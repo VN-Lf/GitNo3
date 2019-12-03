@@ -60,7 +60,7 @@
             <form action="<%=request.getContextPath()%>/to/login" method="post" style="position: relative;">
                 <div style="position: relative;">
                     <input id="name" type="text" name="zhanghao" oninput="donTai()" />
-                    <span id="tishi" class="tishis">账号</span>
+                    <span id="tishi" class="tishis">账号/手机号</span>
                 </div>
                 <div style="position: relative;">
                     <input id="pwd" type="password" name="pwd" style="outline: none;" ondblclick="lookNo(1)" oninput="donTai2('pwd')" ;/>
@@ -87,6 +87,7 @@
             $("#tishi").css("top", "20px");
             $("#tishi").css("left", "20px");
             $("#tishi").css("font-size", "20px");
+            document.getElementById("tishi").innerText = "账号/密码";
 
             $("#name").css("width", "100%");
             $("#name").css("height", "40px");
@@ -98,6 +99,7 @@
             $("#tishi").css("top", "22px");
             $("#tishi").css("left", "-35px");
             $("#tishi").css("font-size", "16px");
+            document.getElementById("tishi").innerText = "账号";
 
             $("#name").css("width", "90%");
             $("#name").css("height", "35px");

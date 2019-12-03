@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("to")
 public class GoPageController {
+    //前往主界面
     @RequestMapping("/home")
     public String toHome(HttpSession session){
         if(session.getAttribute("empId") == null){
@@ -20,10 +21,21 @@ public class GoPageController {
             return "home";
         }
     }
+    @RequestMapping("/tologin")
+    public String toLogin(){
+        return "login";
+    }
+    //登录
     @RequestMapping("/login")
     public String login(HttpSession session, String zhanghao,String pwd){
         System.out.println(pwd+"密码|用户："+zhanghao);
         session.setAttribute("empId",zhanghao);
-        return "home";
+        return "redirect:home";
+    }
+    //退出登录
+    @RequestMapping("/end")
+    public void End(HttpSession session){
+        session.invalidate();
+        System.out.println(session.getAttribute("empId"));
     }
 }
