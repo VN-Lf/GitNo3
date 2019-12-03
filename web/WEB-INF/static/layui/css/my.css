@@ -1,0 +1,29 @@
+.layui-side-scroll{
+    width:260px;
+}
+.layui-nav.layui-nav-tree{
+    background-color: bisque;
+}
+
+.layui-nav.layui-nav-tree li a{
+    color: white;
+}
+
+.layui-nav.layui-nav-tree li a:hover{
+    color: #5FB878;
+}
+
+.layui-nav-item{
+    line-height: 45px;
+}
+
+.liebiao{
+    margin-right: 30px;
+    font-size: 25px;
+}
+
+.content{
+    width: 1000px;
+    height: 500px;
+    margin-left: 500px;
+}

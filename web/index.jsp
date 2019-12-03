@@ -7,11 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-    你是最棒的
-渣渣
-  </body>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath }/jquery-easyui-1.3.0/jquery-1.7.2.min.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath }/jquery-easyui-1.3.0/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath }/jquery-easyui-1.3.0/locale/easyui-lang-zh_CN.js"></script>
+
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath }/jquery-easyui-1.3.0/themes/default/easyui.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/jquery-easyui-1.3.0/themes/icon.css" />
+
+<link rel="stylesheet" href="${pageContext.request.contextPath }/jquery-easyui-1.3.0/demo/demo.css" />
 </html>
