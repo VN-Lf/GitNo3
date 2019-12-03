@@ -16,10 +16,10 @@
             width: 100%;
             line-height: 60px;
             text-align: center;
-
+            cursor:pointer;
         }
 
-        #caidan a {
+        #caidan a{
             text-decoration: none;
             color: black;
         }
@@ -43,20 +43,20 @@
     <div title="Base" id="caidan" fit="true" class="easyui-accordion">
         <div title="员工管理" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)">
+                    <a class="cs-navi-tab">效果预览</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)">
+                    <a class="cs-navi-tab">效果预览</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)">
+                    <a class="cs-navi-tab">效果预览</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)">
+                    <a class="cs-navi-tab">效果预览</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)">
+                    <a class="cs-navi-tab">效果预览</a>
                 </li>
             </ul>
         </div>
@@ -83,7 +83,7 @@
     var shang = null;
 
     function qiehuan(id2) {
-        var id = $(id2).parent();
+        var id = $(id2);
         if(shang == null){
             shang = id;
             id.css('background-color','#FBEC88');
