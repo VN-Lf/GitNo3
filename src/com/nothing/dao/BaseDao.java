@@ -1,6 +1,7 @@
 package com.nothing.dao;
 
 import org.hibernate.*;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import java.util.List;
  */
 
 @Transactional
+@Repository
 public class BaseDao {
     @Resource
     private SessionFactory sessionFactory;
@@ -137,4 +139,13 @@ public class BaseDao {
         session.close();
     }
 
+
+    public int selectcount(String sql) {
+        Session session =  getSession();
+        SQLQuery sqlquery =session.createSQLQuery(sql);
+        int  i =Integer.parseInt(sqlquery.uniqueResult()+"");
+
+        session.close();
+        return i;
+    }
 }
