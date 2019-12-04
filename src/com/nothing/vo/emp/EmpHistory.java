@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 
-//员工工作经历表
+//员工作经历表
 @Entity
 @Table(name = "EmpHistory")
 public class EmpHistory{

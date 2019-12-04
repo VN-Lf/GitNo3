@@ -9,7 +9,7 @@ public class StuFall{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =500, allocationSize = 1)
-    private Integer fallId ;
+    private Integer fallId ;//学年id
     private String fallLevel;
     private String fallRemark;
 

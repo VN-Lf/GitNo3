@@ -1,7 +1,7 @@
 package com.nothing.vo.emp;
 
 import javax.persistence.*;
-//部门
+//部门表
 @Entity
 @Table(name = "Dept")
 public class Dept{

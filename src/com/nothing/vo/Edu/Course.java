@@ -10,7 +10,7 @@ public class Course {
     @TableGenerator(name = "tableGenerator",initialValue =200, allocationSize = 1)
 
     private Integer courseId;
-    private  String courseName;
+    private  String courseName;//课程名
     private String  courseIsNes;//是否必修
     private Integer courseTypeId;
     private String  courseRemark;

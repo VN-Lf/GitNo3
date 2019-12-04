@@ -2,7 +2,7 @@ package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
 import java.util.Date;
-
+//学生请假表
 @Entity
 @Table(name="StudentHoliday")
 public class StudentHoliday{

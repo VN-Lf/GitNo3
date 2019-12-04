@@ -10,8 +10,7 @@ public class ClassVo{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =100, allocationSize = 1)
     private  Integer classId;
-    private Integer classid;
-    private Integer classno;
+    private Integer classNo;
     private Integer classAdviser ;//班主任
     private Integer classCount;
     private Integer classTeacher ;//授课老师
@@ -30,20 +29,12 @@ public class ClassVo{
         this.classId = classId;
     }
 
-    public Integer getClassid(){
-        return classid;
+    public Integer getClassNo() {
+        return classNo;
     }
 
-    public void setClassid(Integer classid) {
-        this.classid = classid;
-    }
-
-    public Integer getClassno() {
-        return classno;
-    }
-
-    public void setClassno(Integer classno) {
-        this.classno = classno;
+    public void setClassNo(Integer classNo) {
+        this.classNo = classNo;
     }
 
     public Integer getClassAdviser() {

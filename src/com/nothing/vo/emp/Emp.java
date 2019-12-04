@@ -3,6 +3,9 @@ package com.nothing.vo.emp;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * 员工表
+ */
 @Entity
 @Table(name = "Emp")
 public class Emp{

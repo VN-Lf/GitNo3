@@ -9,7 +9,7 @@ public class CourseType{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =300, allocationSize = 1)
     private Integer courseTypeId;
-    private  String  courseTypeName;
+    private  String  courseTypeName;//名称
     private String courseRemark;
 
     public Integer getCourseTypeId() {

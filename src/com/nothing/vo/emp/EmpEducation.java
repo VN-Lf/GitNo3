@@ -12,7 +12,7 @@ public class EmpEducation{
     @TableGenerator(name = "tableGenerator",initialValue =2100, allocationSize = 1)
     private Integer empEduId;
     private Integer empId;
-    private String empUniversity;
+    private String empUniversity;//大学
     private String empDegree;
     private String empEucStartDay;
     private String empEucEndDay;

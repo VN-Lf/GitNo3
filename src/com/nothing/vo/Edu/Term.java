@@ -9,7 +9,7 @@ public class Term {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =600, allocationSize = 1)
-    private Integer termId;
+    private Integer termId;//学期id
     private String termName;
     private String termRemark;
 

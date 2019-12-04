@@ -1,7 +1,7 @@
 package com.nothing.vo.emp;
 
 import javax.persistence.*;
-//员工家庭信息
+//员工家庭
 @Table(name="EmpFamilyImf")
 public class EmpFamilyImf{
     @Id
