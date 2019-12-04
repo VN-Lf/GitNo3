@@ -16,11 +16,12 @@
             width: 100%;
             line-height: 60px;
             text-align: center;
-
+            cursor:pointer;
         }
 
-        #caidan a {
+        #caidan a{
             text-decoration: none;
+            font-size: 16px;
             color: black;
         }
 
@@ -41,22 +42,35 @@
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
     <div title="Base" id="caidan" fit="true" class="easyui-accordion">
+        <div title="个人中心" style="padding:10px;">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>效果预览</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>效果预览</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
+                </li>
+            </ul>
+        </div>
         <div title="员工管理" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>效果预览</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>效果预览</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>效果预览</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>效果预览</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">效果预览</a>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>效果预览</a>
                 </li>
             </ul>
         </div>
@@ -83,7 +97,7 @@
     var shang = null;
 
     function qiehuan(id2) {
-        var id = $(id2).parent();
+        var id = $(id2);
         if(shang == null){
             shang = id;
             id.css('background-color','#FBEC88');
