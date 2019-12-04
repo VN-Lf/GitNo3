@@ -13,7 +13,7 @@ public class holidayStudent {
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
     private Integer holidayId;
-    private Integer userId;//教师或学生主键
+    private Integer uId;//教师或学生主键
     private Integer holidayDay;//假期天数
     private Date startTime;
     private Date endTime;
@@ -30,12 +30,12 @@ public class holidayStudent {
         this.holidayId = holidayId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getuId() {
+        return uId;
     }
 
-    public void setUserId(Integer userId) {
-        userId = userId;
+    public void setuId(Integer uId) {
+        this.uId = uId;
     }
 
     public Integer getHolidayDay() {
