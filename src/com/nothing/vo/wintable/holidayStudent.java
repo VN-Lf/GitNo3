@@ -2,6 +2,10 @@ package com.nothing.vo.wintable;
 
 import javax.persistence.*;
 import java.util.Date;
+
+/**
+ * 老师或学生请假
+ */
 @Entity
 @Table(name = "holidayStudent")
 public class holidayStudent {
@@ -9,13 +13,14 @@ public class holidayStudent {
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
     private Integer holidayId;
-    private Integer StudentId;//关联学生表主键
+    private Integer userId;//教师或学生主键
     private Integer holidayDay;//假期天数
     private Date startTime;
     private Date endTime;
     private String title;//标题
     private String Remark;//内容
     private String Status;//审批状态
+    private String type; //请假人员类型
 
     public Integer getHolidayId() {
         return holidayId;
@@ -25,12 +30,12 @@ public class holidayStudent {
         this.holidayId = holidayId;
     }
 
-    public Integer getStudentId() {
-        return StudentId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setStudentId(Integer studentId) {
-        StudentId = studentId;
+    public void setUserId(Integer userId) {
+        userId = userId;
     }
 
     public Integer getHolidayDay() {
@@ -79,5 +84,13 @@ public class holidayStudent {
 
     public void setStatus(String status) {
         Status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
