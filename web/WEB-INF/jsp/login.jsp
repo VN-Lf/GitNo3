@@ -52,7 +52,7 @@
 <body>
 <div id="left" style="width: 30%;height: 100%;float: left;;background-color: rgb(136, 136, 221);">
     <h1>左边 推送内容</h1>
-    <img id="obj1" class="img1" alt="" src="${pageContext.request.contextPath }/photos/x.jpeg" width="340" height="363" border="0">
+    <img id="obj1" class="img1" alt="" src="${pageContext.request.contextPath }/photos/l.jpeg" width="340" height="363" border="0">
 </div>
 <div id="conter" style="width:40%;height: 100%;float: left;">
     <div style="width: 100%;height: 30%;">校园管理系统</div>
@@ -154,6 +154,7 @@
             donTai2('pwd');
         }
     }
+
     //图片轮播
     var leftIndex=0;
     var rightIndex=1;
@@ -189,5 +190,6 @@
         obj2.src=arr[leftIndex];
         obj1.src=arr[rightIndex];
     }
+
 </script>
 </html>
