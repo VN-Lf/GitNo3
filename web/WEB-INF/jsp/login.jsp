@@ -52,6 +52,7 @@
 <body>
 <div id="left" style="width: 30%;height: 100%;float: left;;background-color: rgb(136, 136, 221);">
     <h1>左边 推送内容</h1>
+    <img id="obj1" class="img1" alt="" src="${pageContext.request.contextPath }/photos/x.jpeg" width="340" height="363" border="0">
 </div>
 <div id="conter" style="width:40%;height: 100%;float: left;">
     <div style="width: 100%;height: 30%;">校园管理系统</div>
@@ -77,6 +78,7 @@
 </div>
 <div id="right" style="width: 30%;height: 100%;float:left;background-color: rgb(136, 136, 221);">
     <h1>右边</h1>
+    <img id="obj2" class="img1" alt="" src="${pageContext.request.contextPath }/photos/x.jpeg" width="340" height="363" border="0">
 </div>
 </body>
 <script language="JavaScript">
@@ -151,6 +153,41 @@
             document.getElementById("pwd").value = pwdLook;
             donTai2('pwd');
         }
+    }
+    //图片轮播
+    var leftIndex=0;
+    var rightIndex=1;
+    //时间间隔(单位毫秒)，每秒钟显示一张，数组共有5张图片放在Photos文件夹下。
+    var timeInterval=2000;
+    var arr=new Array();
+    arr[0]="${pageContext.request.contextPath }/photos/x.jpeg";
+    arr[1]="${pageContext.request.contextPath }/photos/l.jpeg";
+    arr[2]="${pageContext.request.contextPath }/photos/m.jpeg";
+    arr[3]="${pageContext.request.contextPath }/photos/f.jpeg";
+    arr[4]="${pageContext.request.contextPath }/photos/n.jpeg";
+    setInterval(changeImg,timeInterval);
+    function changeImg()
+    {
+        var obj1=document.getElementById("obj1");
+        var obj2=document.getElementById("obj2");
+        if (leftIndex==arr.length-1)
+        {
+            leftIndex=0;
+        }
+        else
+        {
+            leftIndex+=1;
+        }
+        if (rightIndex==arr.length-1)
+        {
+            rightIndex=0;
+        }
+        else
+        {
+            rightIndex+=1;
+        }
+        obj2.src=arr[leftIndex];
+        obj1.src=arr[rightIndex];
     }
 </script>
 </html>
