@@ -7,11 +7,11 @@ import java.util.Date;
 @Table(name = "Emp")
 public class Emp{
     @Id
-    @SequenceGenerator(name="empSeq",sequenceName="empSeq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "empSeq")
-    private int empId;
+    @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
+    @TableGenerator(name = "tableGenerator",initialValue =1000, allocationSize = 1)
+    private Integer empId;
     private String empName;
-    private int empDeptId;
+    private Integer empDeptId;
     private String empSex;
     private Date empBirthday;
     private String empCardno;
@@ -21,8 +21,6 @@ public class Emp{
     private String empWeixin;
     private String empEmail;
     private String empMarried; //已婚，单身，离异，丧偶
-    private String empUniversity;
-    private String empEducation;
     private String empAddress;
     private String empRemark;
     private String empBank;
@@ -32,8 +30,8 @@ public class Emp{
     private  Date empHireday;
     private  Date empFireday;
     private String empLogPsw;
-    private int  empLoginStatus; //登录状态
-    private int  empPostId;
+    private Integer  empLoginStatus; //登录状态
+    private Integer  empPostId;
 
 
     public int getEmpId() {
@@ -80,7 +78,7 @@ public class Emp{
         return empCardno;
     }
 
-    public void setEmpCardno(String empCardno) {
+    public void setEmpCardno(String empCardno){
         this.empCardno = empCardno;
     }
 
@@ -132,21 +130,6 @@ public class Emp{
         this.empMarried = empMarried;
     }
 
-    public String getEmpUniversity() {
-        return empUniversity;
-    }
-
-    public void setEmpUniversity(String empUniversity) {
-        this.empUniversity = empUniversity;
-    }
-
-    public String getEmpEducation() {
-        return empEducation;
-    }
-
-    public void setEmpEducation(String empEducation) {
-        this.empEducation = empEducation;
-    }
 
     public String getEmpAddress() {
         return empAddress;
