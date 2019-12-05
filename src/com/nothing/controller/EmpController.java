@@ -21,38 +21,35 @@ public class EmpController {
     @Resource
     private EmpService empService;
 
-    @RequestMapping(value = "/emplist")
+    @RequestMapping("/emplist")
     @ResponseBody
-    public JSONObject EmpList(){
+    public JSONObject EmpList() {
         List examlist = empService.selEmpAll();
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("code",0);
-        jsonObject.put("msg","");
-        jsonObject.put("data",examlist);
-        jsonObject.put("count",11);
-
+        int con = empService.selEmpCont();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("data", examlist);
+        jsonObject.put("count", con);
         return jsonObject;
     }
 
-    @RequestMapping(value = "/empadd")
-    public void EmpList(Emp emp,EmpEducation empEducation,Post post,String ruzhitime,String birthday) throws ParseException {
+    @RequestMapping("/empadd")
+    public void EmpList(Emp emp, EmpEducation empEducation, Post post, String ruzhitime, String birthday) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         emp.setEmpBirthday(simpleDateFormat.parse(birthday));
         emp.setEmpFireday(simpleDateFormat.parse(ruzhitime));
-
-        System.out.println("员工："+emp);
-        System.out.println(ruzhitime+"学历："+empEducation);
-        System.out.println(birthday+"职务："+post.getPostName());
-
-        empService.addEmp(emp,empEducation,post);
+        System.out.println("员工：" + emp);
+        System.out.println(ruzhitime + "学历：" + empEducation);
+        System.out.println(birthday + "职务：" + post.getPostName());
+        empService.addEmp(emp, empEducation, post);
     }
-
 
     @RequestMapping("toDel")
     @ResponseBody
-    public String toDel(String id){
-        System.out.println("进来"+id);
-        id = id.substring(0,id.length()-1);
+    public String toDel(String id) {
+        System.out.println("进来" + id);
+        id = id.substring(0, id.length() - 1);
         empService.delete(id);
         return "成功";
     }

@@ -18,8 +18,13 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
+    public int selEmpCont() {
+        int con = selTotalRow("select empId from emp");
+        return con;
+    }
+
+    @Override
     public void addEmp(Emp emp, EmpEducation empEducation, Post post) {
-        System.out.println("员工id：");
         emp.setEmpLoginStatus(1);//设置登录状态默认 1
         addObject(emp);
         List list = listBySQL2("select empId from emp order by empId desc limit 1");
@@ -37,9 +42,12 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public void delete(String ids){
-        String sql = "delete from emp where empId in （"+ids+");delete from empeducation where empId in ("+ids+");delete from post where empId in（"+ids+");";
-        System.out.println(sql);
+        /*String sql = "delete from emp where empId in （"+ids+");";
+        String sql2 = "delete from empeducation where empId in ("+ids+");";
+        String sql3 = "delete from post where empId in（"+ids+");";
         executeSQL(sql);
+        executeSQL(sql2);
+        executeSQL(sql3);*/
         /*Emp emp = new Emp();
         Post psot = new Post();
         EmpEducation edu = new EmpEducation();

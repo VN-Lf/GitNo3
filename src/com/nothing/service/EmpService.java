@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface EmpService {
     List selEmpAll();
+    int selEmpCont();
     void addEmp(Emp emp, EmpEducation empEducation, Post post);
     void delete(String ids);
 }
