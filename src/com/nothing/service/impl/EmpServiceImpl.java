@@ -19,7 +19,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public int selEmpCont() {
-        int con = selTotalRow("select empId from emp");
+        int con = selTotalRow("select count(empId) from emp");
         return con;
     }
 
@@ -48,7 +48,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         executeSQL(sql);
         executeSQL(sql2);
         executeSQL(sql3);*/
-        /*Emp emp = new Emp();
+        Emp emp = new Emp();
         Post psot = new Post();
         EmpEducation edu = new EmpEducation();
         emp.setEmpId(Integer.parseInt(ids));
@@ -57,6 +57,6 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
         delObject(emp);
         delObject(psot);
-        delObject(edu);*/
+        delObject(edu);
     }
 }
