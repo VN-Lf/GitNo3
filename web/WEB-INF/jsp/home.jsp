@@ -57,8 +57,8 @@
         </div>
         <div title="员工管理" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>效果预览</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>员工资料</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>效果预览</a>
@@ -74,8 +74,12 @@
                 </li>
             </ul>
         </div>
-        <div title="标题2" style="padding:10px;">
-
+        <div title="考核管理" style="list-style-type:none;padding: 0">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/examlist" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>考核指标</a>
+                </li>
+            </ul>
         </div>
         <div title="标题3" style="padding:10px;">
 

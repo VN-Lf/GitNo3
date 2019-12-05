@@ -38,4 +38,14 @@ public class GoPageController {
         session.invalidate();
         System.out.println(session.getAttribute("empId"));
     }
+    //前往员工资料
+    @RequestMapping("/toempzl")
+    public String toEmpzl(){
+        return "emp/emplist";
+    }
+    //前往添加员工页
+    @RequestMapping("/empadd")
+    public String toEmpAdd(){
+        return "emp/empadd";
+    }
 }

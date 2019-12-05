@@ -28,8 +28,9 @@ public class BaseDao {
      * @return
      */
     public List listByHql(String hql) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         List list = session.createQuery(hql).list();
+        session.flush();
         session.close();
         return list;
     }
@@ -55,6 +56,14 @@ public class BaseDao {
         return list;
     }
 
+    public List listBySQL2(String sql) {
+        Session session = getSession();
+        SQLQuery sqlquery = session.createSQLQuery(sql);
+        List list = sqlquery.list();
+        session.close();
+        return list;
+    }
+
     //SQL查询分页列表（一个表或连接多个表，筛选列时）
     public List pageBySQL(String sql, int currPage, int pageSize) {
         Session session = getSession();
@@ -71,9 +80,10 @@ public class BaseDao {
      * 三合一SQL执行(增删改)
      */
     public void executeSQL(String sql) {
-        Session session =  getSession();
+        Session session =  sessionFactory.openSession();
         SQLQuery sqlquery =session.createSQLQuery(sql);
         sqlquery.executeUpdate();
+        session.flush();
         session.close();
     }
 

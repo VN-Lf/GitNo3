@@ -34,7 +34,6 @@ public class Emp{
     private  Date empFireday;
     private String empLogPsw;
     private Integer  empLoginStatus; //登录状态
-    private Integer  empPostId;
 
 
     public int getEmpId() {
@@ -212,13 +211,5 @@ public class Emp{
 
     public void setEmpLoginStatus(int empLoginStatus) {
         this.empLoginStatus = empLoginStatus;
-    }
-
-    public int getEmpPostId() {
-        return empPostId;
-    }
-
-    public void setEmpPostId(int empPostId) {
-        this.empPostId = empPostId;
     }
 }
