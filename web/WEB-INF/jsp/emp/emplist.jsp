@@ -6,17 +6,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="./../../../index.jsp"%>
 <html>
 <head>
     <title>员工列表页</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
-    <script src="http://localhost:8888/jquery.js"></script>
+    <style type="text/css">
+        .layui-table-tool {
+            z-index: 0;
+        }
+    </style>
 </head>
-<body>
-<div style="width: 80%;margin: 0 auto">
-    <table id="demo" lay-filter="test"></table>
-</div>
+<body class="easyui-layout">
+    <div data-options="region:'center',split:true">
+        <div style="width: 99%;margin: 0 auto">
+            <table id="demo" lay-filter="test"></table>
+        </div>
+    </div>
+    <div data-options="region:'east',title:'附加栏',collapsed:true">
 
+    </div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     layui.use('table', function(){
@@ -31,13 +39,13 @@
             ,cols: [[ //表头
                 {type:'checkbox'}
                 ,{field: 'empId', title: '编号', width:80, sort: true}
-                ,{field: 'empName', title: '姓名', width:100}
-                ,{field: 'deptName', title: '部门', width:100}
-                ,{field: 'postName', title: '职务', width:200}
+                ,{field: 'empName', title: '姓名', width:90}
+                ,{field: 'deptName', title: '部门', width:90}
+                ,{field: 'postName', title: '职务', width:100}
                 ,{field: 'empSex', title: '性别', width: 80}
-                ,{field: 'empPhone', title: '手机号码', width:150}
-                ,{field: 'empAddress', title: '家庭地址', width:200}
-                ,{field: 'empLoginStatus', title: '当前状态', width:100,
+                ,{field: 'empPhone', title: '手机号码', width:125}
+                ,{field: 'empAddress', title: '家庭地址', width:150}
+                ,{field: 'empLoginStatus', title: '当前状态', width:90,
                     templet:function (row){
                         return loginStatus(row.empLoginStatus);
                     }
@@ -45,7 +53,7 @@
                     templet:function (row){
                         return onclikId(row.empId);
                     }
-                },{field: 'empId', title: '密码', width:100,
+                },{field: 'empId', title: '密码', width:80,
                     templet:function (row){
                         return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
                     }
@@ -144,5 +152,6 @@
         <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
     </div>
 </script>
+
 </body>
 </html>

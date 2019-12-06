@@ -14,7 +14,7 @@
 <body>
 <form class="layui-form" action="${pageContext.request.contextPath}/emp/empadd" method="post">
     <input type="button" value="赋值" onclick="fuzhi()">
-    <div style="width: 56%;height: 69%;margin-top: 1%">
+    <div style="width: 56%;height: auto;margin-top: 1%">
         <div style="width:50%;height:100%;float: left">
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
@@ -88,6 +88,12 @@
                 <label class="layui-form-label">银行账号</label>
                 <div class="layui-input-block">
                     <input id="yhzh" type="text" name="empBank" required  lay-verify="required" placeholder="银行卡号码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">说明</label>
+                <div class="layui-input-block">
+                    <textarea name="empRemark" placeholder="请输入内容" class="layui-textarea"></textarea>
                 </div>
             </div>
         </div>
@@ -172,21 +178,17 @@
                     <input type="password" name="empLogPsw" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
                 </div>
             </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
         </div>
     </div>
-    <div style="width: 56%;height: 20%;margin-top:3%;float: left">
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">说明</label>
-            <div class="layui-input-block">
-                <textarea name="empRemark" placeholder="请输入内容" class="layui-textarea"></textarea>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-        </div>
+    <div style="width: 56%;height: auto;margin-top:3%;float: left">
+
+
     </div>
 </form>
 
