@@ -42,13 +42,13 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public void delete(String ids){
-        /*String sql = "delete from emp where empId in （"+ids+");";
+        String sql = "delete from emp where empId in ("+ids+");";
         String sql2 = "delete from empeducation where empId in ("+ids+");";
-        String sql3 = "delete from post where empId in（"+ids+");";
+        String sql3 = "delete from post where empId in ("+ids+");";
         executeSQL(sql);
         executeSQL(sql2);
-        executeSQL(sql3);*/
-        Emp emp = new Emp();
+        executeSQL(sql3);
+        /*Emp emp = new Emp();
         Post psot = new Post();
         EmpEducation edu = new EmpEducation();
         emp.setEmpId(Integer.parseInt(ids));
@@ -57,6 +57,6 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
         delObject(emp);
         delObject(psot);
-        delObject(edu);
+        delObject(edu);*/
     }
 }
