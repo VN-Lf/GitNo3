@@ -24,4 +24,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+<style type="text/css">
+    .layui-table-tool {
+        z-index: 0;
+    }
+</style>
 </html>
