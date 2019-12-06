@@ -9,13 +9,11 @@
 <head>
     <meta charset="utf-8">
     <title>table模块快速使用</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
 </head>
 <body>
 <h1>6666666666</h1>
 <table id="demo" lay-filter="test"></table>
 
-<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     layui.use('table', function(){
         var table = layui.table;

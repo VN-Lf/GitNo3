@@ -20,4 +20,13 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/jquery-easyui-1.3.0/themes/icon.css" />
 
 <link rel="stylesheet" href="${pageContext.request.contextPath }/jquery-easyui-1.3.0/demo/demo.css" />
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
+
+<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+<style type="text/css">
+    .layui-table-tool {
+        z-index: 0;
+    }
+</style>
 </html>
