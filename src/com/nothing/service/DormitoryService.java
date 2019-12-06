@@ -11,7 +11,7 @@ public interface DormitoryService {
     List selectDormitorylist(int var1, int var2);
     //查询总行数
     int SelcctDormitorycount(String sql);
-    //添加的方法
+    //添加宿舍的方法
     void addDormitory(studentHour studentHour);
     //修改宿舍的方法
     void updateDormitory(studentHour studentHour);

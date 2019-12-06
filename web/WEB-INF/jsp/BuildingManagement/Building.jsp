@@ -90,7 +90,7 @@
                             });
                         });
                     }else{
-                        layer.msg('请选择需要删除的数据');
+                        layer.msg('请选择需要删除的数据!');
                     }
                     break;
                 case 'isAdd':

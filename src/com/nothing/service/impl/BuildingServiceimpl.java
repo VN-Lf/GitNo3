@@ -19,12 +19,12 @@ public class BuildingServiceimpl extends BaseDao implements BuildingService {
     public int SelcctBuildingcount(String sql) {
         return this.selTotalRow(sql);
     }
-    //添加
+    //添加楼栋
     @Override
     public void addBuilding(studentFloor studentFloor) {
         addObject(studentFloor);
     }
-    //删除
+    //删除楼栋
     @Override
     public void delBuilding(Object id) {
         executeSQL("delete from studentfloor where floorId in ("+id+")");

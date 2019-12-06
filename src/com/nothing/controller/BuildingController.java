@@ -30,6 +30,7 @@ public class BuildingController {
         return "BuildingManagement/Buildings";
     }
 
+    //查看方法
     @ResponseBody
     @RequestMapping("list")
     public JSONObject list() {

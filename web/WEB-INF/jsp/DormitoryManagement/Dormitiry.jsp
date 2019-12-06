@@ -180,6 +180,7 @@
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+    //解决jquery包冲突
     jQuery.noConflict();
     layui.use('table', function(){
         var table = layui.table;

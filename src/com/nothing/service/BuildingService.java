@@ -8,7 +8,7 @@ import java.util.List;
 public interface BuildingService {
     //查询楼栋信息
     List selectBuildinglists(String sql);
-    //查询总行数
+    //查询楼栋总行数
     int SelcctBuildingcount(String sql);
     //添加的方法
     void addBuilding(studentFloor studentFloor);

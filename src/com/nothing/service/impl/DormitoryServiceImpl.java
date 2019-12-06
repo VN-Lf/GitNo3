@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DormitoryServiceImpl extends BaseDao implements DormitoryService {
 
+    //查询出宿舍信息
     @Override
     public List selectDormitorylists(String sql) {
         return listBySQL(sql);
@@ -19,7 +20,7 @@ public class DormitoryServiceImpl extends BaseDao implements DormitoryService {
     public List selectDormitorylist(int page, int rows) {
         return this.pageByHql("select * from studenthour", page, rows);
     }
-
+    //查询出宿舍总数
     public int SelcctDormitorycount(String sql) {
         return this.selTotalRow(sql);
 

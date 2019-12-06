@@ -29,7 +29,7 @@ public class dormitoryController {
         request.setAttribute("dlist",list);
         return "DormitoryManagement/Dormitiry";
     }
-
+    //查看方法
     @ResponseBody
     @RequestMapping("list")
     public JSONObject list() {
