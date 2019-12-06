@@ -13,7 +13,8 @@
     <script src="http://localhost:8888/jquery.js"></script>
 </head>
 <body>
-<div style="width: 80%;margin: 0 auto">
+<a href="${pageContext.request.contextPath}/to/empadd">本页新增员工</a>
+<div style="width: 90%;margin: 0 auto">
     <table id="demo" lay-filter="test"></table>
 </div>
 
@@ -49,7 +50,7 @@
                     templet:function (row){
                         return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
                     }
-                },,{field: 'empId', title: '操作', width:110,
+                },{field: 'empId', title: '操作', width:110,
                     templet:function (row){
                         return chaoZuo(row.empId);
                     }
@@ -100,6 +101,19 @@
             //console.log(data.othis); //得到美化后的DOM对象
         });
     });
+    function createXMLHttp() {
+        try {
+            return new ActiveXObject("Msxm12.XMLHTTP");
+        }catch (e){}
+        try {
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }catch (e){}
+        try{
+            return new XMLHttpRequest();
+        }catch (e){}
+        alert("无法打开");
+        return null;
+    }
     //判断当前用户的状态
     function loginStatus(v){
         if(v == 1){
@@ -130,11 +144,23 @@
     }
 
     function updateUser(id) {
-        alert("编辑用户id："+id);
+        window.open("${pageContext.request.contextPath}/to/empup?id="+id);
     }
 
     function delUser(id) {
-        alert("删除用户id："+id);
+        if (confirm("确定删除吗？")) {
+            var xmlHttp = createXMLHttp();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    if (xmlHttp.responseText == "true") {
+                        location.reload();
+                    }
+                }
+            }
+            var url = "${pageContext.request.contextPath}/emp/toDelon?sid="+id;
+            xmlHttp.open("post", url, true);
+            xmlHttp.send();
+        }
     }
 </script>
 

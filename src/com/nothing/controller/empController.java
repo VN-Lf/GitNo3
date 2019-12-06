@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,12 +49,21 @@ public class EmpController {
         empService.addEmp(emp, empEducation, post);
     }
 
-    @RequestMapping("toDel")
-    @ResponseBody
+    @RequestMapping("/toDel")
     public String toDel(String id) {
         System.out.println("进来" + id);
         id = id.substring(0, id.length() - 1);
         empService.delete(id);
         return "成功";
+    }
+
+    @RequestMapping("/toDelon")
+    public void toDelOn(String sid,HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("进来" + sid);
+        PrintWriter pw = resp.getWriter();
+        empService.delete(sid);
+        pw.write("true");
+        pw.flush();
+        pw.close();
     }
 }
