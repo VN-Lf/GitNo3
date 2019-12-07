@@ -111,7 +111,7 @@
         $("#addDor").form("submit",{
             success : function () {
                 $("#addDor").form("clear");
-                window.location.href="<%=request.getContextPath()%>/Building/todormitory";
+                window.location.href="<%=request.getContextPath()%>/Building/toys";
             }
         })
     }
