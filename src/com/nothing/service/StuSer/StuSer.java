@@ -8,11 +8,12 @@ import java.util.List;
 
 
 public interface StuSer{
-    List toStuList();
-    int allTitle();
+    List toStuList(Object o);
+    int allTitle(Object o);
     void addStu(Student student);
     void updateStu(Student student);
     void deleteStu(String ids);
     List listObj(Object o);
     Object findO(Object o,int id);
+    List toStuAddition(Object o,int studId);
 }

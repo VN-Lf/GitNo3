@@ -14,8 +14,12 @@
 </head>
 <body>
 <h1></h1>
+<div class="layui-row">
 <table id="demo" lay-filter="test"></table>
-
+</div>
+<div class="layui-row" style="height: 25%">
+    下面面
+</div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     jQuery.noConflict();

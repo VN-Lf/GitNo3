@@ -11,7 +11,7 @@ public class StuEdu{
     @TableGenerator(name = "tableGenerator",initialValue =4000, allocationSize = 1)
 
    private Integer EduId;
-   private String  stuId;
+   private String  studId;
    private String hisSchool;
    private String beginDate;
    private Date endDate;
@@ -24,12 +24,12 @@ public class StuEdu{
         EduId = eduId;
     }
 
-    public String getStuId() {
-        return stuId;
+    public String getStudId(){
+        return studId;
     }
 
-    public void setStuId(String stuId) {
-        this.stuId = stuId;
+    public void setStudId(String studId) {
+        this.studId = studId;
     }
 
     public String getHisSchool() {

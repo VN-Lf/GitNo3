@@ -10,7 +10,7 @@ public class StudentHoliday{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =3500, allocationSize = 1)
     private Integer holidayId;
-    private Integer StudentId;
+    private Integer studId;
     private Integer holidayDay;
     private Date startTime;
     private Date endTime;
@@ -26,12 +26,12 @@ public class StudentHoliday{
         this.holidayId = holidayId;
     }
 
-    public Integer getStudentId() {
-        return StudentId;
+    public Integer getStudId() {
+        return studId;
     }
 
-    public void setStudentId(Integer studentId) {
-        StudentId = studentId;
+    public void setStudId(Integer studId) {
+        this.studId = studId;
     }
 
     public Integer getHolidayDay() {

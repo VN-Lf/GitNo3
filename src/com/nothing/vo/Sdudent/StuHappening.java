@@ -9,7 +9,7 @@ public class StuHappening{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =2400, allocationSize = 1)
     private Integer stuHappenId;
-    private Integer   stuId;
+    private Integer   studId;
     private String happening;
     private String opTime;
     private String empId;
@@ -22,12 +22,12 @@ public class StuHappening{
         this.stuHappenId = stuHappenId;
     }
 
-    public Integer getStuId() {
-        return stuId;
+    public Integer getStudId() {
+        return studId;
     }
 
-    public void setStuId(Integer stuId) {
-        this.stuId = stuId;
+    public void setStudId(Integer studId) {
+        this.studId = studId;
     }
 
     public String getHappening() {

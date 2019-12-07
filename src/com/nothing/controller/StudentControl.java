@@ -3,7 +3,7 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.StuSer.StuSer;
 import com.nothing.vo.Edu.ClassVo;
-import com.nothing.vo.Sdudent.Student;
+import com.nothing.vo.Sdudent.*;
 import com.nothing.vo.sushe.studentFloor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,8 +36,8 @@ public class StudentControl{
     @RequestMapping("/toList")
     @ResponseBody
     public JSONObject toList(){
-        List<Map> list = stuSer.toStuList();
-        int title = stuSer.allTitle();
+        List<Map> list = stuSer.toStuList(new Student());
+        int title = stuSer.allTitle(new Student());
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code",0);
         jsonObject.put("msg","");
@@ -86,4 +86,64 @@ public class StudentControl{
         return "成功";
     }
 
+
+    @RequestMapping("stuFal")
+    @ResponseBody
+    public JSONObject toStuFal(int studId){
+        JSONObject jsonObject = new JSONObject();
+        List<Map> list = stuSer.toStuAddition(new StuFimaly(),studId);
+        int title = stuSer.allTitle(new StuFimaly());
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        jsonObject.put("count",title);
+        System.out.println("学生家庭"+jsonObject.toJSONString());
+        return jsonObject;
+    }
+
+
+
+    @RequestMapping("stuEdu")
+    @ResponseBody
+    public JSONObject toStuEdu(int studId){
+        JSONObject jsonObject = new JSONObject();
+        List<Map> list = stuSer.toStuAddition(new StuEdu(),studId);
+        int title = stuSer.allTitle(new StuEdu());
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        jsonObject.put("count",title);
+        System.out.println("学生教育"+jsonObject.toJSONString());
+        return jsonObject;
+    }
+
+
+    @RequestMapping("stuHap")
+    @ResponseBody
+    public JSONObject toStuHap(int studId){
+        JSONObject jsonObject = new JSONObject();
+        List<Map> list = stuSer.toStuAddition(new StuHappening(),studId);
+        int title = stuSer.allTitle(new StuHappening());
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        jsonObject.put("count",title);
+        System.out.println("学生事件"+jsonObject.toJSONString());
+        return jsonObject;
+    }
+
+
+    @RequestMapping("stuReply")
+    @ResponseBody
+    public JSONObject toStuReply(int studId){
+        JSONObject jsonObject = new JSONObject();
+        List<Map> list = stuSer.toStuAddition(new StuReplyScore(),studId);
+        int title = stuSer.allTitle(new StuReplyScore());
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        jsonObject.put("count",title);
+        System.out.println("学生答辩"+jsonObject.toJSONString());
+        return jsonObject;
+    }
 }

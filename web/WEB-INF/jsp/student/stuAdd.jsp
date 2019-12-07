@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
 </head>
 <body>
-
 <form class="layui-form" action="${pageContext.request.contextPath}/stu/add" method="post">
     <div style="width: 100%;height: 69%;margin-top: 1%">
         <div style="width:33%;height:100%;float: left">

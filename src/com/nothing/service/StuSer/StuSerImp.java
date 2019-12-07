@@ -10,13 +10,13 @@ import java.util.List;
 @Service
 public class StuSerImp extends BaseDao implements StuSer{
     @Override
-    public List toStuList() {
-        return listBySQL("select * from student");
+    public List toStuList(Object o) {
+        return listBySQL("select * from "+o.getClass().getSimpleName());
     }
 
     @Override
-    public int allTitle() {
-        return selTotalRow("select count(*) from student");
+    public int allTitle(Object o) {
+        return selTotalRow("select count(*) from "+o.getClass().getSimpleName());
 
     }
 
@@ -43,6 +43,11 @@ public class StuSerImp extends BaseDao implements StuSer{
     @Override
     public Object findO(Object o,int id) {
         return getObject(o.getClass(),id);
+    }
+
+    @Override
+    public List toStuAddition(Object o,int studId) {
+        return listBySQL("select * from "+o.getClass().getSimpleName() +" where studId ="+studId);
     }
 
 
