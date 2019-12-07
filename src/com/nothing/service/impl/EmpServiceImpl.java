@@ -8,6 +8,7 @@ import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmpServiceImpl extends BaseDao implements EmpService{
@@ -28,7 +29,6 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         emp.setEmpLoginStatus(1);//设置登录状态默认 1
         addObject(emp);
         List list = listBySQL2("select empId from emp order by empId desc limit 1");
-        System.out.println("list:"+list);
         int eid = (int)list.get(0);
         System.out.println("新增员工id:"+eid);
         empEducation.setEmpId(eid);
@@ -58,5 +58,53 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         delObject(emp);
         delObject(psot);
         delObject(edu);*/
+    }
+
+    @Override
+    public void czPwd(String id) {
+        String upsql = "UPDATE emp SET empLogPsw = '123456' WHERE empId = "+id;
+        System.out.println(upsql);
+        executeSQL(upsql);
+    }
+
+    @Override
+    public Emp sqlEmpVo(String id){
+        System.out.println("id:"+id);
+        Emp emp = new Emp();
+        return (Emp)getObject(emp.getClass(),Integer.parseInt(id));
+    }
+
+    @Override
+    public Post sqlPostVo(String eid) {
+        /*Post emp = new Post();
+        List list = listBySQL2("select postId from post where empId ="+eid);
+        int pid = (int)list.get(0);
+        return (Post) getObject(emp.getClass(),pid);*/
+        List list = listBySQL(" select * from post where empId = "+eid);
+        Map map = (Map) list.get(0);
+        Post post = new Post();
+        post.setPostId((int)map.get("postId"));
+        post.setEmpId((int)map.get("empId"));
+        post.setDeptId((int)map.get("deptId"));
+        post.setPostName((String) map.get("postName"));
+        post.setRemark((String)map.get("remark"));
+        return post;
+    }
+
+    @Override
+    public EmpEducation sqlEduVo(String eid) {
+        EmpEducation emp = new EmpEducation();
+        List list = listBySQL2("select empEduId from empeducation where empId ="+eid);
+        int empid = (int)list.get(0);
+        return (EmpEducation)getObject(emp.getClass(),empid);
+        /*List list = listBySQL(" select * from empeducation where empId = "+eid);
+        return (EmpEducation)list.get(0);*/
+    }
+
+    @Override
+    public void empUpdate(Emp emp, EmpEducation Edu, Post post) {
+        updObject(emp);
+        updObject(Edu);
+        updObject(post);
     }
 }

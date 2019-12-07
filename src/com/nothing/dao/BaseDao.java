@@ -94,8 +94,8 @@ public class BaseDao {
     public int selTotalRow(String sql) {
         Session session = getSession();
         SQLQuery sqlquery = session.createSQLQuery(sql);
-         int i = Integer.parseInt(sqlquery.uniqueResult()+"");
-         session.close();
+        int i = Integer.parseInt(sqlquery.uniqueResult()+"");
+        session.close();
         return i;
     }
 
@@ -148,7 +148,6 @@ public class BaseDao {
         session.flush();
         session.close();
     }
-
 
     public int selectcount(String sql) {
         Session session =  getSession();

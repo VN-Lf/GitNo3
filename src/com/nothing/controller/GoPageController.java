@@ -2,10 +2,13 @@ package com.nothing.controller;
 
 
 import com.nothing.service.EmpService;
+import com.sun.deploy.net.HttpResponse;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -49,11 +52,5 @@ public class GoPageController {
     @RequestMapping("/empadd")
     public String toEmpAdd(){
         return "emp/empadd";
-    }
-    //前往员工修改页
-    @RequestMapping("/empup")
-    public String toEmpUpdate(String id){
-        System.out.println("id:"+id);
-        return "emp/empupdate";
     }
 }

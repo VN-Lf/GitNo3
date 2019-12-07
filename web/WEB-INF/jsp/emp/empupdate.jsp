@@ -1,25 +1,29 @@
-<%--
+<%@ page import="com.nothing.vo.emp.Emp" %>
+<%@ page import="com.nothing.vo.emp.Post" %>
+<%@ page import="com.nothing.vo.emp.EmpEducation" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2019/12/4
-  Time: 14:23
+  Date: 2019/12/5
+  Time: 20:46
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>添加员工</title>
+    <title>修改员工信息</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
-</head>
+    <%//Emp emp = (Emp) request.getAttribute("empvo");%>
+    <%//Post post = (Post)request.getAttribute("postvo");%>
+    <%//EmpEducation emd = (EmpEducation)request.getAttribute("emdvo");%>
+    </head>
 <body>
-<form class="layui-form" action="${pageContext.request.contextPath}/emp/empadd" method="post">
-    <input type="button" value="赋值" onclick="fuzhi()">
+<form class="layui-form" lay-filter="formTest">
     <div style="width: 56%;height: auto;margin-top: 1%">
         <div style="width:50%;height:100%;float: left">
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名*</label>
                 <div class="layui-input-block">
-                    <input id="xm" type="text" name="empName" required  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+                    <input id="xm" type="text" name="empName" required  lay-verify="required" placeholder="请输入教师姓名" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -31,8 +35,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="empSex" value="男" title="男">
-                    <input type="radio" name="empSex" value="女" title="女" checked>
+                    <input type="radio" name="empSex" value="男" title="男" >
+                    <input type="radio" name="empSex" value="女" title="女" >
                 </div>
             </div>
             <div class="layui-form-item">
@@ -44,7 +48,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">手机号码*</label>
                 <div class="layui-input-block">
-                    <input id="sjhm" type="text" oninput="phoneFuzhi()" name="empPhone" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    <input id="sjhm" type="text" name="empPhone" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -90,10 +94,10 @@
                     <input id="yhzh" type="text" name="empBank" required  lay-verify="required" placeholder="银行卡号码" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">说明</label>
+            <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <textarea name="empRemark" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </div>
@@ -103,12 +107,12 @@
                 <label class="layui-form-label">所在部门*</label>
                 <div class="layui-input-block">
                     <select name="empDeptId" lay-verify="required">
-                        <option value="0">宏图软件</option>
+                        <option value="0" >宏图软件</option>
                         <option value="1">教研部</option>
-                        <option value="2">行政部</option>
-                        <option value="3">后勤部</option>
-                        <option value="4">学工部</option>
-                        <option value="5">招生部</option>
+                        <option value="2" >行政部</option>
+                        <option value="3" >后勤部</option>
+                        <option value="4" >学工部</option>
+                        <option value="5" >招生部</option>
                     </select>
                 </div>
             </div>
@@ -151,7 +155,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">最高学历*</label>
                 <div class="layui-input-block">
-                    <select name="empDegree" lay-verify="required">
+                    <select id="zgxl" name="empDegree" lay-verify="required">
                         <option value="">请选择</option>
                         <option value="高中及以下">高中及以下</option>
                         <option value="大专">大专</option>
@@ -172,49 +176,91 @@
                     <input id="zfb" type="text" name="empAlipay" required  lay-verify="required" placeholder="输入支付宝账号" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">登录密码*</label>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">说明</label>
                 <div class="layui-input-block">
-                    <input type="password" name="empLogPsw" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <textarea name="empRemark" placeholder="请输入内容" class="layui-textarea"></textarea>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
-            </div>
+            <input type="hidden" name="empId">
+            <input type="hidden" name="postId">
+            <input type="hidden" name="empEduId">
         </div>
     </div>
 </form>
-
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
-    function fuzhi() {
-        document.getElementById("xm").value="姓名";
-        document.getElementById("zw").value="副主任";
-        document.getElementById("sjhm").value="186461651156";
-        document.getElementById("khyh").value="农业银行";
-        document.getElementById("jtdz").value="家庭地址";
-        document.getElementById("sfzh").value="36073215112312";
-        document.getElementById("jg").value="江西省赣州市";
-        document.getElementById("yjdz").value="222908562@qq.com";
-        document.getElementById("zfb").value="186461651156";
-    }
-    function phoneFuzhi() {
-        var phone = document.getElementById("sjhm").value;
-        document.getElementById("wxhm").value = phone;
-        document.getElementById("zfb").value = phone;
-    }
-    layui.use('form', function(){
-        var form = layui.form;
+    layui.use(['form','layer'], function(){
+        $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer;
+
+        form.val("formTest",{//formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+            "empId":${requestScope.emp.empId}
+            ,"postId":${requestScope.postvo.postId}
+            ,"empEduId":${requestScope.emdutvo.empEduId}
+            ,"empName":"${requestScope.emp.empName}"
+            ,"postName":"${requestScope.postvo.postName}"
+            ,"empSex":"${requestScope.emp.empSex}"
+            ,"birthday":"${requestScope.emp.empBirthday}"
+            ,"empPhone":"${requestScope.emp.empPhone}"
+            ,"empWeixin":${requestScope.emp.empWeixin}
+            ,"empFireday":"${requestScope.emp.empFireday}"
+            ,"empMarried":"${requestScope.emp.empMarried}"
+            ,"empBankaccountName":"${requestScope.emp.empBankaccountName}"
+            ,"empBankNumber":"${requestScope.emp.empBankNumber}"
+            ,"empBank":"${requestScope.emp.empBank}"
+            ,"empDeptId":${requestScope.emp.empDeptId}
+            ,"empAddress":"${requestScope.emp.empAddress}"
+            ,"empCardno":"${requestScope.emp.empCardno}"
+            ,"empNation":"${requestScope.emp.empNation}"
+            ,"empQQ":"${requestScope.emp.empQQ}"
+            ,"empEmail":"${requestScope.emp.empEmail}"
+            ,"empAlipay":"${requestScope.emp.empAlipay}"
+            ,"empRemark":"${requestScope.emp.empRemark}"
+            ,"empUniversity":"${requestScope.emdutvo.empUniversity}"
+            ,"empDegree":"${requestScope.emdutvo.empDegree}"
+            ,"empEduMajor":"${requestScope.emdutvo.empEduMajor}"
+        });
+
+        //自定义验证规则
+        /*form.verify({
+            nikename: function(value){
+                if(value.length < 5){
+                    return '昵称至少得5个字符啊';
+                }
+            }
+            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+            ,repass: function(value){
+                if($('#L_pass').val()!=$('#L_repass').val()){
+                    return '两次密码不一致';
+                }
+            }
+        });*/
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            layer.msg("成功添加");
-            return true;
+            $.ajax({
+                url:'${pageContext.request.contextPath}/emp/update',
+                type:'post',
+                data:data.field,
+                dataType:'json',
+                success:function (data){
+                    layer.alert("修改成功", {icon: 6},function(){
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        setTimeout(function () {
+                            window.parent.location.reload(); //修改成功后刷新父界面
+                        })
+                    });
+                }
+            });
         });
     });
+
+    //fuzhi();
     //Demo
     layui.use('laydate', function(){
         var laydate = layui.laydate;

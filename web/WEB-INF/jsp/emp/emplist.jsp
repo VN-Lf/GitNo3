@@ -48,7 +48,7 @@
                     }
                 },{field: 'empId', title: '密码', width:100,
                     templet:function (row){
-                        return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
+                        return "<a class=\"layui-btn layui-btn-warm layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
                     }
                 },{field: 'empId', title: '操作', width:110,
                     templet:function (row){
@@ -128,23 +128,19 @@
             "        </div>";
     }
 
-    function chonZhi(id) {
-        alert("重置用户id："+id);
-    }
-
     function chaoZuo(id) {
         return "<div class=\"layui-btn-group\">\n" +
             "  <button onclick='updateUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
             "    <i class=\"layui-icon\">&#xe642;</i>\n" +
             "  </button>\n" +
-            "  <button onclick='delUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
+            "  <button onclick='delUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-danger layui-btn-sm\">\n" +
             "    <i class=\"layui-icon\">&#xe640;</i>\n" +
             "  </button>\n" +
             "</div>"
     }
 
     function updateUser(id) {
-        window.open("${pageContext.request.contextPath}/to/empup?id="+id);
+        window.open("${pageContext.request.contextPath}/emp/empup?id="+id);
     }
 
     function delUser(id) {
@@ -162,12 +158,31 @@
             xmlHttp.send();
         }
     }
+
+
+    function chonZhi(id) {
+        if (confirm("重置密码后为123456 确认吗？")) {
+            var xmlHttp = createXMLHttp();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    if (xmlHttp.responseText == "true") {
+                        alert("重置成功");
+                        location.reload();
+                    }
+                }
+            }
+            var url = "${pageContext.request.contextPath}/emp/czpwd?sid="+id;
+            xmlHttp.open("post", url, true);
+            xmlHttp.send();
+        }
+    }
 </script>
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="isDele">批量删除</button>
         <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增员工</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
+        <button class="layui-btn layui-btn-sm"><a style="color: white" href="${pageContext.request.contextPath}/to/empadd">本页新增</a></button>
     </div>
 </script>
 </body>
