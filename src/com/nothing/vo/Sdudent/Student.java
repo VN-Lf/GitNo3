@@ -21,25 +21,29 @@ public class Student{
     private Date stuBirthday;
     private String stuPhone;
     private String  stuAddr;//地址
-    private Integer stuCla;
+    private Integer stuCla;//班级号 对应 ClassVo中的classno
+    private Integer stuFloor;//楼栋编号
     private  Integer stuHouse; //寝室标号
     private  Date  stuEnterTime;//入学时间
     private String interTecher;//介绍老师
     private Integer stuStu;
     private String stuNation;//民族
     private String  stuNatives;//籍贯
-    private String residence;
-    private Integer cardId;
+    private Integer residence; //户口性质 1 农户 2 非农
+    private String cardId;//身份证
     private String stuProfessional;//专业
     private String stuProLevel;//专业类别
-    private  String studyType;
+    private String studyType;
 
     private String audition;//面试人
     private Integer isvocational;//是否中专
+    private String vocationalsch;//中专学校名称
+    private String vocationalflag;//中专学籍
+    private String enrollno;//省录取号
     private Integer qkMoney;   //欠款金额
     private Double score;//入学成绩
     private String dibao;//低保
-    private String sourceType;
+    private String sourceType;//生源类型
     private String danbaoren;//担保人
     private String soldier;//兵役
     private String baominghao;//报名号
@@ -51,6 +55,38 @@ public class Student{
     private String isComputer;
     private String collar;
     private String zhuxuejin;
+
+    public String getVocationalsch() {
+        return vocationalsch;
+    }
+
+    public void setVocationalsch(String vocationalsch) {
+        this.vocationalsch = vocationalsch;
+    }
+
+    public String getVocationalflag() {
+        return vocationalflag;
+    }
+
+    public void setVocationalflag(String vocationalflag) {
+        this.vocationalflag = vocationalflag;
+    }
+
+    public String getEnrollno() {
+        return enrollno;
+    }
+
+    public void setEnrollno(String enrollno) {
+        this.enrollno = enrollno;
+    }
+
+    public Integer getStuFloor() {
+        return stuFloor;
+    }
+
+    public void setStuFloor(Integer stuFloor) {
+        this.stuFloor = stuFloor;
+    }
 
     public Integer getStudId() {
         return studId;
@@ -180,20 +216,12 @@ public class Student{
         this.stuNatives = stuNatives;
     }
 
-    public String getResidence() {
+    public Integer getResidence() {
         return residence;
     }
 
-    public void setResidence(String residence) {
+    public void setResidence(Integer residence) {
         this.residence = residence;
-    }
-
-    public Integer getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(Integer cardId) {
-        this.cardId = cardId;
     }
 
     public String getStuProfessional() {
@@ -220,6 +248,13 @@ public class Student{
         this.studyType = studyType;
     }
 
+    public String getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
 
     public String getAudition() {
         return audition;

@@ -25,7 +25,7 @@ public class BaseDao {
      * @param hql
      * @return
      */
-    public List listByHql(String hql) {
+    public List listByHql(String hql){
         Session session = getSession();
         List list = session.createQuery(hql).list();
         session.close();
@@ -44,7 +44,7 @@ public class BaseDao {
     }
 
     //SQL查询列表（连接多个表，筛选列时）
-    public List listBySQL(String sql) {
+    public List listBySQL(String sql){
         Session session = getSession();
         SQLQuery sqlquery = session.createSQLQuery(sql);
         sqlquery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);//把结果变形为 List<Map>
@@ -106,7 +106,7 @@ public class BaseDao {
      * @param id
      * @return
      */
-    public Object getObject(Class clazz, Integer id) {
+    public Object getObject(Class clazz, Integer id){
         Session session = getSession();
         Object obj=  session.get(clazz, id);
         session.close();

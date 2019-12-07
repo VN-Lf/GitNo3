@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
  *转跳页面总控制器 登录判断
  */
 @Controller
-@RequestMapping("to")
+@RequestMapping("/to")
 public class GoPageController {
     //前往主界面
     @RequestMapping("/home")

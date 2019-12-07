@@ -34,7 +34,7 @@ public class Emp{
     private  Date empFireday;
     private String empLogPsw;
     private Integer  empLoginStatus; //登录状态
-    private Integer  empPostId;
+    private Integer  empPostId;//职务
 
 
     public int getEmpId() {
