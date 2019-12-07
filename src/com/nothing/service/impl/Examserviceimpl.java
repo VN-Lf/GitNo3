@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import java.util.List;
 @Service
 public class Examserviceimpl implements Examservice{
+    //服务层
     @Resource
     BaseDao baseDao;
     @Override
@@ -17,8 +18,35 @@ public class Examserviceimpl implements Examservice{
     }
 
     @Override
-    public int selectcount() {
-        int count= baseDao.selectcount("select count(aduitModelid) from aduitModel");
+    public List empexamlist(String sql) {
+        List list = baseDao.listBySQL(sql);
+        return list;
+    }
+
+    @Override
+    public int selectcount(String sql) {
+        int count= baseDao.selectcount(sql);
         return count;
+    }
+
+    @Override
+    public void updateexam(Object obj) {
+        baseDao.updObject(obj);
+    }
+
+    @Override
+    public void deleteexam(Object obj) {
+        baseDao.delObject(obj);
+    }
+
+    @Override
+    public void alldelete(String sql) {
+        baseDao.executeSQL(sql);
+    }
+
+    @Override
+    public List examdate(String sql) {
+        List list = baseDao.listBySQL(sql);
+        return list;
     }
 }
