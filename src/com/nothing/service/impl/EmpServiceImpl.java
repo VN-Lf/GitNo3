@@ -59,4 +59,14 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         delObject(psot);
         delObject(edu);*/
     }
+
+    public List selEmpEducation(int id) {
+        List list = this.listBySQL("select * from  empeducation where empId=" + id);
+        return list;
+    }
+
+    public int getEmpEducationCount(int id) {
+        int con = this.selTotalRow("select count(empEduId) from empeducation where empId=" + id);
+        return con;
+    }
 }

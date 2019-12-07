@@ -16,14 +16,14 @@
         }
     </style>
 </head>
-<body class="easyui-layout">
+<body id="main" class="easyui-layout">
     <div data-options="region:'center',split:true">
         <div style="width: 99%;margin: 0 auto">
             <table id="demo" lay-filter="test"></table>
         </div>
     </div>
-    <div data-options="region:'east',title:'附加栏',collapsed:true">
-
+    <div id="east" data-options="region:'east',title:'其他信息',collapsed:true" style="width: 900%;">
+        <h1 style="text-align: center" >There's nothing here</h1>
     </div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
@@ -134,6 +134,9 @@
             "  <button onclick='delUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
             "    <i class=\"layui-icon\">&#xe640;</i>\n" +
             "  </button>\n" +
+            "  <button onclick='ortherInf("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
+            "    <i class=\"layui-icon\">&#xe615;</i>\n" +
+            "  </button>\n" +
             "</div>"
     }
 
@@ -143,6 +146,15 @@
 
     function delUser(id) {
         alert("删除用户id："+id);
+    }
+
+    //查看其他信息
+    function ortherInf(empid) {
+        $('#main').layout('expand','east');
+        load();
+    }
+    function load() {
+        document.getElementById("east").innerHTML =  '<object type="text/html" data="empEdu" width="100%" height="100%"></object>';
     }
 </script>
 

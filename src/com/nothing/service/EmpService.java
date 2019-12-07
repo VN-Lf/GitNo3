@@ -11,4 +11,7 @@ public interface EmpService {
     int selEmpCont();
     void addEmp(Emp emp, EmpEducation empEducation, Post post);
     void delete(String ids);
+    List selEmpEducation(int var1);
+
+    int getEmpEducationCount(int var1);
 }
