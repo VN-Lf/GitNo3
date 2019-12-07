@@ -17,9 +17,6 @@ public class BaseDao {
     @Resource
     private SessionFactory sessionFactory;
 
-    private Session getSession() {
-        return sessionFactory.openSession();
-    }
 
     /**
      * 查询列表(查询一个表的所有数据)
@@ -28,41 +25,46 @@ public class BaseDao {
      * @return
      */
     public List listByHql(String hql) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         List list = session.createQuery(hql).list();
+        session.flush();
         session.close();
         return list;
     }
 
     //HQL分页  (查一个表的所有字段分页)
     public List pageByHql(String hql, int currPage, int pageSize) {
-        Session session = getSession();
+        Session session =sessionFactory.openSession();
         Query query = session.createQuery(hql);
         query.setFirstResult((currPage - 1) * pageSize);//开始行数 0  5  10
         query.setMaxResults(pageSize);//每页行数(每次查几行)   5  5   5
         List list = query.list();
+        session.flush();
         session.close();
         return list;
     }
 
     //SQL查询列表（连接多个表，筛选列时）
     public List listBySQL(String sql) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         SQLQuery sqlquery = session.createSQLQuery(sql);
         sqlquery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);//把结果变形为 List<Map>
         List list = sqlquery.list();
+        session.flush();
         session.close();
         return list;
     }
 
+
     //SQL查询分页列表（一个表或连接多个表，筛选列时）
     public List pageBySQL(String sql, int currPage, int pageSize) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         SQLQuery sqlquery =session .createSQLQuery(sql);
         sqlquery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);//把结果变形为 List<Map>
         sqlquery.setFirstResult((currPage - 1) * pageSize);//开始行数 0  5  10
         sqlquery.setMaxResults(pageSize);//每页行数(每次查几行)   5  5   5
         List list = sqlquery.list();
+        session.flush();
         session.close();
         return list;
     }
@@ -71,9 +73,10 @@ public class BaseDao {
      * 三合一SQL执行(增删改)
      */
     public void executeSQL(String sql) {
-        Session session =  getSession();
+        Session session =  sessionFactory.openSession();
         SQLQuery sqlquery =session.createSQLQuery(sql);
         sqlquery.executeUpdate();
+        session.flush();
         session.close();
     }
 
@@ -82,9 +85,10 @@ public class BaseDao {
      */
     //select count(*) from newemp
     public int selTotalRow(String sql) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         SQLQuery sqlquery = session.createSQLQuery(sql);
          int i = Integer.parseInt(sqlquery.uniqueResult()+"");
+        session.flush();
          session.close();
         return i;
     }
@@ -95,7 +99,7 @@ public class BaseDao {
      * @param obj
      */
     public void addObject(Object obj) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         session.save(obj);
         session.flush();
         session.close();
@@ -109,7 +113,7 @@ public class BaseDao {
      * @return
      */
     public Object getObject(Class clazz, Integer id) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         Object obj=  session.get(clazz, id);
         session.close();
         return obj;
@@ -121,7 +125,7 @@ public class BaseDao {
      * @param obj
      */
     public void updObject(Object obj) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         session.update(obj);
         session.flush();
         session.close();
@@ -133,7 +137,7 @@ public class BaseDao {
      * @param obj
      */
     public void delObject(Object obj) {
-        Session session = getSession();
+        Session session = sessionFactory.openSession();
         session.delete(obj);
         session.flush();
         session.close();
@@ -141,10 +145,10 @@ public class BaseDao {
 
 
     public int selectcount(String sql) {
-        Session session =  getSession();
+        Session session =  sessionFactory.openSession();
         SQLQuery sqlquery =session.createSQLQuery(sql);
         int  i =Integer.parseInt(sqlquery.uniqueResult()+"");
-
+        session.flush();
         session.close();
         return i;
     }

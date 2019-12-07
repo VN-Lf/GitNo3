@@ -14,11 +14,10 @@ public class aduitLog {
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
     private Integer aduitLogid;
     private String aduitModelid;   //考核指标
-    private Integer empid;     //考核分数
-    private Integer scores;     //考核分数
+    private Integer empid;     //员工
     private Date auditDate;     //考核时间
-    private String remark;      //说明
-    private String auditPerson;      //录入人员 从session中获取
+    private String auditPerson;      //录入人员
+
 
     public Integer getAduitLogid() {
         return aduitLogid;
@@ -44,28 +43,12 @@ public class aduitLog {
         this.empid = empid;
     }
 
-    public Integer getScores() {
-        return scores;
-    }
-
-    public void setScores(Integer scores) {
-        this.scores = scores;
-    }
-
     public Date getAuditDate() {
         return auditDate;
     }
 
     public void setAuditDate(Date auditDate) {
         this.auditDate = auditDate;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 
     public String getAuditPerson() {
