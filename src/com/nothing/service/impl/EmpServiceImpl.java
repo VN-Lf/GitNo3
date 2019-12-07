@@ -27,7 +27,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     public void addEmp(Emp emp, EmpEducation empEducation, Post post) {
         emp.setEmpLoginStatus(1);//设置登录状态默认 1
         addObject(emp);
-        List list = listBySQL2("select empId from emp order by empId desc limit 1");
+        List list = listBySQL("select empId from emp order by empId desc limit 1");
         System.out.println("list:"+list);
         int eid = (int)list.get(0);
         System.out.println("新增员工id:"+eid);
