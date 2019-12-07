@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+//考核控制器
 @Controller
 @RequestMapping("/exam")
 public class ExamController {

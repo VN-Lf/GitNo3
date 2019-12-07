@@ -3,6 +3,7 @@ package com.nothing.service;
 import java.util.List;
 
 public interface Examservice {
+    //服务方法
     List examlist(String sql);
 
     List empexamlist(String sql);

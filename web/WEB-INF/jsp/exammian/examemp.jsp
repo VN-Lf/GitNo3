@@ -9,7 +9,7 @@
 <%@ include file="source.jsp"%>
 <head>
     <meta charset="utf-8">
-    <title>table模块快速使用</title>
+    <title>员工考核</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     <script src="<%=request.getContextPath()%>/jquery.js"></script>
 </head>

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- *考核巡查
+ *考核巡查vo
  */
 @Entity
 @Table(name = "aduitLog")

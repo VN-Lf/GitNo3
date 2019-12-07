@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import java.util.List;
 @Service
 public class Examserviceimpl implements Examservice{
+    //服务层
     @Resource
     BaseDao baseDao;
     @Override
