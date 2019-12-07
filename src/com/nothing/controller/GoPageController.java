@@ -1,9 +1,11 @@
 package com.nothing.controller;
 
 
+import com.nothing.service.EmpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -37,5 +39,21 @@ public class GoPageController {
     public void End(HttpSession session){
         session.invalidate();
         System.out.println(session.getAttribute("empId"));
+    }
+    //前往员工资料
+    @RequestMapping("/toempzl")
+    public String toEmpzl(){
+        return "emp/emplist";
+    }
+    //前往添加员工页
+    @RequestMapping("/empadd")
+    public String toEmpAdd(){
+        return "emp/empadd";
+    }
+    //前往员工修改页
+    @RequestMapping("/empup")
+    public String toEmpUpdate(String id){
+        System.out.println("id:"+id);
+        return "emp/empupdate";
     }
 }
