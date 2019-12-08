@@ -22,7 +22,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("emp")
-public class empController {
+public class EmpController {
     @Resource
     private EmpService empService;
 
