@@ -25,7 +25,7 @@
         table.render({
             elem: '#edu'
             ,height: 312
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,toolbar: '#toolbarEdu' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/empEducationList?eid='+4 //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
@@ -34,7 +34,11 @@
                 ,{field: 'empDegree', title: '文凭', width:60}
                 ,{field: 'empEucStartDay', title: '入校时间', width:100}
                 ,{field: 'empEucEndDay', title: '毕业时间', width:100}
-                ,{field: 'empEucRemark', title: '备注', width: 80}
+                ,{field: 'empId', title: '操作', width: 100, templet:
+                     function (row){
+                         return chaoZuo(row.empId);
+                    }
+                }
             ]]
         });
 
@@ -81,5 +85,23 @@
             //console.log(data.othis); //得到美化后的DOM对象
         });
     });
+    //生成操作按钮
+    function chaoZuo(id) {
+        return "<div class=\"layui-btn-group\">\n" +
+            "  <button onclick='updateUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
+            "    <i class=\"layui-icon\">&#xe642;</i>\n" +
+            "  </button>\n" +
+            "  <button onclick='delUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
+            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+            "  </button>\n"
+            "</div>"
+    }
+</script>
+
+<script type="text/html" id="toolbarEdu">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增记录</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
+    </div>
 </script>
 </html>
