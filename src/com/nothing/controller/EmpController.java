@@ -53,4 +53,18 @@ public class EmpController {
         empService.delete(id);
         return "成功";
     }
+
+    @RequestMapping({"/empEducationList"})
+    @ResponseBody
+    public JSONObject getEducationList(String eid) {
+        int id = Integer.parseInt(eid);
+        List eduList = this.empService.selEmpEducation(id);
+        this.empService.getEmpEducationCount(id);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("data", eduList);
+        System.out.println(jsonObject.toJSONString());
+        return jsonObject;
+    }
 }

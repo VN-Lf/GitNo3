@@ -56,4 +56,14 @@ public class GoPageController {
         System.out.println("id:"+id);
         return "emp/empupdate";
     }
+    //前往教育经历
+    @RequestMapping({"/empEdu"})
+    public String toEmpEducation() {
+        return "emp/educationList";
+    }
+    //报修列表
+    @RequestMapping("/toRepairListPage")
+    public String toRepair(){
+        return "houqin/repairList";
+    }
 }
