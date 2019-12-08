@@ -42,16 +42,32 @@
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
     <div title="Base" id="caidan" fit="true" class="easyui-accordion">
-        <div title="个人中心" style="padding:10px;">
+        <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a>效果预览</a>
+                    <a style="color: aquamarine">我的邮件</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>效果预览</a>
+                    <a style="color: aquamarine">员工请假</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">学生请假</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">考勤管理</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">离职申请</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
+                </li>
+            </ul>
+        </div>
+        <div title="通知面板" style="overflow:auto;padding:0;">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: aquamarine">公告发布</a>
                 </li>
             </ul>
         </div>
@@ -61,28 +77,138 @@
                     <a>员工资料</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a>效果预览</a>
+                    <a style="color: aquamarine">周报管理</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: aquamarine">周报审阅-上级可看</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>效果预览</a>
+                    <a style="color: aquamarine">谈心记录</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>效果预览</a>
+                    <a style="color: aquamarine">员工请假管理-上级可看</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>效果预览</a>
+                    <a style="color: aquamarine">考勤管理-上级可看</a>
+                </li>
+            </ul>
+        </div>
+        <div title="学员管理" style="list-style-type:none;padding: 0">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/home" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>学生资料</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">学生请假</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">考试成绩</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">答辩成绩</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">班级分配</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/dormitory/todormitory" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>宿舍管理</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Building/toys" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>楼栋管理</a>
+                </li>
+            </ul>
+        </div>
+        <div title="教务管理" style="overflow:auto;padding:0;">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">课程类别</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">课程管理</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">试讲培训</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">值班管理</a>
+                </li>
+            </ul>
+        </div>
+        <div title="后勤管理" style="overflow:auto;padding:0;">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toRepairListPage" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>报修申请</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">维修管理</a>
                 </li>
             </ul>
         </div>
         <div title="考核管理" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/examlist" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>考核指标</a>
+                    <a>考核指标（日常考核）</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">考核录入</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">考评内容</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: red">教师考评*</a>
                 </li>
             </ul>
         </div>
-        <div title="标题3" style="padding:10px;">
-
+        <div title="财务管理" style="list-style-type:none;padding: 0">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="" class="cs-navi-tab">
+                    <a style="color: aquamarine">学费管理</a>
+                </li>
+            </ul>
+        </div>
+        <div title="问题反馈" style="list-style-type:none;padding: 0">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/toexam" class="cs-navi-tab">
+                    <a>问题反馈</a>
+                </li>
+            </ul>
+        </div>
+        <div title="文件管理" style="overflow:auto;padding:0;">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: aquamarine">资料文档-文件上传</a>
+                </li>
+            </ul>
+        </div>
+        <div title="系统报表" style="overflow:auto;padding:0;">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">日常考核</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: aquamarine">员工请假</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: aquamarine">学生请假</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">未打卡说明</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: aquamarine">宿舍统计报表</a>
+                </li>
+            </ul>
+        </div>
+        <div title="系统设置" style="overflow:auto;padding:0;">
+            <ul style="list-style-type:none;padding: 0">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: aquamarine">流程</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: aquamarine">权限管理</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

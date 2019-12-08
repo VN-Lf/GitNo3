@@ -13,7 +13,6 @@
     <script src="http://localhost:8888/jquery.js"></script>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/to/empadd">本页新增员工</a>
 <div style="width: 90%;margin: 0 auto">
     <table id="demo" lay-filter="test"></table>
 </div>
@@ -140,7 +139,7 @@
     }
 
     function updateUser(id) {
-        window.open("${pageContext.request.contextPath}/emp/empup?id="+id);
+        window.location.href="${pageContext.request.contextPath}/emp/empup?id="+id;
     }
 
     function delUser(id) {

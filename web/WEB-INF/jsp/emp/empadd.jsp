@@ -12,9 +12,12 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
 </head>
 <body>
-<form class="layui-form" action="${pageContext.request.contextPath}/emp/empadd" method="post">
+<div style="height: 20px;margin-top: 10px;margin-left: 15px">
+    <a href="${pageContext.request.contextPath}/to/toempzl">◀ 返回</a>
     <input type="button" value="赋值" onclick="fuzhi()">
-    <div style="width: 56%;height: auto;margin-top: 1%">
+</div>
+<div style="width: 56%;height: auto;margin-top: 1%">
+    <form class="layui-form" action="${pageContext.request.contextPath}/emp/empadd" method="post">
         <div style="width:50%;height:100%;float: left">
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名*</label>
@@ -185,8 +188,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
@@ -209,7 +212,6 @@
     }
     layui.use('form', function(){
         var form = layui.form;
-
         //监听提交
         form.on('submit(formDemo)', function(data){
             layer.msg("成功添加");

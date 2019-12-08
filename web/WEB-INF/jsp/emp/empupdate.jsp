@@ -14,8 +14,11 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     </head>
 <body>
-<form class="layui-form" lay-filter="formTest">
-    <div style="width: 56%;height: auto;margin-top: 1%">
+<div style="height: 20px;margin-top: 10px;margin-left: 15px">
+    <a href="${pageContext.request.contextPath}/to/toempzl">◀ 返回</a>
+</div>
+<div style="width: 56%;height: auto;margin-top: 1%">
+        <form class="layui-form" lay-filter="formTest" action="${pageContext.request.contextPath}/emp/update" method="post">
         <div style="width:50%;height:100%;float: left">
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名*</label>
@@ -182,9 +185,11 @@
             <input type="hidden" name="empId">
             <input type="hidden" name="postId">
             <input type="hidden" name="empEduId">
+            <input type="hidden" name="empLogPsw">
+            <input type="hidden" name="empLoginStatus">
         </div>
+        </form>
     </div>
-</form>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     layui.use(['form','layer'], function(){
@@ -202,7 +207,7 @@
             ,"birthday":"${requestScope.emp.empBirthday}"
             ,"empPhone":"${requestScope.emp.empPhone}"
             ,"empWeixin":${requestScope.emp.empWeixin}
-            ,"empFireday":"${requestScope.emp.empFireday}"
+            ,"ruzhitime":"${requestScope.emp.empFireday}"
             ,"empMarried":"${requestScope.emp.empMarried}"
             ,"empBankaccountName":"${requestScope.emp.empBankaccountName}"
             ,"empBankNumber":"${requestScope.emp.empBankNumber}"
@@ -215,6 +220,8 @@
             ,"empEmail":"${requestScope.emp.empEmail}"
             ,"empAlipay":"${requestScope.emp.empAlipay}"
             ,"empRemark":"${requestScope.emp.empRemark}"
+            ,"empLogPsw":"${requestScope.emp.empLogPsw}"
+            ,"empLoginStatus":${requestScope.emp.empLoginStatus}
             ,"empUniversity":"${requestScope.emdutvo.empUniversity}"
             ,"empDegree":"${requestScope.emdutvo.empDegree}"
             ,"empEduMajor":"${requestScope.emdutvo.empEduMajor}"
@@ -234,11 +241,17 @@
                 }
             }
         });*/
+        var form = layui.form;
 
         //监听提交
         form.on('submit(formDemo)', function(data){
+            layer.msg("修改成功");
+            return true;
+        });
+        //监听提交
+        /*form.on('submit(formDemo)', function(data){
             $.ajax({
-                url:'${pageContext.request.contextPath}/emp/update',
+                url:'',
                 type:'post',
                 data:data.field,
                 dataType:'json',
@@ -254,7 +267,7 @@
                     });
                 }
             });
-        });
+        });*/
     });
 
     //fuzhi();
