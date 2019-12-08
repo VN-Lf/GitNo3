@@ -3,7 +3,6 @@ package com.nothing.service;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.EmpEducation;
 import com.nothing.vo.emp.Post;
-import org.jboss.logging.annotations.Pos;
 
 import java.util.List;
 

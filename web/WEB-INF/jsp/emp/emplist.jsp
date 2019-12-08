@@ -96,7 +96,7 @@
                 alert("打开："+data.value);
             }else if(big.checked == false){
                 alert("关闭"+data.value);
-            }
+            }//封禁按钮待完善
             //console.log(data.value); //复选框value值，也可以通过data.elem.value得到
             //console.log(data.othis); //得到美化后的DOM对象
         });

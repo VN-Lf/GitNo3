@@ -12,9 +12,6 @@
 <head>
     <title>修改员工信息</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
-    <%//Emp emp = (Emp) request.getAttribute("empvo");%>
-    <%//Post post = (Post)request.getAttribute("postvo");%>
-    <%//EmpEducation emd = (EmpEducation)request.getAttribute("emdvo");%>
     </head>
 <body>
 <form class="layui-form" lay-filter="formTest">

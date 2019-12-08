@@ -190,6 +190,7 @@
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+    //带*为必填
     function fuzhi() {
         document.getElementById("xm").value="姓名";
         document.getElementById("zw").value="副主任";
