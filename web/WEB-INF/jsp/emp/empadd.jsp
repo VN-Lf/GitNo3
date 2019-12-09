@@ -13,7 +13,7 @@
 </head>
 <body>
 <div style="height: 20px;margin-top: 10px;margin-left: 15px">
-    <a href="${pageContext.request.contextPath}/to/toempzl">◀ 返回</a>
+    <a href="${pageContext.request.contextPath}/to/toempzl">◀ 返回 </a>
     <input type="button" value="赋值" onclick="fuzhi()">
 </div>
 <div style="width: 56%;height: auto;margin-top: 1%">
