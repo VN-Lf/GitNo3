@@ -65,7 +65,7 @@ public class EmpController {
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
         jsonObject.put("data", eduList);
-        //System.out.println(jsonObject.toJSONString());
+        System.out.println(jsonObject.toJSONString());
         return jsonObject;
     }
     @RequestMapping({"/eduUp"})
@@ -73,7 +73,6 @@ public class EmpController {
         empService.eduUp(edu);
         req.removeAttribute("edu");
     }
-
 
     @RequestMapping({"/eduDel"})
     public void eduDel(EmpEducation edu) {

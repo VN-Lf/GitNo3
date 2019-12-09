@@ -20,10 +20,15 @@ public class GoPageController {
     EmpService es;
     //前往主界面
     @RequestMapping("/home")
-    public String toHome(HttpSession session){
+    public String toHome(HttpSession session,String color) {
         if(session.getAttribute("empId") == null){
             return "login";
         }else {
+            if(color == null || "null".equals(color)){
+                session.setAttribute("color","gray");
+            }else {
+                session.setAttribute("color",color);
+            }
             return "home";
         }
     }
@@ -54,11 +59,26 @@ public class GoPageController {
     public String toEmpAdd(){
         return "emp/empadd";
     }
+    //前往员工资料
+    @RequestMapping("/tonotice")
+    public String toNotice(){
+        return "emp/noticelist";
+    }
     //前往员工修改页
     @RequestMapping("/empup")
     public String toEmpUpdate(String id){
         System.out.println("id:"+id);
         return "emp/empupdate";
+    }
+    //前往教育经历
+    @RequestMapping({"/empEdu"})
+    public String toEmpEducation() {
+        return "emp/educationList";
+    }
+    //报修列表
+    @RequestMapping("/toRepairListPage")
+    public String toRepair(){
+        return "houqin/repairList";
     }
     //前往教育经历
     @RequestMapping({"/empEdu"})
@@ -74,11 +94,5 @@ public class GoPageController {
         EmpEducation edu = es.getEdu(id);
         req.setAttribute("edu",edu);
         return "emp/eduUp";
-    }
-
-    //报修列表
-    @RequestMapping("/toRepairListPage")
-    public String toRepair(){
-        return "houqin/repairList";
     }
 }

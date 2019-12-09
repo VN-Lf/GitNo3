@@ -57,7 +57,7 @@
                     templet:function (row){
                         return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
                     }
-                },{field: 'empId', title: '操作', width:150,
+                },,{field: 'empId', title: '操作', width:150,
                     templet:function (row){
                         return chaoZuo(row.empId);
                     }
@@ -148,6 +148,23 @@
         alert("删除用户id："+id);
     }
 
+    function chonZhi(id) {
+        if (confirm("重置密码后为123456 确认吗？")) {
+            var xmlHttp = createXMLHttp();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    if (xmlHttp.responseText == "true") {
+                        alert("重置成功");
+                        location.reload();
+                    }
+                }
+            }
+            var url = "${pageContext.request.contextPath}/emp/czpwd?sid="+id;
+            xmlHttp.open("post", url, true);
+            xmlHttp.send();
+        }
+    }
+
     //查看其他信息
     function ortherInf(empid) {
         $('#main').layout('expand','east');
@@ -161,8 +178,9 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="isDele">批量删除</button>
         <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增员工</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
+        <button class="layui-btn layui-btn-sm"><a style="color: white" href="${pageContext.request.contextPath}/to/empadd">本页新增</a></button>
     </div>
 </script>
 </body>
