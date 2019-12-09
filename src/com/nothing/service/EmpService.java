@@ -16,4 +16,5 @@ public interface EmpService {
     EmpEducation getEdu(int id);
     void eduUp(EmpEducation edu);
     void eduDel(EmpEducation edu);
+
 }

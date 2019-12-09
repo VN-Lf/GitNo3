@@ -75,6 +75,7 @@ public class GoPageController {
         req.setAttribute("edu",edu);
         return "emp/eduUp";
     }
+
     //报修列表
     @RequestMapping("/toRepairListPage")
     public String toRepair(){

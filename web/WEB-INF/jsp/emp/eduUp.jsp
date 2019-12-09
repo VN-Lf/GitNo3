@@ -76,7 +76,6 @@
                 ,"empEucStartDay":"${edu.empEucStartDay}"
                 ,"empEucEndDay":"${edu.empEucEndDay}"
                 ,"empEucRemark":"${edu.empEucRemark}"
-
             })
         }
 

@@ -74,6 +74,7 @@ public class EmpController {
         req.removeAttribute("edu");
     }
 
+
     @RequestMapping({"/eduDel"})
     public void eduDel(EmpEducation edu) {
         empService.eduDel(edu);

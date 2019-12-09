@@ -154,6 +154,7 @@
         load(empid);
     }
     function load(empid) {
+
         document.getElementById("east").innerHTML =  '<object type="text/html" data="empEdu?id='+empid+'" width="100%" height="100%"></object>';
     }
 </script>

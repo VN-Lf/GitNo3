@@ -77,6 +77,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         return education;
     }
 
+
     @Override
     public void eduUp(EmpEducation edu) {
         this.updObject(edu);
