@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,7 +65,17 @@ public class EmpController {
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
         jsonObject.put("data", eduList);
-        System.out.println(jsonObject.toJSONString());
+        //System.out.println(jsonObject.toJSONString());
         return jsonObject;
+    }
+    @RequestMapping({"/eduUp"})
+    public void eduUp(EmpEducation edu, HttpServletRequest req) {
+        empService.eduUp(edu);
+        req.removeAttribute("edu");
+    }
+
+    @RequestMapping({"/eduDel"})
+    public void eduDel(EmpEducation edu) {
+        empService.eduDel(edu);
     }
 }

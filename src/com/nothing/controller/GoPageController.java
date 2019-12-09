@@ -2,10 +2,12 @@ package com.nothing.controller;
 
 
 import com.nothing.service.EmpService;
+import com.nothing.vo.emp.EmpEducation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("to")
 public class GoPageController {
+    @Resource
+    EmpService es;
     //前往主界面
     @RequestMapping("/home")
     public String toHome(HttpSession session){
@@ -58,8 +62,18 @@ public class GoPageController {
     }
     //前往教育经历
     @RequestMapping({"/empEdu"})
-    public String toEmpEducation() {
+    public String toEmpEducation(String id, HttpServletRequest request) {
+        int eid = Integer.parseInt(id);
+        request.setAttribute("currActEmpId",eid);
         return "emp/educationList";
+    }
+    //前往教育经历修改
+    @RequestMapping({"/eduUpPage"})
+    public String eduUp(String eid, HttpServletRequest req) {
+        int id = Integer.parseInt(eid);
+        EmpEducation edu = es.getEdu(id);
+        req.setAttribute("edu",edu);
+        return "emp/eduUp";
     }
     //报修列表
     @RequestMapping("/toRepairListPage")

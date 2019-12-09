@@ -69,4 +69,21 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         int con = this.selTotalRow("select count(empEduId) from empeducation where empId=" + id);
         return con;
     }
+
+    @Override
+    public EmpEducation getEdu(int id) {
+        EmpEducation education  = (EmpEducation) this.getObject(EmpEducation.class, id);
+        System.out.println(education.toString());
+        return education;
+    }
+
+    @Override
+    public void eduUp(EmpEducation edu) {
+        this.updObject(edu);
+    }
+
+    @Override
+    public void eduDel(EmpEducation edu) {
+        this.delObject(edu);
+    }
 }

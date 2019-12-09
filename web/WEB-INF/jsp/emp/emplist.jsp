@@ -38,26 +38,26 @@
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox'}
-                ,{field: 'empId', title: '编号', width:75, sort: true}
-                ,{field: 'empName', title: '姓名', width:90}
-                ,{field: 'deptName', title: '部门', width:90}
-                ,{field: 'postName', title: '职务', width:90}
-                ,{field: 'empSex', title: '性别', width: 65}
-                ,{field: 'empPhone', title: '手机号码', width:123}
-                ,{field: 'empAddress', title: '家庭地址', width:150}
-                ,{field: 'empLoginStatus', title: '当前状态', width:90,
+                ,{field: 'empId', title: '编号', width:73, sort: true}
+                ,{field: 'empName', title: '姓名', width:87}
+                ,{field: 'deptName', title: '部门', width:87}
+                ,{field: 'postName', title: '职务', width:87}
+                ,{field: 'empSex', title: '性别', width: 63}
+                ,{field: 'empPhone', title: '手机号码', width:122}
+                ,{field: 'empAddress', title: '家庭地址', width:140}
+                ,{field: 'empLoginStatus', title: '当前状态', width:87,
                     templet:function (row){
                         return loginStatus(row.empLoginStatus);
                     }
-                },{field: 'empId', title: '是否禁用', width:90,
+                },{field: 'empId', title: '是否禁用', width:87,
                     templet:function (row){
                         return onclikId(row.empId);
                     }
-                },{field: 'empId', title: '密码', width:90,
+                },{field: 'empId', title: '密码', width:88,
                     templet:function (row){
                         return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
                     }
-                },,{field: 'empId', title: '操作', width:100,
+                },{field: 'empId', title: '操作', width:150,
                     templet:function (row){
                         return chaoZuo(row.empId);
                     }
@@ -151,10 +151,10 @@
     //查看其他信息
     function ortherInf(empid) {
         $('#main').layout('expand','east');
-        load();
+        load(empid);
     }
-    function load() {
-        document.getElementById("east").innerHTML =  '<object type="text/html" data="empEdu" width="100%" height="100%"></object>';
+    function load(empid) {
+        document.getElementById("east").innerHTML =  '<object type="text/html" data="empEdu?id='+empid+'" width="100%" height="100%"></object>';
     }
 </script>
 
