@@ -19,6 +19,12 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
+    public List selNoticeAll() {
+        List list = listBySQL("select * from notice");
+        return list;
+    }
+
+    @Override
     public int selEmpCont() {
         int con = selTotalRow("select count(empId) from emp");
         return con;
@@ -38,7 +44,6 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         post.setEmpId(eid);
         addObject(post);
     }
-
 
     @Override
     public void delete(String ids){

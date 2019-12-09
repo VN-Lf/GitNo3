@@ -39,6 +39,15 @@ public class Emp2Controller {
         return jsonObject;
     }
 
+    @RequestMapping("/notlist")
+    @ResponseBody
+    public JSONObject NoticeList(){
+        List notlist = empService.selNoticeAll();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", notlist);
+        return jsonObject;
+    }
+
     @RequestMapping("/empadd")
     public void EmpList(Emp emp, EmpEducation empEducation, Post post, String ruzhitime, String birthday) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

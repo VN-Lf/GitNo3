@@ -62,4 +62,9 @@ public class GoPageController {
     public String toEmpAdd(){
         return "emp/empadd";
     }
+    //前往员工资料
+    @RequestMapping("/tonotice")
+    public String toNotice(){
+        return "emp/noticelist";
+    }
 }

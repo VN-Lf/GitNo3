@@ -70,7 +70,7 @@
         </div>
         <div title="通知面板" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/tonotice" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a style="color: aquamarine">公告发布</a>
                 </li>
             </ul>

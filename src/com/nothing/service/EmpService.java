@@ -8,6 +8,7 @@ import java.util.List;
 //jiekou
 public interface EmpService {
     List selEmpAll();
+    List selNoticeAll();
     int selEmpCont();
     void addEmp(Emp emp, EmpEducation empEducation, Post post);
     void delete(String ids);
