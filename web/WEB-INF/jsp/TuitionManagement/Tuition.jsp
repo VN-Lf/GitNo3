@@ -1,31 +1,26 @@
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
-  User: freedom
-  Date: 2019/12/4
-  Time: 10:08
+  User: Administrator
+  Date: 2019/12/7
+  Time: 8:41
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>楼栋管理</title>
+    <title>学费管理</title>
     <jsp:include page="../../../index.jsp"></jsp:include>
-    <%String num = (String) request.getAttribute("num");%>
     <script src="<%=request.getContextPath()%>/jquery.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
-    <style type="text/css">
-        .layui-table-tool {
-            z-index: 0;
-        }
-    </style>
 </head>
 <body>
 <div class="easyui-layout" data-options="fit:true" >
-    <div data-options="region:'center',title:'信息管理'" style="background:#eee;" >
+    <div data-options="region:'center',title:'信息管理'" style="background:#eee;">
         <%--信息显示表--%>
         <table id="demo" lay-filter="test"  ></table>
+
         <script type="text/html" id="toolbarDemo">
-            <div class="layui-btn-container" style="left: 300px">
+            <div class="layui-btn-container" style="width: 800px;">
                 <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
             </div>
         </script>
@@ -33,23 +28,12 @@
     </div>
     <div data-options="region:'east',split:true,collapsed:true,title:'修改'" style="width:350px;">
         <div id="tt" class="easyui-tabs"  data-options="tools:'#tabs1'" style="height: 600px;">
-            <div title="新增">
-                <a id="add"  class="easyui-linkbutton" onclick="add()" data-options="iconCls:'icon-add'">Add</a>
-                <form action="<%=request.getContextPath()%>/Building/Buildingadd" method="post" id="addDor">
-                    <table width="300px" align="center" border="0">
-                        <tr>
-                            <td>楼栋:&nbsp;&nbsp;</td>
-                            <td><input id="counts" class="easyui-validatebox" type="text" name="floorName"></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
+
         </div>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
-
+    //解决jquery包冲突
     jQuery.noConflict();
     layui.use('table', function(){
         var table = layui.table;
@@ -59,17 +43,25 @@
             elem: '#demo'
             ,height: 312
             ,toolbar: '#toolbarDemo'
-            ,url: '${pageContext.request.contextPath}/Building/list' //数据接口
+            ,url: '${pageContext.request.contextPath}/Tuition/list' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
-                {type:'checkbox',width:100}//复选框
-                ,{field: 'floorId', title: '编号', width:200, sort: true}
-                ,{field: 'floorName', title: '楼栋名称  ', width:300}
-
+                {type:'checkbox'}//复选框
+                ,{field: 'financeId', title: '编号', width:80, sort: true}
+                ,{field: 'financedate', title: '地址', width:120}
+                ,{field: 'stuid', title: '宿舍人数', width:120, sort: true}
+                ,{field: 'termId', title: '序号', width:80}
+                ,{field: 'receipt', title: '宿舍房号', width:120}
+                ,{field: 'financeType', title: '床位数', width: 80}
+                ,{field: 'factMoney', title: '床位数', width: 80}
+                ,{field: 'empid', title: '床位数', width: 80}
+                ,{field: 'remark', title: '床位数', width: 80}
+                ,{field: 'Invalid', title: '床位数', width: 80}
+                ,{field: 'tuitionTypeId', title: '床位数', width: 80}
             ]]
         });
 
-        //楼栋删除
+
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
@@ -79,18 +71,18 @@
                         employeesId = " ";
                     if(data.length > 0){
                         for (var i in data){
-                            employeesId+=data[i].floorId+",";
+                            employeesId+=data[i].HourId+",";
                         }
                         layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
-                            $.post('${pageContext.request.contextPath}/Building/Buildingdelete',{
-                                id:employeesId
+                            $.post('${pageContext.request.contextPath}/Tuition/Tuitiondelete',{
+                                id:financeId
                             },function(data){
                                 table.reload("demo");
                                 layer.close(index);
                             });
                         });
                     }else{
-                        layer.msg('请选择需要删除的数据!');
+                        layer.msg('请选择需要删除的数据');
                     }
                     break;
                 case 'isAdd':
@@ -98,32 +90,33 @@
                     break;
             };
         });
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'edit'){
+
+                $("#wins").window("open");
+                $("#count").val(data.count);
+                $("#HourId").val(data.HourId);
+                $("#hourIddsc").val(data.hourIddsc);
+                $("#hourName").val(data.hourName);
+                $("#numberBeds").val(data.numberBeds);
+                $("#addr").val(data.addr);
+                $("#floorId").val(data.floorId);
+            }
+        });
+
     });
 
-    //添加
     function add() {
-        /*var num = ;
-        if(num.eq("1")){
-            alert("数据重复");
-            return;
-        }
-        */
         $("#addDor").form("submit",{
             success : function () {
                 $("#addDor").form("clear");
-                window.location.href="<%=request.getContextPath()%>/Building/toys";
+                window.location.href="<%=request.getContextPath()%>/dormitory/todormitory";
             }
         })
     }
 </script>
-<%--<script>
-    $(function(){
-        var num = document.getElementById("num");
-        alert(num);
-        if(num.eq("1")){
-            alert("数据重复,请重新添加")
-        }
-    }
-</script>--%>
 </body>
 </html>
