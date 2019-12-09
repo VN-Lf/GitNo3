@@ -5,7 +5,7 @@ import com.nothing.vo.emp.EmpEducation;
 import com.nothing.vo.emp.Post;
 
 import java.util.List;
-
+//jiekou
 public interface EmpService {
     List selEmpAll();
     int selEmpCont();
