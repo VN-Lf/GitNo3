@@ -16,8 +16,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("to")
 public class GoPageController {
-    @Resource
-    EmpService es;
     //前往主界面
     @RequestMapping("/home")
     public String toHome(HttpSession session,String color) {
@@ -70,11 +68,6 @@ public class GoPageController {
         System.out.println("id:"+id);
         return "emp/empupdate";
     }
-    //前往教育经历
-    @RequestMapping({"/empEdu"})
-    public String toEmpEducation() {
-        return "emp/educationList";
-    }
     //报修列表
     @RequestMapping("/toRepairListPage")
     public String toRepair(){
@@ -82,17 +75,9 @@ public class GoPageController {
     }
     //前往教育经历
     @RequestMapping({"/empEdu"})
-    public String toEmpEducation(String id, HttpServletRequest request) {
+    public String toEmpEducation(String id, HttpSession session) {
         int eid = Integer.parseInt(id);
-        request.setAttribute("currActEmpId",eid);
+        session.setAttribute("currActEmpId",eid);
         return "emp/educationList";
-    }
-    //前往教育经历修改
-    @RequestMapping({"/eduUpPage"})
-    public String eduUp(String eid, HttpServletRequest req) {
-        int id = Integer.parseInt(eid);
-        EmpEducation edu = es.getEdu(id);
-        req.setAttribute("edu",edu);
-        return "emp/eduUp";
     }
 }

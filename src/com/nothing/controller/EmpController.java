@@ -22,51 +22,33 @@ public class EmpController {
     @Resource
     private EmpService empService;
 
-    @RequestMapping("/emplist")
-    @ResponseBody
-    public JSONObject EmpList() {
-        List examlist = empService.selEmpAll();
-        int con = empService.selEmpCont();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("code", 0);
-        jsonObject.put("msg", "");
-        jsonObject.put("data", examlist);
-        jsonObject.put("count", con);
-        return jsonObject;
-    }
-
-    @RequestMapping("/empadd")
-    public void EmpList(Emp emp, EmpEducation empEducation, Post post, String ruzhitime, String birthday) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        emp.setEmpBirthday(simpleDateFormat.parse(birthday));
-        emp.setEmpFireday(simpleDateFormat.parse(ruzhitime));
-        System.out.println("员工：" + emp);
-        System.out.println(ruzhitime + "学历：" + empEducation);
-        System.out.println(birthday + "职务：" + post.getPostName());
-        empService.addEmp(emp, empEducation, post);
-    }
-
-    @RequestMapping("toDel")
-    @ResponseBody
-    public String toDel(String id) {
-        System.out.println("进来" + id);
-        id = id.substring(0, id.length() - 1);
-        empService.delete(id);
-        return "成功";
-    }
-
     @RequestMapping({"/empEducationList"})
     @ResponseBody
     public JSONObject getEducationList(String eid) {
+        System.out.println(eid);
         int id = Integer.parseInt(eid);
-        List eduList = this.empService.selEmpEducation(id);
-        this.empService.getEmpEducationCount(id);
+        List eduList = empService.selEmpEducation(id);
+        int con = empService.getEmpEducationCount(id);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
+        jsonObject.put("count",con);
         jsonObject.put("data", eduList);
         System.out.println(jsonObject.toJSONString());
         return jsonObject;
+    }
+    //前往教育经历修改页面
+    @RequestMapping({"/eduUpPage"})
+    public String eduUp(String eid, HttpServletRequest req) {
+        int id = Integer.parseInt(eid);
+        EmpEducation edu = empService.getEdu(id);
+        req.setAttribute("edu",edu);
+        return "emp/eduUp";
+    }
+    //前往教育经历新增页面
+    @RequestMapping({"/eduAddPage"})
+    public String eduAddPage() {
+        return "emp/eduAdd";
     }
     @RequestMapping({"/eduUp"})
     public void eduUp(EmpEducation edu, HttpServletRequest req) {
@@ -74,8 +56,13 @@ public class EmpController {
         req.removeAttribute("edu");
     }
 
+    @RequestMapping({"/eduAdd"})
+    public void eduAdd(EmpEducation edu, HttpServletRequest req) {
+        empService.eduAdd(edu);
+        req.removeAttribute("edu");
+    }
     @RequestMapping({"/eduDel"})
-    public void eduDel(EmpEducation edu) {
-        empService.eduDel(edu);
+    public void eduDel(String id) {
+        empService.eduDel(id);
     }
 }

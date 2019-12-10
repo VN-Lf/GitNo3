@@ -48,16 +48,16 @@
                 case 'isDele':
                     var checkStatus = table.checkStatus('edu'),
                         data = checkStatus.data,
-                        employeesId = "";
+                        eduId = "";
                     alert(employeesId);
                     if(data.length > 0){
                         for (var i in data){
-                            employeesId+=data[i].empId+",";
+                            eduId+=data[i].empEduId+",";
                         }
                         alert(employeesId);
                         layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
-                            $.post('${pageContext.request.contextPath}/emp/toDel',{
-                                id:employeesId
+                            $.post('${pageContext.request.contextPath}/emp/eduDel',{
+                                id:eduId
                             },function(data){
                                 alert("删除"+data);
                                 table.reload("edu");
@@ -69,7 +69,7 @@
                     }
                     break;
                 case 'isAdd':
-                    window.open("${pageContext.request.contextPath}/to/empadd");
+                    addTab("新增记录","${pageContext.request.contextPath}/emp/eduAddPage");
                     break;
             };
         });

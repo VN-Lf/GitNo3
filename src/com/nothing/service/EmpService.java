@@ -21,5 +21,6 @@ public interface EmpService {
     int getEmpEducationCount(int id);
     EmpEducation getEdu(int id);
     void eduUp(EmpEducation edu);
-    void eduDel(EmpEducation edu);
+    void eduDel(String id);
+    void eduAdd(EmpEducation edu);
 }

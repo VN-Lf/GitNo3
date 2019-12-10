@@ -113,21 +113,36 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         updObject(post);
     }
 
-    @Override
-    public EmpEducation getEdu(int id) {
-        EmpEducation education  = (EmpEducation) this.getObject(EmpEducation.class, id);
+    @Override//根据Id获取教育经历列表
+    public List selEmpEducation(int id) {
+        return this.listBySQL("select * from empeducation where empId="+id);
+    }
+
+    @Override//根据Id获取教育经历的数量
+    public int getEmpEducationCount(int id) {
+        return this.selectcount("select count(*) from empeducation where empId ="+id);
+    }
+
+    @Override//根据Id获取教育经历
+    public EmpEducation getEdu(int eid) {
+        EmpEducation education  = (EmpEducation) this.getObject(EmpEducation.class, eid);
+        System.out.println(eid);
         System.out.println(education.toString());
         return education;
     }
 
-
-    @Override
+    @Override//修改教育经历
     public void eduUp(EmpEducation edu) {
         this.updObject(edu);
     }
 
-    @Override
-    public void eduDel(EmpEducation edu) {
-        this.delObject(edu);
+    @Override//删除教育经历
+    public void eduDel(String id) {
+        this.listBySQL("delete empeducation where empEduId in("+id+")");
+    }
+
+    @Override//新增教育经历
+    public void eduAdd(EmpEducation edu) {
+        this.addObject(edu);
     }
 }

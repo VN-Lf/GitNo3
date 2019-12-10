@@ -65,19 +65,15 @@
             layer = layui.layer,
             laydate = layui.laydate;
 
-        if ("${edu}"==""){
-
-        }else{
-            form.val("gg",{
-                "empEduId":"${edu.empEduId}"
-                ,"empId":"${edu.empId}"
-                ,"empUniversity":"${edu.empUniversity}"
-                ,"empDegree":"${edu.empDegree}"
-                ,"empEucStartDay":"${edu.empEucStartDay}"
-                ,"empEucEndDay":"${edu.empEucEndDay}"
-                ,"empEucRemark":"${edu.empEucRemark}"
-            })
-        }
+        form.val("gg",{
+            "empEduId":"${edu.empEduId}"
+            ,"empId":"${edu.empId}"
+            ,"empUniversity":"${edu.empUniversity}"
+            ,"empDegree":"${edu.empDegree}"
+            ,"empEucStartDay":"${edu.empEucStartDay}"
+            ,"empEucEndDay":"${edu.empEucEndDay}"
+            ,"empEucRemark":"${edu.empEucRemark}"
+        })
 
         //日期
         laydate.render({

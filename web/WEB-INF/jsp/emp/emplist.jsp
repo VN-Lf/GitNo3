@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="./../../../index.jsp"%>
+<%@include file="../../../index.jsp"%>
 <html>
 <head>
     <title>员工列表页</title>
@@ -22,10 +22,10 @@
             <table id="demo" lay-filter="test"></table>
         </div>
     </div>
-    <div id="east" data-options="region:'east',title:'其他信息',collapsed:true" style="width: 900%;">
+    <div id="east" data-options="region:'east',collapsed:true,title:'其他信息'" style="width: 650px;">
         <h1 style="text-align: center" >There's nothing here</h1>
     </div>
-<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+</body>
 <script>
     layui.use('table', function(){
         var table = layui.table;
@@ -122,10 +122,6 @@
             "        </div>";
     }
 
-    function chonZhi(id) {
-        alert("重置用户id："+id);
-    }
-
     function chaoZuo(id) {
         return "<div class=\"layui-btn-group\">\n" +
             "  <button onclick='updateUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
@@ -171,7 +167,6 @@
         load(empid);
     }
     function load(empid) {
-
         document.getElementById("east").innerHTML =  '<object type="text/html" data="empEdu?id='+empid+'" width="100%" height="100%"></object>';
     }
 </script>
@@ -183,5 +178,4 @@
         <button class="layui-btn layui-btn-sm"><a style="color: white" href="${pageContext.request.contextPath}/to/empadd">本页新增</a></button>
     </div>
 </script>
-</body>
 </html>
