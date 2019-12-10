@@ -20,14 +20,14 @@ public class BuildingController {
     @Resource
     BuildingService service;
 
-    @RequestMapping("todormitory")
+   /* @RequestMapping("todormitory")
     public String todormitory() {
         return "BuildingManagement/Building";
-    }
+    }*/
 
     @RequestMapping("toys")
     public String todormitorys() {
-        return "BuildingManagement/Buildings";
+        return "BuildingManagement/Building";
     }
 
     //查看方法
@@ -64,7 +64,7 @@ public class BuildingController {
         }*/
 
         service.addBuilding(studentFloor);
-        return "redirect:todormitory";
+        return "redirect:toys";
     }
 
     //删除的方法
@@ -73,6 +73,6 @@ public class BuildingController {
         System.out.println("进来了删除：id"+id);
         id = id.substring(0,id.length()-1);
         service.delBuilding(id);
-        return "redirect:todormitory";
+        return "redirect:toys";
     }
 }

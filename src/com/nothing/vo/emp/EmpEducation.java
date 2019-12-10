@@ -17,7 +17,7 @@ public class EmpEducation{
     private String empEucStartDay;
     private String empEucEndDay;
     private String empEucRemark;
-    private String EmpEduMajor;//专业
+    private String empEduMajor;//专业
 
     public Integer getEmpEduId() {
         return empEduId;
@@ -76,10 +76,10 @@ public class EmpEducation{
     }
 
     public String getEmpEduMajor() {
-        return EmpEduMajor;
+        return empEduMajor;
     }
 
     public void setEmpEduMajor(String empEduMajor) {
-        EmpEduMajor = empEduMajor;
+        this.empEduMajor = empEduMajor;
     }
 }

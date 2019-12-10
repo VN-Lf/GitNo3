@@ -16,10 +16,6 @@ import java.util.List;
 public class houqinController {
     @Resource
     houqinService hs;
-    @RequestMapping("/toRepairListPage")
-    public String toRepair(){
-        return "houqin/repairList";
-    }
     @RequestMapping("/repairList")
     @ResponseBody
     public JSONObject repairList(){
