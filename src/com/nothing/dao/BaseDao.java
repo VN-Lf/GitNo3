@@ -55,6 +55,15 @@ public class BaseDao {
         return list;
     }
 
+    public List listBySQL2(String sql) {
+        Session session = sessionFactory.openSession();
+        SQLQuery sqlquery = session.createSQLQuery(sql);
+        List list = sqlquery.list();
+        session.flush();
+        session.close();
+        return list;
+    }
+
 
     //SQL查询分页列表（一个表或连接多个表，筛选列时）
     public List pageBySQL(String sql, int currPage, int pageSize) {
