@@ -65,4 +65,5 @@ public class EmpController {
     public void eduDel(String id) {
         empService.eduDel(id);
     }
+
 }
