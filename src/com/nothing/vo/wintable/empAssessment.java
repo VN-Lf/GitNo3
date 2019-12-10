@@ -12,9 +12,10 @@ public class empAssessment {
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
     private Integer empAssessId;
-    private Integer aduitModelid;   //考核指标表id
-    private float scores;     //考核分数
-    private Integer empAssTotalId;      //考核总表
+    private Integer empexamid;   //考核类型id
+    private Integer empid;//员工id
+    private Integer classid;//班级id
+    private Integer scores;//总评分
 
     public Integer getEmpAssessId() {
         return empAssessId;
@@ -24,27 +25,35 @@ public class empAssessment {
         this.empAssessId = empAssessId;
     }
 
-    public Integer getAduitModelid() {
-        return aduitModelid;
+    public Integer getEmpexamid() {
+        return empexamid;
     }
 
-    public void setAduitModelid(Integer aduitModelid) {
-        this.aduitModelid = aduitModelid;
+    public void setEmpexamid(Integer empexamid) {
+        this.empexamid = empexamid;
     }
 
-    public float getScores() {
+    public Integer getEmpid() {
+        return empid;
+    }
+
+    public void setEmpid(Integer empid) {
+        this.empid = empid;
+    }
+
+    public Integer getClassid() {
+        return classid;
+    }
+
+    public void setClassid(Integer classid) {
+        this.classid = classid;
+    }
+
+    public Integer getScores() {
         return scores;
     }
 
-    public void setScores(float scores) {
+    public void setScores(Integer scores) {
         this.scores = scores;
-    }
-
-    public Integer getEmpAssTotalId() {
-        return empAssTotalId;
-    }
-
-    public void setEmpAssTotalId(Integer empAssTotalId) {
-        this.empAssTotalId = empAssTotalId;
     }
 }

@@ -2,6 +2,7 @@ package com.nothing.service.impl;
 
 import com.nothing.dao.BaseDao;
 import com.nothing.service.EmpService;
+import com.nothing.vo.charge.Notice;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.EmpEducation;
 import com.nothing.vo.emp.Post;
@@ -144,5 +145,23 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override//新增教育经历
     public void eduAdd(EmpEducation edu) {
         this.addObject(edu);
+    }
+    @Override
+    public void addNotice(Notice notice, int lx) {
+        if(lx == 1){
+            addObject(notice);
+        }else if(lx == 2) {
+            updObject(notice);
+        }else if(lx == 3){
+            delObject(notice);
+        }
+
+    }
+
+    @Override
+    public Notice chaNotice(String nid) {
+        System.out.println("nid:"+nid);
+        Notice emp = new Notice();
+        return (Notice)getObject(emp.getClass(),Integer.parseInt(nid));
     }
 }

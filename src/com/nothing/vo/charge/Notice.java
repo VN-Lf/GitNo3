@@ -15,7 +15,6 @@ public class Notice {
     private Integer noticeType;   // 1 所有人 2员工 3学生 4班级
     private String empName;//发布人
     private Date noticeTime;
-    private String classIds;//可多个班级
     private String deptIds;//多部门id
 
     public Integer getNoticeId() {
@@ -64,14 +63,6 @@ public class Notice {
 
     public void setNoticeTime(Date noticeTime) {
         this.noticeTime = noticeTime;
-    }
-
-    public String getClassIds() {
-        return classIds;
-    }
-
-    public void setClassIds(String classIds) {
-        this.classIds = classIds;
     }
 
     public String getDeptIds() {

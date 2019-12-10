@@ -1,11 +1,12 @@
 package com.nothing.service;
 
+import com.nothing.vo.charge.Notice;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.EmpEducation;
 import com.nothing.vo.emp.Post;
 
 import java.util.List;
-
+//jiekou
 public interface EmpService {
     List selEmpAll();
     List selNoticeAll();
@@ -17,6 +18,8 @@ public interface EmpService {
     Post sqlPostVo(String eid);
     EmpEducation sqlEduVo(String eid);
     void empUpdate(Emp emp, EmpEducation Edu, Post post);
+    void addNotice(Notice notice,int lx);//发布公告
+    Notice chaNotice(String nid);    //根据id查员工
     List selEmpEducation(int id);
     int getEmpEducationCount(int id);
     EmpEducation getEdu(int id);
