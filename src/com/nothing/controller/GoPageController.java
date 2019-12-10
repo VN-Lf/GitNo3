@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *转跳页面总控制器 登录判断
@@ -28,7 +30,13 @@ public class GoPageController {
             return "login";
         }else {
             if(color == null || "null".equals(color)){
-                session.setAttribute("color","gray");
+                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
+                String time = df.format(new Date()).substring(0,2);
+                if(Integer.parseInt(time) > 18 || Integer.parseInt(time) < 6){
+                    session.setAttribute("color","dark-hive");
+                }else {
+                    session.setAttribute("color","gray");
+                }
             }else {
                 session.setAttribute("color",color);
             }

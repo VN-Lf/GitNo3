@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>主界面</title>
-    <script src="http://localhost:8888/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <jsp:include page="../../index.jsp"></jsp:include>
     <!--dark-hive 纯黑   gray 灰色 pepper-grinder咖啡色-->
     <%String yangshi = (String) session.getAttribute("color");%>
@@ -45,7 +45,7 @@
     <h1>管理员界面</h1>
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
-    <div title="Base" id="caidan" fit="true" class="easyui-accordion">
+    <div title="Base" id="caidan" fit="true" style="height: 16px;font-size: 16px" class="easyui-accordion">
         <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
@@ -71,7 +71,7 @@
         <div title="通知面板" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/tonotice" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">公告发布</a>
+                    <a>公告发布</a>
                 </li>
             </ul>
         </div>

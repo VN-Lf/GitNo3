@@ -2,11 +2,13 @@ package com.nothing.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmpService;
+import com.nothing.vo.charge.Notice;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.EmpEducation;
 import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,11 +43,22 @@ public class Emp2Controller {
 
     @RequestMapping("/notlist")
     @ResponseBody
-    public JSONObject NoticeList(){
-        List notlist = empService.selNoticeAll();
+    public JSONObject NoticeList(String type){
+        List notlist = empService.selNoticeAll(type);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("data", notlist);
         return jsonObject;
+    }
+
+    @RequestMapping("/notadd")
+    public String NotAdd(Notice notice,String time) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("时间"+time);
+        notice.setNoticeTime(simpleDateFormat.parse(time));
+        System.out.println(notice.getContent()+notice.getTitle()+notice.getNoticeTime());
+        System.out.println(notice.getNoticeType());
+        empService.addNotice(notice,1);
+        return "emp/noticelist";
     }
 
     @RequestMapping("/empadd")
@@ -100,6 +113,24 @@ public class Emp2Controller {
         req.setAttribute("postvo",post);
         req.setAttribute("emdutvo",emdu);
         return  "emp/empupdate";
+    }
+    @RequestMapping("/notupdate")
+    @ResponseBody
+    public String notUpdate(String con,String ti,String id){
+        Notice notice = empService.chaNotice(id);
+        notice.setNoticeId(Integer.parseInt(id));
+        notice.setTitle(ti);
+        notice.setContent(con);
+        empService.addNotice(notice,2);//2为修改
+        return "修改成功";
+    }
+    @RequestMapping("/notdel")
+    @ResponseBody
+    public String notDel(String id){
+        Notice notice = empService.chaNotice(id);
+        notice.setNoticeId(Integer.parseInt(id));
+        empService.addNotice(notice,3);//3为删除
+        return "删除成功";
     }
     /*@RequestMapping("/empup")
     public ModelAndView EmpUp(String id,ModelAndView mv){
