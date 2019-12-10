@@ -43,11 +43,11 @@
             <label class="layui-form-label">部门</label>
             <div class="layui-input-block">
                 <select name="Depid" lay-verify="required" style="width: 250px">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="1">教研部</option>
+                    <option value="2">行政部</option>
+                    <option value="3">后勤部</option>
+                    <option value="4">学工部</option>
+                    <option value="5">招生部</option>
                 </select>
             </div>
         </div>
@@ -89,7 +89,7 @@
                 ,{field: 'aduitModelid', title: '编号', sort: true}
                 ,{field: 'Remark', title: '考核内容'}
                 ,{field: 'Scores', title: '考核分数', sort: true}
-                ,{field: 'Depid', title: '部门id'}
+                ,{field: 'deptName', title: '部门名称'}
                 ,{field: 'aduitName', title: '说明'}
                 ,{ fixed: 'right', title: '操作', width: 180, align: 'center', toolbar: '#barDemo' }
             ]]
