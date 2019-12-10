@@ -134,7 +134,7 @@
             "</div>"
     }
     function eduUp(id) {
-        addTab("修改记录","eduUpPage?eid="+id)
+        addTab("修改记录","${pageContext.request.contextPath}/emp/eduUpPage?eid="+id)
     }
     function eduDel(id) {
         layer.confirm('确认删除  ',{icon: 3, title: '提示信息'},function (d) {
