@@ -143,7 +143,6 @@
                 table.reload("demo");
             })
         })
-
     }
 </script>
 
