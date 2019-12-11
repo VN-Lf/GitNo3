@@ -20,7 +20,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
-    public List selNoticeAll() {
+    public List selNoticeAll(String type) {
         List list = listBySQL("select * from notice");
         return list;
     }
