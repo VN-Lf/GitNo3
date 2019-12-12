@@ -11,9 +11,9 @@ public interface WeeklyService {
     int SelcctWeeklycount(String sql);
     //添加周报的方法
     void WeeklyAdd(EmpWeekPaper weekPaper);
-    //修改的方法
+    //修改周报的方法
     void WeeklyUpdate(EmpWeekPaper weekPaper);
-    //删除的方法
+    //删除周报的方法
     void WeeklyDelete(String id);
     //获取到周报表的时间
     List WeeklySerletData(String sql);

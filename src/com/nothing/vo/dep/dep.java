@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name ="dep")
-public class dep {  //部门设置
+public class dep {  //部门设置表
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)

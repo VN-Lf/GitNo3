@@ -22,7 +22,7 @@ import java.util.*;
 @Controller
 @RequestMapping("Weekly")
 public class WeeklyController {
-
+    //周报管理
     @Resource
     WeeklyService service;
     //去我的周报页面

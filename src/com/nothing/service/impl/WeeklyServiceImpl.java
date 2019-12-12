@@ -11,7 +11,7 @@ import java.util.List;
 public class WeeklyServiceImpl  implements WeeklyService {
     @Resource
     BaseDao dao;
-    //查询周包信息
+    //查询周报信息
     @Override
     public List selectWeeklylist(String sql) {
         return dao.listBySQL(sql);
@@ -27,7 +27,7 @@ public class WeeklyServiceImpl  implements WeeklyService {
     public void WeeklyAdd(EmpWeekPaper weekPaper) {
             dao.addObject(weekPaper);
     }
-    //修改的方法
+    //修改周报的方法
     @Override
     public void WeeklyUpdate(EmpWeekPaper weekPaper) {
         dao.updObject(weekPaper);

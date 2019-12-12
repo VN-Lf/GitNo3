@@ -22,7 +22,7 @@
 <div class="easyui-layout" data-options="fit:true" >
     <div data-options="region:'center',title:'信息管理'" style="background:#eee;" >
 
-        <form <%--action="<%=request.getContextPath()%>/Weekly/empWeeklist" --%>  method="post" style="width: 1205px;margin: 20px 0px 0px 10px">
+        <form  method="post" style="width: 1205px;margin: 20px 0px 0px 10px">
             <%--员工姓名:<input type="text" name="empname" id="empname" required lay-verify="required" placeholder="请输人姓名"  class="layui-input" style="width:180px;display:inline-block" />--%>
 
             开始时间:

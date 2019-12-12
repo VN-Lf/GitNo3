@@ -102,7 +102,7 @@
         });
 
         laydate.render({
-            elem: '#endtime' //指定元素
+            elem: '#endtime' //指定元素o
         });
     });
 
