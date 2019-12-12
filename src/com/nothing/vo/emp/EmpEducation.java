@@ -13,10 +13,11 @@ public class EmpEducation{
     private Integer empEduId;
     private Integer empId;
     private String empUniversity;//大学
-    private String empDegree;
+    private String empDegree;//学历
     private String empEucStartDay;
     private String empEucEndDay;
     private String empEucRemark;
+    private String empEduMajor;//专业
 
     public Integer getEmpEduId() {
         return empEduId;
@@ -72,5 +73,13 @@ public class EmpEducation{
 
     public void setEmpEucRemark(String empEucRemark) {
         this.empEucRemark = empEucRemark;
+    }
+
+    public String getEmpEduMajor() {
+        return empEduMajor;
+    }
+
+    public void setEmpEduMajor(String empEduMajor) {
+        this.empEduMajor = empEduMajor;
     }
 }
