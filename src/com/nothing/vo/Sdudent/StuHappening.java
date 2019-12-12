@@ -1,7 +1,7 @@
 package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
-//学生事故状况表
+//学生事故状况表//
 @Table(name = "StuHappening")
 @Entity
 public class StuHappening{

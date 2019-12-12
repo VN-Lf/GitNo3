@@ -1,7 +1,7 @@
 package com.nothing.vo.Edu;
 
 import javax.persistence.*;
-
+//
 //学年表
 @Entity
 @Table(name="StuFall")

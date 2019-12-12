@@ -1,7 +1,7 @@
 package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Date;//
 //student
 @Entity
 @Table(name="Student")

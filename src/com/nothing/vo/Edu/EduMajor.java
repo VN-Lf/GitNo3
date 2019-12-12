@@ -2,7 +2,7 @@ package com.nothing.vo.Edu;
 
 
 import javax.persistence.*;
-
+//
 //专业设置表
 public class EduMajor {
     @Id

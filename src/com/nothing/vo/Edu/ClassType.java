@@ -1,7 +1,7 @@
 package com.nothing.vo.Edu;
 
 import javax.persistence.*;
-
+//
 @Entity
 @Table(name="ClassType")
 public class ClassType {

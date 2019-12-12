@@ -2,7 +2,7 @@ package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
 import java.util.Date;
-//学生教育经历
+//学生教育经历//
 @Table
 @Entity(name="StuEdu")
 public class StuEdu{

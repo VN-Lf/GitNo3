@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 
-@Entity
+@Entity//
 @Table(name = "studentFloor")
 public class studentFloor {//宿舍资料
     @Id

@@ -2,7 +2,7 @@ package com.nothing.vo.sushe;
 
 import javax.persistence.*;
 
-@Entity
+@Entity//
 @Table(name = "studentHour")
 public class studentHour {//楼栋维护
     @Id

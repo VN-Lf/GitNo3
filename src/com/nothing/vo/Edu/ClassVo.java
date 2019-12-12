@@ -1,7 +1,7 @@
 package com.nothing.vo.Edu;
 
 import javax.persistence.*;
-
+//
 //班级表
 @Entity
 @Table(name="ClassVo")
