@@ -1,53 +1,53 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2019/12/9
-  Time: 15:38
+  Date: 2019/12/11
+  Time: 10:46
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="./../../../index.jsp"%>
+<%@include file="./../../../../index.jsp"%>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<form class="layui-form" method="post" action="/emp/eduUp" lay-filter="gg">
-    <input type="hidden" name="empEduId">
+<form class="layui-form" method="post" action="/emp/jobAdd" lay-filter="gg">
     <input type="hidden" name="empId">
     <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">学校名称</label>
+        <label class="layui-form-label">公司名称</label>
         <div class="layui-input-block">
-            <input type="text" name="empUniversity" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
+            <input type="text" name="empHisCompany" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
+        </div>
+    </div>
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">职务</label>
+            <div class="layui-input-block">
+                <input type="text" name="empHisDegree" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    <div class="layui-form-item" style="width: 450px">
+        <label class="layui-form-label">入职时间</label>
+        <div class="layui-input-block">
+            <input id="start" type="text" name="empHisStartDay" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">学历水平</label>
+        <label class="layui-form-label">离职时间</label>
         <div class="layui-input-block">
-            <select name="empDegree" lay-verify="required" style="width: 250px">
-                <option value="0">请选择...</option>
-                <option value="高中及以下">高中及以下</option>
-                <option value="大专">大专</option>
-                <option value="本科">本科</option>
-            </select>
+            <input id="end" type="text" name="empHisEndDay" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">入学时间</label>
+        <label class="layui-form-label">离职原因</label>
         <div class="layui-input-block">
-            <input id="start" type="text" name="empEucStartDay" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">毕业时间</label>
-        <div class="layui-input-block">
-            <input id="end" type="text" name="empEucEndDay" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input type="text" name="empLiftReason" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <input type="text" name="empEucRemark" placeholder="请输入.." autocomplete="off" class="layui-input">
+            <input type="text" name="empHisRemark" placeholder="请输入.." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -59,26 +59,19 @@
 </form>
 </body>
 <script>
-    var d = parseInt(2019-12-02)
     layui.use(['form','laydate'], function(){
         var form = layui.form,
             layer = layui.layer,
             laydate = layui.laydate;
 
         form.val("gg",{
-            "empEduId":"${edu.empEduId}"
-            ,"empId":"${edu.empId}"
-            ,"empUniversity":"${edu.empUniversity}"
-            ,"empDegree":"${edu.empDegree}"
-            ,"empEucStartDay":"${edu.empEucStartDay}"
-            ,"empEucEndDay":"${edu.empEucEndDay}"
-            ,"empEucRemark":"${edu.empEucRemark}"
+            "empId":"${currActEmpId}"
         })
 
         //日期
         laydate.render({
             elem:'#start',
-            trigger: 'click',
+            trigger: 'click'
         });
         laydate.render({
             elem:'#end',
@@ -92,10 +85,6 @@
         });
     });
 
-    function a() {
-        var name=parent.$('#tabs').tabs('getSelected').panel('options').title;
-        parent.$('#tabs').tabs('close', name);
-    }
     function tabClose() {
         $(".tabs-inner").dblclick(function() {
             var subtitle = $(this).children(".tabs-closable").text();

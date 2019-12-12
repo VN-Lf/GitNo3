@@ -23,25 +23,25 @@ import java.util.Date;
 @RequestMapping("to")
 public class GoPageController {
     //前往主界面
-    //    @RequestMapping("/home")
-    //    public String toHome(HttpSession session,String color) {
-    //        if(session.getAttribute("empId") == null){
-    //            return "login";
-    //        }else {
-    //            if(color == null || "null".equals(color)){
-    //                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
-    //                String time = df.format(new Date()).substring(0,2);
-    //                if(Integer.parseInt(time) > 18 || Integer.parseInt(time) < 6){
-    //                    session.setAttribute("color","dark-hive");
-    //                }else {
-    //                    session.setAttribute("color","gray");
-    //                }
-    //            }else {
-    //                session.setAttribute("color",color);
-    //            }
-    //            return "home";
-    //        }
-    //    }
+    @RequestMapping("/home")
+    public String toHome(HttpSession session,String color) {
+        if(session.getAttribute("empId") == null){
+            return "login";
+        }else {
+            if(color == null || "null".equals(color)){
+                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
+                String time = df.format(new Date()).substring(0,2);
+                if(Integer.parseInt(time) > 18 || Integer.parseInt(time) < 6){
+                    session.setAttribute("color","dark-hive");
+                }else {
+                    session.setAttribute("color","gray");
+                }
+            }else {
+                session.setAttribute("color",color);
+            }
+            return "home";
+        }
+    }
     @RequestMapping("/tologin")
     public String toLogin(){
         return "login";
@@ -73,5 +73,12 @@ public class GoPageController {
     @RequestMapping("/tonotice")
     public String toNotice(){
         return "emp/noticelist";
+    }
+    //前往子表信息
+    @RequestMapping({"/empEdu"})
+    public String toEmpEducation(String id, HttpSession session) {
+        int eid = Integer.parseInt(id);
+        session.setAttribute("currActEmpId",eid);
+        return "emp/educationList";
     }
 }
