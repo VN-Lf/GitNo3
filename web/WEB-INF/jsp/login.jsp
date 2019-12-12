@@ -11,6 +11,22 @@
     <meta charset="UTF-8">
     <title>登录</title>
     <script src="http://localhost:8888/jquery.js"></script>
+    <%
+        HttpSession sess = request.getSession();
+        String message = (String)sess.getAttribute("mes");
+        if(message == "" /*|| message.equals("")*/){
+        }else{
+    %>
+    <script type="text/javascript">
+        var a = "<%=message%>"
+        if(a !="null" ){
+            alert(a);
+        }
+    </script>
+    <%
+            sess.setAttribute("mes", "");
+        }
+    %>
     <style>
         input {
             border: 0px;
@@ -61,7 +77,7 @@
             <form action="<%=request.getContextPath()%>/to/login" method="post" style="position: relative;">
                 <div style="position: relative;">
                     <input id="name" type="text" name="zhanghao" oninput="donTai()" />
-                    <span id="tishi" class="tishis">账号/手机号</span>
+                    <span id="tishi" class="tishis">手机号</span>
                 </div>
                 <div style="position: relative;">
                     <input id="pwd" type="password" name="pwd" style="outline: none;" ondblclick="lookNo(1)" oninput="donTai2('pwd')" ;/>
