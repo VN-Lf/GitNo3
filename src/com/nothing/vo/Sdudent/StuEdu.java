@@ -1,7 +1,7 @@
 package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 //学生教育经历
 @Table
 @Entity(name="StuEdu")
@@ -13,7 +13,7 @@ public class StuEdu{
    private Integer EduId;
    private String  studId;
    private String hisSchool;
-   private String beginDate;
+   private Date beginDate;
    private Date endDate;
 
     public Integer getEduId() {
@@ -40,11 +40,11 @@ public class StuEdu{
         this.hisSchool = hisSchool;
     }
 
-    public String getBeginDate() {
+    public Date getBeginDate() {
         return beginDate;
     }
 
-    public void setBeginDate(String beginDate) {
+    public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
     }
 

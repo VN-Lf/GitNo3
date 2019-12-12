@@ -129,10 +129,9 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在班级</label>
                 <div class="layui-input-block">
-                    <select name="stuCla" lay-verify="required" placeholder=" ">
-                        <option value=""></option>
+                    <select name="classId" lay-verify="required" placeholder=" ">
                         <c:forEach items="${classList}" var="stuClass">
-                            <option value="${stuClass.classId}">${stuClass.classId}</option>
+                            <option value="${stuClass.classId}">${stuClass.className}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -141,10 +140,9 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在楼栋</label>
                 <div class="layui-input-block">
-                    <select name="stuFloor" lay-verify="required"  placeholder="  ">
-                        <option value=" "></option>
+                    <select name="floorId" lay-verify="required"  placeholder=" ">
                         <c:forEach items="${foolList}" var="fool">
-                            <option value="${fool.floorId}">${fool.floorId}</option>
+                            <option value="${fool.floorId}">${fool.floorName}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -153,7 +151,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在寝室</label>
                 <div class="layui-input-block">
-                    <input id="stuHouse" type="text" name="stuHouse" required  lay-verify="required"  autocomplete="off" class="layui-input" value="${stu.stuHouse}">
+                    <input id="stuHours" type="text" name="stuHours" required  lay-verify="required"  autocomplete="off" class="layui-input" value="${stu.stuHours}">
                 </div>
             </div>
 
@@ -166,7 +164,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">身份证号</label>
                 <div class="layui-input-block">
-                    <input id="cardId" type="text" name="cardId" required  lay-verify="identity" placeholder="请输入11位完整的号码" autocomplete="off" class="layui-input" value="stu.cardId">
+                    <input id="cardId" type="text" name="cardId" required  lay-verify="identity" placeholder="请输入11位完整的号码" autocomplete="off" class="layui-input" value="${stu.cardId}">
                 </div>
             </div>
 
@@ -352,6 +350,7 @@
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+
     function createTime(v){
         var date = new Date(v);
         var y = date.getFullYear();
@@ -363,16 +362,15 @@
         return str;
     }
 
-    document.getElementById("birthday").value =createTime("${stu.stuBirthday}");
-    document.getElementById("enterDate").value =createTime("${stu.stuEnterTime}");
-
 
     layui.use('form', function(){
         var form = layui.form;
         form.val("gg",{
-            "stuSex":"${stu.stuSex}"
-            ,"stuCla":"${stu.stuCla}"
-            ,"stuFloor":${stu.stuFloor}
+            "stuSex":"${requestScope.stu.stuSex}"
+            ,"birthday":"${requestScope.stu.stuBirthday}"
+            ,"enterDate":"${requestScope.stu.stuEnterTime}"
+            ,"classId" :${requestScope.stu.classId}
+            ,"floorId":${requestScope.stu.floorId}
             ,"stuStu":"${requestScope.stu.stuStu}"
             ,"residence":"${requestScope.stu.residence}"
             ,"studyType":"${requestScope.stu.studyType}"
@@ -387,6 +385,7 @@
 
         //监听提交
         form.on('submit(formDemo)', function(data){
+            alert(data.field.stuCla);
             layer.msg(JSON.stringify(data.field));
             return true;
         });

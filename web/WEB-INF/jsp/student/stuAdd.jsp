@@ -126,7 +126,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在班级</label>
                 <div class="layui-input-block">
-                    <select name="stuCla" lay-verify="required" placeholder=" " >
+                    <select name="classId" lay-verify="required" placeholder=" " >
                         <option value=""> </option>
                         <c:forEach items="${classList}" var="stuClass">
                             <option value="${stuClass.classId}">${stuClass.className}</option>
@@ -138,7 +138,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在楼栋</label>
                 <div class="layui-input-block">
-                    <select name="stuFloor" lay-verify="required"  placeholder="  ">
+                    <select name="floorId" lay-verify="required"  placeholder="  ">
                         <option value=" "> </option>
                         <c:forEach items="${foolList}" var="fool">
                             <option value="${fool.floorId}">${fool.floorName}</option>
@@ -150,7 +150,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在寝室</label>
                 <div class="layui-input-block">
-                    <input id="stuHouse" type="text" name="stuHouse" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                    <input id="stuHours" type="text" name="stuHours" required  lay-verify="required"  autocomplete="off" class="layui-input">
                 </div>
             </div>
 

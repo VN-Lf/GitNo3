@@ -9,7 +9,7 @@ public class StuFimaly{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =2200, allocationSize = 1)
     private Integer stuFamilyid;
-    private Integer     studId;
+    private Integer studId;
     private String stuFamilyName;
     private String relation;
     private String familyPhone;
@@ -53,5 +53,17 @@ public class StuFimaly{
 
     public void setFamilyPhone(String familyPhone) {
         this.familyPhone = familyPhone;
+    }
+
+
+    @Override
+    public String toString() {
+        return "StuFimaly{" +
+                "stuFamilyid=" + stuFamilyid +
+                ", studId=" + studId +
+                ", stuFamilyName='" + stuFamilyName + '\'' +
+                ", relation='" + relation + '\'' +
+                ", familyPhone='" + familyPhone + '\'' +
+                '}';
     }
 }

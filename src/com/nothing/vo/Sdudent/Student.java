@@ -21,9 +21,9 @@ public class Student{
     private Date stuBirthday;
     private String stuPhone;
     private String  stuAddr;//地址
-    private Integer stuCla;//班级号 对应 ClassVo中的classno
-    private Integer stuFloor;//楼栋编号
-    private  Integer stuHouse; //寝室标号
+    private Integer classId;//班级号 对应 ClassVo中的classno
+    private Integer floorId;//楼栋编号
+    private  Integer stuHours; //寝室标号
     private  Date  stuEnterTime;//入学时间
     private String interTecher;//介绍老师
     private Integer stuStu;
@@ -80,12 +80,12 @@ public class Student{
         this.enrollno = enrollno;
     }
 
-    public Integer getStuFloor() {
-        return stuFloor;
+    public Integer getFloorId() {
+        return floorId;
     }
 
-    public void setStuFloor(Integer stuFloor) {
-        this.stuFloor = stuFloor;
+    public void setFloorId(Integer floorId) {
+        this.floorId = floorId;
     }
 
     public Integer getStudId() {
@@ -160,20 +160,20 @@ public class Student{
         this.stuAddr = stuAddr;
     }
 
-    public Integer getStuCla() {
-        return stuCla;
+    public Integer getClassId() {
+        return classId;
     }
 
-    public void setStuCla(Integer stuCla) {
-        this.stuCla = stuCla;
+    public void setClassId(Integer classId){
+        this.classId = classId;
     }
 
-    public Integer getStuHouse() {
-        return stuHouse;
+    public Integer getStuHours() {
+        return stuHours;
     }
 
-    public void setStuHouse(Integer stuHouse) {
-        this.stuHouse = stuHouse;
+    public void setStuHours(Integer stuHours) {
+        this.stuHours = stuHours;
     }
 
     public Date getStuEnterTime() {

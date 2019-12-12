@@ -79,7 +79,7 @@ public class BaseDao {
      * SQL查询总行数
      */
     //select count(*) from newemp
-    public int selTotalRow(String sql) {
+    public int selTotalRow(String sql){
         Session session = getSession();
         SQLQuery sqlquery = session.createSQLQuery(sql);
          int i = Integer.parseInt(sqlquery.uniqueResult()+"");
