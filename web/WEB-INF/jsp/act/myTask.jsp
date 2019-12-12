@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>任务</title>
 </head>
 <body>
 <table width="90%" cellspacing="1" bgcolor="#6495ED">

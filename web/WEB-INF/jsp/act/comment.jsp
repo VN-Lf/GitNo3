@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>历史审核信息</title>
 </head>
 <body>
 <a href="${pageContext.request.contextPath }/myJobList">返回</a>

@@ -67,7 +67,7 @@
 
 <body>
 <div id="left" style="width: 30%;height: 100%;float: left;;background-color: rgb(136, 136, 221);">
-    <h1>左边 推送内容</h1>
+    <h1>左边 推送内容  </h1>
     <img id="obj1" class="img1" alt="" src="${pageContext.request.contextPath }/photos/l.jpeg" width="340" height="363" border="0">
 </div>
 <div id="conter" style="width:40%;height: 100%;float: left;">

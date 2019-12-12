@@ -10,7 +10,7 @@
 <form action="${pageContext.request.contextPath}/act/complete" theme="simple" method="post">
     <input type="hidden" name="jobId" value="${job.jobId}"/>
     <input type="hidden" name="taskId" value="${taskId}"/>
-    <table width="90%" cellspacing="1" bgcolor="#6495ED">
+    <table style="width: 80%;margin: 0 auto" cellspacing="1" bgcolor="#6495ED">
         <tr>
             <td align="right">请假人</td>
             <td>${job.userId}</td>

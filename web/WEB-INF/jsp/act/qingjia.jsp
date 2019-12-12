@@ -17,7 +17,7 @@
     <input type="hidden" name="userId" value="<%=use.getEmpId()%>"/>
     <input type="hidden" name="dept" value="<%=use.getEmpDeptId()%>"/>
     <input type="hidden" name="jobType" value="empact"/>
-    <table width="90%" cellspacing="1" bgcolor="#6495ED">
+    <table style="width:50%;margin: 0 auto" cellspacing="1" bgcolor="#6495ED">
         <tr bgcolor="white">
             <td style="width: 700px" align="right">请假天数：</td>
             <td ><input type="text" name="day"/></td>

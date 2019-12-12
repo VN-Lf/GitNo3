@@ -84,8 +84,8 @@
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a style="color: aquamarine">周报管理</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">周报审阅-上级可看</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeeklyCollect" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>周报汇总--审阅</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: aquamarine">谈心记录</a>

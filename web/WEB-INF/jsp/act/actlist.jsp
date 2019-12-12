@@ -42,9 +42,9 @@
         </tr>
         <c:forEach items="${processList}" var="pd">
             <tr bgcolor="white">
-                <td>${pd.id }</td>
-                <td>${pd.name }</td>
-                <td>${pd.key }</td>
+                <td>${pd.id}</td>
+                <td>${pd.name}</td>
+                <td>${pd.key}</td>
                 <td><a href="${pageContext.request.contextPath }/delProgressDefine?id=${pd.deploymentId}" onclick="return confirm('确认删除?')">删除流程</a></td>
                 <td><a href="${pageContext.request.contextPath }/viewProcessImage?did=${pd.deploymentId}&imageName=${pd.diagramResourceName}">查看流程图</a>
                 <td><a href="${pageContext.request.contextPath }/toExport?id=${pd.id}">下载流程图</a>

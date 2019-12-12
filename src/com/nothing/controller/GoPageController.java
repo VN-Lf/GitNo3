@@ -46,7 +46,7 @@ public class GoPageController {
     public String toLogin(){
         return "login";
     }
-    //登录
+    //登录判断
     @RequestMapping("/login")
     public String login(HttpServletRequest request,HttpSession session, String zhanghao,String pwd){
         System.out.println(pwd+"密码|用户："+zhanghao);

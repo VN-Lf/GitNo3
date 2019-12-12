@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>我的申请单</title>
     <script src="http://localhost:8888/jquery.js"></script>
     <style>
         table a{

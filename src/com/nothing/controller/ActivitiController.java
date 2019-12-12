@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
-
+//流程控制器
 @Controller
 public class ActivitiController {
     @Resource

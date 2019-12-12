@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>查看图片</title>
 </head>
 <body>
 <!-- 1.根据流程定义的ID和名字获取到规则流程图 -->
