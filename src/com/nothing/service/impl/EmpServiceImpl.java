@@ -2,19 +2,27 @@ package com.nothing.service.impl;
 
 import com.nothing.dao.BaseDao;
 import com.nothing.service.EmpService;
+import com.nothing.vo.charge.Notice;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.EmpEducation;
+import com.nothing.vo.emp.EmpHistory;
 import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-//学生服务器
+//学生服
 @Service
 public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override
     public List selEmpAll() {
         List list = listBySQL("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId");
+        return list;
+    }
+
+    @Override
+    public List selNoticeAll(String type) {
+        List list = listBySQL("select * from notice");
         return list;
     }
 
@@ -38,7 +46,6 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         post.setEmpId(eid);
         addObject(post);
     }
-
 
     @Override
     public void delete(String ids){
@@ -106,5 +113,85 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         updObject(emp);
         updObject(Edu);
         updObject(post);
+    }
+
+    @Override//根据Id获取教育经历列表
+    public List selEmpEducation(int id) {
+        return this.listBySQL("select * from empeducation where empId="+id);
+    }
+
+    @Override//根据Id获取教育经历的数量
+    public int getEmpEducationCount(int id) {
+        return this.selectcount("select count(*) from empeducation where empId ="+id);
+    }
+
+    @Override//根据Id获取教育经历
+    public EmpEducation getEdu(int eid) {
+        EmpEducation education  = (EmpEducation) this.getObject(EmpEducation.class, eid);
+        return education;
+    }
+
+    @Override//修改教育经历
+    public void eduUp(EmpEducation edu) {
+        this.updObject(edu);
+    }
+
+    @Override//删除教育经历
+    public void eduDel(String id) {
+        this.executeSQL("delete from empeducation where empEduId in("+id+")");
+    }
+
+    @Override//新增教育经历
+    public void eduAdd(EmpEducation edu) {
+        this.addObject(edu);
+    }
+
+    @Override//根据Id获取工作经历列表
+    public List jobHis(int id) {
+        return this.listBySQL("select * from emphistory where empId="+id);
+    }
+
+    @Override//根据Id获取工作经历条数
+    public int jobHisCount(int id) {
+        return this.selectcount("select count(*) from emphistory where empId ="+id);
+    }
+
+    @Override//根据Id获取工作经历
+    public EmpHistory getJob(int id) {
+        EmpHistory eh  = (EmpHistory) this.getObject(EmpHistory.class, id);
+        return eh;
+    }
+
+    @Override//修改工作经历
+    public void jobUp(EmpHistory eh) {
+        this.updObject(eh);
+    }
+
+    @Override///根据Id删除工作经历
+    public void jobDel(String id) {
+        this.executeSQL("delete from emphistory where empHisId in("+id+")");
+    }
+
+    @Override//新增工作经历
+    public void jobAdd(EmpHistory eh) {
+        this.addObject(eh);
+    }
+
+    @Override
+    public void addNotice(Notice notice, int lx) {
+        if(lx == 1){
+            addObject(notice);
+        }else if(lx == 2) {
+            updObject(notice);
+        }else if(lx == 3){
+            delObject(notice);
+        }
+    }
+
+    @Override
+    public Notice chaNotice(String nid) {
+        System.out.println("nid:"+nid);
+        Notice emp = new Notice();
+        return (Notice)getObject(emp.getClass(),Integer.parseInt(nid));
     }
 }

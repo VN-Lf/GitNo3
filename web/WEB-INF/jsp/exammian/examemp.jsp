@@ -38,7 +38,7 @@
         <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元素并不是必须的 -->
             <input type="text" name="endtime" id="endtime"  class="layui-input">
         </div>
-        <input class="layui-btn layui-btn-normal" id="selectexam" value="搜索" />
+        <input class="layui-btn layui-btn-normal" id="selectexam" style="width: 80px" value="搜索" />
     </form>
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
@@ -62,6 +62,7 @@
         table.render({
             elem: '#demo'
             ,height: 312
+            ,method:'post'
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/exam/empexamlist' //数据接口
             ,page: true //开启分页
@@ -70,7 +71,7 @@
                 {type:'checkbox',fixed:'left'}
                 ,{field: 'aduitLogid', title: '编号', sort: true}
                 ,{field: 'Remark', title: '考核内容'}
-                ,{field: 'empid', title: '员工id'}
+                ,{field: 'empName', title: '员工姓名'}
                 ,{field: 'Scores', title: '考核分数', sort: true}
                 ,{field: 'auditDate', title: '考核时间',templet: function(d){return dateFormat(d.auditDate)}}
                 ,{field: 'auditPerson', title: '录入人员'}
