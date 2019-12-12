@@ -6,19 +6,26 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!---->
+<%@include file="../../../index.jsp"%>
 <html>
 <head>
     <title>员工列表页</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
-    <script src="http://localhost:8888/jquery.js"></script>
+    <style type="text/css">
+        .layui-table-tool {
+            z-index: 0;
+        }
+    </style>
 </head>
-<body>
-<div style="width: 90%;margin: 0 auto">
-    <table id="demo" lay-filter="test"></table>
-</div>
-
-<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+<body id="main" class="easyui-layout">
+    <div data-options="region:'center',split:true">
+        <div style="width: 99%;margin: 0 auto">
+            <table id="demo" lay-filter="test"></table>
+        </div>
+    </div>
+    <div id="east" data-options="region:'east',collapsed:true,title:'其他信息'" style="width: 650px;">
+        <h1 style="text-align: center" >There's nothing here</h1>
+    </div>
+</body>
 <script>
     layui.use('table', function(){
         var table = layui.table;
@@ -31,26 +38,26 @@
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox'}
-                ,{field: 'empId', title: '编号', width:80, sort: true}
-                ,{field: 'empName', title: '姓名', width:100}
-                ,{field: 'deptName', title: '部门', width:100}
-                ,{field: 'postName', title: '职务', width:200}
-                ,{field: 'empSex', title: '性别', width: 80}
-                ,{field: 'empPhone', title: '手机号码', width:150}
-                ,{field: 'empAddress', title: '家庭地址', width:200}
-                ,{field: 'empLoginStatus', title: '当前状态', width:100,
+                ,{field: 'empId', title: '编号', width:73, sort: true}
+                ,{field: 'empName', title: '姓名', width:87}
+                ,{field: 'deptName', title: '部门', width:87}
+                ,{field: 'postName', title: '职务', width:87}
+                ,{field: 'empSex', title: '性别', width: 63}
+                ,{field: 'empPhone', title: '手机号码', width:122}
+                ,{field: 'empAddress', title: '家庭地址', width:140}
+                ,{field: 'empLoginStatus', title: '当前状态', width:87,
                     templet:function (row){
                         return loginStatus(row.empLoginStatus);
                     }
-                },{field: 'empId', title: '是否禁用', width:100,
+                },{field: 'empId', title: '是否禁用', width:87,
                     templet:function (row){
                         return onclikId(row.empId);
                     }
-                },{field: 'empId', title: '密码', width:100,
+                },{field: 'empId', title: '密码', width:88,
                     templet:function (row){
-                        return "<a class=\"layui-btn layui-btn-warm layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
+                        return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
                     }
-                },{field: 'empId', title: '操作', width:110,
+                },,{field: 'empId', title: '操作', width:150,
                     templet:function (row){
                         return chaoZuo(row.empId);
                     }
@@ -96,24 +103,11 @@
                 alert("打开："+data.value);
             }else if(big.checked == false){
                 alert("关闭"+data.value);
-            }//封禁按钮待完善
+            }
             //console.log(data.value); //复选框value值，也可以通过data.elem.value得到
             //console.log(data.othis); //得到美化后的DOM对象
         });
     });
-    function createXMLHttp() {
-        try {
-            return new ActiveXObject("Msxm12.XMLHTTP");
-        }catch (e){}
-        try {
-            return new ActiveXObject("Microsoft.XMLHTTP");
-        }catch (e){}
-        try{
-            return new XMLHttpRequest();
-        }catch (e){}
-        alert("无法打开");
-        return null;
-    }
     //判断当前用户的状态
     function loginStatus(v){
         if(v == 1){
@@ -133,32 +127,22 @@
             "  <button onclick='updateUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
             "    <i class=\"layui-icon\">&#xe642;</i>\n" +
             "  </button>\n" +
-            "  <button onclick='delUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-danger layui-btn-sm\">\n" +
+            "  <button onclick='delUser("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
             "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+            "  </button>\n" +
+            "  <button onclick='ortherInf("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
+            "    <i class=\"layui-icon\">&#xe615;</i>\n" +
             "  </button>\n" +
             "</div>"
     }
 
     function updateUser(id) {
-        window.location.href="${pageContext.request.contextPath}/emp/empup?id="+id;
+        alert("编辑用户id："+id);
     }
 
     function delUser(id) {
-        if (confirm("确定删除吗？")) {
-            var xmlHttp = createXMLHttp();
-            xmlHttp.onreadystatechange = function () {
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-                    if (xmlHttp.responseText == "true") {
-                        location.reload();
-                    }
-                }
-            }
-            var url = "${pageContext.request.contextPath}/emp/toDelon?sid="+id;
-            xmlHttp.open("post", url, true);
-            xmlHttp.send();
-        }
+        alert("删除用户id："+id);
     }
-
 
     function chonZhi(id) {
         if (confirm("重置密码后为123456 确认吗？")) {
@@ -176,6 +160,15 @@
             xmlHttp.send();
         }
     }
+
+    //查看其他信息
+    function ortherInf(empid) {
+        $('#main').layout('expand','east');
+        load(empid);
+    }
+    function load(empid) {
+        document.getElementById("east").innerHTML =  '<object type="text/html" data="empEdu?id='+empid+'" width="100%" height="100%"></object>';
+    }
 </script>
 
 <script type="text/html" id="toolbarDemo">
@@ -185,5 +178,4 @@
         <button class="layui-btn layui-btn-sm"><a style="color: white" href="${pageContext.request.contextPath}/to/empadd">本页新增</a></button>
     </div>
 </script>
-</body>
 </html>
