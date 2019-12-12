@@ -1,7 +1,7 @@
 package com.nothing.vo.Edu;
 
 import javax.persistence.*;
-
+//
 //班级表
 @Entity
 @Table(name="ClassVo")
@@ -12,14 +12,23 @@ public class ClassVo{
     private  Integer classId;
     private Integer classNo;
     private Integer classAdviser ;//班主任
+    private String className;
     private Integer classCount;
     private Integer classTeacher ;//授课老师
-    private Integer classTerm ;//学年
-    private Integer classType;
+    private Integer classTerm ;//学期
+        private Integer classType;
     private String  classRemark;
     private Integer classFall;//学年
     private Integer deptId;
-    private Integer classMajorId;
+    private Integer MajorId;
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
     public Integer getClassId(){
         return classId;
@@ -101,11 +110,11 @@ public class ClassVo{
         this.deptId = deptId;
     }
 
-    public Integer getClassMajorId() {
-        return classMajorId;
+    public Integer getMajorId() {
+        return MajorId;
     }
 
-    public void setClassMajorId(Integer classMajorId) {
-        this.classMajorId = classMajorId;
+    public void setMajorId(Integer majorId) {
+        MajorId = majorId;
     }
 }

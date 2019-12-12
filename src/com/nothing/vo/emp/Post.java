@@ -2,7 +2,7 @@ package com.nothing.vo.emp;
 
 import javax.persistence.*;
 
-//岗位表
+//岗位表//////
 @Entity
 @Table(name = "Post")
 public class Post {

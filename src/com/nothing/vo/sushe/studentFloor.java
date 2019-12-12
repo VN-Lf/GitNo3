@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 
-@Entity
+@Entity//
 @Table(name = "studentFloor")
 public class studentFloor {//宿舍资料
     @Id
@@ -13,7 +13,7 @@ public class studentFloor {//宿舍资料
     private Integer floorId;//楼栋id
     private String floorName;//楼栋名称
 
-    public Integer getFloorId() {
+    public Integer getFloorId(){
         return floorId;
     }
 

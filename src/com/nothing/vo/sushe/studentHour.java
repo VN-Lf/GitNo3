@@ -2,13 +2,13 @@ package com.nothing.vo.sushe;
 
 import javax.persistence.*;
 
-@Entity
+@Entity//
 @Table(name = "studentHour")
 public class studentHour {//楼栋维护
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
-    private Integer HourId;
+    private Integer stuHours;
     private String hourName;//宿舍房号
     private String addr;//地址
     private Integer count;//宿舍人数
@@ -16,12 +16,12 @@ public class studentHour {//楼栋维护
     private Integer numberBeds;//床位数
     private Integer hourIddsc;//序号
 
-    public Integer getHourId() {
-        return HourId;
+    public Integer getStuHours() {
+        return stuHours;
     }
 
-    public void setHourId(Integer hourId) {
-        HourId = hourId;
+    public void setStuHours(Integer stuHours) {
+        this.stuHours = stuHours;
     }
 
     public String getHourName() {

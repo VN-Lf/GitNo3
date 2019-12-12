@@ -1,7 +1,7 @@
 package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Date;//
 //学生请假表
 @Entity
 @Table(name="StudentHoliday")
@@ -10,7 +10,7 @@ public class StudentHoliday{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =3500, allocationSize = 1)
     private Integer holidayId;
-    private Integer StudentId;
+    private Integer studId;
     private Integer holidayDay;
     private Date startTime;
     private Date endTime;
@@ -26,12 +26,12 @@ public class StudentHoliday{
         this.holidayId = holidayId;
     }
 
-    public Integer getStudentId() {
-        return StudentId;
+    public Integer getStudId() {
+        return studId;
     }
 
-    public void setStudentId(Integer studentId) {
-        StudentId = studentId;
+    public void setStudId(Integer studId) {
+        this.studId = studId;
     }
 
     public Integer getHolidayDay() {

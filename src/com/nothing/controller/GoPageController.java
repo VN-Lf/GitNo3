@@ -18,7 +18,7 @@ import java.util.Map;
  *转跳页面总控制器 登录判断
  */
 @Controller
-@RequestMapping("to")
+@RequestMapping("/to")
 public class GoPageController {
     @Resource
     GoPageService service;
