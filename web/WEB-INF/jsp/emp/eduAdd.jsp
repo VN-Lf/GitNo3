@@ -59,7 +59,6 @@
     </form>
 </body>
 <script>
-    var d = parseInt(2019-12-02)
     layui.use(['form','laydate'], function(){
         var form = layui.form,
             layer = layui.layer,
