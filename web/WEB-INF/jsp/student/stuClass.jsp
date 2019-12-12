@@ -21,14 +21,14 @@
     <div class="layui-form-item">
         <label class="layui-form-label">班级名</label>
         <div class="layui-input-block">
-            <input id="className" type="text" name="className" required  lay-verify="required" placeholder="家长姓名" autocomplete="off" class="layui-input">
+            <input id="className" type="text" name="className" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">班级人数</label>
         <div class="layui-input-block">
-            <input id="relation" type="text" name="relation" required  lay-verify="required" placeholder="与学生关系" autocomplete="off" class="layui-input">
+            <input id="relation" type="text" name="relation" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -54,7 +54,7 @@
 
     <label class="layui-form-label" style="width:100px">学期</label>
     <div class="layui-input-block">
-        <select name="classTeacher" lay-verify="required" placeholder=" " id="classTerm">
+        <select name="classTerm" lay-verify="required" placeholder=" " id="classTerm">
             <c:forEach items="${term}" var="te">
                 <option value="${te.termId}">${te.termName}</option>
             </c:forEach>
@@ -64,13 +64,31 @@
 
     <label class="layui-form-label" style="width:100px">学年</label>
     <div class="layui-input-block">
-        <select name="classTeacher" lay-verify="required" placeholder=" " id="classFall">
+        <select name="classFall" lay-verify="required" placeholder=" " id="classFall">
             <c:forEach items="${fall}" var="fall">
                 <option value="${fall.fallId}">${fall.fallLevel}</option>
             </c:forEach>
         </select>
     </div>
 
+    <label class="layui-form-label" style="width:100px">班级类型</label>
+    <div class="layui-input-block">
+        <select name="classType" lay-verify="required" placeholder=" " id="classType">
+            <c:forEach items="${classType}" var="ct">
+                <option value="${ct.classType}">${ct.classTypeName}</option>
+            </c:forEach>
+        </select>
+    </div>
+
+
+    <label class="layui-form-label" style="width:100px">专业</label>
+    <div class="layui-input-block">
+        <select name="MajorId" lay-verify="required" placeholder=" " id="MajorId">
+            <c:forEach items="${majorList}" var="ma">
+                <option value="${ma.MajorId}">${ma.MajorName}</option>
+            </c:forEach>
+        </select>
+    </div>
 
 
     <div class="layui-form-item">
@@ -78,6 +96,8 @@
             <button class="layui-btn" lay-submit lay-filter="formDemoCla">确定</button>
         </div>
     </div>
+
+
 </form>
 
 </body>
@@ -95,7 +115,7 @@
             elem: '#demo'
             ,height: 400
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,url: '${pageContext.request.contextPath}/stu/cla/toList' //数据接口
+            ,url: '${pageContext.request.contextPath}/stu/claMian/toList' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
@@ -111,6 +131,7 @@
                 ,{field: 'deptName', title: '系别', width:80}
                 ,{field: 'fallLevel', title: '学年', width:80}
                 ,{field: 'classTypeName', title: '班级类型', width:80}
+                ,{field: 'MajorName', title: '专业', width:80}
                 ,{width:150, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo'}
             ]]
         });
@@ -142,11 +163,10 @@
                     openStuAc =layer.open({
                         type: 1,
                         title:"新增",
-                        area:['700px','400px'],
+                        area:['900px','800px'],
                         content: $("#addClaForm"),
                         closeBtn :1,
                         success: function(layero, index){
-                            document.getElementById("addClaForm").reset();
                             $("#classId").val(0);
                         }
                     });
@@ -180,7 +200,7 @@
                     var classId = data.classId;
                     openStuAc = layer.open({
                         type: 1,
-                        title:'家庭信息修改',
+                        title:'班级管理修改',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
                         area: ['700px', '400px'],
@@ -199,6 +219,23 @@
                     });
                     break;
             }
+        });
+
+        var form = layui.form;
+        //监听提交
+        form.on('submit(formDemoCla)',function(data){
+            $.ajax({
+                url:'${pageContext.request.contextPath}/stu/toStuClss',
+                type:'post',
+                data:data.field,
+                dataType:'json',
+                success:function (data){
+                }
+            });
+            document.getElementById("addClaForm").reset();
+            layer.close(openStuAc);
+            table.reload('demo');
+            return false;
         });
 
     })

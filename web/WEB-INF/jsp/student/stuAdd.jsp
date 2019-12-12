@@ -147,10 +147,16 @@
                 </div>
             </div>
 
+
             <div class="layui-form-item">
-                <label class="layui-form-label">所在寝室</label>
+                <label class="layui-form-label">所在楼栋</label>
                 <div class="layui-input-block">
-                    <input id="stuHours" type="text" name="stuHours" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                    <select name="stuHours" lay-verify="required"  placeholder="  ">
+                        <option value=" "> </option>
+                        <c:forEach items="${hoursList}" var="hours">
+                            <option value="${hours.stuHours}">${hours.hourName}</option>
+                        </c:forEach>
+                    </select>
                 </div>
             </div>
 

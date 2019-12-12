@@ -12,7 +12,6 @@ import java.util.List;
  */
 
 @Transactional
-@Repository
 public class BaseDao {
     @Resource
     private SessionFactory sessionFactory;

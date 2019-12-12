@@ -8,24 +8,22 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class TuitionServiceImpl implements TuitionService {
+public class TuitionServiceImpl extends BaseDao implements TuitionService {
 
-    @Resource
-    BaseDao dao;
     //查询出学费信息
     @Override
     public List selectTuition(String sql) {
-        return dao.listBySQL(sql);
+        return listBySQL(sql);
     }
 
     @Override
     public int SelcctTuitioncount(String sql) {
-        return dao.selTotalRow(sql);
+        return selTotalRow(sql);
     }
 
     @Override
     public void deleteTuition(String id) {
-        dao.executeSQL("delete from studenthour where HourId in ("+id+")");
+        executeSQL("delete from studenthour where HourId in ("+id+")");
     }
 
 

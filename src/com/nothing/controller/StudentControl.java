@@ -2,9 +2,7 @@ package com.nothing.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.StuSer.StuSer;
-import com.nothing.vo.Edu.ClassVo;
-import com.nothing.vo.Edu.StuFall;
-import com.nothing.vo.Edu.Term;
+import com.nothing.vo.Edu.*;
 import com.nothing.vo.Sdudent.*;
 import com.nothing.vo.emp.Dept;
 import com.nothing.vo.sushe.studentFloor;
@@ -50,11 +48,15 @@ public class StudentControl{
             List<Map> dept  = stuSer.listO(new Dept());
             List<Map> term = stuSer.listO(new Term());
             List <Map> fall  = stuSer.listO(new StuFall());
+            List <Map> classType = stuSer.listO(new ClassType());
+            List<Map> majorList = stuSer.listO(new EduMajor());
             request.setAttribute("bzrList",bzrList);
             request.setAttribute("jsList",jsList);
             request.setAttribute("dept",dept);
             request.setAttribute("term",term);
             request.setAttribute("fall",fall);
+            request.setAttribute("classType",classType);
+            request.setAttribute("majorList",majorList);
             return "student/stuClass";
         }
         return "";
@@ -81,7 +83,7 @@ public class StudentControl{
         return jsonObject;
     }
 
-    @RequestMapping("/con")
+    @RequestMapping("con")
     @ResponseBody
     public JSONObject toConStuList(String stuSelectName,String  stuSelectPhone,String stuSelectCla,String stuSelectFloor){
         if(stuSelectCla==null){
@@ -123,12 +125,14 @@ public class StudentControl{
         }
         return "成功";
     }
-    @RequestMapping("/toAdd")
+    @RequestMapping("toAdd")
     public String toAdd(HttpServletRequest request,String stuId){
         List classVoList = stuSer.listObj(new ClassVo());
         List foolList = stuSer.listObj(new studentFloor());
+        List hoursList = stuSer.listO(new studentHour());
         request.setAttribute("foolList",foolList);
         request.setAttribute("classList",classVoList);
+        request.setAttribute("hoursList",hoursList);
         System.out.println("zhlililili"+stuId);
         if(stuId.equals("0")){
             return "student/stuAdd";
@@ -142,7 +146,7 @@ public class StudentControl{
             return "student/stuUpdate";
         }
 
-    @RequestMapping("/add")
+    @RequestMapping("add")
     public String add(Student student,String enterDate,String birthday) throws ParseException{
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date enterD = formatter.parse(enterDate);
@@ -217,6 +221,14 @@ public class StudentControl{
     public String toStuHap(StuHappening stuHappening,String hapEmpID,String studId){
             stuHappening.setEmpId(hapEmpID);
             System.out.println("进啦啊~"+stuHappening.toString()+"studId"+studId);
+        return "成功";
+    }
+
+
+    @RequestMapping("toStuClss")
+    @ResponseBody
+    public String toStuClss(ClassVo classVo){
+        stuSer.addStu(classVo);
         return "成功";
     }
 

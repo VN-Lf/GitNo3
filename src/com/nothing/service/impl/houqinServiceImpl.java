@@ -8,15 +8,14 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class houqinServiceImpl implements houqinService {
-    @Resource
-    BaseDao dao;
+public class houqinServiceImpl extends  BaseDao implements houqinService {
+
     //获取保修列表
     public List repairList(String sql){
-        return dao.listBySQL(sql);
+        return listBySQL(sql);
     }
     //获取数据数量
     public int getCount(String sql){
-        return dao.selectcount(sql);
+        return selectcount(sql);
     }
 }
