@@ -12,14 +12,17 @@
     <title>Title</title>
 </head>
 <body>
-        <div id="empTabs" class="easyui-tabs" fit="true">
-            <div title="教育经历">
-                <table id="edu" lay-filter="edu"></table>
-            </div>
-            <div title="工作经历">
-                <table id="his" lay-filter="job"></table>
-            </div>
+    <div id="empTabs" class="easyui-tabs" fit="true">
+        <div title="教育经历">
+            <table id="edu" lay-filter="edu"></table>
         </div>
+        <div title="工作经历">
+            <table id="job" lay-filter="job"></table>
+        </div>
+        <div title="家庭信息">
+            <table id="fam" lay-filter="fam"></table>
+        </div>
+    </div>
 </body>
 <script>
     layui.use('table', function(){
@@ -37,17 +40,13 @@
                 ,{field: 'empEucStartDay', title: '入校时间', width:110}
                 ,{field: 'empEucEndDay', title: '毕业时间', width:110}
                 ,{field: 'empEucRemark', title: '说明', width:100}
-                ,{field: 'empId', title: '操作', width: 120, templet:
-                     function (row){
-                         return eduAct(row.empEduId);
-                    }
-                }
+                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
             ]]
         });
         table.render({
-            elem: '#his'
+            elem: '#job'
             ,height: 312
-            ,toolbar: '#toolbarJH' //开启头部工具栏，并为其绑定左侧模板
+            ,toolbar: '#toolbarJob' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/empHis?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
@@ -58,11 +57,22 @@
                 ,{field: 'empHisEndDay', title: '离职时间', width:110}
                 ,{field: 'empLiftReason', title: '离职原因', width:100}
                 ,{field: 'empHisRemark', title: '说明', width:100}
-                ,{field: 'empId', title: '操作', width: 120, templet:
-                        function (row){
-                            return jobAct(row.empHisId);
-                        }
-                }
+                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
+            ]]
+        });
+        table.render({
+            elem: '#fam'
+            ,height: 312
+            ,toolbar: '#toolbarFam' //开启头部工具栏，并为其绑定左侧模板
+            ,url: '${pageContext.request.contextPath}/emp/famInf?eid='+${currActEmpId} //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {type:'checkbox'}
+                ,{field: 'empContact', title: '联系人', width:110}
+                ,{field: 'empRelation', title: '关系', width:110}
+                ,{field: 'empContactphone', title: '联系电话', width:100}
+                ,{field: 'empFamImfRemark', title: '说明', width:100}
+                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
             ]]
         });
 
@@ -124,7 +134,84 @@
                     break;
             };
         });
+        table.on('toolbar(fam)', function(obj){//注：tool 是工具条事件名，job 是 table 原始容器的属性 lay-filter="对应的值"
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'isDele':
+                    var checkStatus = table.checkStatus('fam'),
+                        data = checkStatus.data,
+                        famId = "";
+                    if(data.length > 0){
+                        for (var i in data){
+                            famId+=data[i].empFamImfId+",";
+                        }
+                        layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
+                            $.post('${pageContext.request.contextPath}/emp/famDel',{
+                                id:famId
+                            },function(data){
+                                alert("删除"+data);
+                                table.reload("fam");
+                                layer.close(index);
+                            });
+                        });
+                    }else{
+                        layer.msg('请选择需要删除的数据');
+                    }
+                    break;
+                case 'isAdd':
+                    addTab("新增记录","${pageContext.request.contextPath}/emp/famAddPage");
+                    table.reload("fam")
+                    break;
+            };
+        });
+        //监听工具条
+        table.on('tool(edu)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'up') {
+                addTab("修改记录","${pageContext.request.contextPath}/emp/eduUpPage?eid="+data.empId)
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.post('${pageContext.request.contextPath}/emp/eduDel',{id:data.empId},function (data) {
+                        //显示提示框
+                        layer.msg("删除成功", {icon: 6});
+                        table.reload("edu");
+                    });
+                    return false;
+                });
+            }
+        });
+        table.on('tool(job)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'up') {
+                addTab("修改记录","${pageContext.request.contextPath}/emp/jobUpPage?eid="+data.empHisId);
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.post('${pageContext.request.contextPath}/emp/jobDel',{id:data.empHisId},function (data) {
+                        //显示提示框
+                        layer.msg("删除成功", {icon: 6});
+                        table.reload("up");
+                    });
+                    return false;
+                });
+            } else if (obj.event === 'edit') {
 
+            }
+        });
+        table.on('tool(fam)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'up') {
+                addTab("修改记录","${pageContext.request.contextPath}/emp/famUpPage?eid="+data.empFamImfId);
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.post('${pageContext.request.contextPath}/emp/famDel',{id:data.empFamImfId},function (data) {
+                        //显示提示框
+                        layer.msg("删除成功", {icon: 6});
+                        table.reload("fam");
+                    });
+                    return false;
+                });
+            }
+        });
         table.on('checkbox(filter)', function(data){
             //console.log(data.elem); //得到checkbox原始DOM对象
             if(data.elem.checked == true){
@@ -170,6 +257,7 @@
             $('#empTabs').tabs('close', subtitle);
         })
     }
+
     //edu生成操作按钮
     function eduAct(id) {
         return "<div class=\"layui-btn-group\">\n" +
@@ -188,10 +276,10 @@
         layer.confirm('确认删除  ',{icon: 3, title: '提示信息'},function (d) {
             $.post('${pageContext.request.contextPath}/emp/eduDel',{id:id},function (data) {
                 layer.msg(data);
-                table.reload("edu");
             })
         })
     }
+
     //job生成操作按钮
     function jobAct(id) {
         return "<div class=\"layui-btn-group\">\n" +
@@ -210,7 +298,28 @@
         layer.confirm('确认删除  ',{icon: 3, title: '提示信息'},function (d) {
             $.post('${pageContext.request.contextPath}/emp/jobDel',{id:id},function (data) {
                 layer.msg(data);
-                table.reload("his");
+            })
+        })
+    }
+
+    //fam生成操作按钮
+    function famAct(id) {
+        return "<div class=\"layui-btn-group\">\n" +
+            "  <button onclick='famUp("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
+            "    <i class=\"layui-icon\">&#xe642;</i>\n" +
+            "  </button>\n" +
+            "  <button onclick='famDel("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
+            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+            "  </button>\n"
+        "</div>"
+    }
+    function famUp(id) {
+        addTab("修改记录","${pageContext.request.contextPath}/emp/famUpPage?eid="+id)
+    }
+    function famDel(id) {
+        layer.confirm('确认删除  ',{icon: 3, title: '提示信息'},function (d) {
+            $.post('${pageContext.request.contextPath}/emp/famDel',{id:id},function (data) {
+                layer.msg(data);
             })
         })
     }
@@ -222,10 +331,22 @@
         <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
     </div>
 </script>
-<script type="text/html" id="toolbarJH">
+<script type="text/html" id="toolbarJob">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增记录</button>
         <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
     </div>
+</script>
+<script type="text/html" id="toolbarFam">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增记录</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
+    </div>
+</script>
+
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="barOption">
+    <a class="layui-btn layui-btn-mini" lay-event="up">修改</a>
+    <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del">删除</a>
 </script>
 </html>

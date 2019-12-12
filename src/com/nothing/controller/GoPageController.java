@@ -95,6 +95,6 @@ public class GoPageController {
     public String toEmpEducation(String id, HttpSession session) {
         int eid = Integer.parseInt(id);
         session.setAttribute("currActEmpId",eid);
-        return "emp/educationList";
+        return "emp/ortherInf";
     }
 }
