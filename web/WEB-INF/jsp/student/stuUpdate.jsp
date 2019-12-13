@@ -12,6 +12,8 @@
 <head>
     <title>新增员工</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
+    <script src="${pageContext.request.contextPath}/layui/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
 </head>
 <body>
 
@@ -368,7 +370,7 @@
     }
 
 
-    layui.use('form', function(){
+    layui.use(['form','laydate'], function(){
         var form = layui.form;
         form.val("gg",{
             "stuSex":"${requestScope.stu.stuSex}"
@@ -395,25 +397,18 @@
             layer.msg(JSON.stringify(data.field));
             return true;
         });
+
+
+        laydate.render({
+            elem: '#birthday' //指定元素
+        });
+
+        laydate.render({
+            elem: '#enterDate' //指定元素o
+        });
     });
     //Demo
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
 
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#rutime' //指定元素
-        });
-    });
-
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#srtime' //指定元素
-        });
-    });
 </script>
 </body>
 </html>

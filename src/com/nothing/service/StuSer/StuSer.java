@@ -27,4 +27,7 @@ public interface StuSer{
     void delCla(String ids);
     int conStu(String stuSelectName, String stuSelectPhone, String stuSelectCla, String stuSelectFloor);
     List  classTeacher(String type);
+    void delClaStu(String classId);
+    int  countClaCon(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall);
+    List conClas(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall);
 }

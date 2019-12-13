@@ -87,7 +87,7 @@ public class StuSerImp extends BaseDao implements StuSer{
 
 
     @Override
-    public List stuRep(String  studId) {
+    public List stuRep(String  studId){
         return listBySQL("select * , e.empName as empNames from stuReplyScore rep left join emp e  using(empId)  where rep.studId = "+studId );
     }
 
@@ -97,9 +97,8 @@ public class StuSerImp extends BaseDao implements StuSer{
     }
 
     @Override
-    public List classList() {
-        return listBySQL("\n" +
-                "select c.classId,c.classAdviser,c.classCount,c.classFall,c.MajorId,c.classNo,c.classRemark,\n" +
+    public List classList(){
+        return listBySQL("select c.classId,c.classAdviser,c.classCount,c.classFall,c.MajorId,c.classNo,c.classRemark,\n" +
                 "c.classTeacher,c.classTerm,c.classType,c.deptId,c.className,t.termName as tnames,d.deptName,\n" +
                 "ma.MajorName ,ma.deptId as maDept, ma.MajorRemark,ct.classTypeName, \n" +
                 "e.empName as bzr,ee.empName as js ,f.fallLevel from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join Term t on c.classTerm = t.termId left join StuFall f on c.classFall = f.fallId left join edumajor ma using(deptId,MajorId) left join dept d using(deptId) left join classType ct using(classType) \n");
@@ -107,7 +106,7 @@ public class StuSerImp extends BaseDao implements StuSer{
 
     @Override
     public void delCla(String ids){
-          executeSQL("delete from StuFimaly where classVo in ("+ids+")");
+          executeSQL("delete from classVo where classId in ("+ids+")");
     }
 
     @Override
@@ -131,8 +130,40 @@ public class StuSerImp extends BaseDao implements StuSer{
 
     @Override
     public List  classTeacher(String type){
-        return listBySQL("select *,e.empName as names from  post left join emp e using(empId) where postName like '%"+type+"%' ");
+        return listBySQL("select e.empId,e.empName as names from  post left join emp e using(empId) where postName like '%"+type+"%' ");
     }
+
+    @Override
+    public void delClaStu(String classId){
+        executeSQL("update student set classId = 0 where classId in ("+classId+")");
+    }
+
+    @Override
+    public int countClaCon(String claSelectName, String claSelectAdviser, String claSelectTeacher, String claSelectTerm, String claSelectType, String claSelectFall) {
+        return selTotalRow("\n" +
+                "select count(*) from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join Term t on c.classTerm = t.termId left join StuFall f on c.classFall = f.fallId left join edumajor ma using(MajorId,deptId) left join dept d using(deptId) left join classType ct using(classType) \n" +
+                "where className like '%"+claSelectName+"%' \n" +
+                "and e.empName like '%"+claSelectAdviser+"%'\n" +
+                "and ee.empName like '%"+claSelectTeacher+"%'\n" +
+                "and t.termName like '%"+claSelectTerm+"%'\n" +
+                "and classTypeName like '%"+claSelectType+"%'\n" +
+                "and  f.fallLevel like '%"+claSelectFall+"%'");
+    }
+
+    @Override
+    public List conClas(String claSelectName, String claSelectAdviser, String claSelectTeacher, String claSelectTerm, String claSelectType, String claSelectFall) {
+        return listBySQL("select c.classId,c.classAdviser,c.classCount,c.classFall,c.MajorId,c.classNo,c.classRemark,\n" +
+                "c.classTeacher,c.classTerm,c.classType,c.deptId,c.className,t.termName as tnames,d.deptName,\n" +
+                "ma.MajorName ,ma.deptId as maDept, ma.MajorRemark,ct.classTypeName,\n" +
+                "e.empName as bzr,ee.empName as js ,f.fallLevel from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join Term t on c.classTerm = t.termId left join StuFall f on c.classFall = f.fallId left join edumajor ma using(MajorId,deptId) left join dept d using(deptId) left join classType ct using(classType) \n" +
+                "where className like '%"+claSelectName+"%' \n" +
+                "and e.empName like '%"+claSelectAdviser+"%'\n" +
+                "and ee.empName like '%"+claSelectTeacher+"%'\n" +
+                "and t.termName like '%"+claSelectTerm+"%'\n" +
+                "and classTypeName like '%"+claSelectType+"%'\n" +
+                "and  f.fallLevel like '%"+claSelectFall+"%'\n");
+    }
+
 
 
 }
