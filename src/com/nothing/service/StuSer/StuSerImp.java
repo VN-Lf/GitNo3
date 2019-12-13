@@ -7,7 +7,7 @@ import com.nothing.vo.Sdudent.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-//修改学生要查出班级和寝室的name放在页面的下拉框上。。。。。
+//修改学生要查出班级和寝室的name放在页面的下拉框上。。。。。/////////
 @Service
 public class StuSerImp extends BaseDao implements StuSer{
     @Override

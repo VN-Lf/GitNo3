@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.JarEntry;
-//多表查询的条数问题//////
+//多表查询的条数问题/////////////
 @Controller
 @RequestMapping("/stu")
 public class StudentControl{
