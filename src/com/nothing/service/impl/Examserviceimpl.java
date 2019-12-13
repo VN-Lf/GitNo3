@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 @Service
-public class Examserviceimpl extends  BaseDao implements Examservice{
+    public class Examserviceimpl extends  BaseDao implements Examservice{
 
     @Override
     public List examlist(String sql) {

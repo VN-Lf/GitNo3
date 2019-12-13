@@ -1,8 +1,10 @@
 package com.nothing.controller;
 
 
+import com.nothing.service.EmpService;
 import com.nothing.service.GoPageService;
 import com.nothing.vo.emp.Emp;
+import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,6 +24,8 @@ import java.util.Map;
 public class GoPageController {
     @Resource
     GoPageService service;
+    @Resource
+    EmpService empService;
     //前往主界面
     @RequestMapping("/home")
     public String toHome(HttpSession session,String color) {
@@ -65,8 +69,9 @@ public class GoPageController {
 
         Emp emp = new Emp();
         emp = (Emp) service.selectEmpGoPage(emp,i);
-
+        Post post = empService.sqlPostVo(""+emp.getEmpId());
         session.setAttribute("empId",emp);
+        session.setAttribute("post",post);
         return "redirect:home";
     }
     //退出登录

@@ -1,4 +1,5 @@
-<%@ page import="com.nothing.vo.emp.Emp" %><%--
+<%@ page import="com.nothing.vo.emp.Emp" %>
+<%@ page import="com.nothing.vo.emp.Post" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/3
@@ -12,6 +13,7 @@
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <jsp:include page="../../index.jsp"></jsp:include>
     <% Emp use = (Emp) session.getAttribute("empId");%>
+    <% Post post = (Post) session.getAttribute("post");%>
     <!--dark-hive 纯黑   gray 灰色 pepper-grinder咖啡色-->
     <%String yangshi = (String) session.getAttribute("color");%>
     <link rel="stylesheet"
@@ -27,16 +29,29 @@
         #caidan a{
             text-decoration: none;
             font-size: 16px;
-            color: black;
-        }
+            <%if("dark-hive".equals(yangshi)){%>
+                color: white;
+            <%}else {%>
+                    color: black;
+                <%}%>
+            }
 
         #caidan li:hover {
-            background-color: #D0E5F5;
+            <%if("dark-hive".equals(yangshi)){%>
+                background-color: #0972a5;
+            <%}else {%>
+                background-color: #D0E5F5;
+            <%}%>
             color: #D0E5F5;
         }
 
         #caidan a:hover {
-            color: blue;
+        <%if("dark-hive".equals(yangshi)){%>
+            color: white;
+        <%}else {%>
+            color: black;
+        <%}%>
+        }
             text-decoration: blue;
         }
     </style>
@@ -50,19 +65,22 @@
         <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">我的邮件</a>
+                    <a style="color: green">我的邮件</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myJobList" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>请假相关</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">学生请假</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的周报</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">考勤管理</a>
+                    <a style="color: green">学生请假</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">离职申请</a>
+                    <a style="color: green">考勤管理</a>
+                </li>
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: green">离职申请</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
@@ -82,19 +100,24 @@
                     <a>员工资料</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">周报管理</a>
+                    <a style="color: green">周报管理</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的周报</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeeklyCollect" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>周报汇总--审阅</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">谈心记录</a>
+                    <a style="color: green">谈心记录</a>
                 </li>
+                <%if(post.getPostName().indexOf("部长")!=-1 || post.getPostName().indexOf("校长")!=-1){%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myTask" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>员工请假管理-上级可看</a>
+                    <a>员工请假管理</a>
                 </li>
+                <%}%>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">考勤管理-上级可看</a>
+                    <a style="color: green">考勤管理-上级可看</a>
                 </li>
             </ul>
         </div>
@@ -104,16 +127,16 @@
                     <a>学生资料</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">学生请假</a>
+                    <a style="color: green">学生请假</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">考试成绩</a>
+                    <a style="color: green">考试成绩</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">答辩成绩</a>
+                    <a style="color: green">答辩成绩</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">班级分配</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/claMian" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: green">班级分配</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/dormitory/todormitory" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>宿舍管理</a>
@@ -126,16 +149,16 @@
         <div title="教务管理" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">课程类别</a>
+                    <a style="color: green">课程类别</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">课程管理</a>
+                    <a style="color: green">课程管理</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">试讲培训</a>
+                    <a style="color: green">试讲培训</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">值班管理</a>
+                    <a style="color: green">值班管理</a>
                 </li>
             </ul>
         </div>
@@ -145,7 +168,7 @@
                     <a>报修申请</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">维修管理</a>
+                    <a style="color: green">维修管理</a>
                 </li>
             </ul>
         </div>
@@ -155,10 +178,10 @@
                     <a>考核指标（日常考核）</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">考核录入</a>
+                    <a style="color: green">考核录入</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">考评内容</a>
+                    <a style="color: green">考评内容</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: red">教师考评*</a>
@@ -168,7 +191,7 @@
         <div title="财务管理" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" class="cs-navi-tab">
-                    <a style="color: aquamarine">学费管理</a>
+                    <a style="color: green">学费管理</a>
                 </li>
             </ul>
         </div>
@@ -182,26 +205,26 @@
         <div title="文件管理" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">资料文档-文件上传</a>
+                    <a style="color: green">资料文档-文件上传</a>
                 </li>
             </ul>
         </div>
         <div title="系统报表" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">日常考核</a>
+                    <a style="color: green">日常考核</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">员工请假</a>
+                    <a style="color: green">员工请假</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">学生请假</a>
+                    <a style="color: green">学生请假</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">未打卡说明</a>
+                    <a style="color: green">未打卡说明</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">宿舍统计报表</a>
+                    <a style="color: green">宿舍统计报表</a>
                 </li>
             </ul>
         </div>
@@ -211,7 +234,7 @@
                     <a>流程</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">权限管理</a>
+                    <a style="color: green">权限管理</a>
                 </li>
             </ul>
         </div>
@@ -262,13 +285,21 @@
         var id = $(id2);
         if(shang == null){
             shang = id;
-            id.css('background-color','#FBEC88');
+            <%if("dark-hive".equals(yangshi)){%>
+            id.css('background-color','#0972a5');
+            <%}else {%>
+            id.css('background-color','#D0E5F5');
+            <%}%>
             id.css('border-radius','0 40px 40px 0');
         }else {
             shang.css("background-color","");
             shang.css("border-radius","");
             shang = id;
-            id.css('background-color','#FBEC88');
+            <%if("dark-hive".equals(yangshi)){%>
+            id.css('background-color','#0972a5');
+            <%}else {%>
+            id.css('background-color','#D0E5F5');
+            <%}%>
             id.css('border-radius','0 40px 40px 0');
         }
     }
