@@ -175,4 +175,6 @@ public class ExamController {
         examserviceimpl.alldelete("delete from aduitlog where aduitLogid in("+id+")");
         return "删除成功";
     }
+
+
 }

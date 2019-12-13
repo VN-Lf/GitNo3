@@ -1,5 +1,9 @@
 package com.nothing.service;
 
+import com.nothing.vo.gongon.dataDoc;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface Examservice {
@@ -17,4 +21,10 @@ public interface Examservice {
     void alldelete(String sql);
 
     List examdate(String sql);
+
+    void addupload(Object obj);
+
+    dataDoc uploadfile(MultipartFile face, HttpServletRequest request);
+
+    List fileurl(String sql);
 }
