@@ -10,7 +10,7 @@ public class EmpFamilyImf{
     @TableGenerator(name = "tableGenerator",initialValue =2200, allocationSize = 1)
     Integer empFamImfId;
     Integer empId;
-    String empContact;
+    String empContact;//联系人名字
     String empRelation;
     String empContactphone;
     String empFamImfRemark;
