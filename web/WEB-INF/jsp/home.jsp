@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.nothing.vo.emp.Emp" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/3
@@ -9,8 +9,9 @@
 <html>
 <head>
     <title>主界面</title>
-    <script src="http://localhost:8888/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <jsp:include page="../../index.jsp"></jsp:include>
+    <% Emp use = (Emp) session.getAttribute("empId");%>
     <!--dark-hive 纯黑   gray 灰色 pepper-grinder咖啡色-->
     <%String yangshi = (String) session.getAttribute("color");%>
     <link rel="stylesheet"
@@ -45,14 +46,14 @@
     <h1>管理员界面</h1>
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
-    <div title="Base" id="caidan" fit="true" class="easyui-accordion">
+    <div title="Base" id="caidan" fit="true" style="height: 16px;font-size: 16px" class="easyui-accordion">
         <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a style="color: aquamarine">我的邮件</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">员工请假</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myJobList" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>请假相关</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: aquamarine">学生请假</a>
@@ -71,7 +72,7 @@
         <div title="通知面板" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/tonotice" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">公告发布</a>
+                    <a>公告发布</a>
                 </li>
             </ul>
         </div>
@@ -83,14 +84,14 @@
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a style="color: aquamarine">周报管理</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: aquamarine">周报审阅-上级可看</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeeklyCollect" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>周报汇总--审阅</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: aquamarine">谈心记录</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">员工请假管理-上级可看</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myTask" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>员工请假管理-上级可看</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: aquamarine">考勤管理-上级可看</a>
@@ -206,8 +207,8 @@
         </div>
         <div title="系统设置" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: aquamarine">流程</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/list" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>流程</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a style="color: aquamarine">权限管理</a>
@@ -219,7 +220,7 @@
 <div data-options="region:'center',title:'操作区'" style="background:#eee;">
     <div id="tabs" class="easyui-tabs" fit="true">
         <div title="首页">
-            <h1>欢迎到来，今天有哪些任务呢？</h1>
+            <h1>欢迎到来，<%=use.getEmpName()%> 今天有哪些任务呢？</h1>
             <h2 id="time"></h2>
             <!--dark-hive 纯黑   gray 灰色 pepper-grinder咖啡色-->
             换肤

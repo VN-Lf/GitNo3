@@ -1,30 +1,29 @@
 package com.nothing.vo.Edu;
 
 import javax.persistence.*;
-
+//
 @Entity
 @Table(name="ClassType")
 public class ClassType {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name = "tableGenerator",initialValue =200, allocationSize = 1)
+    @TableGenerator(name = "tableGenerator",initialValue =100, allocationSize = 1)
+    private  Integer classType;
+    private  String classTypeName;
 
-    private Integer calssTypeId;
-    private  String calssTypename;//班级类别名称
-
-    public Integer getCalssTypeId() {
-        return calssTypeId;
+    public Integer getClassType() {
+        return classType;
     }
 
-    public void setCalssTypeId(Integer calssTypeId) {
-        this.calssTypeId = calssTypeId;
+    public void setClassType(Integer classType) {
+        this.classType = classType;
     }
 
-    public String getCalssTypename() {
-        return calssTypename;
+    public String getClassTypeName() {
+        return classTypeName;
     }
 
-    public void setCalssTypename(String calssTypename) {
-        this.calssTypename = calssTypename;
+    public void setClassTypeName(String classTypeName) {
+        this.classTypeName = classTypeName;
     }
 }

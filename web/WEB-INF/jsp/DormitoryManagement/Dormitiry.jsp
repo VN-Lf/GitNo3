@@ -10,8 +10,7 @@
 <head>
     <meta charset="utf-8">
     <title>宿舍管理</title>
-    <jsp:include page="../../../index.jsp"></jsp:include>
-    <script src="<%=request.getContextPath()%>/jquery.js"></script>
+
     <%List<Map> list = (List) request.getAttribute("dlist");%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     <style type="text/css">
@@ -19,6 +18,7 @@
             z-index: 0;
         }
     </style>
+    <jsp:include page="../../../index.jsp"></jsp:include>
 </head>
 <body>
 <h1>宿舍管理信息</h1>

@@ -1,7 +1,7 @@
 package com.nothing.vo.Edu;
 
 import javax.persistence.*;
-
+//
 //学期表
 @Table(name="Term")
 @Entity

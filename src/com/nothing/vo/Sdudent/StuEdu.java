@@ -1,8 +1,8 @@
 package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
-import java.sql.Date;
-//学生教育经历
+import java.util.Date;
+//学生教育经历//
 @Table
 @Entity(name="StuEdu")
 public class StuEdu{
@@ -11,9 +11,9 @@ public class StuEdu{
     @TableGenerator(name = "tableGenerator",initialValue =4000, allocationSize = 1)
 
    private Integer EduId;
-   private String  stuId;
+   private String  studId;
    private String hisSchool;
-   private String beginDate;
+   private Date beginDate;
    private Date endDate;
 
     public Integer getEduId() {
@@ -24,12 +24,12 @@ public class StuEdu{
         EduId = eduId;
     }
 
-    public String getStuId() {
-        return stuId;
+    public String getStudId(){
+        return studId;
     }
 
-    public void setStuId(String stuId) {
-        this.stuId = stuId;
+    public void setStudId(String studId) {
+        this.studId = studId;
     }
 
     public String getHisSchool() {
@@ -40,11 +40,11 @@ public class StuEdu{
         this.hisSchool = hisSchool;
     }
 
-    public String getBeginDate() {
+    public Date getBeginDate() {
         return beginDate;
     }
 
-    public void setBeginDate(String beginDate) {
+    public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
     }
 

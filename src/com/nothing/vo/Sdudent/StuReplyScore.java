@@ -1,7 +1,7 @@
 package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
-//学生答辩成绩
+//学生答辩成绩//
 @Entity
 @Table(name="StuReplyScore")
 public class StuReplyScore{
@@ -9,7 +9,7 @@ public class StuReplyScore{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =3000, allocationSize = 1)
    private Integer stuReplyId;
-   private Integer  StudentId;
+   private Integer  studId;
    private Integer projectId;
    private Integer        empId;
    private     Float score1;
@@ -29,12 +29,12 @@ public class StuReplyScore{
         this.stuReplyId = stuReplyId;
     }
 
-    public Integer getStudentId() {
-        return StudentId;
+    public Integer getStudId() {
+        return studId;
     }
 
-    public void setStudentId(Integer studentId) {
-        StudentId = studentId;
+    public void setStudId(Integer studId) {
+        this.studId = studId;
     }
 
     public Integer getProjectId() {

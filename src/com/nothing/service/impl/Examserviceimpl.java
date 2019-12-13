@@ -16,46 +16,44 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class Examserviceimpl implements Examservice{
-    //服务层
-    @Resource
-    BaseDao baseDao;
+public class Examserviceimpl extends  BaseDao implements Examservice{
+
     @Override
     public List examlist(String sql) {
-        List list = baseDao.listBySQL(sql);
+        List list = listBySQL(sql);
         return list;
     }
 
     @Override
     public List empexamlist(String sql) {
-        List list = baseDao.listBySQL(sql);
+        List list = listBySQL(sql);
         return list;
     }
 
     @Override
     public int selectcount(String sql) {
-        int count= baseDao.selectcount(sql);
+        int count= selectcount(sql);
         return count;
     }
 
     @Override
     public void updateexam(Object obj) {
-        baseDao.updObject(obj);
+        updObject(obj);
     }
 
     @Override
     public void deleteexam(Object obj) {
-        baseDao.delObject(obj);
+        delObject(obj);
     }
 
     @Override
     public void alldelete(String sql) {
-        baseDao.executeSQL(sql);
+        executeSQL(sql);
     }
 
     @Override
     public List examdate(String sql) {
-        List list = baseDao.listBySQL(sql);
+        List list = listBySQL(sql);
         return list;
     }
 

@@ -10,6 +10,7 @@
             <description>SpringMVC</description>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:config/spring-web.xml</param-value>
+
         </init-param>
     </servlet>
     <servlet-mapping>

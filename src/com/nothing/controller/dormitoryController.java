@@ -57,7 +57,7 @@ public class dormitoryController {
         System.out.println("进来了新增"+studentHour.getNumberBeds());
         System.out.println(studentHour.getCount());
         System.out.println(studentHour.getFloorId());
-        System.out.println(studentHour.getHourId());
+        System.out.println(studentHour.getStuHours());
         System.out.println(studentHour.getHourIddsc());
         System.out.println(studentHour.getHourName());
         service.addDormitory(studentHour);
@@ -70,7 +70,7 @@ public class dormitoryController {
         System.out.println("fajfajflkaj"+studentHour.getNumberBeds());
         System.out.println(studentHour.getCount());
         System.out.println(studentHour.getFloorId());
-        System.out.println(studentHour.getHourId());
+        System.out.println(studentHour.getStuHours());
         System.out.println(studentHour.getHourIddsc());
         System.out.println(studentHour.getHourName());
         service.updateDormitory(studentHour);
