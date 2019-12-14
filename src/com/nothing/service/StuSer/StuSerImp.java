@@ -7,7 +7,7 @@ import com.nothing.vo.Sdudent.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-//修改学生要查出班级和寝室的name放在页面的下拉框上。。。。。/////////
+
 @Service
 public class StuSerImp extends BaseDao implements StuSer{
     @Override
@@ -136,6 +136,16 @@ public class StuSerImp extends BaseDao implements StuSer{
     @Override
     public void delClaStu(String classId){
         executeSQL("update student set classId = 0 where classId in ("+classId+")");
+    }
+
+    @Override
+    public List stuByClaId(String classId){
+        return listBySQL("select * from student where classId = "+classId);
+    }
+
+    @Override
+    public int stuByClaIdCount(String classId) {
+        return selTotalRow("select count(*) from student where classId = "+classId);
     }
 
     @Override

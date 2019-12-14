@@ -156,7 +156,7 @@
 
 </script>
 <script>
-    layui.use(['table','laydate'], function(){
+    layui.use(['table','laydate','tree'], function(){
         var table = layui.table;
         var tId = layui.table.id;
         //第一个实例

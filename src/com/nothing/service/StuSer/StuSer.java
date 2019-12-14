@@ -28,6 +28,8 @@ public interface StuSer{
     int conStu(String stuSelectName, String stuSelectPhone, String stuSelectCla, String stuSelectFloor);
     List  classTeacher(String type);
     void delClaStu(String classId);
+    List stuByClaId(String classId);
+    int stuByClaIdCount(String classId);
     int  countClaCon(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall);
     List conClas(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall);
 }

@@ -58,6 +58,8 @@ public class StudentControl{
             request.setAttribute("classType",classType);
             request.setAttribute("majorList",majorList);
             return "student/stuClass";
+        }else if("allotStu".equals(ac)){
+            return "student/stuAllotClass";
         }
         return "";
     }
@@ -73,6 +75,9 @@ public class StudentControl{
         }else if("cla".equals(ac)){
             list = stuSer.classList();
             title = stuSer.allTitle(new ClassVo());
+        }else if("allotStu".equals(ac)){
+            list = stuSer.stuByClaId("0");
+            title = stuSer.stuByClaIdCount("0");
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code",0);
