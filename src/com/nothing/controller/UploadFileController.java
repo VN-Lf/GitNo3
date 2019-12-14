@@ -1,6 +1,7 @@
 package com.nothing.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.nothing.service.Examservice;
 import com.nothing.service.impl.Examserviceimpl;
 import com.nothing.vo.gongon.dataDoc;
 import com.nothing.vo.wintable.aduitLog;
@@ -24,7 +25,7 @@ import java.util.UUID;
 @RequestMapping("/upload")
 public class UploadFileController {
     @Resource
-    Examserviceimpl examserviceimpl;
+    Examservice examservice;
 
     @RequestMapping(value = "/toupload")
     public String toupload() {
@@ -39,10 +40,10 @@ public class UploadFileController {
     @RequestMapping(value = "/uploadlist")
     @ResponseBody
     public JSONObject uploadlist() {
-        List uploadlist = examserviceimpl.examlist("select * from datadoc");
+        List uploadlist = examservice.examlist("select * from datadoc");
 
         JSONObject jsonObject = new JSONObject();
-        int selectcount = examserviceimpl.selectcount("select count(docId) from datadoc");
+        int selectcount = examservice.Selectcount("select count(docId) from datadoc");
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
         jsonObject.put("data", uploadlist);
@@ -53,16 +54,16 @@ public class UploadFileController {
 
     @RequestMapping(value = "/addupload")
     public String addupload(MultipartFile face, String remark, HttpServletRequest request) {
-        dataDoc dataDoc = examserviceimpl.uploadfile(face, request);
+        dataDoc dataDoc = examservice.uploadfile(face, request);
         dataDoc.setRemark(remark);
-        examserviceimpl.addupload(dataDoc);
+        examservice.addupload(dataDoc);
         return "redirect:/upload/toupload";
     }
 
     @RequestMapping(value = "/filedelete")
     @ResponseBody
     public String filedelete(dataDoc dataDoc) {
-        examserviceimpl.deleteexam(dataDoc);
+        examservice.deleteexam(dataDoc);
         return "删除成功";
     }
 
@@ -71,14 +72,14 @@ public class UploadFileController {
     @ResponseBody
     public String allfiledelete(String id) {
         id = id.substring(0, id.length() - 1);
-        examserviceimpl.alldelete("delete from datadoc where docId in(" + id + ")");
+        examservice.alldelete("delete from datadoc where docId in(" + id + ")");
         return "删除成功";
     }
 
     @RequestMapping("/downfile")
     @ResponseBody
     public String downfile(String docId, HttpServletResponse response, HttpServletRequest request) throws IOException {
-        List fileurl = examserviceimpl.fileurl("select url from datadoc where docId=" + docId);
+        List fileurl = examservice.fileurl("select url from datadoc where docId=" + docId);
         try {
             String filename = (String) fileurl.get(0);
 

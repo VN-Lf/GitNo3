@@ -28,7 +28,7 @@ public class ExamController {
 
     @RequestMapping(value = "lookexam")
     public String lookexam(){
-        return "exammian/examemp";
+        return "exammian/examemp1";
     }
 
     @RequestMapping(value = "empexam")
@@ -54,7 +54,7 @@ public class ExamController {
         List examlist = examservice.examlist("select m.*,d.deptName from  aduitmodel   as m left join dept as d  on m.Depid=d.deptId");
 
         JSONObject jsonObject=new JSONObject();
-        int selectcount = examservice.selectcount("select count(aduitModelid) from aduitModel");
+        int selectcount = examservice.Selectcount("select count(aduitModelid) from aduitModel");
         jsonObject.put("code",0);
         jsonObject.put("msg","");
         jsonObject.put("data",examlist);
@@ -67,6 +67,7 @@ public class ExamController {
     @RequestMapping(value = "/empexamlist")
     @ResponseBody
     public JSONObject empexamlist(String empname,String  Depid,String starttime,String endtime){
+        System.out.println("进来了");
         String Starttime=null;
         String Endtime=null;
         List examdate = examservice.examdate("select auditDate from aduitlog ORDER BY auditDate");
@@ -98,12 +99,12 @@ public class ExamController {
         List examlist = examservice.examlist("\n" +
                 "select l.*,m.Remark,m.Scores,m.aduitName,e.empName from  aduitlog  as l left join aduitmodel as m  on l.aduitModelid=m.aduitModelid left join emp as e on l.empid=e.empId where e.empName like '%"+empname+"%' and m.Depid like '%"+Depid+"%' and l.auditDate between '"+starttime+"' and '"+endtime+"'");
         JSONObject jsonObject=new JSONObject();
-        int selectcount = examservice.selectcount("select count(aduitLogid) from aduitlog");
+        int selectcount = examservice.Selectcount("select count(aduitLogid) from aduitlog");
         jsonObject.put("code",0);
         jsonObject.put("msg","");
         jsonObject.put("data",examlist);
         jsonObject.put("count",selectcount);
-
+        System.out.println(jsonObject.toJSONString());
         return jsonObject;
     }
 
@@ -120,7 +121,7 @@ public class ExamController {
         List examlist = examservice.examlist("select e.empAssessId,c.classRemark,ex.empexamname,em.empName,e.scores from empassessment as e left join classvo as c on c.classId=e.classid left join empexam as ex on ex.empexamid=e.empexamid left join emp as em on em.empId=e.empid");
 
         JSONObject jsonObject=new JSONObject();
-        int selectcount = examservice.selectcount("select count(empAssessId) from empassessment");
+        int selectcount = examservice.Selectcount("select count(empAssessId) from empassessment");
         jsonObject.put("code",0);
         jsonObject.put("msg","");
         jsonObject.put("data",examlist);

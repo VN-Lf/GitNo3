@@ -12,7 +12,7 @@ public interface Examservice {
 
     List empexamlist(String sql);
 
-    int selectcount(String sql);
+    int Selectcount(String sql);
 
     void updateexam(Object obj);
 

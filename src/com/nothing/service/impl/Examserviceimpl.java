@@ -31,7 +31,7 @@ public class Examserviceimpl extends  BaseDao implements Examservice{
     }
 
     @Override
-    public int selectcount(String sql) {
+    public int Selectcount(String sql) {
         int count= selectcount(sql);
         return count;
     }
@@ -59,7 +59,7 @@ public class Examserviceimpl extends  BaseDao implements Examservice{
 
     @Override
     public void addupload(Object obj) {
-        baseDao.addObject(obj);
+        addObject(obj);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Examserviceimpl extends  BaseDao implements Examservice{
 
     @Override
     public List fileurl(String sql) {
-        List list = baseDao.listBySQL2(sql);
+        List list = listBySQL2(sql);
         return list;
     }
 }
