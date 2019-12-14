@@ -95,7 +95,7 @@ public class BaseDao {
     public int selTotalRow(String sql) {
         Session session = sessionFactory.openSession();
         SQLQuery sqlquery = session.createSQLQuery(sql);
-         int i = Integer.parseInt(sqlquery.uniqueResult()+"");
+        int i = Integer.parseInt(sqlquery.uniqueResult()+"");
         session.flush();
          session.close();
         return i;

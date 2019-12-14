@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//...
+//...////
 public interface StuSer{
     List toStuList();
     int allTitle(Object o);
@@ -27,4 +27,9 @@ public interface StuSer{
     void delCla(String ids);
     int conStu(String stuSelectName, String stuSelectPhone, String stuSelectCla, String stuSelectFloor);
     List  classTeacher(String type);
+    void delClaStu(String classId);
+    List stuByClaId(String classId);
+    int stuByClaIdCount(String classId);
+    int  countClaCon(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall);
+    List conClas(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall);
 }

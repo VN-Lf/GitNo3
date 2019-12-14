@@ -16,7 +16,7 @@ public class ClassVo{
     private Integer classCount;
     private Integer classTeacher ;//授课老师
     private Integer classTerm ;//学期
-        private Integer classType;
+    private Integer classType;
     private String  classRemark;
     private Integer classFall;//学年
     private Integer deptId;

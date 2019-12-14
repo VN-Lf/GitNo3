@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.JarEntry;
-//多表查询的条数问题//////
+//多表查询的条数问题/////////////
 @Controller
 @RequestMapping("/stu")
 public class StudentControl{
@@ -35,21 +35,21 @@ public class StudentControl{
     @RequestMapping("{ac}")
     public String toStuMain(@PathVariable("ac")String ac ,HttpServletRequest request){
         if("home".equals(ac)){
-            List<Map> classList = stuSer.listObj(new ClassVo());
-            List<Map> floorList = stuSer.listObj(new studentFloor());
-            List<Map> hoursList = stuSer.listO(new studentHour());
+            List classList = stuSer.listObj(new ClassVo());
+            List floorList = stuSer.listObj(new studentFloor());
+            List hoursList = stuSer.listO(new studentHour());
             request.setAttribute("classList",classList);
             request.setAttribute("foolList",floorList);
             request.setAttribute("hoursList",hoursList);
             return "student/stuMain";
         }else if("claMian".equals(ac)){
-            List<Map> bzrList= stuSer.classTeacher("班主任");
-            List<Map> jsList= stuSer.classTeacher("授课教师");
-            List<Map> dept  = stuSer.listO(new Dept());
-            List<Map> term = stuSer.listO(new Term());
-            List <Map> fall  = stuSer.listO(new StuFall());
-            List <Map> classType = stuSer.listO(new ClassType());
-            List<Map> majorList = stuSer.listO(new EduMajor());
+            List bzrList= stuSer.classTeacher("班主任");
+            List  jsList= stuSer.classTeacher("授课教师");
+            List dept  = stuSer.listO(new Dept());
+            List term = stuSer.listO(new Term());
+            List  fall  = stuSer.listO(new StuFall());
+            List  classType = stuSer.listO(new ClassType());
+            List  majorList = stuSer.listO(new EduMajor());
             request.setAttribute("bzrList",bzrList);
             request.setAttribute("jsList",jsList);
             request.setAttribute("dept",dept);
@@ -58,6 +58,8 @@ public class StudentControl{
             request.setAttribute("classType",classType);
             request.setAttribute("majorList",majorList);
             return "student/stuClass";
+        }else if("allotStu".equals(ac)){
+            return "student/stuAllotClass";
         }
         return "";
     }
@@ -73,6 +75,9 @@ public class StudentControl{
         }else if("cla".equals(ac)){
             list = stuSer.classList();
             title = stuSer.allTitle(new ClassVo());
+        }else if("allotStu".equals(ac)){
+            list = stuSer.stuByClaId("0");
+            title = stuSer.stuByClaIdCount("0");
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code",0);
@@ -86,10 +91,11 @@ public class StudentControl{
     @RequestMapping("con")
     @ResponseBody
     public JSONObject toConStuList(String stuSelectName,String  stuSelectPhone,String stuSelectCla,String stuSelectFloor){
-        if(stuSelectCla==null){
+        System.out.println("ajshwkjdhwekjhwkjhkjwehdjkwehdkjwed"+stuSelectName+ stuSelectPhone +stuSelectCla +stuSelectFloor);
+        if(stuSelectCla==null||"".equals(stuSelectCla)){
             stuSelectCla ="";
         }
-        if(stuSelectFloor==null){
+        if(stuSelectFloor==null||"".equals(stuSelectFloor)){
             stuSelectFloor="";
         }
         List<Map> list = stuSer.toStuConList(stuSelectName,stuSelectPhone,stuSelectCla,stuSelectFloor);
@@ -99,11 +105,22 @@ public class StudentControl{
         jsonObject.put("msg","");
         jsonObject.put("data",list);
         jsonObject.put("count",title);
-
         return jsonObject;
-
     }
 
+    @RequestMapping("classCon")
+    @ResponseBody
+    public JSONObject toClaCon(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall){
+        System.out.println("zheehejjedhekjdhekjdhej+++++++++++"+claSelectName+claSelectAdviser+claSelectTeacher+claSelectTerm+claSelectType+claSelectFall);
+        JSONObject jsonObject = new JSONObject();
+        List list = stuSer.conClas(claSelectName, claSelectAdviser, claSelectTeacher ,claSelectTerm ,claSelectType, claSelectFall);
+        int title = stuSer.countClaCon(claSelectName, claSelectAdviser, claSelectTeacher ,claSelectTerm ,claSelectType, claSelectFall);
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        jsonObject.put("count",title);
+        return jsonObject;
+    }
 
     @RequestMapping("toDel/{ac}")
     @ResponseBody
@@ -122,6 +139,7 @@ public class StudentControl{
             stuSer.delHap(id);
         }else if("cla".equals(ac)){
             stuSer.delCla(id);
+            stuSer.delClaStu(id);
         }
         return "成功";
     }
@@ -229,6 +247,19 @@ public class StudentControl{
     @ResponseBody
     public String toStuClss(ClassVo classVo){
         stuSer.addStu(classVo);
+        return "成功";
+    }
+
+
+    @RequestMapping("toStuCla")
+    @ResponseBody
+    public String  toStuCla(ClassVo classVo){
+        System.out.println("classId++++++++++++++++++++++++++"+classVo.getClassId());
+        if(classVo.getClassId()==0){
+            stuSer.addStu(classVo);
+
+        }
+        stuSer.updateStu(classVo);
         return "成功";
     }
 

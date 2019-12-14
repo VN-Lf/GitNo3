@@ -137,13 +137,24 @@
     }
 
     function updateUser(id) {
-        alert("编辑用户id："+id);
+        window.location.href="${pageContext.request.contextPath}/emp/empup?id="+id;
     }
 
     function delUser(id) {
-        alert("删除用户id："+id);
+        if (confirm("确定删除吗？")) {
+            var xmlHttp = createXMLHttp();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    if (xmlHttp.responseText == "true") {
+                        location.reload();
+                    }
+                }
+            }
+            var url = "${pageContext.request.contextPath}/emp/toDelon?sid="+id;
+            xmlHttp.open("post", url, true);
+            xmlHttp.send();
+        }
     }
-
     function chonZhi(id) {
         if (confirm("重置密码后为123456 确认吗？")) {
             var xmlHttp = createXMLHttp();

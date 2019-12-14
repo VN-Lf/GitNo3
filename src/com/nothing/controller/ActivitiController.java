@@ -1,6 +1,7 @@
 package com.nothing.controller;
 
 import com.nothing.service.ActivitiService;
+import com.nothing.service.EmpService;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.JobsVo;
 import org.activiti.engine.RepositoryService;
@@ -18,6 +19,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 //流程控制器
@@ -29,6 +33,8 @@ public class ActivitiController {
     private TaskService taskService;
     @Resource
     private ActivitiService actservice;
+    @Resource
+    private EmpService empService;
     //前往流程列表
     @RequestMapping("/list")
     public String toActList(Model model){
@@ -65,7 +71,7 @@ public class ActivitiController {
     @RequestMapping("/delProgressDefine")
     public String delProgressDefine(String id){
         repositoryService.deleteDeployment(id,true);
-        return "redirect:chaAllLiu";
+        return "redirect:list";
     }
     //下载流程图
     @RequestMapping("/toExport")
@@ -106,14 +112,35 @@ public class ActivitiController {
     //查看我的任务
     @RequestMapping("/myTask")
     public String LookMyTask(HttpSession session,Model model){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Emp emp = (Emp)session.getAttribute("empId");
         String actorId = ""+emp.getEmpId();
         List<Task> list = taskService.createTaskQuery().taskAssignee(actorId).list();
+        List mlist = new ArrayList();
+        List empList = empService.selEmpAll(); //查询所有员工
+        //将com中的emp id转换成用户名
+        for (int i = 0;i < list.size(); i++){
+            Map map = new HashMap();
+            Task jvo = list.get(i);
+            String shijian = formatter.format(jvo.getCreateTime());
+            for(int j = 0;j < empList.size(); j++){
+                Map map1 = (Map)empList.get(j);
+                if(jvo.getAssignee().equals(""+map1.get("empId"))){
+                    jvo.setAssignee(""+map1.get("empName"));
+                    break;
+                }
+            }
+
+            list.set(i,jvo);
+            map.put("com",jvo);
+            map.put("sj",shijian);
+            mlist.add(i,map);
+        }
         if(list.size() == 0){
             model.addAttribute("zhi",0);
         }else {
             model.addAttribute("zhi",1);
-            model.addAttribute("taskList",list);
+            model.addAttribute("taskList",mlist);
         }
         return "act/myTask";
     }
@@ -126,6 +153,15 @@ public class ActivitiController {
         JobsVo job = actservice.selJobById(jobId);
         Map rmap = actservice.zhixieTask(taskId,instId);
 
+        //将job里的empid转换为员工姓名
+        List elist = (List) rmap.get("emplist");
+        for(int j = 0;j < elist.size(); j++){
+            Map map = (Map)elist.get(j);
+            if(job.getUserId().equals(""+map.get("empId"))){
+                job.setUserId(""+map.get("empName"));
+                break;
+            }
+        }
         model.addAttribute("taskId",taskId);
         model.addAttribute("job",job);
 
