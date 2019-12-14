@@ -2,10 +2,7 @@ package com.nothing.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmpService;
-import com.nothing.vo.emp.Emp;
-import com.nothing.vo.emp.EmpEducation;
-import com.nothing.vo.emp.EmpHistory;
-import com.nothing.vo.emp.Post;
+import com.nothing.vo.emp.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -46,12 +43,12 @@ public class EmpController {
         int id = Integer.parseInt(eid);
         EmpEducation edu = empService.getEdu(id);
         req.setAttribute("edu",edu);
-        return "emp/eduUp";
+        return "emp/edu/eduUp";
     }
     //前往教育经历新增页面
     @RequestMapping({"/eduAddPage"})
     public String eduAddPage() {
-        return "emp/eduAdd";
+        return "emp/edu/eduAdd";
     }
     //教育经历修改操作
     @RequestMapping({"/eduUp"})
@@ -72,7 +69,9 @@ public class EmpController {
     public void eduDel(String id) {
         empService.eduDel(id);
     }
+
     @RequestMapping({"/empHis"})
+    //工作经历表数据
     @ResponseBody
     public JSONObject getJobHis(String eid) {
         System.out.println(eid);
@@ -120,5 +119,54 @@ public class EmpController {
     @ResponseBody
     public void jobDel(String id) {
         empService.jobDel(id);
+    }
+
+    //家庭信息表数据
+    @RequestMapping({"/famInf"})
+    @ResponseBody
+    public JSONObject getfamInf(String eid) {
+        int id = Integer.parseInt(eid);
+        List famInfList = empService.famInf(id);
+        int con = empService.famInfCount(id);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count",con);
+        jsonObject.put("data", famInfList);
+        return jsonObject;
+    }
+    //前往家庭信息新增页面
+    @RequestMapping({"/famAddPage"})
+    public String famAddPage() {
+        return "emp/fam/famAdd";
+    }
+    //前往家庭信息修改页面
+    @RequestMapping({"/famUpPage"})
+    public String famUp(String eid, HttpServletRequest req) {
+        int id = Integer.parseInt(eid);
+        //当前要修改的记录
+        EmpFamilyImf efi = empService.getFam(id);
+        System.out.println(efi.toString());
+        req.setAttribute("efi",efi);
+        return "emp/fam/famUp";
+    }
+    //家庭信息新增操作
+    @RequestMapping({"/famAdd"})
+    @ResponseBody
+    public void famAdd(EmpFamilyImf efi) {
+        empService.famAdd(efi);
+    }
+    //家庭信息修改操作
+    @RequestMapping({"/famUp"})
+    @ResponseBody
+    public void famUp(EmpFamilyImf efi, HttpServletRequest req) {
+        empService.famUp(efi);
+        req.removeAttribute("efi");
+    }
+    //家庭信息删除操作
+    @RequestMapping({"/famDel"})
+    @ResponseBody
+    public void famDel(String id) {
+        empService.famDel(id);
     }
 }

@@ -3,10 +3,7 @@ package com.nothing.service.impl;
 import com.nothing.dao.BaseDao;
 import com.nothing.service.EmpService;
 import com.nothing.vo.charge.Notice;
-import com.nothing.vo.emp.Emp;
-import com.nothing.vo.emp.EmpEducation;
-import com.nothing.vo.emp.EmpHistory;
-import com.nothing.vo.emp.Post;
+import com.nothing.vo.emp.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +11,24 @@ import java.util.Map;
 //学生服
 @Service
 public class EmpServiceImpl extends BaseDao implements EmpService{
+    @Override
+    public void addNotice(Notice notice, int lx) {
+        if(lx == 1){
+            addObject(notice);
+        }else if(lx == 2) {
+            updObject(notice);
+        }else if(lx == 3){
+            delObject(notice);
+        }
+    }
+
+    @Override
+    public Notice chaNotice(String nid) {
+        System.out.println("nid:"+nid);
+        Notice emp = new Notice();
+        return (Notice)getObject(emp.getClass(),Integer.parseInt(nid));
+    }
+
     @Override
     public List selEmpAll() {
         List list = listBySQL("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId");
@@ -159,6 +174,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override//根据Id获取工作经历
     public EmpHistory getJob(int id) {
         EmpHistory eh  = (EmpHistory) this.getObject(EmpHistory.class, id);
+        System.out.println(eh.toString());
         return eh;
     }
 
@@ -178,20 +194,34 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
-    public void addNotice(Notice notice, int lx) {
-        if(lx == 1){
-            addObject(notice);
-        }else if(lx == 2) {
-            updObject(notice);
-        }else if(lx == 3){
-            delObject(notice);
-        }
+    public List famInf(int id) {
+        return this.listBySQL("select * from EmpFamilyImf where empId="+id);
     }
 
     @Override
-    public Notice chaNotice(String nid) {
-        System.out.println("nid:"+nid);
-        Notice emp = new Notice();
-        return (Notice)getObject(emp.getClass(),Integer.parseInt(nid));
+    public int famInfCount(int id) {
+        return this.selectcount("select count(*) from EmpFamilyImf where empId ="+id);
     }
+
+    @Override
+    public EmpFamilyImf getFam(int id) {
+        EmpFamilyImf efi  = (EmpFamilyImf) this.getObject(EmpFamilyImf.class, id);
+        return efi;
+    }
+
+    @Override
+    public void famUp(EmpFamilyImf efi) {
+        this.updObject(efi);
+    }
+
+    @Override
+    public void famDel(String id) {
+        this.executeSQL("delete from EmpFamilyImf where empFamImfId in("+id+")");
+    }
+
+    @Override
+    public void famAdd(EmpFamilyImf efi) {
+        this.addObject(efi);
+    }
+
 }
