@@ -167,7 +167,7 @@
         load(empid);
     }
     function load(empid) {
-        document.getElementById("east").innerHTML =  '<object type="text/html" data="${pageContext.request.contextPath}/to/empEdu?id='+empid+'" width="100%" height="100%"></object>';
+        document.getElementById("east").innerHTML =  '<object type="text/html" data="${pageContext.request.contextPath}/to/ortherInf?id='+empid+'" width="100%" height="100%"></object>';
     }
 </script>
 

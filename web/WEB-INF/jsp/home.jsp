@@ -42,7 +42,7 @@
     </style>
 </head>
 <body class="easyui-layout">
-<div data-options="region:'north',split:true" style="height:100px;background-color: aquamarine;text-align:center">
+<div data-options="region:'north',split:true" style="height:60px;background-color: aquamarine;text-align:center">
     <h1>管理员界面</h1>
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
@@ -144,7 +144,7 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toRepairListPage" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>报修申请</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toRepairListPage" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: aquamarine">维修管理</a>
                 </li>
             </ul>
