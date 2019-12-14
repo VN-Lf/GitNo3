@@ -90,11 +90,20 @@ public class GoPageController {
     public String toNotice(){
         return "emp/noticelist";
     }
-    //前往子表信息
-    @RequestMapping({"/empEdu"})
+    //前往员工子表信息
+    @RequestMapping({"/ortherInf"})
     public String toEmpEducation(String id, HttpSession session) {
         int eid = Integer.parseInt(id);
         session.setAttribute("currActEmpId",eid);
         return "emp/ortherInf";
+    }
+    @RequestMapping("/toRepairListPage")
+    public String toRepairListPage(){
+        return "houqin/repairList";
+    }
+    //报修操作页
+    @RequestMapping("/toRepairActPage")
+    public String toRepairActPage(){
+        return "houqin/rep";
     }
 }
