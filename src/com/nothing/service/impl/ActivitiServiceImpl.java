@@ -3,6 +3,7 @@ package com.nothing.service.impl;
 import com.nothing.dao.BaseDao;
 import com.nothing.service.ActivitiService;
 import com.nothing.service.EmpService;
+import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.JobsVo;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricActivityInstance;
@@ -39,8 +40,6 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     private RuntimeService runtimeService;
     @Resource
     private HistoryService historyService;
-    @Resource
-    private ProcessEngine processEngine;
     @Resource
     private EmpService empService;
 
@@ -138,7 +137,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
         String  zxempid = ""+sqlZhixin(dept);
         System.out.println("zxempid:"+zxempid);
         if(zxempid.equals(job.getUserId())){ //这个员工是主任
-            List list = listBySQL2("select empId from post where postName like '%校长%' and deptId = 0");
+            List list = listBySQL2("select empId from post where postName like '%校长%'");
             System.out.println("下一个办理人id："+list.get(0));
             variables.put("x","zr");//单据ID
             variables.put("assignee",""+list.get(0));
@@ -179,7 +178,21 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
 
     @Override
     public List<JobsVo> selJob(String actorId) {
-        return listByHql("from JobsVo j where j.userId='"+actorId+"'");
+        List<JobsVo> list = listByHql("from JobsVo j where j.userId='"+actorId+"'");
+        List empList = empService.selEmpAll(); //查询所有员工
+        //将com中的emp id转换成用户名
+        for (int i = 0;i < list.size(); i++){
+            JobsVo jvo = list.get(i);
+            for(int j = 0;j < empList.size(); j++){
+                Map map = (Map)empList.get(j);
+                if(jvo.getUserId().equals(""+map.get("empId"))){
+                    jvo.setUserId(""+map.get("empName"));
+                    break;
+                }
+            }
+            list.set(i,jvo);
+        }
+        return list;
     }
 
     @Override
@@ -240,18 +253,16 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
         Map<String, Object> rmap = new HashMap<>();
         //根据流程实例ID查询流程实例
         ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(instId).singleResult();
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();  //根据任务ID查询任务实例
         List<Comment> commentList = taskService.getProcessInstanceComments(instId); //历史审批信息
-        if(commentList.size() == 0){
+        List empList = empService.selEmpAll(); //查询所有员工
+        List maxlist = chuliComm(commentList,empList);
+        rmap.put("emplist",empList);
+        if(maxlist.size() == 0){
             rmap.put("zhi","0");
         }else {
             rmap.put("zhi","1");
-            rmap.put("commentList",commentList);
+            rmap.put("commentList",maxlist);
         }
-        //获取流程定义id
-        String processDefineId = task.getProcessDefinitionId();
-        //查询流程定义实体对象
-        ProcessDefinitionEntity pdentity = (ProcessDefinitionEntity) processEngine.getRepositoryService().getProcessDefinition(processDefineId);
         //获取当前活动id
         String activeId = pi.getActivityId();
         System.out.println("当前活动ID "+activeId);
@@ -312,21 +323,14 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
 
     @Override
     public List lookMyBeiZhu(int id){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //通过jobID查询历史变量对象
         HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("jobId",id).singleResult();
         //获取流程实例id （查询历史批注）
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());        //System.out.println("历史时间"+commentList.get(0).getTime());
-        List comList = new ArrayList<>();
-        for (int i = 0;i < commentList.size(); i++){
-            Map map = new HashMap();
-            CommentEntity com = (CommentEntity) commentList.get(i);
-            map.put("com",com);
-            System.out.println("com对象:"+com);
-            String shijian = formatter.format(com.getTime());
-            map.put("sj",shijian);
-            comList.add(i,map);
-        }
+        //将com中的emp id转换成用户名
+
+        List empList = empService.selEmpAll(); //查询所有员工
+        List comList = chuliComm(commentList,empList);
         return comList;
     }
 
@@ -338,5 +342,29 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
         }else {
             return (int)list.get(0);
         }
+    }
+
+    public List chuliComm(List<Comment> commentList,List empList){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List comList = new ArrayList<>();
+        for (int i = 0;i < commentList.size(); i++){
+            Map map = new HashMap();
+            CommentEntity com = (CommentEntity) commentList.get(i);
+            map.put("com",com);
+            System.out.println("com对象:"+com);
+            String shijian = formatter.format(com.getTime());
+            map.put("sj",shijian);
+            comList.add(i,map);
+
+            for(int j = 0;j < empList.size(); j++){
+                Map emp = (Map)empList.get(j);
+                if(com.getUserId().equals(""+emp.get("empId"))){
+                    com.setUserId(""+emp.get("empName"));
+                    break;
+                }
+            }
+            commentList.set(i,com);
+        }
+        return comList;
     }
 }
