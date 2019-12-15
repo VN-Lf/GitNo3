@@ -92,4 +92,19 @@ public class equipmentRepair {
     public void setEedTime(Date eedTime) {
         this.eedTime = eedTime;
     }
+
+    @Override
+    public String toString() {
+        return "equipmentRepair{" +
+                "equipmentId=" + equipmentId +
+                ", equipmentType='" + equipmentType + '\'' +
+                ", status=" + status +
+                ", classes=" + classes +
+                ", student=" + student +
+                ", remark='" + remark + '\'' +
+                ", userType=" + userType +
+                ", startTime=" + startTime +
+                ", eedTime=" + eedTime +
+                '}';
+    }
 }
