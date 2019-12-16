@@ -1,5 +1,7 @@
 package com.nothing.vo.houqin;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.util.Date;
 /**
@@ -18,8 +20,8 @@ public class equipmentRepair {
     private Integer student;     //学生申请人
     private String remark;       //备注
     private Integer userType;   //1学生 2老师
-    private Date startTime;     //开始时间
-    private Date eedTime;       //结束
+    private String startTime;     //开始时间
+    private String eedTime;       //结束
 
     public Integer getEquipmentId() {
         return equipmentId;
@@ -77,19 +79,19 @@ public class equipmentRepair {
         this.userType = userType;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEedTime() {
+    public String getEedTime() {
         return eedTime;
     }
 
-    public void setEedTime(Date eedTime) {
+    public void setEedTime(String eedTime) {
         this.eedTime = eedTime;
     }
 

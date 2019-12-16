@@ -3,6 +3,7 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.houqin.equipmentRepair;
+import org.hibernate.result.Output;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.nothing.service.houqinService;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,11 +51,6 @@ public class houqinController {
         int id = Integer.parseInt(rid);
         //当前要修改的记录
         equipmentRepair er = hs.getEr(id);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date start =  sdf.parse(String.valueOf(er.getStartTime()));
-        Date end =  sdf.parse(String.valueOf(er.getEedTime()));
-        er.setStartTime(start);
-        er.setEedTime(end);
         req.setAttribute("er",er);
         return "houqin/repUp";
     }
@@ -65,8 +62,7 @@ public class houqinController {
         er.setStatus(0);//0未完成，1完成
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String s = sdf.format(new Date());
-        Date date =  sdf.parse(s);
-        er.setStartTime(date);
+        er.setStartTime(s);
         er.setUserType(2);//1学生，2员工
         er.setClasses(e.getEmpDeptId());
         er.setStudent(e.getEmpId());
@@ -76,11 +72,6 @@ public class houqinController {
     @RequestMapping({"/repUp"})
     @ResponseBody
     public void repUp(equipmentRepair er, HttpServletRequest req) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date start =  sdf.parse(req.getParameter("start"));
-        Date end =  sdf.parse(req.getParameter("end"));
-        er.setStartTime(start);
-        er.setEedTime(end);
         hs.erUp(er);
         req.removeAttribute("er");
     }

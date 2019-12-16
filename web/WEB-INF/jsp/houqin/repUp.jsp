@@ -36,13 +36,13 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">开始时间</label>
         <div class="layui-input-block">
-            <input id="start" type="text" name="start" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input id="start" type="text" name="startTime" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">结束时间</label>
         <div class="layui-input-block">
-            <input id="end" type="text" name="end" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input id="end" type="text" name="eedTime" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
@@ -73,8 +73,8 @@
             ,"student":"${er.student}"
             ,"remark":"${er.remark}"
             ,"userType":"${er.userType}"
-            ,"start":dateFormat(${er.startTime})
-            ,"end":"${er.eedTime}"
+            ,"startTime":"${er.startTime}"
+            ,"eedTime":"${er.eedTime}"
         })
 
         //日期
@@ -91,6 +91,7 @@
         form.on('submit(formDemo)', function(data){
             layer.msg(JSON.stringify(data.field));
             return true;
+            parent.layui.admin.events.closeThisTabs();
         });
     });
 

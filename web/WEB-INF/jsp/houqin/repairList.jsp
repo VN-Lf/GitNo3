@@ -11,17 +11,8 @@
 <head>
     <title>报修列表</title>
 </head>
-<body id="main" class="easyui-layout">
-    <div data-options="region:'center',split:true">
-        <div style="width: 99%;margin: 0 auto">
-            <table id="rep" lay-filter="rep"></table>
-        </div>
-    </div>
-    <div id="east" data-options="region:'east',collapsed:true,title:'操作区'" style="width: 650px;">
-        <div id="repTabs" class="easyui-tabs" fit="true" style="visibility: hidden;">
-            <h1 id="leftTitle" style="text-align: center;visibility: visible;" >There's nothing here</h1>
-        </div>
-    </div>
+<body>
+    <table id="rep" lay-filter="rep"></table>
 </body>
 <!-- 表格头部工具栏 -->
 <script type="text/html" id="toolbar">
@@ -53,12 +44,12 @@
                 ,{field: 'student', title: '学生', width:100}
                 ,{field: 'remark', title: '备注', width:100}
                 ,{field: 'userType', title: '报修身份', width:100}
-                ,{field: 'startTime', title: '保修时间', width:150,sort:true,templet: function(d){return dateFormat(d.startTime)}}
+                ,{field: 'startTime', title: '保修时间', width:150,sort:true}
                 ,{field: 'eedTime', title: '完成时间', width: 150,sort:true,templet: function(d){
                     if (d.eedTime==null){
                         return "";}
                         else {
-                        return dateFormat(d.eedTime)}
+                        return d.eedTime}
                 }}
                 ,{field: 'eedTime', title: '操作', width: 150,toolbar:"#barOption"}
             ]]
@@ -94,7 +85,7 @@
                     tabs.style.cssText = "visibility: visible;"
                     var title= document.getElementById('leftTitle');
                     title.style.cssText = "text-align: center;visibility: hidden;"
-                    addTab("报修申请","${pageContext.request.contextPath}/houqin/repAddPage");
+                    addTab("报修申请",'${pageContext.request.contextPath}/houqin/repAddPage');
                     break;
             };
         });
@@ -102,13 +93,14 @@
         table.on('tool(rep)', function (obj) {
             var data = obj.data;
             if (obj.event === 'up') {
-                $('#main').layout('expand','east');
-                $('#main').layout('expand','east');
-                var tabs= document.getElementById('repTabs');
-                tabs.style.cssText = "visibility: visible;"
-                var title= document.getElementById('leftTitle');
-                title.style.cssText = "text-align: center;visibility: hidden;"
-                addTab("修改记录","${pageContext.request.contextPath}/houqin/repUpPage?rid="+data.equipmentId)
+                <%--$('#main').layout('expand','east');--%>
+                <%--$('#main').layout('expand','east');--%>
+                <%--var tabs= document.getElementById('repTabs');--%>
+                <%--tabs.style.cssText = "visibility: visible;"--%>
+                <%--var title= document.getElementById('leftTitle');--%>
+                <%--title.style.cssText = "text-align: center;visibility: hidden;"--%>
+                <%--addTab("修改记录","${pageContext.request.contextPath}/houqin/repUpPage?rid="+data.equipmentId)--%>
+                openUpdate(data,data.equipmentId);
             } else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
                     $.post('${pageContext.request.contextPath}/houqin/repDel',{id:data.equipmentId},function (data) {
@@ -121,56 +113,22 @@
             }
         });
     });
-    function addTab(title, url) {
-        if ($('#repTabs').tabs('exists', title)) { //如果存在
-            $('#repTabs').tabs('select', title); //让标签页选中
-
-            var currTab = $('#repTabs').tabs('getSelected'); //获取当前选中的选项页(返回panel对象)
-            $('#repTabs').tabs('update', {
-                tab: currTab,
-                options: {
-                    content: createFrame(url)
-                }
-            })
-        } else { //如果这个标题的选项卡不存在
-            var content = createFrame(url);
-            $('#repTabs').tabs('add', {
-                title: title, //标题
-                content: content, //内容
-                closable: true //显示关闭按钮
-            });
-        }
-        tabClose();
-    }
-    function createFrame(url) { //创建窗口
-        var s = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:99%;"></iframe>';
-        return s;
-    }
     function tabClose() {
         $(".tabs-inner").dblclick(function() {
             var subtitle = $(this).children(".tabs-closable").text();
             $('#empTabs').tabs('close', subtitle);
         })
     }
-</script>
-<script>
-    // 解决easyui 页面加载的时候布局乱 一闪而过
-    var shadeDiv = "<div id='PageLoadingTip' style='position: absolute; z-index: 1000; top: 0px; left: 0px; width: 100%; height: 100%; background: gray; text-align: center;'> <h1 style='top: 48%; position: relative; color: white;'>页面加载中···</h1> </div>"
-
-    document.write(shadeDiv );
-
-    function _PageLoadingTip_Closes() {
-        $("#PageLoadingTip").fadeOut("normal", function() {
-            $(this).remove();
+    function openUpdate(data,id) {
+        index1=layer.open({
+            type: 2,
+            title:'修改记录',
+            area: ['500px', '300px'],
+            content:'${pageContext.request.contextPath}/houqin/repUpPage?rid='+id, //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
         });
     }
-
-    var _pageloding_pc;
-
-    $.parser.onComplete = function() {
-        if (_pageloding_pc)
-            clearTimeout(_pageloding_pc);
-        _pageloding_pc = setTimeout(_PageLoadingTip_Closes, 200);
+    function closeupdate() {
+        layer.close(index1);
     }
 </script>
 <script>
