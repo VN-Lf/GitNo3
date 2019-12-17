@@ -116,7 +116,7 @@ public class EmailController {
                 System.out.println("param j :"+param[j]);
                if(num == param[j]){
                    session.setAttribute("Repeat","提交失败,数据冲突!");
-                   System.out.println("提交失败,数据冲突");
+                   System.out.println("提交失败数据冲突");
                    return "redirect:toemail";
                }
             }

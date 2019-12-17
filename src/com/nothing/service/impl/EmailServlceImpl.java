@@ -50,7 +50,7 @@ public class EmailServlceImpl extends BaseDao implements EmailService {
 
     @Override
     public Email Emailfile(MultipartFile face, HttpServletRequest request) {
-        //        文件上传对象
+        //文件上传对象
         Email email = new Email();
 
         String filename = face.getOriginalFilename();

@@ -57,7 +57,7 @@
                     员工：<select id="empnames" style="width: 80px;height: 35px"></select>
 
                         <a id="adddept" name="adddept">添加</a>
-                        <a id="deldept" name="deldept" style="left: 225px">重置</a>
+                        <a id="deldept" name="deldept" style="left: 225px">重 置</a>
                 </div>
                     <br>
                 <div>
@@ -65,7 +65,7 @@
                 </div>
                     <br>
                 <div>
-                    <h3> 邮件内容</h3>
+                    <h3> 邮件内容:</h3>
                     <textarea name="content" id="content" style=" left: 400px;width: 500px; height: 200px"></textarea>
                 </div>
                 <div>

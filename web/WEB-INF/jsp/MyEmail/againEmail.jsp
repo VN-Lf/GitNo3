@@ -41,7 +41,7 @@
                 </div>
                 <br>
                 <div>
-                    <h3> 邮件内容</h3>
+                    <h3>邮件内容:</h3>
                     <textarea name="content" id="content"  style=" left: 400px;width: 500px; height: 200px"><%=email.getContent()%></textarea>
                 </div>
                 <div>

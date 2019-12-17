@@ -40,7 +40,6 @@
             <a id="add"  onclick="fans();"  class="easyui-linkbutton" data-options="iconCls:'icon-add'">发送邮件</a>
             <div id="tabs" class="easyui-tabs" fit="true">
                 <div title="收到的邮件">
-                    <%--信息显示表--%>
                     <table id="demo" lay-filter="test"  ></table>
                 </div>
                 <div title="发送的邮件">
