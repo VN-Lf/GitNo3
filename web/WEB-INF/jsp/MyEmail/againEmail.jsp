@@ -32,7 +32,6 @@
                 <div>
                     接收人：
                     <input type="text" name="receId" id="receId" value="<%=email.getReceId()%>," required lay-verify="required"   class="layui-input" style="width:180px;display:inline-block" />
-                    <%--<a>查找</a>--%>
                     <br>
 
                 </div>

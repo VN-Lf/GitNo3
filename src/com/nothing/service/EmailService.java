@@ -13,7 +13,7 @@ public interface EmailService {
     int SelcctEmailcount(String sql);
     //根据Id查找内容
     Object SelectEmailContent(Email email, Integer id);
-    //删除Email方法
+    //删除Email的方法
     void delEmail(Object id);
     //添加Email的方法
     void addEmail(Email email);

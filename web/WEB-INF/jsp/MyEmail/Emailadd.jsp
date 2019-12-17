@@ -55,8 +55,6 @@
                         </select>
                         <div id="test2" class="demo-transfer"></div>
                     员工：<select id="empnames" style="width: 80px;height: 35px"></select>
-                        <%--<input id="cc" value="001">--%>
-
 
                         <a id="adddept" name="adddept">添加</a>
                         <a id="deldept" name="deldept" style="left: 225px">重置</a>

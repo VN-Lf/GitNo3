@@ -15,7 +15,7 @@ public class Email {
     private String topic;       //标题
     private String content;     //发布内容0
     private Date sendtime;      //发布时间
-    private Integer isRead;     //是否已读,1:已读 2:未读
+    private Integer isRead;     //是否已读,1:已读;2:未读
     private String image;       //附件
     private String oldFileName;
 

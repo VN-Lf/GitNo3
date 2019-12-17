@@ -44,8 +44,6 @@
                     <table id="demo" lay-filter="test"  ></table>
                 </div>
                 <div title="发送的邮件">
-
-                    <%--信息显示表--%>
                     <table id="Senddemo" lay-filter="test" ></table>
                 </div>
             </div>
