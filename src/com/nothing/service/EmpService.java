@@ -1,10 +1,7 @@
 package com.nothing.service;
 
 import com.nothing.vo.charge.Notice;
-import com.nothing.vo.emp.Emp;
-import com.nothing.vo.emp.EmpEducation;
-import com.nothing.vo.emp.EmpHistory;
-import com.nothing.vo.emp.Post;
+import com.nothing.vo.emp.*;
 
 import java.util.List;
 //jiekou
@@ -47,4 +44,17 @@ public interface EmpService {
     void jobDel(String id);
     //新增工作经历
     void jobAdd(EmpHistory hs);
+
+    //根据Id查家庭信息列表
+    List famInf(int id);
+    //根据Id查家庭信息条数
+    int famInfCount(int id);
+    //根据Id查家庭信息
+    EmpFamilyImf getFam(int id);
+    //根据Id修改家庭信息
+    void famUp(EmpFamilyImf efi);
+    //根据Id删除家庭信息
+    void famDel(String id);
+    //新增家庭信息
+    void famAdd(EmpFamilyImf efi);
 }

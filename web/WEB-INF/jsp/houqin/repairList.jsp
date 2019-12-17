@@ -12,33 +12,126 @@
     <title>报修列表</title>
 </head>
 <body>
-    <table id="demo" lay-filter="test"></table>
+    <table id="rep" lay-filter="rep"></table>
 </body>
+<!-- 表格头部工具栏 -->
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">申请报修</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
+    </div>
+</script>
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="barOption">
+    <a class="layui-btn layui-btn-sm" lay-event="up">修改</a>
+    <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</a>
+</script>
 <script>
-
     layui.use(['util','table'], function(){
         var table = layui.table;
-
-        var util = layui.util;
         //第一个实例
         table.render({
-            elem: '#demo'
+            elem: '#rep'
             ,height: 312
+            // ,toolbar:"#toolbar"
             ,url: '${pageContext.request.contextPath}/houqin/repairList' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
                 {field: 'equipmentId', title: '编号', width:80, sort: true, fixed: 'left'}
                 ,{field: 'equipmentType', title: '保修事项', width:100}
-                ,{field: 'status', title: '修理状态', width:100}
-                ,{field: 'classes', title: '班级', width:100}
+                ,{field: 'status', title: '修理状态', width:100,templet:function (d) {if (d.status==1){return'已完成'}else{return'未完成'}}}
+                ,{field: 'classes', title: '部门班级', width:100}
                 ,{field: 'student', title: '学生', width:100}
                 ,{field: 'remark', title: '备注', width:100}
                 ,{field: 'userType', title: '报修身份', width:100}
-                ,{field: 'startTime', title: '保修时间', width:150, sort: true,templet: function(d){return dateFormat(d.startTime)}}
-                ,{field: 'eedTime', title: '完成时间', width: 150, sort: true,templet: function(d){return dateFormat(d.eedTime)}}
+                ,{field: 'startTime', title: '保修时间', width:150,sort:true}
+                ,{field: 'eedTime', title: '完成时间', width: 150,sort:true,templet: function(d){
+                    if (d.eedTime==null){
+                        return "";}
+                        else {
+                        return d.eedTime}
+                }}
+                ,{field: 'eedTime', title: '操作', width: 150,toolbar:"#barOption"}
             ]]
         });
+        //监听顶部按钮
+        table.on('toolbar(rep)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'isDele':
+                    var checkStatus = table.checkStatus('edu'),
+                        data = checkStatus.data,
+                        er = "";
+                    if(data.length > 0){
+                        for (var i in data){
+                            er+=data[i].equipmentId+",";
+                        }
+                        layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
+                            $.post('${pageContext.request.contextPath}/emp/eduDel',{
+                                id:er
+                            },function(data){
+                                alert("删除"+data);
+                                table.reload("rep");
+                                layer.close(index);
+                            });
+                        });
+                    }else{
+                        layer.msg('请选择需要删除的数据');
+                    }
+                    break;
+                case 'isAdd':
+                    $('#main').layout('expand','east');
+                    var tabs= document.getElementById('repTabs');
+                    tabs.style.cssText = "visibility: visible;"
+                    var title= document.getElementById('leftTitle');
+                    title.style.cssText = "text-align: center;visibility: hidden;"
+                    addTab("报修申请",'${pageContext.request.contextPath}/houqin/repAddPage');
+                    break;
+            };
+        });
+        //监听工具条
+        table.on('tool(rep)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'up') {
+                <%--$('#main').layout('expand','east');--%>
+                <%--$('#main').layout('expand','east');--%>
+                <%--var tabs= document.getElementById('repTabs');--%>
+                <%--tabs.style.cssText = "visibility: visible;"--%>
+                <%--var title= document.getElementById('leftTitle');--%>
+                <%--title.style.cssText = "text-align: center;visibility: hidden;"--%>
+                <%--addTab("修改记录","${pageContext.request.contextPath}/houqin/repUpPage?rid="+data.equipmentId)--%>
+                openUpdate(data,data.equipmentId);
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.post('${pageContext.request.contextPath}/houqin/repDel',{id:data.equipmentId},function (data) {
+                        //显示提示框
+                        layer.msg("删除成功", {icon: 6});
+                        table.reload("rep");
+                    });
+                    return false;
+                });
+            }
+        });
     });
+    function tabClose() {
+        $(".tabs-inner").dblclick(function() {
+            var subtitle = $(this).children(".tabs-closable").text();
+            $('#empTabs').tabs('close', subtitle);
+        })
+    }
+    function openUpdate(data,id) {
+        index1=layer.open({
+            type: 2,
+            title:'修改记录',
+            area: ['500px', '300px'],
+            content:'${pageContext.request.contextPath}/houqin/repUpPage?rid='+id, //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+        });
+    }
+    function closeupdate() {
+        layer.close(index1);
+    }
+</script>
+<script>
 
     /*
      * 时间格式化工具

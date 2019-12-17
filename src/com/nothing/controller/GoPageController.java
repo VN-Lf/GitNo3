@@ -1,8 +1,10 @@
 package com.nothing.controller;
 
 
+import com.nothing.service.EmpService;
 import com.nothing.service.GoPageService;
 import com.nothing.vo.emp.Emp;
+import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,6 +24,8 @@ import java.util.Map;
 public class GoPageController {
     @Resource
     GoPageService service;
+    @Resource
+    EmpService empService;
     //前往主界面
     @RequestMapping("/home")
     public String toHome(HttpSession session,String color) {
@@ -86,8 +90,9 @@ public class GoPageController {
 
         Emp emp = new Emp();
         emp = (Emp) service.selectEmpGoPage(emp,i);
-
+        Post post = empService.sqlPostVo(""+emp.getEmpId());
         session.setAttribute("empId",emp);
+        session.setAttribute("post",post);
         return "redirect:home";
     }
     //退出登录
@@ -111,11 +116,20 @@ public class GoPageController {
     public String toNotice(){
         return "emp/noticelist";
     }
-    //前往子表信息
-    @RequestMapping({"/empEdu"})
+    //前往员工子表信息
+    @RequestMapping({"/ortherInf"})
     public String toEmpEducation(String id, HttpSession session) {
         int eid = Integer.parseInt(id);
         session.setAttribute("currActEmpId",eid);
-        return "emp/educationList";
+        return "emp/ortherInf";
+    }
+    @RequestMapping("/toRepairListPage")
+    public String toRepairListPage(){
+        return "houqin/repairList";
+    }
+    //报修操作页
+    @RequestMapping("/toRepairActPage")
+    public String toRepairActPage(){
+        return "houqin/rep";
     }
 }

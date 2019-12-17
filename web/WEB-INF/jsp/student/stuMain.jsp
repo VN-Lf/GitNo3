@@ -6,10 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
     <meta charset="utf-8">
-    <title>table模块快速使用</title>
+    <title>table模块快速使用/</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
+    <script src="${pageContext.request.contextPath}/layui/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
 </head>
 <body>
@@ -51,6 +55,7 @@
 <!--附表家庭-->
 <form  class="layui-form" id="addFalForm" style="display:none;height: auto;width: 600px" method="post">
     <label class="layui-form-label">学生家庭情况</label>
+
     <input id="stuFamilyid" type="hidden" name="stuFamilyid">
     <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
@@ -68,7 +73,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">联系方式</label>
         <div class="layui-input-block">
-            <input id="familyPhone" type="text" name="familyPhone" required  lay-verify="required" placeholder="家长电话" autocomplete="off" class="layui-input">
+            <input id="familyPhone" type="text" name="familyPhone" required  lay-verify="phone" placeholder="家长电话" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -147,12 +152,11 @@
 </form>
 
 
-
 <script src="${pageContext.request.contextPath}/layui/layui.js">
 
 </script>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','laydate','tree'], function(){
         var table = layui.table;
         var tId = layui.table.id;
         //第一个实例
@@ -237,8 +241,9 @@
                     case 'isSelect':
                         var stuSelectName = $('input[name="stuSelectName"]').val();
                         var stuSelectPhone = $('input[name="stuSelectPhone"]').val();
-                        var stuSelectCla = $('input[name="stuSelectCla"]').val();
-                        var stuSelectFloor = $('input[name="stuSelectFloor"]').val();
+                        var stuSelectCla = $('#stuSelectCla').val();
+                        var stuSelectFloor = $("#stuSelectFloor").val();
+                        alert("班级"+stuSelectCla+"寝室"+stuSelectFloor);
                     table.reload('demo',{
                         page: {
                             curr: 1 //重新从第 1 页开始
@@ -273,6 +278,16 @@
                 var studId = o.studId;
                 var stuName = o.stuName
                 addTable(studId,stuName);
+        });
+
+
+
+        laydate.render({
+            elem: '#beginDH' //指定元素
+        });
+
+        laydate.render({
+            elem: '#endDH' //指定元素o
         });
     });
 
@@ -551,6 +566,7 @@
                 data:data.field,
                 dataType:'json',
                 success:function (data){
+
                 }
             });
             document.getElementById("addFalForm").reset();
@@ -581,13 +597,14 @@
                 data:data.field,
                 dataType:'json',
                 success:function (data){
+
                 }
             });
-            document.getElementById("addHapForm").reset();
-            layer.close(openStuAc);
-            table.reload('stuHap');
-            return false;
         });
+        document.getElementById("addHapForm").reset();
+        layer.close(openStuAc);
+        table.reload('stuHap');
+        return false;
     }
     layui.use('element', function(){
         var element = layui.element;
@@ -614,7 +631,7 @@
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">学生电话</label>
             <div class="layui-input-block">
-                <input id="stuSelectPhone" type="text" name="stuSelectPhone" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                <input id="stuSelectPhone" type="text" name="stuSelectPhone" required  lay-verify="phone" placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -622,20 +639,20 @@
             <label class="layui-form-label" style="width:100px">所在班级</label>
             <div class="layui-input-block">
                 <select name="stuSelectCla" lay-verify="required" placeholder=" " id="stuSelectCla">
+                    <option></option>
                     <c:forEach items="${classList}" var="stuClass">
-                        <option value="${stuClass.classId}">${stuClass.className}</option>
+                        <option>${stuClass.className}</option>
                     </c:forEach>
                 </select>
             </div>
         </div>
-
-
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">所在寝室</label>
             <div class="layui-input-block">
                 <select name="stuSelectFloor" lay-verify="required" placeholder=" " id="stuSelectFloor">
-                    <c:forEach items="${foolList}" var="fool">
-                        <option value="${fool.floorId}">${fool.floorName}</option>
+                    <option></option>
+                    <c:forEach items="${hoursList}" var="hours">
+                        <option>${hours.hourName}</option>
                     </c:forEach>
                 </select>
             </div>

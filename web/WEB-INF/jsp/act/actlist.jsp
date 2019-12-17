@@ -12,11 +12,11 @@
     <title>流程列表</title>
 </head>
 <body>
-<div style="width: 150px;height: 50px;margin-left: 10%">
+<div style="width: 250px;height: 50px;margin-left: 10%">
     <form action="${pageContext.request.contextPath}/upact" method="post" enctype="multipart/form-data">
-        <input type="button" onclick="HuanTou();" value="上传一个新流程" />
+        <input type="button" onclick="HuanTou();" id="ks" value="上传一个新流程" />
         <input type="file" name="pdFile" id="up" style="height: 0;width: 0" onchange="upload()"/>
-        <input type="submit"  id="yes"  style="display: none" value="确认上传"/>
+        <input type="submit"  id="yes"  style="display: none;float: left;margin-right: 10px;" value="确认上传"/>
     </form>
 </div>
 
@@ -50,25 +50,33 @@
                 <td><a href="${pageContext.request.contextPath }/toExport?id=${pd.id}">下载流程图</a>
                 </td>
             </tr>
-
         </c:forEach>
     </c:if>
 </table>
 <script>
-
+    var pand = 0;
     function HuanTou() {
-        var it=document.getElementById("up");
-        it.click();
+        if(pand == 0){
+            var it=document.getElementById("up");
+            it.click();
+            pand = 1;
+        }else if(pand == 1){
+            document.getElementById("ks").value="上传一个新流程";
+            document.getElementById("yes").style.display="none";
+            pand = 0;
+        }
     }
     function upload() {
         var _name, _fileName, personsFile;
         personsFile = document.getElementById("up");
         _name = personsFile.value;
         _fileName = _name.substring(_name.lastIndexOf(".") + 1).toLowerCase();
-        if (_fileName != ".zip") {
+        if (_fileName != "zip") {
             document.getElementById("yes").style.display="none";
+            pand = 0;
             alert("上传格式不正确，请重新上传");
         } else {
+            document.getElementById("ks").value="取消";
             document.getElementById("yes").style.display="block";
         }
     }
