@@ -34,14 +34,7 @@
                     <input type="text" name="receId" id="receId" value="<%=email.getReceId()%>," required lay-verify="required"   class="layui-input" style="width:180px;display:inline-block" />
                     <%--<a>查找</a>--%>
                     <br>
-                    <%--部门：<select id="deptId" style="width: 80px;height: 35px">
-                    <c:forEach items="${againEdeptlist}" var="li">
-                        <option value=${li.get("deptId")}>${li.get("deptName")}</option>
-                    </c:forEach>
-                        </select>
-                    &lt;%&ndash;<div id="test2" class="demo-transfer"></div>&ndash;%&gt;
-                    员工：<select id="empnames" style="width: 80px;height: 35px"></select>
-                    <a id="adddept" name="adddept">添加</a>--%>
+
                 </div>
                 <br>
                 <div>

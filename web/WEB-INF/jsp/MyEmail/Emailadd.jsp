@@ -46,7 +46,7 @@
                 <div>
                     接收人：
                     <input type="text" name="receId" id="receId" autocomplete="off" required lay-verify="required"   class="layui-input" style="width:180px;display:inline-block" />
-                    <%--<a>查找</a>--%>
+
                     <br>
                     部门：<select id="deptId" style="width: 80px;height: 35px">
                             <c:forEach items="${Edeptlist}" var="li">

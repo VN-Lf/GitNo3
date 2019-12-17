@@ -155,7 +155,7 @@
                 };
             });
 
-            //删除
+            //删除l
             table.on('toolbar(test)', function(obj){
                 var checkStatus = table.checkStatus(obj.config.id);
                 switch(obj.event){

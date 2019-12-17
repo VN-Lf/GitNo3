@@ -122,13 +122,7 @@ public class EmailController {
             }
         }
         for(int i=0;i<param.length;i++){
-            /*String num = param[i];
-            for(int j=1;j<i;j++){
-                if(num == param[j]){
-                    session.setAttribute("Repeat","提交失败,数据冲突");
-                    return "redirect :toemailadd";
-                }
-            }*/
+
             Emp emp = (Emp) session.getAttribute("empId");
             String empid = emp.getEmpName();
             //添加file文件的方法

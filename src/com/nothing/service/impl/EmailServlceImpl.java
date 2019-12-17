@@ -59,10 +59,6 @@ public class EmailServlceImpl extends BaseDao implements EmailService {
 
         email.setOldFileName(filename);
 
-       /* dataDoc.setDataName(filename);
-        dataDoc.setEmpid(2);
-        dataDoc.setOptime(new Date());*/
-
         String imgname = filename.substring(filename.indexOf("."));//文件后缀名
         System.out.println("文件后缀名:"+imgname);
 
