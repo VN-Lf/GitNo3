@@ -14,6 +14,7 @@
     <mvc:default-servlet-handler/>
 
     <!--设置静态资源可以直接访问-->
+    <mvc:resources location="/upload/" mapping="/upload/**" />
     <mvc:resources location="/WEB-INF/static/" mapping="/**"/>
 
     <!--3、配置视图解析器-->
