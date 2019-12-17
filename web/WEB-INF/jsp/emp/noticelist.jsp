@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>公告列表</title>
-    <script src="http://localhost:8888/jquery.js"></script>
+    <script src="<%=request.getContextPath()%>/jquery.js"></script>
     <style>
         body{
             font-size: 14px;

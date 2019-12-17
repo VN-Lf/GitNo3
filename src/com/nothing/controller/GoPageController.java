@@ -43,6 +43,27 @@ public class GoPageController {
             }else {
                 session.setAttribute("color",color);
             }
+            //获取这周的星期一
+            List<Map> list= service.selectGoPage("select subdate(curdate(),date_format(curdate(),'%w')-1) as mondata");
+            Date mondate = (Date) list.get(0).get("mondata");
+            System.out.println("星期一" + mondate);
+            List<Map> list1 = service.selectGoPage("select subdate(curdate(),date_format(curdate(),'%w')-7) as sundata");
+            Date sundate = (Date) list1.get(0).get("sundata");
+            System.out.println("星期日" + sundate);
+            /*List<Map> list2 = (List<Map>) session.getAttribute("empId");
+            int empid  = (int) list2.get(0).get("empId");
+            System.out.println("id" + empid);*/
+
+            Emp emp = (Emp) session.getAttribute("empId");
+            int empid = emp.getEmpId();
+            System.out.println("id"+empid);
+            int count = service.selecthomeunfinished("select count(*) from empweekpaper  where  empId = "+empid+" and weekCycle between '"+mondate+"' and  '"+sundate+"'");
+            System.out.println("count:"+count);
+            if(count>=5){
+                session.setAttribute("honmdata","已完成");
+            }else {
+                session.setAttribute("honmdata","未完成");
+            }
             return "home";
         }
     }
@@ -95,11 +116,20 @@ public class GoPageController {
     public String toNotice(){
         return "emp/noticelist";
     }
-    //前往子表信息
-    @RequestMapping({"/empEdu"})
+    //前往员工子表信息
+    @RequestMapping({"/ortherInf"})
     public String toEmpEducation(String id, HttpSession session) {
         int eid = Integer.parseInt(id);
         session.setAttribute("currActEmpId",eid);
         return "emp/ortherInf";
+    }
+    @RequestMapping("/toRepairListPage")
+    public String toRepairListPage(){
+        return "houqin/repairList";
+    }
+    //报修操作页
+    @RequestMapping("/toRepairActPage")
+    public String toRepairActPage(){
+        return "houqin/rep";
     }
 }

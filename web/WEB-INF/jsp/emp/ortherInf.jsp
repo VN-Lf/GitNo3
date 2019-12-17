@@ -30,7 +30,7 @@
         table.render({
             elem: '#edu'
             ,height: 312
-            ,toolbar: '#toolbarEdu' //开启头部工具栏，并为其绑定左侧模板
+            ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/empEducationList?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
@@ -46,7 +46,7 @@
         table.render({
             elem: '#job'
             ,height: 312
-            ,toolbar: '#toolbarJob' //开启头部工具栏，并为其绑定左侧模板
+            ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/empHis?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
@@ -63,7 +63,7 @@
         table.render({
             elem: '#fam'
             ,height: 312
-            ,toolbar: '#toolbarFam' //开启头部工具栏，并为其绑定左侧模板
+            ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/famInf?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
@@ -75,7 +75,7 @@
                 ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
             ]]
         });
-
+        //监听顶部按钮
         table.on('toolbar(edu)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
@@ -101,7 +101,7 @@
                     }
                     break;
                 case 'isAdd':
-                    addTab("新增记录","${pageContext.request.contextPath}/emp/eduAddPage");
+                    openUpdate(data,'补充教育经历',"${pageContext.request.contextPath}/emp/eduAddPage");
                     break;
             };
         });
@@ -130,7 +130,7 @@
                     }
                     break;
                 case 'isAdd':
-                    addTab("新增记录","${pageContext.request.contextPath}/emp/jobAddPage");
+                    openUpdate(data,'补充工作经历',"${pageContext.request.contextPath}/emp/jobAddPage");
                     break;
             };
         });
@@ -159,7 +159,7 @@
                     }
                     break;
                 case 'isAdd':
-                    addTab("新增记录","${pageContext.request.contextPath}/emp/famAddPage");
+                    openUpdate(data,'补充家庭信息',"${pageContext.request.contextPath}/emp/famAddPage");
                     table.reload("fam")
                     break;
             };
@@ -168,7 +168,7 @@
         table.on('tool(edu)', function (obj) {
             var data = obj.data;
             if (obj.event === 'up') {
-                addTab("修改记录","${pageContext.request.contextPath}/emp/eduUpPage?eid="+data.empId)
+                openUpdate(data,'修改教育经历',"${pageContext.request.contextPath}/emp/eduUpPage?eid="+data.empEduId);
             } else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/eduDel',{id:data.empId},function (data) {
@@ -183,7 +183,7 @@
         table.on('tool(job)', function (obj) {
             var data = obj.data;
             if (obj.event === 'up') {
-                addTab("修改记录","${pageContext.request.contextPath}/emp/jobUpPage?eid="+data.empHisId);
+                openUpdate(data,'修改工作经历',"${pageContext.request.contextPath}/emp/jobUpPage?eid="+data.empHisId);
             } else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/jobDel',{id:data.empHisId},function (data) {
@@ -200,7 +200,7 @@
         table.on('tool(fam)', function (obj) {
             var data = obj.data;
             if (obj.event === 'up') {
-                addTab("修改记录","${pageContext.request.contextPath}/emp/famUpPage?eid="+data.empFamImfId);
+                openUpdate(data,'修改家庭信息',"${pageContext.request.contextPath}/emp/famUpPage?eid="+data.empFamImfId);
             } else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/famDel',{id:data.empFamImfId},function (data) {
@@ -212,6 +212,7 @@
                 });
             }
         });
+        //监听复选框
         table.on('checkbox(filter)', function(data){
             //console.log(data.elem); //得到checkbox原始DOM对象
             if(data.elem.checked == true){
@@ -223,121 +224,21 @@
             //console.log(data.othis); //得到美化后的DOM对象
         });
     });
-
-    function addTab(title, url) {
-        if ($('#empTabs').tabs('exists', title)) { //如果存在
-            $('#empTabs').tabs('select', title); //让标签页选中
-
-            var currTab = $('#empTabs').tabs('getSelected'); //获取当前选中的选项页(返回panel对象)
-            $('#empTabs').tabs('update', {
-                tab: currTab,
-                options: {
-                    content: createFrame(url)
-                }
-            })
-        } else { //如果这个标题的选项卡不存在
-            var content = createFrame(url);
-            $('#empTabs').tabs('add', {
-                title: title, //标题
-                content: content, //内容
-                closable: true //显示关闭按钮
-            });
-        }
-        tabClose();
+    function openUpdate(data,title,url) {
+        index1=layer.open({
+            type: 2,
+            title:title,
+            area: ['500px', '300px'],
+            content: url, //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            anim: 2
+        });
     }
-
-    function createFrame(url) { //创建窗口
-        var s = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:99%;"></iframe>';
-        return s;
-    }
-
-    function tabClose() {
-        $(".tabs-inner").dblclick(function() {
-            var subtitle = $(this).children(".tabs-closable").text();
-            $('#empTabs').tabs('close', subtitle);
-        })
-    }
-
-    //edu生成操作按钮
-    function eduAct(id) {
-        return "<div class=\"layui-btn-group\">\n" +
-            "  <button onclick='eduUp("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
-            "    <i class=\"layui-icon\">&#xe642;</i>\n" +
-            "  </button>\n" +
-            "  <button onclick='eduDel("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
-            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-            "  </button>\n"
-            "</div>"
-    }
-    function eduUp(id) {
-        addTab("修改记录","${pageContext.request.contextPath}/emp/eduUpPage?eid="+id)
-    }
-    function eduDel(id) {
-        layer.confirm('确认删除  ',{icon: 3, title: '提示信息'},function (d) {
-            $.post('${pageContext.request.contextPath}/emp/eduDel',{id:id},function (data) {
-                layer.msg(data);
-            })
-        })
-    }
-
-    //job生成操作按钮
-    function jobAct(id) {
-        return "<div class=\"layui-btn-group\">\n" +
-            "  <button onclick='jobUp("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
-            "    <i class=\"layui-icon\">&#xe642;</i>\n" +
-            "  </button>\n" +
-            "  <button onclick='jobDel("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
-            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-            "  </button>\n"
-        "</div>"
-    }
-    function jobUp(id) {
-        addTab("修改记录","${pageContext.request.contextPath}/emp/jobUpPage?eid="+id)
-    }
-    function jobDel(id) {
-        layer.confirm('确认删除  ',{icon: 3, title: '提示信息'},function (d) {
-            $.post('${pageContext.request.contextPath}/emp/jobDel',{id:id},function (data) {
-                layer.msg(data);
-            })
-        })
-    }
-
-    //fam生成操作按钮
-    function famAct(id) {
-        return "<div class=\"layui-btn-group\">\n" +
-            "  <button onclick='famUp("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
-            "    <i class=\"layui-icon\">&#xe642;</i>\n" +
-            "  </button>\n" +
-            "  <button onclick='famDel("+id+")' type=\"button\" class=\"layui-btn layui-btn-sm\">\n" +
-            "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-            "  </button>\n"
-        "</div>"
-    }
-    function famUp(id) {
-        addTab("修改记录","${pageContext.request.contextPath}/emp/famUpPage?eid="+id)
-    }
-    function famDel(id) {
-        layer.confirm('确认删除  ',{icon: 3, title: '提示信息'},function (d) {
-            $.post('${pageContext.request.contextPath}/emp/famDel',{id:id},function (data) {
-                layer.msg(data);
-            })
-        })
+    function closeupdate() {
+        layer.close(index1);
     }
 </script>
-
-<script type="text/html" id="toolbarEdu">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增记录</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
-    </div>
-</script>
-<script type="text/html" id="toolbarJob">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增记录</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
-    </div>
-</script>
-<script type="text/html" id="toolbarFam">
+<!-- 表格头部工具栏 -->
+<script type="text/html" id="toolbar">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增记录</button>
         <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
@@ -346,7 +247,7 @@
 
 <!-- 表格操作按钮集 -->
 <script type="text/html" id="barOption">
-    <a class="layui-btn layui-btn-mini" lay-event="up">修改</a>
-    <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-sm" lay-event="up">修改</a>
+    <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</a>
 </script>
 </html>
