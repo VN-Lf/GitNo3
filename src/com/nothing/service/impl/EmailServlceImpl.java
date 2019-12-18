@@ -1,12 +1,11 @@
 package com.nothing.service.impl;
 
 import com.nothing.dao.BaseDao;
-import com.nothing.service.Examservice;
-import com.nothing.vo.gongon.dataDoc;
+import com.nothing.service.EmailService;
+import com.nothing.vo.Email.Email;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -16,74 +15,48 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-    public class Examserviceimpl extends  BaseDao implements Examservice{
-
+public class EmailServlceImpl extends BaseDao implements EmailService {
+    //查询楼栋信息
     @Override
-    public List examlist(String sql) {
-        List list = listBySQL(sql);
-        return list;
+    public List selectEmaillist(String sql) {
+        return listBySQL(sql);
+    }
+    //查询总行数
+    @Override
+    public int SelcctEmailcount(String sql) {
+        return selTotalRow(sql);
+    }
+    //根据Id查找内容
+    @Override
+    public Object SelectEmailContent(Email email, Integer id) {
+        return getObject(email.getClass(),id);
+    }
+    @Override
+    public void delEmail(Object id) {
+        executeSQL("delete from myemail where emailId in ("+id+")");
     }
 
+    //添加邮件的方法
     @Override
-    public List examlist1(String sql) {
-        List list = listBySQL2(sql);
-        return list;
-    }
+    public void addEmail(Email email) {
 
-    @Override
-    public List empexamlist(String sql) {
-        List list = listBySQL(sql);
-        return list;
+        addObject(email);
     }
-
+    //修改email为已读
     @Override
-    public void addexam(Object obj) {
-        addObject(obj);
-    }
-
-    @Override
-    public int Selectcount(String sql) {
-        int count= selectcount(sql);
-        return count;
-    }
-
-    @Override
-    public void updateexam(Object obj) {
-        updObject(obj);
-    }
-
-    @Override
-    public void deleteexam(Object obj) {
-        delObject(obj);
-    }
-
-    @Override
-    public void alldelete(String sql) {
+    public void updateEmailIsRead(String sql) {
         executeSQL(sql);
     }
 
     @Override
-    public List examdate(String sql) {
-        List list = listBySQL(sql);
-        return list;
-    }
-
-    @Override
-    public void addupload(Object obj) {
-        addObject(obj);
-    }
-
-    @Override
-    public dataDoc uploadfile(MultipartFile face, HttpServletRequest request) {
-//        文件上传对象
-        dataDoc dataDoc=new dataDoc();
+    public Email Emailfile(MultipartFile face, HttpServletRequest request) {
+        //文件上传对象
+        Email email = new Email();
 
         String filename = face.getOriginalFilename();
         System.out.println("文件名:"+filename);
 
-        dataDoc.setDataName(filename);
-        dataDoc.setEmpid(2);
-        dataDoc.setOptime(new Date());
+        email.setOldFileName(filename);
 
         String imgname = filename.substring(filename.indexOf("."));//文件后缀名
         System.out.println("文件后缀名:"+imgname);
@@ -91,6 +64,7 @@ import java.util.UUID;
         String realPath = request.getServletContext().getRealPath("\\");//获取项目绝对路径
 
         System.out.println("项目绝对路径:"+realPath);
+
 
 
         //获取时间
@@ -121,14 +95,8 @@ import java.util.UUID;
             e.printStackTrace();
         }
 
-        dataDoc.setUrl("upload\\"+calendar.get(Calendar.YEAR)+mm+calendar.get(Calendar.DAY_OF_MONTH)+"\\"+s+ imgname);
+        email.setImage("upload\\"+calendar.get(Calendar.YEAR)+mm+calendar.get(Calendar.DAY_OF_MONTH)+"\\"+s+ imgname);
 
-        return dataDoc;
-    }
-
-    @Override
-    public List fileurl(String sql) {
-        List list = listBySQL2(sql);
-        return list;
+        return email;
     }
 }

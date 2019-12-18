@@ -84,6 +84,9 @@
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">学生请假</a>
                 </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的周报</a>
+                </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">考勤管理</a>
                 </li>
@@ -257,7 +260,23 @@
                 <option value="dark-hive" <%if("dark-hive".equals(yangshi)){%>selected<%}%>>纯黑主题</option>
                 <option value="pepper-grinder" <%if("pepper-grinder".equals(yangshi)){%>selected<%}%>>咖啡主题</option>
             </select>
+
+            <fieldset class="layui-elem-field">
+                <legend><h3>任务</h3></legend>
+                <div class="layui-field-box">
+                    员工请假待审批()<br>
+                    学生请假待审批()<br>
+                    未打卡待审批()<br>
+                    <h4>
+                       <%-- <a href="<%=request.getContextPath()%>/Weekly/toWeekly">本周工作周报(${honmdata})
+                        </a>&nbsp;&nbsp;<font color="#8b0000">周日17:00前提交</font>--%>
+                        本周工作周报(${honmdata})&nbsp;&nbsp;<font color="#8b0000">周日17:00前提交</font>
+                    </h4> <br>
+                    <h4>月谈心记录() &nbsp;&nbsp;<font color="#8b0000">每周需完成5个</font></h4> <br>
+                </div>
+            </fieldset>
         </div>
+
     </div>
 </div>
 <div data-options="region:'south'" style="text-align:center">版权所有：宏图18级开发1班</div>
