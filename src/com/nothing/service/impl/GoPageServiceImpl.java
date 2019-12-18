@@ -2,6 +2,7 @@ package com.nothing.service.impl;
 
 import com.nothing.dao.BaseDao;
 import com.nothing.service.GoPageService;
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.emp.Emp;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,12 @@ public class GoPageServiceImpl extends BaseDao implements GoPageService {
     public Object selectEmpGoPage(Emp obj, int id) {
         return getObject(obj.getClass(),id);
     }
+
+    @Override
+    public Object selectStuGoPage(Student obj, int id) {
+        return getObject(obj.getClass(),id);
+    }
+
     //查询未完成周报
     @Override
     public int selecthomeunfinished(String sql) {
