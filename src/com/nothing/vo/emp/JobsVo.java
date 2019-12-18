@@ -11,7 +11,7 @@ public class JobsVo implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int jobId;   //主键
 	private String jobType;//申请类型 qingjia    baoxiao
-	private String jobName;//申请类型名称 请假单  报销单
+	private String jobName;//申请类型请假单  报销单
 	private int day; //天数
 	private Date jobDate;//申请日期
 	private String goDate;//开始时间

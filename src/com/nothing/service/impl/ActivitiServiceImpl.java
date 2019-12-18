@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
-
+//liuc
 @Service
 public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     @Resource
