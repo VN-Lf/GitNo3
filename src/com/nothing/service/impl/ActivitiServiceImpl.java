@@ -125,7 +125,6 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     public void addJobs(JobsVo job,String dept) {
         job.setJobDate(new Date());//创建时间
         job.setProcessFlag(1);//状态1、审批中
-        job.setMoney(0);
         addObject(job);
 
         //设置流程实例变量集合
@@ -179,7 +178,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     @Override
     public List<JobsVo> selJob(String actorId) {
         List<JobsVo> list = listByHql("from JobsVo j where j.userId='"+actorId+"'");
-        List empList = empService.selEmpAll(); //查询所有员工
+        List empList = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId"); //查询所有员工
         //将com中的emp id转换成用户名
         for (int i = 0;i < list.size(); i++){
             JobsVo jvo = list.get(i);
@@ -254,7 +253,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
         //根据流程实例ID查询流程实例
         ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(instId).singleResult();
         List<Comment> commentList = taskService.getProcessInstanceComments(instId); //历史审批信息
-        List empList = empService.selEmpAll(); //查询所有员工
+        List empList = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId"); //查询所有员工
         List maxlist = chuliComm(commentList,empList);
         rmap.put("emplist",empList);
         if(maxlist.size() == 0){
@@ -329,7 +328,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());        //System.out.println("历史时间"+commentList.get(0).getTime());
         //将com中的emp id转换成用户名
 
-        List empList = empService.selEmpAll(); //查询所有员工
+        List empList = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId"); //查询所有员工
         List comList = chuliComm(commentList,empList);
         return comList;
     }

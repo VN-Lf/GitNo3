@@ -62,8 +62,12 @@ public class ActivitiController {
     }
 
     @RequestMapping("/apply")
-    public String apply(JobsVo job,String dept){
+    public String apply(JobsVo job,String dept,String godate,String gotime,String enddate,String endtime){
         //保存单据
+        String gotd = godate+" "+gotime;
+        String endtd = enddate+" "+endtime;
+        job.setGoDate(gotd);
+        job.setEndDate(endtd);
         actservice.addJobs(job,dept);
         return "redirect:myJobList";
     }
@@ -117,7 +121,7 @@ public class ActivitiController {
         String actorId = ""+emp.getEmpId();
         List<Task> list = taskService.createTaskQuery().taskAssignee(actorId).list();
         List mlist = new ArrayList();
-        List empList = empService.selEmpAll(); //查询所有员工
+        List empList = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId"); //查询所有员工
         //将com中的emp id转换成用户名
         for (int i = 0;i < list.size(); i++){
             Map map = new HashMap();

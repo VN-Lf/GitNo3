@@ -81,7 +81,7 @@
                 </div>
                 <div style="position: relative;">
                     <input id="pwd" type="password" name="pwd" style="outline: none;" ondblclick="lookNo(1)" oninput="donTai2('pwd')" ;/>
-                    <input id="pwdLook" type="text" name="pwd" style="display: none" ondblclick="lookNo(2)" oninput="donTai2('pwdLook')" ;/>
+                    <input id="pwdLook" type="text" style="display: none" ondblclick="lookNo(2)" oninput="donTai2('pwdLook')" ;/>
                 </div>
                 <span id="tishi2" style="top:75px" class="tishis">密码</span>
                 <div>
@@ -127,9 +127,14 @@
         }
     }
 
-    function donTai2(id) {
-        var name = document.getElementById(id).value;
-        var id = document.getElementById(id);
+    function donTai2(id2) {
+        var id = document.getElementById(id2);
+        var name = id.value;
+        if(id2 == 'pwd'){
+            document.getElementById("pwdLook").value = name;
+        }else {
+            document.getElementById("pwd").value = name;
+        }
         if (name == null || name == "") {
             $("#tishi2").css("top", "75px");
             $("#tishi2").css("left", "20px");

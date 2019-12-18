@@ -25,8 +25,7 @@ import java.util.UUID;
 @RequestMapping("/upload")
 public class UploadFileController {
     @Resource
-    Examservice examservice;
-
+    Examservice examserviceimpl;
     @RequestMapping(value = "/toupload")
     public String toupload() {
         return "uploadfile/uploadfile";
@@ -40,10 +39,10 @@ public class UploadFileController {
     @RequestMapping(value = "/uploadlist")
     @ResponseBody
     public JSONObject uploadlist() {
-        List uploadlist = examservice.examlist("select * from datadoc");
+        List uploadlist = examserviceimpl.examlist("select * from datadoc");
 
         JSONObject jsonObject = new JSONObject();
-        int selectcount = examservice.Selectcount("select count(docId) from datadoc");
+        int selectcount = examserviceimpl.Selectcount("select count(docId) from datadoc");
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
         jsonObject.put("data", uploadlist);
@@ -54,16 +53,16 @@ public class UploadFileController {
 
     @RequestMapping(value = "/addupload")
     public String addupload(MultipartFile face, String remark, HttpServletRequest request) {
-        dataDoc dataDoc = examservice.uploadfile(face, request);
+        dataDoc dataDoc = examserviceimpl.uploadfile(face, request);
         dataDoc.setRemark(remark);
-        examservice.addupload(dataDoc);
+        examserviceimpl.addupload(dataDoc);
         return "redirect:/upload/toupload";
     }
 
     @RequestMapping(value = "/filedelete")
     @ResponseBody
     public String filedelete(dataDoc dataDoc) {
-        examservice.deleteexam(dataDoc);
+        examserviceimpl.deleteexam(dataDoc);
         return "删除成功";
     }
 
@@ -72,14 +71,14 @@ public class UploadFileController {
     @ResponseBody
     public String allfiledelete(String id) {
         id = id.substring(0, id.length() - 1);
-        examservice.alldelete("delete from datadoc where docId in(" + id + ")");
+        examserviceimpl.alldelete("delete from datadoc where docId in(" + id + ")");
         return "删除成功";
     }
 
     @RequestMapping("/downfile")
     @ResponseBody
     public String downfile(String docId, HttpServletResponse response, HttpServletRequest request) throws IOException {
-        List fileurl = examservice.fileurl("select url from datadoc where docId=" + docId);
+        List fileurl = examserviceimpl.fileurl("select url from datadoc where docId=" + docId);
         try {
             String filename = (String) fileurl.get(0);
 
@@ -125,6 +124,4 @@ public class UploadFileController {
 
         return null;
     }
-
-
 }
