@@ -75,7 +75,6 @@
 </table>
 <script>
     var pand = 0;
-
     function HuanTou() {
         if(pand == 0){
             var it=document.getElementById("up");

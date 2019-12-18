@@ -17,7 +17,6 @@
         table th{
             padding: 10px 5px;
         }
-
         table tr:hover{
         <%if("dark-hive".equals(yangshi)){%>
             background-color: #0972a5;

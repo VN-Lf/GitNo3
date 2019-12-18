@@ -252,6 +252,7 @@
             }else {
                 var toph = 250;
             }
+
             $("#sqd").css("margin-top","-"+toph+"px");
             $("#qinjia").css("display","block");
             document.getElementById("abt").innerText =">  取消申请  <";

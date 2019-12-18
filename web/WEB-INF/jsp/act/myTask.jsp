@@ -16,6 +16,7 @@
             font-size: 15px;
             transition: 0.25s;
         }
+
         table tr{
         <%if("dark-hive".equals(yangshi)){%>
             background-color: black;

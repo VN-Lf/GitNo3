@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>sdfa</title>
+    <title></title>
     <%String yangshi = (String) session.getAttribute("color");%>
     <style>
         table td{
