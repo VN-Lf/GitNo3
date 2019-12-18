@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -129,8 +130,13 @@ public class ExamController {
         if(Depid==null){
             Depid="";
         }
+        String yuJu = "%";
+        for(int i = 0; i < empname.length(); i++){
+            char x = empname.charAt(i);
+            yuJu += x+"%";
+        }
         List examlist = examservice.examlist("\n" +
-                "select l.*,m.Remark,m.Scores,m.aduitName,e.empName from  aduitlog  as l left join aduitmodel as m  on l.aduitModelid=m.aduitModelid left join emp as e on l.empid=e.empId where e.empName like '%"+empname+"%' and m.Depid like '%"+Depid+"%' and l.auditDate between '"+starttime+"' and '"+endtime+"'");
+                "select l.*,m.Remark,m.Scores,m.aduitName,e.empName from  aduitlog  as l left join aduitmodel as m  on l.aduitModelid=m.aduitModelid left join emp as e on l.empid=e.empId where e.empName like '"+yuJu+"' and m.Depid like '%"+Depid+"%' and l.auditDate between '"+starttime+"' and '"+endtime+"'");
         JSONObject jsonObject=new JSONObject();
         int selectcount = examservice.Selectcount("select count(aduitLogid) from aduitlog");
         jsonObject.put("code",0);
@@ -256,7 +262,7 @@ public class ExamController {
 
     @RequestMapping(value = "/addkaohu")
     @ResponseBody
-    public void addkaohu(String empname, String classname){
+    public void addkaohu(String empname, String classname, HttpSession session){
         Email email=new Email();
         List stuname = examservice.examlist("\n" +
                 "select stuName from student where classId=(select classId from classvo where className='"+classname+"')");
@@ -268,11 +274,24 @@ public class ExamController {
             stuname1.add(map.get("stuName"));
         }
 
+        List emptype =examservice.examlist("select postName from post where  empId =(select empId from emp where empName='"+empname+"')");
+
+
+
+        List emptype1=new ArrayList();
+
+        for(int i=0;i<emptype.size();i++){
+            Map map= (Map) emptype.get(i);
+            emptype1.add(map.get("postName"));
+        }
+
         email.setEmpId("刘飞");
-        email.setContent("对"+empname+"老师进行考核");
+        email.setContent("对"+empname+"老师进行考核,考核类型:"+emptype1.get(0));
         email.setTopic("考核");
         email.setSendtime(new java.util.Date());
         email.setIsRead(2);
+
+        session.setAttribute("kaohuempname",empname);
 
         for(int i=0;i<stuname1.size();i++){
             email.setReceId(String.valueOf(stuname1.get(i)));
@@ -280,22 +299,4 @@ public class ExamController {
 
         }
     }
-
-    @RequestMapping(value = "/kaohulist")
-    @ResponseBody
-    public JSONObject kaohulist(){
-        List kaohulist = examservice.examlist("\n" +
-                "select * from myemail where receId='刘飞'");
-
-        JSONObject jsonObject=new JSONObject();
-        int selectcount = examservice.Selectcount("select count(emailId) from myemail");
-        jsonObject.put("code",0);
-        jsonObject.put("msg","");
-        jsonObject.put("data",kaohulist);
-        jsonObject.put("count",selectcount);
-
-        return jsonObject;
-    }
-
-
 }

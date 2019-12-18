@@ -3,6 +3,7 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmailService;
 import com.nothing.vo.Email.Email;
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.emp.Emp;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,10 +42,18 @@ public class EmailController {
     public String toemailServlet(HttpServletRequest request, int emailId){
         int eId = emailId;
         System.out.println("查看邮件的Id为"+eId);
+
         //修改邮件为已读
         service.updateEmailIsRead("update myemail set isRead = '1' where emailId = '"+eId+"'");
         Email email = new Email();
         email = (Email) service.SelectEmailContent(email, eId);
+        String content = email.getContent();
+
+        String substring = content.substring(content.lastIndexOf(":"));
+        String substring1 = substring.substring(1, substring.length());
+
+        System.out.println("考核类型："+substring1);
+
         request.setAttribute("emalilist",email);
         return "MyEmail/SelectEmail";
     }

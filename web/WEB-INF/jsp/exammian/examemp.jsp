@@ -21,6 +21,7 @@
             <label class="layui-form-label" style="width: 97px;margin-left: 10px;"> 部门名称:</label>
             <div class="layui-input-block">
                 <select name="Depid" id="Depid" lay-filter="aihao" style="width: 180px;height: 38px;border: 1px solid rgba(216,216,216,0.5)">
+                    <option value="">请选择部门</option>
                     <c:forEach items="${dept}" var="deptname">
                         <option value="${deptname}">${deptname}</option>
                     </c:forEach>
