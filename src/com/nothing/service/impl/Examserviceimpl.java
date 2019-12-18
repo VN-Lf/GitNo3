@@ -59,7 +59,7 @@ import java.util.UUID;
 
     @Override
     public void addupload(Object obj) {
-        baseDao.addObject(obj);
+        addObject(obj);
     }
 
     @Override
@@ -117,7 +117,7 @@ import java.util.UUID;
 
     @Override
     public List fileurl(String sql) {
-        List list = baseDao.listBySQL2(sql);
+        List list = listBySQL2(sql);
         return list;
     }
 }

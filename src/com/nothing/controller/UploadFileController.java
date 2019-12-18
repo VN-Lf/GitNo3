@@ -1,6 +1,7 @@
 package com.nothing.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.nothing.service.Examservice;
 import com.nothing.service.impl.Examserviceimpl;
 import com.nothing.vo.gongon.dataDoc;
 import com.nothing.vo.wintable.aduitLog;
@@ -24,7 +25,7 @@ import java.util.UUID;
 @RequestMapping("/upload")
 public class UploadFileController {
     @Resource
-    Examserviceimpl examserviceimpl;
+    Examservice examserviceimpl;
 
     @RequestMapping(value = "/toupload")
     public String toupload() {

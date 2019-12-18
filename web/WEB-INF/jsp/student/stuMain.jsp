@@ -54,8 +54,6 @@
 <!--附表表单-->
 <!--附表家庭-->
 <form  class="layui-form" id="addFalForm" style="display:none;height: auto;width: 600px" method="post">
-    <label class="layui-form-label">学生家庭情况</label>
-
     <input id="stuFamilyid" type="hidden" name="stuFamilyid">
     <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
@@ -85,7 +83,6 @@
 </form>
 <!--附表教育-->
 <form  class="layui-form" id="addEduForm" style="display:none;height: auto;width: 600px" method="post">
-    <label class="layui-form-label">学生教育经历</label>
 
     <input type="hidden"name="EduId" id="EduId">
 
@@ -119,7 +116,6 @@
 </form>
 <!--附表事故-->
 <form  class="layui-form" id="addHapForm" style="display:none;height: auto;width: 600px" method="post">
-    <label class="layui-form-label">学生事件经历</label>
 
     <input type="hidden" name="stuHappenId" id="stuHappenId">
     <input type="hidden" name="hapEmpID" id="hapEmpID">
@@ -150,7 +146,6 @@
         </div>
     </div>
 </form>
-
 
 <script src="${pageContext.request.contextPath}/layui/layui.js">
 
@@ -240,20 +235,19 @@
                     break;
                     case 'isSelect':
                         var stuSelectName = $('input[name="stuSelectName"]').val();
-                        var stuSelectPhone = $('input[name="stuSelectPhone"]').val();
                         var stuSelectCla = $('#stuSelectCla').val();
-                        var stuSelectFloor = $("#stuSelectFloor").val();
-                        alert("班级"+stuSelectCla+"寝室"+stuSelectFloor);
+                        var stuSelectPhone = $('input[name="stuSelectPhone"]').val();
+                        var stuSelectFloor  = $('#stuSelectFloor').val();
                     table.reload('demo',{
                         page: {
                             curr: 1 //重新从第 1 页开始
                         }
-                        , url: '${pageContext.request.contextPath}/stu/con'
+                        , url: '${pageContext.request.contextPath}'
                         , method:'POST'
                         ,where:{
                             stuSelectName:stuSelectName,
-                            stuSelectPhone:stuSelectPhone,
                             stuSelectCla:stuSelectCla,
+                            stuSelectPhone:stuSelectPhone,
                             stuSelectFloor:stuSelectFloor
                         }
                     });
@@ -280,8 +274,6 @@
                 addTable(studId,stuName);
         });
 
-
-
         laydate.render({
             elem: '#beginDH' //指定元素
         });
@@ -289,6 +281,7 @@
         laydate.render({
             elem: '#endDH' //指定元素o
         });
+
     });
 
 
@@ -597,7 +590,6 @@
                 data:data.field,
                 dataType:'json',
                 success:function (data){
-
                 }
             });
         });
@@ -605,11 +597,19 @@
         layer.close(openStuAc);
         table.reload('stuHap');
         return false;
-    }
-    layui.use('element', function(){
-        var element = layui.element;
-    });
 
+
+
+    }
+    layui.use(['element','tab'], function(){
+        var element = layui.element;
+        var tab = layui.tab;
+        tab.render({
+            elem: '#commodity',
+            toolbar: '#toolbarDemo5'
+
+        })
+    });
 
 
 </script>
@@ -646,6 +646,7 @@
                 </select>
             </div>
         </div>
+
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">所在寝室</label>
             <div class="layui-input-block">
@@ -657,14 +658,16 @@
                 </select>
             </div>
         </div>
+
         <button class="layui-btn layui-btn-sm" lay-event="isSelect">条件筛选</button>
     </div>
+
 </script>
 
 <script type="text/html" id="toolbarDemo2">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addFal">添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delFal">批量删除</button>
+        <button class="layui-btn  layui-btn-warm" lay-event="addFal">添加</button>
+        <button class="layui-btn  layui-btn-warm" lay-event="delFal">批量删除</button>
     </div>
 </script>
 
@@ -681,6 +684,7 @@
         <button class="layui-btn layui-btn-sm" lay-event="delHap">批量删除</button>
     </div>
 </script>
+
 
 <!--4表的尾部toolbar-->
 <script type="text/html" id="barDemo">

@@ -21,6 +21,7 @@ import java.util.*;
 public class ExamController {
     @Resource
     Examservice examservice;
+
     @RequestMapping(value = "toexam")
     public String toexam(){
         return "exammian/exam";
