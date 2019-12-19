@@ -21,7 +21,7 @@
 
 </table>
 
-
+<!---->
 <!--考试成绩表单-->
 <form  class="layui-form" id="addTextForm" style="display:none;height: auto;width: 600px" method="post" action="${pageContext.request.contextPath}/sco/toScoreMa" target="_self">
 

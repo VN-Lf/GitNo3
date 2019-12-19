@@ -11,7 +11,7 @@
     <title>课程管理</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
-</head>
+</head><!---->
 <body>
 <div class="layui-row">
 </div>

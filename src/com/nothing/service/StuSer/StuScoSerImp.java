@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static oracle.net.aso.C00.o;
-
+//
 @Service
 public class StuScoSerImp extends BaseDao implements StuScoSer{
 

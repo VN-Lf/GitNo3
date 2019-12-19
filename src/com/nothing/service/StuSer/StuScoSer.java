@@ -1,7 +1,7 @@
 package com.nothing.service.StuSer;
 
 import java.util.List;
-
+//
 public interface StuScoSer{
     List toAll();
     int toTitle(Object o);
