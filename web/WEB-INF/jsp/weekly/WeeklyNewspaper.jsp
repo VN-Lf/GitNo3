@@ -181,10 +181,17 @@
         //解决jquery包冲突
         jQuery.noConflict();
         function sub() {
+            var num = '';
+            num = $("#weekCycleD").val();
+            if(num == ''){
+                alert("请选择时间");
+                $("#wins").window("close");
+                return ;
+            }
             $("#addform").form("submit",{
                 success : function () {
                     $("#addform").form("clear");
-                    $("#win").window("close");
+                    $("#wins").window("close");
                     window.location.href="<%=request.getContextPath()%>/Weekly/toWeekly";
                 }
             })
