@@ -14,7 +14,7 @@ public class houqinServiceImpl extends  BaseDao implements houqinService {
 
     //获取保修列表
     public List repairList(){
-        return listBySQL( "select  e.*,e1.empName,stu.stuName from equipmentrepair as e left join student  as stu on e.student=stu.studId left join emp as e1 on e.student=e1.empId");
+        return listBySQL( "select  e.*,e1.empName,e1.empDeptId,stu.stuName,stu.classId from equipmentrepair as e left join student  as stu on e.student=stu.studId left join emp as e1 on e.student=e1.empId");
     }
     //获取数据数量
     public int getCount(){
