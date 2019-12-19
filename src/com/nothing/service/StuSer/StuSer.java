@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//...//////
+//...////////
 public interface StuSer{
     List toStuList();
     int allTitle(Object o);
