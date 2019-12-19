@@ -49,7 +49,6 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        //生成动态按钮
         table.render({
             elem: '#demo'
             ,height:'full-200'
