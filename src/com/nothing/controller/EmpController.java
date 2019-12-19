@@ -45,6 +45,7 @@ public class EmpController {
     public String eduUp(String eid, HttpServletRequest req) {
         int id = Integer.parseInt(eid);
         EmpEducation edu = empService.getEdu(id);
+        System.out.println(edu.toString());
         req.setAttribute("edu",edu);
         return "emp/edu/eduUp";
     }

@@ -4,6 +4,7 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmpService;
 import com.nothing.service.GoPageService;
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class GoPageController {
     @RequestMapping("/login")
     public String login(HttpServletRequest request,HttpSession session, String zhanghao,String pwd){
         System.out.println(pwd+"密码|用户："+zhanghao);
-        pwd = pwd.substring(0,pwd.length()-1);
+        //pwd = pwd.substring(0,pwd.length()-1);
         List<Map> list = service.selectGoPage("SELECT empId from emp where empPhone = '"+zhanghao+ "' and empLogPsw = '"+pwd+"'");
         if(list.size()==0 ){
             String s = "账号或密码错误";
@@ -71,15 +72,21 @@ public class GoPageController {
 
         Emp emp = new Emp();
         emp = (Emp) service.selectEmpGoPage(emp,i);
-        Post post = empService.sqlPostVo(""+emp.getEmpId());
-        session.setAttribute("empId",emp);
-        session.setAttribute("post",post);
-        return "redirect:home";
+        if(0 == emp.getEmpLoginStatus()){
+            String s = "该用户已被封禁";
+            request.getSession().setAttribute("mes",s);
+            return "redirect:tologin";
+        }else {
+            Post post = empService.sqlPostVo(""+emp.getEmpId());
+            session.setAttribute("empId",emp);
+            session.setAttribute("post",post);
+            return "redirect:home";
+        }
     }
     //退出登录
     @RequestMapping("/end")
     public void End(HttpSession session){
-        System.out.println(session.getAttribute("empId"));
+        System.out.println(session.getAttribute("studId"));
         session.invalidate();
     }
     //前往员工资料
@@ -97,26 +104,34 @@ public class GoPageController {
     public String toNotice(){
         return "emp/noticelist";
     }
-    //前往员工子表信息
-    @RequestMapping({"/ortherInf"})
+    //前往子表信息
+    @RequestMapping({"/empEdu"})
     public String toEmpEducation(String id, HttpSession session) {
         int eid = Integer.parseInt(id);
         session.setAttribute("currActEmpId",eid);
         return "emp/ortherInf";
     }
-
-    //报修管理
-    @RequestMapping("/toRepairListPage")
-    public String toRepairListPage(){
-        return "houqin/repairList";
+    //前往值班列表
+    @RequestMapping("/weeklist")
+    public String toWeeklist(){
+        return "emp/weeklist";
     }
-
+    //动态查找部门
     @RequestMapping("/deptlist")
     @ResponseBody
     public JSONObject deptList() {
         List wlist = service.deptList();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("data", wlist);
+        return jsonObject;
+    }
+    //查找员工下拉框
+    @RequestMapping("/listemp")
+    @ResponseBody
+    public JSONObject ListEmp() {
+        List elist = service.empList();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", elist);
         return jsonObject;
     }
 }

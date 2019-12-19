@@ -11,10 +11,11 @@ public class JobsVo implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int jobId;   //主键
 	private String jobType;//申请类型 qingjia    baoxiao
-	private String jobName;//申请类型名称 请假单  报销单
+	private String jobName;//申请类型
 	private int day; //天数
-	private float money;//金额
 	private Date jobDate;//申请日期
+	private String goDate;//开始时间
+	private String endDate;//结束时间
 	private int processFlag;//状态:1、审核中 //2、审批通过
 	private String userId;//用户名称
 	private String remark;//申请说明
@@ -26,12 +27,29 @@ public class JobsVo implements Serializable{
 				", jobType='" + jobType + '\'' +
 				", jobName='" + jobName + '\'' +
 				", day=" + day +
-				", money=" + money +
 				", jobDate=" + jobDate +
+				", goDate=" + goDate +
+				", endDate=" + endDate +
 				", processFlag=" + processFlag +
 				", userId='" + userId + '\'' +
 				", remark='" + remark + '\'' +
 				'}';
+	}
+
+	public String getGoDate() {
+		return goDate;
+	}
+
+	public void setGoDate(String goDate) {
+		this.goDate = goDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	public int getJobId() {
@@ -57,12 +75,6 @@ public class JobsVo implements Serializable{
 	}
 	public void setDay(int day) {
 		this.day = day;
-	}
-	public float getMoney() {
-		return money;
-	}
-	public void setMoney(float money) {
-		this.money = money;
 	}
 	public Date getJobDate() {
 		return jobDate;

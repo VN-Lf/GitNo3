@@ -12,7 +12,17 @@
 <head>
     <title>修改员工信息</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
-    </head>
+    <%String yangshi = (String) session.getAttribute("color");%>
+    <style>
+        div{
+        <%if("dark-hive".equals(yangshi)){%>
+            color: white;
+        <%}else {%>
+            color: black;
+        <%}%>
+        }
+    </style>
+</head>
 <body>
 <div style="height: 20px;margin-top: 10px;margin-left: 15px">
     <a href="${pageContext.request.contextPath}/to/toempzl">◀ 返回</a>
@@ -226,21 +236,6 @@
             ,"empDegree":"${requestScope.emdutvo.empDegree}"
             ,"empEduMajor":"${requestScope.emdutvo.empEduMajor}"
         });
-
-        //自定义验证规则
-        /*form.verify({
-            nikename: function(value){
-                if(value.length < 5){
-                    return '昵称至少得5个字符啊';
-                }
-            }
-            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-            ,repass: function(value){
-                if($('#L_pass').val()!=$('#L_repass').val()){
-                    return '两次密码不一致';
-                }
-            }
-        });*/
         var form = layui.form;
 
         //监听提交
@@ -248,26 +243,6 @@
             layer.msg("修改成功");
             return true;
         });
-        //监听提交
-        /*form.on('submit(formDemo)', function(data){
-            $.ajax({
-                url:'',
-                type:'post',
-                data:data.field,
-                dataType:'json',
-                success:function (data){
-                    layer.alert("修改成功", {icon: 6},function(){
-                        // 获得frame索引
-                        var index = parent.layer.getFrameIndex(window.name);
-                        //关闭当前frame
-                        parent.layer.close(index);
-                        setTimeout(function () {
-                            window.parent.location.reload(); //修改成功后刷新父界面
-                        })
-                    });
-                }
-            });
-        });*/
     });
 
     //fuzhi();

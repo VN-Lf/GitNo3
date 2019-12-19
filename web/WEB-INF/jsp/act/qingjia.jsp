@@ -49,6 +49,10 @@
         <tr bgcolor="#D0E5F5">
             <th colspan="2"><h2 style="margin: 10px" color="black">申请假期</h2></th>
         </tr>
+        <tr bgcolor="white">
+            <td align="right">开始时间：</td>
+            <td><input name="godate" type="date"/><input name="gotime" type="time"/> </td>
+        </tr>
         <tr style="padding: 8px" bgcolor="white">
             <td align="right">请假天数：</td>
             <td style="position: relative;">
@@ -62,6 +66,10 @@
                 </select>
                 <span id="tishi" class="tishis"></span>
             </td>
+        </tr>
+        <tr bgcolor="white">
+            <td align="right">结束时间：</td>
+            <td><input name="enddate" type="date"/><input name="endtime" type="time"/> </td>
         </tr>
         <tr style="padding: 8px" bgcolor="white">
             <td align="right">请假事由：</td>

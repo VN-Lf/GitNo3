@@ -9,7 +9,18 @@
 <html>
 <head>
     <title>添加员工</title>
+    <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
+    <%String yangshi = (String) session.getAttribute("color");%>
+    <style>
+        div{
+        <%if("dark-hive".equals(yangshi)){%>
+            color: white;
+        <%}else {%>
+            color: black;
+        <%}%>
+        }
+    </style>
 </head>
 <body>
 <div style="height: 20px;margin-top: 10px;margin-left: 15px">
@@ -47,13 +58,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">手机号码*</label>
                 <div class="layui-input-block">
-                    <input id="sjhm" type="text" oninput="phoneFuzhi()" name="empPhone" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    <input id="sjhm" type="text" oninput="phoneFuzhi()" name="empPhone" lay-verify="phone" placeholder="" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">微信号码*</label>
                 <div class="layui-input-block">
-                    <input id="wxhm" type="text" name="empWeixin" required  lay-verify="required" placeholder="可手机号可微信号" autocomplete="off" class="layui-input">
+                    <input id="wxhm" type="text" name="empWeixin" lay-verify="required" placeholder="可手机号可微信号" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -105,13 +116,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在部门*</label>
                 <div class="layui-input-block">
-                    <select name="empDeptId" lay-verify="required">
-                        <option value="0">宏图软件</option>
-                        <option value="1">教研部</option>
-                        <option value="2">行政部</option>
-                        <option value="3">后勤部</option>
-                        <option value="4">学工部</option>
-                        <option value="5">招生部</option>
+                    <select name="empDeptId" id="empDeptId" lay-verify="required">
+                        <option value=""></option>
                     </select>
                 </div>
             </div>
@@ -124,7 +130,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">身份证号*</label>
                 <div class="layui-input-block">
-                    <input id="sfzh" type="text" name="empCardno" required  lay-verify="required" placeholder="请输入11位完整的号码" autocomplete="off" class="layui-input">
+                    <input id="sfzh" type="text" name="empCardno" lay-verify="identity" placeholder="请输入11位完整的号码" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -142,7 +148,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">邮件地址*</label>
                 <div class="layui-input-block">
-                    <input id="yjdz" type="text" name="empEmail" required  lay-verify="required" placeholder="用于找回密码" autocomplete="off" class="layui-input">
+                    <input id="yjdz" type="text" name="empEmail" lay-verify="email" placeholder="用于找回密码" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -205,6 +211,22 @@
         document.getElementById("yjdz").value="222908562@qq.com";
         document.getElementById("zfb").value="186461651156";
     }
+    layui.use(['form', 'upload', 'layer'], function () {
+        var form = layui.form;
+        $.ajax({
+            url: '${pageContext.request.contextPath}/to/deptlist',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                var json = data.data;
+                $.each(json, function (index, item) {
+                    $('#empDeptId').append(new Option(item.deptName,item.deptId));// 下拉菜单里添加元素
+                });
+                form.render("select");
+            }
+        })
+
+    });
     function phoneFuzhi() {
         var phone = document.getElementById("sjhm").value;
         document.getElementById("wxhm").value = phone;
@@ -216,24 +238,6 @@
         form.on('submit(formDemo)', function(data){
             layer.msg("成功添加");
             return true;
-        });
-    });
-    //Demo
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#rutime' //指定元素
-        });
-    });
-
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#srtime' //指定元素
         });
     });
 </script>
