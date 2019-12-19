@@ -31,7 +31,7 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">时间</label>
         <div class="layui-input-block">
-            <input id="start" type="text" name="date" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input id="start" type="text" name="chatDate" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
@@ -59,7 +59,7 @@
             ,"teacher":"${chat[0].teacher}"
             ,"face":"${chat[0].stuName}"
             ,"addr":"${chat[0].addr}"
-            ,"date":"<fmt:formatDate value="${chat[0].chatDate}" pattern="yyyy-MM-dd"/>"
+            ,"chatDate":"${chat[0].chatDate}"
             ,"sayscon":"${chat[0].sayscon}"
 
         })

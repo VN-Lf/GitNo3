@@ -213,25 +213,17 @@ public class EmpController {
         Student student = empService.getStu(face);
         if (student!=null){
             cr.setSayface(student.getStudId());
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date1 = formatter.parse(String.valueOf(date));
-            cr.setChatDate(date1);
             empService.chatAdd(cr);
         }
     }
     //谈心记录修改操作
     @RequestMapping({"/chatUp"})
     @ResponseBody
-    public void chatUp(chatRecord cr,String cid,String face, String date) throws ParseException {
+    public void chatUp(chatRecord cr,String cid,String face) throws ParseException {
         Student student = empService.getStu(face);
         if (student!=null){
             cr.setChatid(Integer.parseInt(cid));
-            System.out.println(cr.toString());
             cr.setSayface(student.getStudId());
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date1 = formatter.parse(String.valueOf(date));
-            cr.setChatDate(date1);
-            System.out.println(cr.toString());
             empService.chatUp(cr);
         }
     }

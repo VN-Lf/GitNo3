@@ -30,7 +30,7 @@
                 ,{field: 'teacher', title: '老师', width:100,templet:function (d) { return d.empName; }}
                 ,{field: 'addr', title: '地点', width:120}
                 ,{field: 'sayscon', title: '内容', width:00}
-                ,{field: 'chatDate', title: '时间', width: 120,sort: true,templet:function (d) {return dateFormat(d.chatDate);}}
+                ,{field: 'chatDate', title: '时间', width: 120,sort: true}
                 ,{field: 'chatDate', title: '操作', width: 150,toolbar:"#barOption"}
             ]]
         });
