@@ -30,8 +30,8 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
-    public List selEmpAll() {
-        List list = listBySQL("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId");
+    public List selEmpAll(String sql) {
+        List list = listBySQL(sql);
         return list;
     }
 
@@ -42,8 +42,8 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
-    public int selEmpCont() {
-        int con = selTotalRow("select count(empId) from emp");
+    public int selEmpCont(String sql) {
+        int con = selTotalRow(sql);
         return con;
     }
 
@@ -85,7 +85,15 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override
     public void czPwd(String id) {
         String upsql = "UPDATE emp SET empLogPsw = '123456' WHERE empId = "+id;
-        System.out.println(upsql);
+        executeSQL(upsql);
+    }
+
+    @Override
+    public void banEmp(String id, String zt) {
+        if("0".equals(zt)) zt = "1";
+        else if("1".equals(zt)) zt = "0";
+
+        String upsql = "UPDATE emp SET empLoginStatus ="+zt+" WHERE empId = "+id;
         executeSQL(upsql);
     }
 
@@ -222,6 +230,32 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override
     public void famAdd(EmpFamilyImf efi) {
         this.addObject(efi);
+    }
+
+    @Override
+    public List weekList(String sql) {
+        return listBySQL(sql);
+    }
+
+    @Override
+    public void addWeek(WeekArrange war) {
+        addObject(war);
+    }
+
+    @Override
+    public void delWeek(String id) {
+        executeSQL("delete from weekarrange where weekArrangeId ="+id);
+    }
+
+    @Override
+    public void updateWeek(WeekArrange week) {
+        updObject(week);
+    }
+
+    @Override
+    public void delWeekAll(String id) {
+        id = id.substring(0,id.length()-1);
+        executeSQL("delete from weekarrange where weekArrangeId in ("+id+")");
     }
 
 }

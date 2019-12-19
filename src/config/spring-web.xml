@@ -13,7 +13,9 @@
     <!--2、使用web默认的default-servlet来处理静态资源-->
     <mvc:default-servlet-handler/>
 
-    <mvc:resources mapping="/**" location="WEB-INF/static/"/>
+    <!--设置静态资源可以直接访问 -->
+    <mvc:resources location="/upload/" mapping="/upload/**" />
+    <mvc:resources location="/WEB-INF/static/" mapping="/**"/>
 
     <!--3、配置视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -2,15 +2,25 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title></title>
+    <%String yangshi = (String) session.getAttribute("color");%>
     <style>
         table td{
             padding: 5px;
         }
+        table tr{
+        <%if("dark-hive".equals(yangshi)){%>
+            background-color: black;
+            color: white;
+        <%}else {%>
+            background-color: #f1f1f1;
+            color: black;
+        <%}%>
+        }
     </style>
 </head>
 <body>
-<h2 align="center" style="background-color: #D0E5F5;margin: 0;padding: 15px">审核请假申请</h2>
+<h2 align="center" style="background-color: #D0E5F5;margin: 0;padding: 15px">审核员工请假单</h2>
 <hr/>
 <form action="${pageContext.request.contextPath}/complete" theme="simple" method="post">
     <input type="hidden" name="jobId" value="${job.jobId}"/>
@@ -19,6 +29,10 @@
         <tr bgcolor="white">
             <td align="right" style="width: 35%">请假人：</td>
             <td>${job.userId}</td>
+        </tr>
+        <tr bgcolor="white">
+            <td align="right">${job.goDate}</td>
+            <td>:假期开始时间</td>
         </tr>
         <tr bgcolor="white">
             <td align="right">请假天数：</td>
@@ -32,12 +46,16 @@
             </td>
         </tr>
         <tr bgcolor="white">
-            <td align="right">填单时间：</td>
-            <td >${job.jobDate} </td>
+            <td align="right">${job.endDate}</td>
+            <td >:假期结束时间</td>
         </tr>
         <tr bgcolor="white">
             <td align="right">请假事由：</td>
             <td >${job.remark}</td>
+        </tr>
+        <tr bgcolor="white">
+            <td align="right">填单时间：</td>
+            <td >${job.jobDate}</td>
         </tr>
         <tr bgcolor="white">
             <td align="right">是否批准：</td>
@@ -49,7 +67,7 @@
             </td>
         </tr>
         <tr bgcolor="white" style="height: 60px">
-            <td align="right">备注：</td>
+            <td align="right">批注：</td>
             <td ><textarea style="height: 55px;width: 250px" name="comment"></textarea></td>
         </tr>
         <tr bgcolor="white">
@@ -63,13 +81,13 @@
 <hr/>
 <table style="margin: 0 auto;width: 50%" cellspacing="1" bgcolor="#6495ED">
     <tr bgcolor="#D0E5F5">
-        <th colspan="4"><h2 style="margin: 0" color="black">审批信息列表</h2></th>
+        <th colspan="4"><h2 style="margin: 0">审批信息列表</h2></th>
     </tr>
     <tr bgcolor="#D0E5F5">
-        <th><font color="black">ID</font></th>
-        <th><font color="black">审批时间</font></th>
-        <th><font color="black">审批人</font></th>
-        <th width="50%"><font color="black">批注内容</font></th>
+        <th>ID</th>
+        <th>审批时间</th>
+        <th>审批人</th>
+        <th width="50%">批注内容</th>
     </tr>
     <c:if test="${zhi==0}">
         <tr bgcolor="white">

@@ -50,13 +50,12 @@
     <div data-options="region:'east',split:true,collapsed:true,title:'修改'" style="width:500px;">
         <div id="tt" class="easyui-tabs"  data-options="tools:'#tabs1'" style="height: 600px;">
             <div title="新增">
-                <a id="add"  class="easyui-linkbutton" onclick="add()" data-options="iconCls:'icon-add'">新增周报</a>
                 <form action="<%=request.getContextPath()%>/Weekly/Weeklyadd" method="post" id="addDor">
                     <input type="hidden" name="weekCycleD" id="weekCycleDadd" value="1999-1-1"/>
                     <input type="hidden" name="empId" id="empIdadd" value="0" />
-                    <table width="300px" align="center" border="0">
+                    <table width="300px" align="center" border="0" style="margin-top: 15px">
                         <tr>
-                            <td><h4 style="width: 100px">工作描述</h4></td>
+                            <td><h4 style="width: 80px">工作描述</h4></td>
                             <td>
                                 <textarea name="weekDescription" id="weekDescriptionadd" style="width: 400px; height: 80px"></textarea>
                                 <%--<input id="weekDescriptionadd"  type="text" name="weekDescription">--%>
@@ -80,7 +79,7 @@
                         </tr>
                         <tr><td> &nbsp;&nbsp;</td></tr>
                         <tr>
-                            <td>下周工作计划</td>
+                            <td>下周计划</td>
                             <td>
                                 <textarea name="weekNextPlan" id="weekNextPlanadd" style="width: 400px; height: 80px"></textarea>
                                 <%--<input type="text" name="weekNextPlan" id="weekNextPlanadd"/>--%>
@@ -90,7 +89,7 @@
                         <tr>
                             <td>工作学期</td>
                             <td>
-                                <select name="weekTerm" id="weekTermadd" style="width: 150px">
+                                <select name="weekTerm" id="weekTermadd" style="width: 210px;height: 25px">
                                     <option> 第一学期</option>
                                     <option> 第二学期</option>
                                     <option> 第三学期</option>
@@ -100,6 +99,9 @@
                         </tr>
                     </table>
                 </form>
+                <h1 align="center" style="margin-top: 25px">
+                    <a id="add"  class="easyui-linkbutton" onclick="add()" data-options="iconCls:'icon-add'">新增周报</a>
+                </h1>
             </div>
         </div>
     </div>
@@ -217,22 +219,23 @@
             //第一个实例
             table.render({
                 elem: '#demo'
-                ,height: 312
+                ,height:'full-200'
+                ,cellMinWidth: 80
                 ,toolbar: '#toolbarDemo'
                 ,url: '${pageContext.request.contextPath}/Weekly/list' //数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
                     {type:'checkbox'}//复选框
-                    ,{field: 'weekPaperId', title: '编号', width:80, sort: true}
-                    ,{field: 'empNames', title: '员工', width:80, sort: true}
-                    ,{field: 'weekCycle', title: '填写日期', width:120,templet:function (row){
+                    ,{field: 'weekPaperId', title: '编号', sort: true}
+                    ,{field: 'empNames', title: '员工', sort: true}
+                    ,{field: 'weekCycle', title: '填写日期', templet:function (row){
                             return createTime(row.weekCycle);
                         }, sort: true}
-                    ,{field: 'weekDescription', title: '工作描述', width:80}
-                    ,{field: 'weekOption', title: '工作意见', width:120}
-                    ,{field: 'weekStudentQuestion', title: '学生问题', width: 80}
-                    ,{field: 'weekNextPlan', title: '下周工作计划', width: 80}
-                    ,{field: 'weekTerm', title: '工作学期', width: 80}
+                    ,{field: 'weekDescription', title: '工作描述'}
+                    ,{field: 'weekOption', title: '工作意见'}
+                    ,{field: 'weekStudentQuestion', title: '学生问题'}
+                    ,{field: 'weekNextPlan', title: '下周工作计划'}
+                    ,{field: 'weekTerm', title: '工作学期'}
                     ,{width:215, title: '操作',align:'center', fixed: 'right', toolbar: '#barDemo'}
                 ]]
             });

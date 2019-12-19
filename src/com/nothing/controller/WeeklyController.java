@@ -78,8 +78,8 @@ public class WeeklyController {
     //添加周报的方法
     @RequestMapping("Weeklyadd")
     public String Weeklyadd(EmpWeekPaper weekPaper,HttpSession session){
-        int empid = (int) session.getAttribute("empId");
-        weekPaper.setEmpId(empid);
+        Emp emp = (Emp) session.getAttribute("empId");
+        weekPaper.setEmpId(emp.getEmpId());
         weekPaper.setWeekCycle(new Date());
         service.WeeklyAdd(weekPaper);
         return "redirect:toWeekly";

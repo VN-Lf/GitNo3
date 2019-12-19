@@ -26,7 +26,6 @@ import java.util.UUID;
 public class UploadFileController {
     @Resource
     Examservice examserviceimpl;
-
     @RequestMapping(value = "/toupload")
     public String toupload() {
         return "uploadfile/uploadfile";
@@ -43,7 +42,7 @@ public class UploadFileController {
         List uploadlist = examserviceimpl.examlist("select * from datadoc");
 
         JSONObject jsonObject = new JSONObject();
-        int selectcount = examserviceimpl.selectcount("select count(docId) from datadoc");
+        int selectcount = examserviceimpl.Selectcount("select count(docId) from datadoc");
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
         jsonObject.put("data", uploadlist);
@@ -125,6 +124,4 @@ public class UploadFileController {
 
         return null;
     }
-
-
 }

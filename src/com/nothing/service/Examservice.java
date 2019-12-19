@@ -10,9 +10,13 @@ public interface Examservice {
     //服务方法
     List examlist(String sql);
 
+    List examlist1(String sql);
+
     List empexamlist(String sql);
 
-    int selectcount(String sql);
+    void addexam(Object obj);
+
+    int Selectcount(String sql);
 
     void updateexam(Object obj);
 
