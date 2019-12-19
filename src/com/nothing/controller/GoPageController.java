@@ -1,12 +1,14 @@
 package com.nothing.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmpService;
 import com.nothing.service.GoPageService;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -102,13 +104,19 @@ public class GoPageController {
         session.setAttribute("currActEmpId",eid);
         return "emp/ortherInf";
     }
+
+    //报修管理
     @RequestMapping("/toRepairListPage")
     public String toRepairListPage(){
         return "houqin/repairList";
     }
-    //报修操作页
-    @RequestMapping("/toRepairActPage")
-    public String toRepairActPage(){
-        return "houqin/rep";
+
+    @RequestMapping("/deptlist")
+    @ResponseBody
+    public JSONObject deptList() {
+        List wlist = service.deptList();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", wlist);
+        return jsonObject;
     }
 }

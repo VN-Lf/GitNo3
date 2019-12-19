@@ -12,7 +12,7 @@ public class chatRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
-    private Integer Chatid;
+    private Integer chatid;
     private Integer sayface;        //学生表
     private Integer teacher;      //员工表
     private String addr;          //地址
@@ -20,11 +20,11 @@ public class chatRecord {
     private Date chatDate;          //时间
 
     public Integer getChatid() {
-        return Chatid;
+        return chatid;
     }
 
     public void setChatid(Integer chatid) {
-        Chatid = chatid;
+        chatid = chatid;
     }
 
     public Integer getSayface() {
@@ -65,5 +65,17 @@ public class chatRecord {
 
     public void setChatDate(Date chatDate) {
         this.chatDate = chatDate;
+    }
+
+    @Override
+    public String toString() {
+        return "chatRecord{" +
+                "chatid=" + chatid +
+                ", sayface=" + sayface +
+                ", teacher=" + teacher +
+                ", addr='" + addr + '\'' +
+                ", sayscon='" + sayscon + '\'' +
+                ", chatDate=" + chatDate +
+                '}';
     }
 }

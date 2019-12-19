@@ -53,7 +53,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button class="layui-btn" onclick="a()" lay-submit lay-filter="formDemo">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -90,8 +90,8 @@
         //监听提交
         form.on('submit(formDemo)', function(data){
             layer.msg(JSON.stringify(data.field));
+            window.parent.location.reload();
             return true;
-            parent.layui.admin.events.closeThisTabs();
         });
     });
 
@@ -100,6 +100,10 @@
             var subtitle = $(this).children(".tabs-closable").text();
             $('#tabs').tabs('close', subtitle);
         })
+    }
+    function a() {
+        var index = layer.open();
+        layer.close(index);
     }
 </script>
 <script>

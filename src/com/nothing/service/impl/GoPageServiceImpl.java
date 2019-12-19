@@ -20,4 +20,9 @@ public class GoPageServiceImpl extends BaseDao implements GoPageService {
         return getObject(obj.getClass(),id);
     }
 
+    @Override
+    public List deptList() {
+        return listBySQL("select deptId,deptName from dept");
+    }
+
 }
