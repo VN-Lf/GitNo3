@@ -226,6 +226,7 @@ public class EmpController {
         Student student = empService.getStu(face);
         if (student!=null){
             cr.setChatid(Integer.parseInt(cid));
+            System.out.println(cr.toString());
             cr.setSayface(student.getStudId());
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date1 = formatter.parse(String.valueOf(date));

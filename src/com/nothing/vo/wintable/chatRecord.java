@@ -24,7 +24,7 @@ public class chatRecord {
     }
 
     public void setChatid(Integer chatid) {
-        chatid = chatid;
+        this.chatid = chatid;
     }
 
     public Integer getSayface() {

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../../../../index.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -58,7 +59,7 @@
             ,"teacher":"${chat[0].teacher}"
             ,"face":"${chat[0].stuName}"
             ,"addr":"${chat[0].addr}"
-            ,"date":"${chat[0].chatDate}"
+            ,"date":"<fmt:formatDate value="${chat[0].chatDate}" pattern="yyyy-MM-dd"/>"
             ,"sayscon":"${chat[0].sayscon}"
 
         })
