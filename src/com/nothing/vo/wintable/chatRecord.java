@@ -17,7 +17,7 @@ public class chatRecord {
     private Integer teacher;      //员工表
     private String addr;          //地址
     private String sayscon;      //内容
-    private Date chatDate;          //时间
+    private String chatDate;      //时间
 
     public Integer getChatid() {
         return chatid;
@@ -59,11 +59,11 @@ public class chatRecord {
         this.sayscon = sayscon;
     }
 
-    public Date getChatDate() {
+    public String getChatDate() {
         return chatDate;
     }
 
-    public void setChatDate(Date chatDate) {
+    public void setChatDate(String chatDate) {
         this.chatDate = chatDate;
     }
 

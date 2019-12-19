@@ -31,7 +31,7 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">时间</label>
         <div class="layui-input-block">
-            <input id="start" type="text" name="date" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input id="start" type="text" name="chatDate" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
