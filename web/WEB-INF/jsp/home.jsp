@@ -126,7 +126,7 @@
                 }
             });
         }
-        chazhaoAct();
+
         function chazhaoWeek() {
             var date = new Date();
             date.setDate(date.getDate() - date.getDay() + 1);
@@ -150,8 +150,10 @@
                         weekTis(size);
                         $.each(weekl,function (index,item) {
                             var misu = item.weekDescription;
-                            var time = item.weekCycle;
-                            tianjiaWeek(misu,time);
+                            var time = new Date(item.weekCycle);
+                            var d = new Date(time)
+                            var t=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+ d.getSeconds();
+                            tianjiaWeek(misu,t);
                         })
                     }else {
                         weekTis(size);
@@ -159,7 +161,17 @@
                 }
             });
         }
-        chazhaoWeek();
+
+        function shuaF5(f) {
+            if(f == 1){
+                $("#weektask").remove();
+                $("#emptask").remove();
+            }
+            chazhaoWeek();
+            chazhaoAct();
+        }
+
+        shuaF5(0);
     </script>
 </head>
 <body class="easyui-layout">
@@ -275,7 +287,7 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/repAddPage" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>报修申请</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toRepairListPage" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/toRepairListPage" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>维修管理</a>
                 </li>
             </ul>
@@ -361,9 +373,8 @@
                     <option value="dark-hive" <%if("dark-hive".equals(yangshi)){%>selected<%}%>>夜间模式</option>
                     <option value="pepper-grinder" <%if("pepper-grinder".equals(yangshi)){%>selected<%}%>>咖啡主题</option>
                 </select>
-
                 <fieldset id="hometask" class="layui-elem-field">
-                    <legend><h3>任务</h3></legend>
+                    <legend><h3>任务 <button onclick="shuaF5(1)">刷新列表</button></h3></legend>
                     <div class="layui-field-box">
                         学生请假待审批()<br>
                         未打卡待审批()<br>
@@ -379,6 +390,54 @@
 <div data-options="region:'south'" style="text-align:center">版权所有：宏图18级开发1班</div>
 
 </body>
+<script type="text/javascript">
+    var timeStart,timeEnd,time;//申明全局变量
+
+    function getTimeNow(){
+        var now=new Date();
+        return now.getTime();
+    }
+    function holdDown(id)//鼠标按下时触发
+    {
+        timeStart=getTimeNow();//获取鼠标按下时的时间
+        time=setInterval(function()//setInterval会每100毫秒执行一次
+        {
+            timeEnd=getTimeNow();//也就是每100毫秒获取一次时间
+
+            if(timeEnd-timeStart>800){
+                $(id).css("background-color","#ff0000");
+            }else if(timeEnd-timeStart>650){
+                $(id).css("background-color","#ff2d2d");
+            }else if(timeEnd-timeStart>500){
+                $(id).css("background-color","#ff5151");
+            }else if(timeEnd-timeStart>350){
+                $(id).css("background-color","#f47920");
+            }else if(timeEnd-timeStart>200){
+                $(id).css("background-color","#ffd2d2");
+            }
+            if(timeEnd-timeStart>1000){
+                clearInterval(time);//便不再继续重复此函数 （clearInterval取消周期性执行）
+                $(id).css("display","none");
+            }
+        },100);
+    }
+    function holdUp(id,bs){
+        if(bs == 1){
+            <%if("dark-hive".equals(yangshi)){%>
+            $(id).css("background-color","black");
+            <%}else {%>
+            $(id).css("background-color","#9F9F9F");
+            <%}%>
+        }else if(bs == 0){
+            <%if("dark-hive".equals(yangshi)){%>
+            $(id).css("background-color","#9F9F9F");
+            <%}else {%>
+            $(id).css("background-color","#f1f1f1");
+            <%}%>
+        }
+        clearInterval(time);//如果按下时间不到1000毫秒便弹起，
+    }
+</script>
 <script>
     var shang = null;
 
@@ -386,12 +445,13 @@
     function actTaskTis(san,pand) {
         var html = "";
         if(pand == 1){
-            html = "<div id=\"emptask\" onmouseenter=\"baoyiru(this)\" onmouseleave=\"baoyichu(this)\" class='emptask' onclick=\"zhankaiAct(this,"+san+",'act')\">\n" +
+            html = "<div id=\"emptask\"  onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+                " onmouseleave=\"baoyichu(this)\" class='emptask' onclick=\"zhankaiAct(this,"+san+",'act')\">\n" +
                 "           <span style=\"font-size: 24px\">有 "+san+" 个员工任务待审核</span>\n" +
                 "           <p class=\"tishi\" id='tishi' align=\"right\">点击展开</p>\n" +
                 "        </div>"
         }else if(pand == 0){
-            html = "<div id=\"emptask\" class='emptask'>\n" +
+            html = "<div id=\"emptask\" class='emptask'  onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
                 "           <span style=\"font-size: 24px\">暂无员工申请假期</span>\n" +
                 "           <p class=\"tishi\" align=\"right\"></p>\n" +
                 "        </div>"
@@ -459,12 +519,13 @@
         var html = "";
         if(size == 0){
             setInterval("gettime()","1000");
-            html = "<div class=\"emptask\">\n" +
+            html = "<div class=\"emptask\"  onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
                 "       <span style=\"font-size: 24px\">本周周报尚未完成</span>\n" +
                 "       <p align=\"right\" id=\"sysj\" style=\"padding-right: 30px;margin-top: 10px;font-size: 16px\"></p>\n" +
                 "   </div>";
         }else {
-            html = "<div id=\"weektask\" onmouseenter=\"baoyiru(this)\" onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'week')\">\n" +
+            html = "<div id=\"weektask\" onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+                " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'week')\">\n" +
                 "       <span style=\"font-size: 24px\">本周周报已填写 "+size+" 条</span>\n" +
                 "       <p align=\"right\" id='tishi2' style=\"padding-right: 30px;margin-top: 10px;font-size: 16px\">点击查看更多</p>\n" +
                 "   </div>";

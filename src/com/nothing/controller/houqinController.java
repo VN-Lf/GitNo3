@@ -71,8 +71,12 @@ public class houqinController {
     //报修信息修改操作
     @RequestMapping({"/repUp"})
     @ResponseBody
-    public void repUp(equipmentRepair er, HttpServletRequest req) throws ParseException {
+    public void repUp(equipmentRepair er,String start,String end, HttpServletRequest req) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        er.setStartTime(simpleDateFormat.parse(start));
+        er.setEedTime(simpleDateFormat.parse(end));
         hs.erUp(er);
+        System.out.println(er.toString());
         req.removeAttribute("er");
     }
     //报修信息删除操作
