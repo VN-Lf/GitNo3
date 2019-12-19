@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../../../index.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -36,13 +37,13 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">开始时间</label>
         <div class="layui-input-block">
-            <input id="start" type="text" name="startTime" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input id="start" type="text" name="start" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">结束时间</label>
         <div class="layui-input-block">
-            <input id="end" type="text" name="eedTime" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input id="end" type="text" name="end" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
@@ -73,8 +74,8 @@
             ,"student":"${er.student}"
             ,"remark":"${er.remark}"
             ,"userType":"${er.userType}"
-            ,"startTime":"${er.startTime}"
-            ,"eedTime":"${er.eedTime}"
+            ,"start":"<fmt:formatDate value="${er.startTime}" pattern="yyyy-MM-dd"/>"
+            ,"end":"<fmt:formatDate value="${er.eedTime}" pattern="yyyy-MM-dd"/>"
         })
 
         //日期

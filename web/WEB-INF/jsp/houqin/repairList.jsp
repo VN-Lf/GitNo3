@@ -38,8 +38,8 @@
                 ,{field: 'student', title: '报修人', width:100,templet:function (d) {if (d.userType==1){return d.stuName;}else{return d.empName;}}}
                 ,{field: 'remark', title: '备注', width:100}
                 ,{field: 'userType', title: '报修身份', width:100,templet:function (d) {if (d.userType==1){return'学生';}else{return'员工';}}}
-                ,{field: 'startTime', title: '保修时间', width:150,sort:true,templet: function(d){return d.startTime}}
-                ,{field: 'eedTime', title: '完成时间', width: 150,sort:true,templet: function(d){if (d.eedTime==null){return "";}else {return d.eedTime}}}
+                ,{field: 'startTime', title: '保修时间', width:150,sort:true,templet: function(d){return dateFormat(d.startTime)}}
+                ,{field: 'eedTime', title: '完成时间', width: 150,sort:true,templet: function(d){if (d.eedTime==null){return "";}else {return dateFormat(d.eedTime)}}}
                 ,{field: 'eedTime', title: '操作', width: 150,toolbar:"#barOption"}
             ]]
         });

@@ -50,9 +50,8 @@ public class houqinController {
     //前往报修信息修改页面
     @RequestMapping({"/repUpPage"})
     public String repUp(String rid, HttpServletRequest req) throws ParseException {
-        int id = Integer.parseInt(rid);
         //当前要修改的记录
-        equipmentRepair er = hs.getEr(id);
+        equipmentRepair er = hs.getEr(Integer.parseInt(rid));
         req.setAttribute("er",er);
         return "houqin/repUp";
     }
@@ -71,9 +70,13 @@ public class houqinController {
     //报修信息修改操作
     @RequestMapping({"/repUp"})
     @ResponseBody
-    public void repUp(equipmentRepair er, HttpServletRequest req) throws ParseException {
+    public void repUp(equipmentRepair er,String start,String end) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = formatter.parse(String.valueOf(start));
+        Date date2 = formatter.parse(String.valueOf(end));
+        er.setStartTime(date1);
+        er.setEedTime(date2);
         hs.erUp(er);
-        req.removeAttribute("er");
     }
     //报修信息删除操作
     @RequestMapping({"/repDel"})
