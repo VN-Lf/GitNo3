@@ -12,17 +12,21 @@
     <title>报修列表</title>
 </head>
 <body>
-    <table id="demo" lay-filter="test"></table>
+    <table id="rep" lay-filter="rep"></table>
 </body>
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="barOption">
+    <a class="layui-btn layui-btn-sm" lay-event="up">修改</a>
+    <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</a>
+</script>
 <script>
-
     layui.use(['util','table'], function(){
         var table = layui.table;
 
         var util = layui.util;
         //第一个实例
         table.render({
-            elem: '#demo'
+            elem: '#rep'
             ,height: 312
             ,url: '${pageContext.request.contextPath}/houqin/repairList' //数据接口
             ,page: true //开启分页
@@ -34,9 +38,26 @@
                 ,{field: 'student', title: '学生', width:100}
                 ,{field: 'remark', title: '备注', width:100}
                 ,{field: 'userType', title: '报修身份', width:100}
-                ,{field: 'startTime', title: '保修时间', width:150, sort: true,templet: function(d){return dateFormat(d.startTime)}}
-                ,{field: 'eedTime', title: '完成时间', width: 150, sort: true,templet: function(d){return dateFormat(d.eedTime)}}
+                ,{field: 'startTime', title: '保修时间', width:150,sort:true}
+                ,{field: 'eedTime', title: '完成时间', width: 150,sort:true,templet: function(d){if (d.eedTime==null){return "";}else {return d.eedTime}}}
+                ,{field: 'eedTime', title: '操作', width: 150,toolbar:"#barOption"}
             ]]
+        });
+        //监听工具条
+        table.on('tool(rep)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'up') {
+                openUpdate(data.equipmentId);
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.post('${pageContext.request.contextPath}/houqin/repDel',{id:data.equipmentId},function (data) {
+                        //显示提示框
+                        layer.msg("删除成功", {icon: 6});
+                        table.reload("rep");
+                    });
+                    return false;
+                });
+            }
         });
     });
 
