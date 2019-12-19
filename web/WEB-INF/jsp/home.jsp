@@ -558,6 +558,7 @@
             var $this = $(this);
             var href = $this.attr('src');
             var title = $this.text();
+            var title = $this.text();
             addTab(title, href);
         });
     });
