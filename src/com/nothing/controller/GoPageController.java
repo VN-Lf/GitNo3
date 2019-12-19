@@ -1,12 +1,15 @@
 package com.nothing.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmpService;
 import com.nothing.service.GoPageService;
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -43,27 +46,6 @@ public class GoPageController {
             }else {
                 session.setAttribute("color",color);
             }
-            //获取这周的星期一
-            List<Map> list= service.selectGoPage("select subdate(curdate(),date_format(curdate(),'%w')-1) as mondata");
-            Date mondate = (Date) list.get(0).get("mondata");
-            System.out.println("星期一" + mondate);
-            List<Map> list1 = service.selectGoPage("select subdate(curdate(),date_format(curdate(),'%w')-7) as sundata");
-            Date sundate = (Date) list1.get(0).get("sundata");
-            System.out.println("星期日" + sundate);
-            /*List<Map> list2 = (List<Map>) session.getAttribute("empId");
-            int empid  = (int) list2.get(0).get("empId");
-            System.out.println("id" + empid);*/
-
-            Emp emp = (Emp) session.getAttribute("empId");
-            int empid = emp.getEmpId();
-            System.out.println("id"+empid);
-            int count = service.selecthomeunfinished("select count(*) from empweekpaper  where  empId = "+empid+" and weekCycle between '"+mondate+"' and  '"+sundate+"'");
-            System.out.println("count:"+count);
-            if(count>=5){
-                session.setAttribute("honmdata","已完成");
-            }else {
-                session.setAttribute("honmdata","未完成");
-            }
             return "home";
         }
     }
@@ -75,7 +57,7 @@ public class GoPageController {
     @RequestMapping("/login")
     public String login(HttpServletRequest request,HttpSession session, String zhanghao,String pwd){
         System.out.println(pwd+"密码|用户："+zhanghao);
-        pwd = pwd.substring(0,pwd.length()-1);
+        //pwd = pwd.substring(0,pwd.length()-1);
         List<Map> list = service.selectGoPage("SELECT empId from emp where empPhone = '"+zhanghao+ "' and empLogPsw = '"+pwd+"'");
         if(list.size()==0 ){
             String s = "账号或密码错误";
@@ -90,15 +72,21 @@ public class GoPageController {
 
         Emp emp = new Emp();
         emp = (Emp) service.selectEmpGoPage(emp,i);
-        Post post = empService.sqlPostVo(""+emp.getEmpId());
-        session.setAttribute("empId",emp);
-        session.setAttribute("post",post);
-        return "redirect:home";
+        if(0 == emp.getEmpLoginStatus()){
+            String s = "该用户已被封禁";
+            request.getSession().setAttribute("mes",s);
+            return "redirect:tologin";
+        }else {
+            Post post = empService.sqlPostVo(""+emp.getEmpId());
+            session.setAttribute("empId",emp);
+            session.setAttribute("post",post);
+            return "redirect:home";
+        }
     }
     //退出登录
     @RequestMapping("/end")
     public void End(HttpSession session){
-        System.out.println(session.getAttribute("empId"));
+        System.out.println(session.getAttribute("studId"));
         session.invalidate();
     }
     //前往员工资料
@@ -116,20 +104,34 @@ public class GoPageController {
     public String toNotice(){
         return "emp/noticelist";
     }
-    //前往员工子表信息
-    @RequestMapping({"/ortherInf"})
+    //前往子表信息
+    @RequestMapping({"/empEdu"})
     public String toEmpEducation(String id, HttpSession session) {
         int eid = Integer.parseInt(id);
         session.setAttribute("currActEmpId",eid);
         return "emp/ortherInf";
     }
-    @RequestMapping("/toRepairListPage")
-    public String toRepairListPage(){
-        return "houqin/repairList";
+    //前往值班列表
+    @RequestMapping("/weeklist")
+    public String toWeeklist(){
+        return "emp/weeklist";
     }
-    //报修操作页
-    @RequestMapping("/toRepairActPage")
-    public String toRepairActPage(){
-        return "houqin/rep";
+    //动态查找部门
+    @RequestMapping("/deptlist")
+    @ResponseBody
+    public JSONObject deptList() {
+        List wlist = service.deptList();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", wlist);
+        return jsonObject;
+    }
+    //查找员工下拉框
+    @RequestMapping("/listemp")
+    @ResponseBody
+    public JSONObject ListEmp() {
+        List elist = service.empList();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", elist);
+        return jsonObject;
     }
 }

@@ -10,6 +10,21 @@
 <html>
 <head>
     <title>流程列表</title>
+    <%String yangshi = (String) session.getAttribute("color");%>
+    <style>
+        table td{
+            padding: 5px;
+        }
+        table tr{
+        <%if("dark-hive".equals(yangshi)){%>
+            background-color: black;
+            color: white;
+        <%}else {%>
+            background-color: #f1f1f1;
+            color: black;
+        <%}%>
+        }
+    </style>
 </head>
 <body>
 <div style="width: 250px;height: 50px;margin-left: 10%">
@@ -20,34 +35,39 @@
     </form>
 </div>
 
-<table style="width:80%;margin: 0 auto" cellspacing="1" bgcolor="#6495ED">
-    <tr bgcolor="#D0E5F5">
-        <th colspan="6"><h2 style="margin: 10px" color="black">流程定义列表</h2></th>
+<table style="width:80%;margin: 0 auto" cellspacing="1">
+    <tr>
+        <th colspan="6"><h2 style="margin: 10px">流程定义列表</h2></th>
     </tr>
     <c:if test="${zhi==0}">
-        <tr bgcolor="white">
+        <tr>
             <td colspan="10">
                 <h2 align="center" style="margin: 10px">还没有上传过流程</h2>
             </td>
         </tr>
     </c:if>
     <c:if test="${zhi==1}">
-        <tr bgcolor="#D0E5F5">
-            <th><font color="black">流程ID</font></th>
-            <th><font color="black">流程名称</font></th>
-            <th><font color="black">流程KEY</font></th>
-            <th><font color="black">删除流程</font></th>
-            <th><font color="black">查看流程图</font></th>
-            <th><font color="black">下载流程图</font></th>
+        <tr>
+            <th>流程ID</th>
+            <th>流程名称</th>
+            <th>流程KEY</th>
+            <th>删除流程</th>
+            <th>查看流程图</th>
+            <th>下载流程图</th>
         </tr>
         <c:forEach items="${processList}" var="pd">
-            <tr bgcolor="white">
-                <td>${pd.id}</td>
-                <td>${pd.name}</td>
-                <td>${pd.key}</td>
-                <td><a href="${pageContext.request.contextPath }/delProgressDefine?id=${pd.deploymentId}" onclick="return confirm('确认删除?')">删除流程</a></td>
-                <td><a href="${pageContext.request.contextPath }/viewProcessImage?did=${pd.deploymentId}&imageName=${pd.diagramResourceName}">查看流程图</a>
-                <td><a href="${pageContext.request.contextPath }/toExport?id=${pd.id}">下载流程图</a>
+            <tr>
+                <td align="center">${pd.id}</td>
+                <td align="center">${pd.name}</td>
+                <td align="center">${pd.key}</td>
+                <td align="center">
+                    <a href="${pageContext.request.contextPath }/delProgressDefine?id=${pd.deploymentId}" onclick="return confirm('确认删除?')">删除流程</a>
+                </td>
+                <td align="center">
+                    <a href="${pageContext.request.contextPath }/viewProcessImage?did=${pd.deploymentId}&imageName=${pd.diagramResourceName}">查看流程图</a>
+                </td>
+                <td align="center">
+                    <a href="${pageContext.request.contextPath }/toExport?id=${pd.id}">下载流程图</a>
                 </td>
             </tr>
         </c:forEach>

@@ -21,6 +21,7 @@ import java.util.*;
 public class ExamController {
     @Resource
     Examservice examservice;
+
     @RequestMapping(value = "toexam")
     public String toexam(){
         return "exammian/exam";
@@ -28,7 +29,7 @@ public class ExamController {
 
     @RequestMapping(value = "lookexam")
     public String lookexam(){
-        return "exammian/examemp1";
+        return "exammian/examemp";
     }
 
     @RequestMapping(value = "empexam")
@@ -67,7 +68,6 @@ public class ExamController {
     @RequestMapping(value = "/empexamlist")
     @ResponseBody
     public JSONObject empexamlist(String empname,String  Depid,String starttime,String endtime){
-        System.out.println("进来了");
         String Starttime=null;
         String Endtime=null;
         List examdate = examservice.examdate("select auditDate from aduitlog ORDER BY auditDate");
@@ -104,7 +104,7 @@ public class ExamController {
         jsonObject.put("msg","");
         jsonObject.put("data",examlist);
         jsonObject.put("count",selectcount);
-        System.out.println(jsonObject.toJSONString());
+
         return jsonObject;
     }
 

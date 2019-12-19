@@ -7,7 +7,7 @@ import com.nothing.vo.Sdudent.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+////
 @Service
 public class StuSerImp extends BaseDao implements StuSer{
     @Override
@@ -140,7 +140,7 @@ public class StuSerImp extends BaseDao implements StuSer{
 
     @Override
     public List stuByClaId(String classId){
-        return listBySQL("select * from student where classId = "+classId);
+        return listBySQL("select *,c.className as names from student left join classVo c using (classId) where classId = "+classId);
     }
 
     @Override
@@ -174,6 +174,15 @@ public class StuSerImp extends BaseDao implements StuSer{
                 "and  f.fallLevel like '%"+claSelectFall+"%'\n");
     }
 
+    @Override
+    public List classByFall(String fallId){
+        return listBySQL("select * from ClassVo where classFall = "+fallId);
+    }
+
+    @Override
+    public void classAddStu(String cid, String studIds) {
+        executeSQL("update student set classId = "+cid+" where studId in ("+studIds+")");
+    }
 
 
 }

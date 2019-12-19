@@ -17,7 +17,10 @@
 <%--表格数据--%>
 <div>
     <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
+        <div class="layui-btn-container" style="float: left">
+            <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="isAdd">新增指标</button>
+        </div>
+        <div class="layui-btn-container" style="float: left">
             <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
         </div>
     </script>
@@ -59,6 +62,48 @@
         </div>
         <div class="layui-btn-container">
             <input class="layui-btn layui-btn-normal" type="submit" value="修改" style="margin-left: 190px" />
+            <input 	class="layui-btn layui-btn-primary" type="button" onclick="closeupdate()"  value="取消"/>
+        </div>
+
+    </form>
+</div>
+
+<%--弹出层--%>
+<div style="display: none" id="add">
+    <form class="layui-form" method="post" action="${pageContext.request.contextPath}/exam/addexam" lay-filter="dataf">
+        <input type="hidden" name="aduitModelid"/>
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">考核内容</label>
+            <div class="layui-input-block">
+                <input type="text" name="aduitName" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">考核分数</label>
+            <div class="layui-input-block">
+                <input type="text" name="Scores" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-block">
+                <select name="Depid" lay-verify="required" style="width: 250px">
+                    <option value="1">教研部</option>
+                    <option value="2">行政部</option>
+                    <option value="3">后勤部</option>
+                    <option value="4">学工部</option>
+                    <option value="5">招生部</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">说明</label>
+            <div class="layui-input-block">
+                <input type="text" name="Remark" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-btn-container">
+            <input class="layui-btn layui-btn-normal" type="submit" value="新增" style="margin-left: 190px" />
             <input 	class="layui-btn layui-btn-primary" type="button" onclick="closeupdate()"  value="取消"/>
         </div>
 
@@ -136,6 +181,9 @@
                         layer.msg('请选择需要删除的数据');
                     }
                     break;
+                case 'isAdd':
+                    openaddeexam();
+                    break;
             };
         });
 
@@ -148,6 +196,16 @@
                 success:function (index) {
                     form.val('dataf',data)
                 }
+            });
+        }
+
+
+        function openaddeexam(data) {
+            index1=layer.open({
+                type: 1,
+                title:'修改内容',
+                area: ['500px', '300px'],
+                content:$('#add') ,
             });
         }
     });

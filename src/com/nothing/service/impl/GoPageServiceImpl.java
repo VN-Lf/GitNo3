@@ -9,21 +9,25 @@ import java.util.List;
 
 @Service
 public class GoPageServiceImpl extends BaseDao implements GoPageService {
-    //查询出登录信息
+
     @Override
     public List selectGoPage(String sql) {
         return listBySQL(sql);
     }
-    //查出总行数
+
     @Override
     public Object selectEmpGoPage(Emp obj, int id) {
         return getObject(obj.getClass(),id);
     }
-    //查询未完成周报
+
     @Override
-    public int selecthomeunfinished(String sql) {
-        return selTotalRow(sql);
+    public List deptList() {
+        return listBySQL("select deptId,deptName from dept");
     }
 
+    @Override
+    public List empList() {
+        return listBySQL("select empId,empName from emp");
+    }
 
 }

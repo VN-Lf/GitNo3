@@ -9,20 +9,27 @@
 <html>
 <head>
     <title>公告列表</title>
-    <script src="<%=request.getContextPath()%>/jquery.js"></script>
+    <%String yangshi = (String) session.getAttribute("color");%>
+    <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <style>
         body{
             font-size: 14px;
         }
         #list{
-            width: 80%;height: auto;margin: 0 auto;
+            width: 80%;
+            height: auto;
+            margin: 0 auto;
         }
         .kuai{
             height: 65px;
             width: 95%;
             margin: 10px 0;
             padding:10px 0 10px 15px;
+        <%if("dark-hive".equals(yangshi)){%>
+            background-color: #9F9F9F;
+        <%}else {%>
             background-color: #f1f1f1;
+        <%}%>
             border-radius: 8px;
             transition: 0.5s;
         }
@@ -82,7 +89,7 @@
                             }
 
                             addMovk(noticeId,tishi,content,deptIds,empName,noticeTime,noticeType,title);
-                        })
+                        });
                         tishi('已加载完毕');
                     }
                 },
@@ -226,14 +233,22 @@
     var jinzhi = 1;//移入列表区
     function baoyiru(id) {
         if(jinzhi == 1){
+            <%if("dark-hive".equals(yangshi)){%>
+            $(id).css("background-color","#f1f1f1");
+            <%}else {%>
             $(id).css("background-color","#9F9F9F");
+            <%}%>
             $(id).css("height","75px");
             $(id).css("margin","5px 0");
         }
     }//移除列表区
     function baoyichu(id) {
         if(jinzhi == 1){
+            <%if("dark-hive".equals(yangshi)){%>
+            $(id).css("background-color","#9F9F9F");
+            <%}else {%>
             $(id).css("background-color","#f1f1f1");
+            <%}%>
             $(id).css("height","65px");
             $(".wenben").css("height","65px");
             $(id).css("margin","10px 0");

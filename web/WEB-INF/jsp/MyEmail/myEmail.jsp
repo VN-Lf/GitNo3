@@ -50,7 +50,7 @@
                 <a class="layui-btn layui-btn-xs" lay-event="edit">再次发送</a>
             </script>
             <script type="text/html" id="ServletDemo">
-                <a class="layui-btn layui-btn-xs" <%--onclick="SelvetEmail();"--%> lay-event="selectedit">内容阅览</a>
+                <a class="layui-btn layui-btn-xs" <%--onclick="SelvetEmail();"--%> lay-event="selectedit">打开邮件</a>
             </script>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container" style="width: 800px;">

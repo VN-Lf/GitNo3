@@ -10,14 +10,11 @@
 <html>
 <head>
     <title>主界面</title>
-    <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <jsp:include page="../../index.jsp"></jsp:include>
+    <%String yangshi = (String) session.getAttribute("color");%>
     <% Emp use = (Emp) session.getAttribute("empId");%>
     <% Post post = (Post) session.getAttribute("post");%>
     <!--dark-hive 纯黑   gray 灰色 pepper-grinder咖啡色-->
-    <%String yangshi = (String) session.getAttribute("color");%>
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath }/jquery-easyui-1.3.0/themes/<%=yangshi%>/easyui.css" />
     <style>
         #caidan li {
             width: 100%;
@@ -52,24 +49,35 @@
             color: black;
         <%}%>
         }
-            text-decoration: blue;
+        .hometop{
+            height:80px;
+            text-align:center;
+        <%if("dark-hive".equals(yangshi)){%>
+            background-color:black;
+            color: white;
+        <%}else {%>
+            background-color: white;
+            color: black;
+        <%}%>
         }
     </style>
 </head>
 <body class="easyui-layout">
-<div data-options="region:'north',split:true" style="height:100px;background-color: aquamarine;text-align:center">
+<div data-options="region:'north',split:true" class="hometop">
     <h1>管理员界面</h1>
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
     <div title="Base" id="caidan" fit="true" style="height: 16px;font-size: 16px" class="easyui-accordion">
         <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/email/toemail" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a style="color: green">我的邮件</a>
                 </li>
+                <%if(post.getPostName().indexOf("校长")==-1){%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myJobList" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>请假相关</a>
                 </li>
+                <%}%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>我的周报</a>
                 </li>
@@ -81,9 +89,6 @@
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">考勤管理</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">离职申请</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
@@ -102,14 +107,8 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>员工资料</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">周报管理</a>
-                </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我的周报</a>
-                </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeeklyCollect" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>周报汇总--审阅</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Tuition/todept" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>部门管理</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">谈心记录</a>
@@ -117,6 +116,9 @@
                 <%if(post.getPostName().indexOf("部长")!=-1 || post.getPostName().indexOf("校长")!=-1){%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myTask" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>员工请假管理</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeeklyCollect" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>周报汇总</a>
                 </li>
                 <%}%>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
@@ -138,8 +140,11 @@
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">答辩成绩</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/claMian" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">班级分配</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/claMian" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>班级管理</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/dormitory/todormitory" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>宿舍管理</a>
@@ -160,34 +165,34 @@
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">试讲培训</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">值班管理</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/weeklist" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>值班管理</a>
                 </li>
             </ul>
         </div>
         <div title="后勤管理" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/repAddPage" onclick="qiehuan(this)"  class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toRepairListPage" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>报修申请</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toRepairListPage" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">维修管理</a>
                 </li>
             </ul>
         </div>
         <div title="考核管理" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/examlist" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/toexam" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>考核指标（日常考核）</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考核录入</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/lookexam" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>考核巡查</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/empexam" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>考核录入</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考评内容</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: red">教师考评*</a>
+                    <a>教师考评</a>
                 </li>
             </ul>
         </div>
@@ -208,7 +213,7 @@
         <div title="文件管理" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">资料文档-文件上传</a>
+                    <a>资料文档</a>
                 </li>
             </ul>
         </div>
@@ -279,19 +284,6 @@
 </body>
 <script>
     var shang = null;
-    function createXMLHttp(){
-        try {
-            return new ActiveXObject("Msxm12.XMLHTTP");
-        }catch (e){}
-        try {
-            return new ActiveXObject("Microsoft.XMLHTTP");
-        }catch (e){}
-        try{
-            return new XMLHttpRequest();
-        }catch (e){}
-        alert("无法打开");
-        return null;
-    }
     function gettime(){
         var date = new Date();
         var hour = date.getHours();

@@ -6,17 +6,18 @@ import com.nothing.vo.emp.*;
 import java.util.List;
 //jiekou
 public interface EmpService {
-    List selEmpAll();
+    List selEmpAll(String sql);
     List selNoticeAll(String type);
-    int selEmpCont();
+    int selEmpCont(String sql);
     void addEmp(Emp emp, EmpEducation empEducation, Post post);
     void delete(String ids);
     void czPwd(String id);
+    void banEmp(String id, String zt);
     Emp sqlEmpVo(String id);
     Post sqlPostVo(String eid);
     EmpEducation sqlEduVo(String eid);
     void empUpdate(Emp emp, EmpEducation Edu, Post post);
-    void addNotice(Notice notice,int lx);//发布公告
+    void addNotice(Notice notice, int lx);//发布公告
     Notice chaNotice(String nid);    //根据id查员工
 
     //根据Id查教育经历列表
@@ -57,4 +58,11 @@ public interface EmpService {
     void famDel(String id);
     //新增家庭信息
     void famAdd(EmpFamilyImf efi);
+
+    //查找所有值班
+    List weekList(String sql);
+    void addWeek(WeekArrange war);
+    void delWeek(String id);
+    void updateWeek(WeekArrange week);
+    void delWeekAll(String id);
 }

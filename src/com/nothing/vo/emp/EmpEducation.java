@@ -82,4 +82,18 @@ public class EmpEducation{
     public void setEmpEduMajor(String empEduMajor) {
         this.empEduMajor = empEduMajor;
     }
+
+    @Override
+    public String toString() {
+        return "EmpEducation{" +
+                "empEduId=" + empEduId +
+                ", empId=" + empId +
+                ", empUniversity='" + empUniversity + '\'' +
+                ", empDegree='" + empDegree + '\'' +
+                ", empEucStartDay='" + empEucStartDay + '\'' +
+                ", empEucEndDay='" + empEucEndDay + '\'' +
+                ", empEucRemark='" + empEucRemark + '\'' +
+                ", empEduMajor='" + empEduMajor + '\'' +
+                '}';
+    }
 }

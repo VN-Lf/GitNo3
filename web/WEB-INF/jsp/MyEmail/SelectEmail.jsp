@@ -30,6 +30,7 @@
         <div>
             <a href="${pageContext.request.contextPath}/email/toemail"  class="layui-btn layui-bg-blue layui-btn-xs" >返回</a>
         </div>
+
     </div>
 </div>
 </body>

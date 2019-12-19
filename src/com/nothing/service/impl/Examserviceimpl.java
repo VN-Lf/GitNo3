@@ -25,9 +25,20 @@ import java.util.UUID;
     }
 
     @Override
+    public List examlist1(String sql) {
+        List list = listBySQL2(sql);
+        return list;
+    }
+
+    @Override
     public List empexamlist(String sql) {
         List list = listBySQL(sql);
         return list;
+    }
+
+    @Override
+    public void addexam(Object obj) {
+        addObject(obj);
     }
 
     @Override
