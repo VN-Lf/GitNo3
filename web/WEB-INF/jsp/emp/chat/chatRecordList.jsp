@@ -25,7 +25,7 @@
             ,url: '${pageContext.request.contextPath}/emp/chatList' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
-                {field: 'Chatid', title: '编号', width:80,sort: true, fixed: 'left'}
+                {field: 'chatid', title: '编号', width:80,sort: true, fixed: 'left'}
                 ,{field: 'sayface', title: '学生', width:100,templet:function (d) { return d.stuName; }}
                 ,{field: 'teacher', title: '老师', width:100,templet:function (d) { return d.empName; }}
                 ,{field: 'addr', title: '地点', width:120}
@@ -41,14 +41,14 @@
                 case 'isDele':
                     var checkStatus = table.checkStatus('edu'),
                         data = checkStatus.data,
-                        eduId = "";
+                        cid = "";
                     if(data.length > 0){
                         for (var i in data){
-                            Chatid+=data[i].Chatid+",";
+                            cid+=data[i].chatid+",";
                         }
                         layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
                             $.post('${pageContext.request.contextPath}/emp/chatDel',{
-                                id:Chatid
+                                id:cid
                             },function(data){
                                 alert("删除"+data);
                                 table.reload("edu");
@@ -71,7 +71,7 @@
                 open("修改",'${pageContext.request.contextPath}/emp/toChatUp?cid='+data.chatid);
             }else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
-                    $.post('${pageContext.request.contextPath}/emp/chatDel',{id:data.Chatid},function (data) {
+                    $.post('${pageContext.request.contextPath}/emp/chatDel',{id:data.chatid},function (data) {
                         //显示提示框
                         layer.msg("删除成功", {icon: 6});
                         table.reload("chat");

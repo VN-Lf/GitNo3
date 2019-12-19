@@ -210,7 +210,7 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Tuition/todept" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>部门管理</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/emp/tochatList" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">谈心记录</a>
                 </li>
                 <%if(post.getPostName().indexOf("部长")!=-1 || post.getPostName().indexOf("校长")!=-1){%>
