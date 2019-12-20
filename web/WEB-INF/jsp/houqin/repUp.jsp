@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../../../index.jsp"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -54,7 +53,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" onclick="a()" lay-submit lay-filter="formDemo">立即提交</button>
+            <button class="layui-btn" onclick="a()" lay-submit lay-filter="formDemo">立即修改</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -74,8 +73,8 @@
             ,"student":"${er.student}"
             ,"remark":"${er.remark}"
             ,"userType":"${er.userType}"
-            ,"start":"<fmt:formatDate value="${er.startTime}" pattern="yyyy-MM-dd"/>"
-            ,"end":"<fmt:formatDate value="${er.eedTime}" pattern="yyyy-MM-dd"/>"
+            ,"start":"${er.startTime}"
+            ,"end":"${er.eedTime}"
         })
 
         //日期

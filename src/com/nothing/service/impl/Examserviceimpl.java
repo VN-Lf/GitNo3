@@ -53,6 +53,11 @@ import java.util.UUID;
     }
 
     @Override
+    public void updateend(String sql) {
+        executeSQL(sql);
+    }
+
+    @Override
     public void deleteexam(Object obj) {
         delObject(obj);
     }

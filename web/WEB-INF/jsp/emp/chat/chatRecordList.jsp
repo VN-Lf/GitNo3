@@ -20,7 +20,8 @@
         //第一个实例
         table.render({
             elem: '#chat'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar:'#toolbar'
             ,url: '${pageContext.request.contextPath}/emp/chatList' //数据接口
             ,page: true //开启分页

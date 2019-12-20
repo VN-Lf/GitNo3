@@ -40,7 +40,7 @@
             </div>
             <input class="layui-btn layui-btn-normal" id="shaixuan" style="width: 80px" value="筛选" />
         </form>
-        <table id="demo" lay-filter="test"></table>
+        <table id="demo" class="layui-bg-black" lay-filter="test"></table>
     </div>
     <div id="east" data-options="region:'east',collapsed:true,title:'其他信息'" style="width: 650px;">
         <h1 style="text-align: center" >单击操作最右侧图标以查看</h1>
@@ -262,7 +262,7 @@
 </script>
 
 <script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
+    <div class="layui-btn-container" style="float: left">
         <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="isDele">批量删除</button>
         <button class="layui-btn layui-btn-sm"><a style="color: white" href="${pageContext.request.contextPath}/to/empadd">新增员工</a></button>
     </div>

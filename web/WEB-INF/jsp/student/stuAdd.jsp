@@ -19,7 +19,7 @@
 <form class="layui-form" action="${pageContext.request.contextPath}/stu/add" method="post">
     <div style="width: 100%;height: 69%;margin-top: 1%">
         <div style="width:33%;height:100%;float: left">
-            <input id="stuId" type="hidden" name="studId" lay-verify="required" autocomplete="off" class="layui-input" value="0">
+            <!--<input id="stuId" type="hidden" name="studId" lay-verify="required" autocomplete="off" class="layui-input" value="0">-->
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-block">

@@ -35,19 +35,19 @@
     <div data-options="region:'east',split:true,collapsed:true,title:'修改'" style="width:350px;">
         <div id="tt" class="easyui-tabs"  data-options="tools:'#tabs1'" style="height: 600px;">
             <div title="新增">
-                <a id="add"  class="easyui-linkbutton" onclick="add()" data-options="iconCls:'icon-add'">Add</a>
                 <form action="<%=request.getContextPath()%>/course/addCourseType" method="post" id="addDor">
                     <table width="300px" align="center" border="0">
                         <tr>
-                            <td>类别名称:&nbsp;&nbsp;</td>
+                            <td style="padding: 10px">类别名称:&nbsp;&nbsp;</td>
                             <td><input id="courseTypeName" class="easyui-validatebox" type="text" name="courseTypeName"></td>
                         </tr>
                         <tr>
-                            <td>说明:&nbsp;&nbsp;</td>
+                            <td style="padding: 10px">说明:&nbsp;&nbsp;</td>
                             <td><input id="courseRemark" class="easyui-validatebox" type="text" name="courseRemark"></td>
                         </tr>
                     </table>
                 </form>
+                <button id="add"  class="layui-btn layui-btn-normal" style="margin: 20px 0 0 130px;" onclick="add()">添加数据</button>
             </div>
         </div>
     </div>
@@ -100,7 +100,8 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/course/list' //数据接口
             ,page: true //开启分页

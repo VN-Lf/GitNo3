@@ -52,7 +52,6 @@
     <div data-options="region:'east',split:true,collapsed:true,title:'修改'" style="width:350px;">
         <div id="tt" class="easyui-tabs"  data-options="tools:'#tabs1'" style="height: 600px;">
             <div title="新增">
-                <a id="add"  class="easyui-linkbutton" onclick="add()" data-options="iconCls:'icon-add'">Add</a>
                 <form action="<%=request.getContextPath()%>/Trial/addTrial" method="post" id="addDor">
                     <table width="300px" align="center" border="0">
                         <tr>
@@ -120,6 +119,7 @@
                         </tr>
                     </table>
                 </form>
+                <button id="add"  class="layui-btn layui-btn-normal" style="margin: 20px 0 0 130px;" onclick="add()">添加数据</button>
             </div>
         </div>
     </div>
@@ -221,14 +221,15 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/Trial/list' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox',width:100}//复选框
                 ,{field: 'trialId', title: '编号', width:100, sort: true}
-                ,{field: 'trialDate', title: '日期  ', width:100,templet:function (row){
+                ,{field: 'trialDate', title: '日期  ', width:150,templet:function (row){
                         return createTime(row.trialDate);
                     }}
                 ,{field: 'trialWeekDay', title: '工作日 ',templet:function (data) {
@@ -248,7 +249,7 @@
                             return '星期七'
                         }
                     }, width:100}
-                ,{field: 'CourseName', title: '课程', width:100}
+                ,{field: 'CourseName', title: '课程', width:150}
                 ,{field: 'trialType', title: '授课类型', width:100,templet:function (data) {
                         if( data.trialType ==1 ){
                             return '试讲'
@@ -257,8 +258,8 @@
                         }
                     }
                 }
-                ,{field: 'empName', title: '授课老师', width:100}
-                ,{field: 'trialRemark', title: '说明  ', width:100}
+                ,{field: 'empName', title: '授课老师', width:150}
+                ,{field: 'trialRemark', title: '说明  '}
                 ,{width:215, title: '操作',align:'center', fixed: 'right', toolbar: '#barDemo'}
             ]]
         });
