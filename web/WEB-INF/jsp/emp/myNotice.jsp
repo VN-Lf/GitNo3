@@ -33,7 +33,7 @@
             border-radius: 8px;
             transition: 0.5s;
         }
-        .biti{
+        .biti .biti2{
             margin:0;
             font-size: 10px;
         }
@@ -179,18 +179,27 @@
             var div = $(id).parent();
             div.css("height","300px");
             $(id).css("height","300px");
-            var id = $(id).parent().children('div').find(".id").html().slice(3);
-            $.post('${pageContext.request.contextPath}/emp/martNotice',{eid:${empId.empId},nid:id},function (data) {
-
-            },"json");
+            var nnnnid = $(id).parent().children('div').find(".id").html().slice(3);
+            document.getElementById(nnnnid).innerHTML="已读";
+            $.post('${pageContext.request.contextPath}/emp/martNotice',{eid:${empId.empId},nid:nnnnid},function (data) {},"json");
         }
     }//添加一个公告
     function addMovk(nid,tishi,con,dep,name,ntime,ntype,title,emps) {
+        var emp = new Array();
+        if (emps){
+            emp = emps.split(",");
+        }
+        var a = "<p id='"+nid+"' class=\"biti\">未读</p>";
+        var empId = ${empId.empId};
+        for(var i=0;i<emp.length;i++){
+            if(empId==emp[i]){
+                a="<p id='"+nid+"' class=\"biti2\">已读</p>";
+            }
+        }
         var html = "<div class=\"kuai\" onmouseenter=\"baoyiru(this)\" onmouseleave=\"baoyichu(this)\">\n" +
             "            <div style=\"float: left;width: 10%;height: 100%\">\n" +
             "                <p class='id' style=\"margin: 0;color: #f1f1f1\">编号："+nid+"</p>\n" +
             "                <p style=\"margin: 0\">发布："+name+"</p>\n" +
-            "                <p style=\"margin: 0\">类型："+ntype+"</p>\n" +
             "            </div>\n" +
             "            <div style=\"float: left;width: 15%;height: 100%\">\n" +
             "                <p class=\"biti\" id='ti"+nid+"'>"+title+"</p>\n" +
@@ -200,21 +209,10 @@
             "            <div class=\"wenben\" onclick='zanKai(this)' style=\"float: left;width: 60%;height: 100%;margin: 0 2.5%;transition: 0.5s;\">\n" +
             "                 <textarea id='text"+nid+"' readonly class='textcss'>"+con+"</textarea>\n"+tishi+
             "            </div>\n" +
-            "            <div style=\"float: left;width: 10%;height: 100%;\">\n" +
+            "            <div style=\"float: left;width: 10%;height: 100%;\">\n" +a+
             "            </div>\n" +
             "        </div>";
 
-        var emp = new Array();
-        if (emps){
-            emp = emps.split(",");
-        }
-        var a = "<p class=\"biti\">已读</p>";
-        var empId = ${empId.empId};
-        for(var i=0;i<emp.length;i++){
-            if(empId==emp[i].slice(0,-1)){
-
-            }
-        }
         $("#list").append(html);
     }
 

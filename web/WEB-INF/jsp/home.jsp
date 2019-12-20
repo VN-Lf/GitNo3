@@ -256,6 +256,9 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/tonotice" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>公告发布</a>
                 </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toMyNotice" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>查看公共</a>
+                </li>
             </ul>
         </div>
         <div title="员工管理" style="overflow:auto;padding:0;">
