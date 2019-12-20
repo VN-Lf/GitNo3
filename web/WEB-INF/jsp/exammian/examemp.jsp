@@ -46,7 +46,7 @@
             <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
         </div>
     </script>
-    
+
     <table class="layui-table" id="demo" lay-data="{id: 'idTest'}" lay-filter="test"></table>
 </div>
 

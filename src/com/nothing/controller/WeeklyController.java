@@ -59,11 +59,20 @@ public class WeeklyController {
 
         return json;
     }
-
+    @RequestMapping("/weeksize")
+    @ResponseBody
+    public JSONObject taskSize(String empId,String ks,String end){
+        JSONObject jsonObject = new JSONObject();
+        List<Map> list = service.selectWeeklylist("select * from empweekpaper where empId ="+empId+" and weekCycle between '"+ks+"' and '"+end+"'");
+        System.out.println(list);
+        jsonObject.put("size", list.size());
+        jsonObject.put("week",list);
+        return jsonObject;
+    }
     //获取全部周报
     @ResponseBody
     @RequestMapping("listcollect")
-    public JSONObject listcollect(HttpSession session) {
+    public JSONObject listcollect() {
         List list = service.selectWeeklylist("select *,e.empName as empNames from empweekpaper w left join emp e  using(empId)");
         int count = service.SelcctWeeklycount("select count(*) from empweekpaper");
 
@@ -78,11 +87,8 @@ public class WeeklyController {
     //添加周报的方法
     @RequestMapping("Weeklyadd")
     public String Weeklyadd(EmpWeekPaper weekPaper,HttpSession session){
-       /* int empid = (int) session.getAttribute("empId");*/
-
         Emp emp = (Emp) session.getAttribute("empId");
-        int empid = emp.getEmpId();
-        weekPaper.setEmpId(empid);
+        weekPaper.setEmpId(emp.getEmpId());
         weekPaper.setWeekCycle(new Date());
         service.WeeklyAdd(weekPaper);
         return "redirect:toWeekly";
@@ -99,17 +105,6 @@ public class WeeklyController {
         Date date2 = new Date();
         date2.setTime(Long.parseLong(date1));*/
         weekPaper.setWeekCycle(date1);
-        System.out.println(date1);
-        System.out.println("修改时间" + weekPaper.getWeekCycle());
-        System.out.println("进来了周报修改");
-        System.out.println("进来了新增"+weekPaper.getWeekPaperId());
-        System.out.println(weekPaper.getWeekCycle());
-        System.out.println(weekPaper.getWeekDescription());
-        System.out.println(weekPaper.getWeekNextPlan());
-        System.out.println(weekPaper.getWeekOption());
-        System.out.println(weekPaper.getWeekPaperId());
-        System.out.println(weekPaper.getWeekStudentQuestion());
-        System.out.println(weekPaper.getWeekTerm());
         service.WeeklyUpdate(weekPaper);
         return "redirect:toWeekly";
     }

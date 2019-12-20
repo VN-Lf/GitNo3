@@ -3,7 +3,6 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.houqin.equipmentRepair;
-import org.hibernate.result.Output;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import com.nothing.service.houqinService;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,13 +35,17 @@ public class houqinController {
         jsonObject.put("msg","");
         jsonObject.put("data",list);
         jsonObject.put("count",count);
-        System.out.println(jsonObject.toJSONString());
         return jsonObject;
     }
     //前往报修信息新增页面
     @RequestMapping({"/repAddPage"})
     public String repAddPage() {
         return "houqin/repAdd";
+    }
+    //报修管理
+    @RequestMapping("/toRepairListPage")
+    public String toRepairListPage(){
+        return "houqin/repairList";
     }
     //前往报修信息修改页面
     @RequestMapping({"/repUpPage"})
@@ -60,9 +62,7 @@ public class houqinController {
     public void repAdd(equipmentRepair er, HttpSession session) throws ParseException {
         Emp e = (Emp) session.getAttribute("empId");
         er.setStatus(0);//0未完成，1完成
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String s = sdf.format(new Date());
-        er.setStartTime(s);
+        er.setStartTime(new Date());
         er.setUserType(2);//1学生，2员工
         er.setClasses(e.getEmpDeptId());
         er.setStudent(e.getEmpId());
@@ -71,8 +71,12 @@ public class houqinController {
     //报修信息修改操作
     @RequestMapping({"/repUp"})
     @ResponseBody
-    public void repUp(equipmentRepair er, HttpServletRequest req) throws ParseException {
+    public void repUp(equipmentRepair er,String start,String end, HttpServletRequest req) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        er.setStartTime(simpleDateFormat.parse(start));
+        er.setEedTime(simpleDateFormat.parse(end));
         hs.erUp(er);
+        System.out.println(er.toString());
         req.removeAttribute("er");
     }
     //报修信息删除操作

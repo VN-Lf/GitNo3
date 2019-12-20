@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//...////
+//...////////
 public interface StuSer{
     List toStuList();
     int allTitle(Object o);
@@ -32,4 +32,9 @@ public interface StuSer{
     int stuByClaIdCount(String classId);
     int  countClaCon(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall);
     List conClas(String claSelectName , String claSelectAdviser, String claSelectTeacher, String claSelectTerm , String claSelectType , String claSelectFall);
+
+    //根据学年查班级
+    List classByFall(String fallId);
+    //给某个班新增学生
+    void classAddStu(String cid,String studIds);
 }

@@ -21,7 +21,6 @@
     <jsp:include page="../../../index.jsp"></jsp:include>
 </head>
 <body>
-<h1>宿舍管理信息</h1>
     <div class="easyui-layout" data-options="fit:true" >
         <div data-options="region:'center',title:'信息管理'" style="background:#eee;">
             <%--信息显示表--%>
@@ -40,7 +39,6 @@
         <div data-options="region:'east',split:true,collapsed:true,title:'修改'" style="width:350px;">
             <div id="tt" class="easyui-tabs"  data-options="tools:'#tabs1'" style="height: 600px;">
                 <div title="新增">
-                    <a id="add"  class="easyui-linkbutton" onclick="add()" data-options="iconCls:'icon-add'">Add</a>
                     <form action="<%=request.getContextPath()%>/dormitory/dormadd" method="post" id="addDor">
                         <table width="300px" align="center" border="0">
                             <tr>
@@ -96,9 +94,9 @@
                                     <input type="text" name="numberBeds" id="numberBedss"/>
                                 </td>
                             </tr>
-
                         </table>
                     </form>
+                    <button id="add"  class="layui-btn layui-btn-normal" style="margin: 20px 0 0 130px;" onclick="add()">添加数据</button>
                 </div>
             </div>
         </div>
@@ -188,13 +186,14 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/dormitory/list' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
                  {type:'checkbox'}//复选框
-                ,{field: 'HourId', title: '编号', width:80, sort: true}
+                ,{field: 'stuHours', title: '编号', width:80, sort: true}
                 ,{field: 'addr', title: '地址', width:120}
                 ,{field: 'count', title: '宿舍人数', width:120, sort: true}
                 ,{field: 'hourIddsc', title: '序号', width:80}
@@ -214,7 +213,7 @@
                         employeesId = " ";
                     if(data.length > 0){
                         for (var i in data){
-                            employeesId+=data[i].HourId+",";
+                            employeesId+=data[i].stuHours+",";
                         }
                         layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
                             $.post('${pageContext.request.contextPath}/dormitory/dormitorydelete',{

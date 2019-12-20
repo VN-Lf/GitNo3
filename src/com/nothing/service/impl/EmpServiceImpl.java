@@ -2,8 +2,12 @@ package com.nothing.service.impl;
 
 import com.nothing.dao.BaseDao;
 import com.nothing.service.EmpService;
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.charge.Notice;
 import com.nothing.vo.emp.*;
+import com.nothing.vo.wintable.chatRecord;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +34,8 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
-    public List selEmpAll() {
-        List list = listBySQL("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId");
+    public List selEmpAll(String sql) {
+        List list = listBySQL(sql);
         return list;
     }
 
@@ -42,8 +46,8 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
-    public int selEmpCont() {
-        int con = selTotalRow("select count(empId) from emp");
+    public int selEmpCont(String sql) {
+        int con = selTotalRow(sql);
         return con;
     }
 
@@ -85,7 +89,15 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override
     public void czPwd(String id) {
         String upsql = "UPDATE emp SET empLogPsw = '123456' WHERE empId = "+id;
-        System.out.println(upsql);
+        executeSQL(upsql);
+    }
+
+    @Override
+    public void banEmp(String id, String zt) {
+        if("0".equals(zt)) zt = "1";
+        else if("1".equals(zt)) zt = "0";
+
+        String upsql = "UPDATE emp SET empLoginStatus ="+zt+" WHERE empId = "+id;
         executeSQL(upsql);
     }
 
@@ -224,4 +236,68 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         this.addObject(efi);
     }
 
+    @Override
+    public List weekList(String sql) {
+        return listBySQL(sql);
+    }
+
+    @Override
+    public void addWeek(WeekArrange war) {
+        addObject(war);
+    }
+
+    @Override
+    public void delWeek(String id) {
+        executeSQL("delete from weekarrange where weekArrangeId ="+id);
+    }
+
+    @Override
+    public void updateWeek(WeekArrange week) {
+        updObject(week);
+    }
+
+    @Override
+    public void delWeekAll(String id) {
+        id = id.substring(0,id.length()-1);
+        executeSQL("delete from weekarrange where weekArrangeId in ("+id+")");
+    }
+
+    @Override
+    public void chatAdd(chatRecord cr) {
+        this.addObject(cr);
+    }
+
+    @Override
+    public void chatUp(chatRecord cr) {
+        this.updObject(cr);
+    }
+
+    @Override
+    public List chatList() {
+        return this.listBySQL("select  c.*,e1.empName,stu.stuName from chatrecord as c left join student  as stu on c.sayface=stu.studId left join emp as e1 on c.teacher=e1.empId");
+    }
+
+    @Override
+    public List getChat(int id) {
+        return listBySQL("select  c.*,e1.empName,stu.stuName from chatrecord as c left join student  as stu on c.sayface=stu.studId left join emp as e1 on c.teacher=e1.empId where c.chatid ='"+id+"'");
+    }
+
+    @Override
+    public int chatCount() {
+        return this.selectcount("select count(*) from chatRecord");
+    }
+    @Override
+    public void chatDel(String id) {
+        this.executeSQL("delete from chatRecord where Chatid in("+id+")");
+    }
+
+    @Override
+    public Student getStu(String name) {
+        Session session = sessionFactory.openSession();
+        SQLQuery sqlquery =session .createSQLQuery("select * from student where stuName = '"+name+"'");
+        Student student = (Student)sqlquery.addEntity(Student.class).uniqueResult();
+        session.flush();
+        session.close();
+        return student;
+    }
 }

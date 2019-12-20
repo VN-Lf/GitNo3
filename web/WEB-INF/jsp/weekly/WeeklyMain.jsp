@@ -58,52 +58,25 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/Weekly/listcollect' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
-                ,{field: 'weekPaperId', title: '编号', width:80, sort: true}
-                ,{field: 'empNames', title: '员工', width:80, sort: true}
-                ,{field: 'weekCycle', title: '填写日期', width:120,templet:function (row){
+                ,{field: 'weekPaperId', title: '编号', sort: true}
+                ,{field: 'empNames', title: '员工', sort: true}
+                ,{field: 'weekCycle', title: '填写日期', templet:function (row){
                         return createTime(row.weekCycle);
                     }, sort: true}
-                ,{field: 'weekDescription', title: '工作描述', width:80}
-                ,{field: 'weekOption', title: '工作意见', width:120}
-                ,{field: 'weekStudentQuestion', title: '学生问题', width: 80}
-                ,{field: 'weekNextPlan', title: '下周工作计划', width: 80}
-                ,{field: 'weekTerm', title: '工作学期', width: 80}
+                ,{field: 'weekDescription', title: '工作描述'}
+                ,{field: 'weekOption', title: '工作意见'}
+                ,{field: 'weekStudentQuestion', title: '学生问题'}
+                ,{field: 'weekNextPlan', title: '下周工作计划'}
+                ,{field: 'weekTerm', title: '工作学期'}
+                ,{width:215, title: '操作',align:'center', fixed: 'right', toolbar: '#barDemo'}
             ]]
-        });
-
-        table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
-                case 'isDele':
-                    var checkStatus = table.checkStatus('demo'),
-                        data = checkStatus.data,
-                        employeesId = " ";
-                    if(data.length > 0){
-                        for (var i in data){
-                            employeesId+=data[i].weekPaperId+",";
-                        }
-                        layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
-                            $.post('${pageContext.request.contextPath}/Weekly/WeeklyDelete',{
-                                id:employeesId
-                            },function(data){
-                                table.reload("demo");
-                                layer.close(index);
-                            });
-                        });
-                    }else{
-                        layer.msg('请选择需要删除的数据');
-                    }
-                    break;
-                case 'isAdd':
-                    window.open("${pageContext.request.contextPath}/stu/toAdd");
-                    break;
-            };
         });
 
         $('#selectexam').click(function () {

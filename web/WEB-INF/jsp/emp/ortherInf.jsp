@@ -12,24 +12,25 @@
     <title>Title</title>
 </head>
 <body>
-    <div id="empTabs" class="easyui-tabs" fit="true">
-        <div title="教育经历">
-            <table id="edu" lay-filter="edu"></table>
-        </div>
-        <div title="工作经历">
-            <table id="job" lay-filter="job"></table>
-        </div>
-        <div title="家庭信息">
-            <table id="fam" lay-filter="fam"></table>
-        </div>
+<div id="empTabs" class="easyui-tabs" fit="true">
+    <div title="教育经历">
+        <table id="edu" lay-filter="edu"></table>
     </div>
+    <div title="工作经历">
+        <table id="job" lay-filter="job"></table>
+    </div>
+    <div title="家庭信息">
+        <table id="fam" lay-filter="fam"></table>
+    </div>
+</div>
 </body>
 <script>
     layui.use('table', function(){
         var table = layui.table;
         table.render({
             elem: '#edu'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/empEducationList?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
@@ -45,7 +46,8 @@
         });
         table.render({
             elem: '#job'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/empHis?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
@@ -62,7 +64,8 @@
         });
         table.render({
             elem: '#fam'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/famInf?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
@@ -101,7 +104,7 @@
                     }
                     break;
                 case 'isAdd':
-                    openUpdate(data,'补充教育经历',"${pageContext.request.contextPath}/emp/eduAddPage");
+                    addTab("新增记录","${pageContext.request.contextPath}/emp/eduAddPage");
                     break;
             };
         });
@@ -130,7 +133,7 @@
                     }
                     break;
                 case 'isAdd':
-                    openUpdate(data,'补充工作经历',"${pageContext.request.contextPath}/emp/jobAddPage");
+                    addTab("新增记录","${pageContext.request.contextPath}/emp/jobAddPage");
                     break;
             };
         });
@@ -159,7 +162,7 @@
                     }
                     break;
                 case 'isAdd':
-                    openUpdate(data,'补充家庭信息',"${pageContext.request.contextPath}/emp/famAddPage");
+                    addTab("新增记录","${pageContext.request.contextPath}/emp/famAddPage");
                     table.reload("fam")
                     break;
             };
@@ -168,7 +171,7 @@
         table.on('tool(edu)', function (obj) {
             var data = obj.data;
             if (obj.event === 'up') {
-                openUpdate(data,'修改教育经历',"${pageContext.request.contextPath}/emp/eduUpPage?eid="+data.empEduId);
+                addTab("修改记录","${pageContext.request.contextPath}/emp/eduUpPage?eid="+data.empEduId)
             } else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/eduDel',{id:data.empId},function (data) {
@@ -183,7 +186,7 @@
         table.on('tool(job)', function (obj) {
             var data = obj.data;
             if (obj.event === 'up') {
-                openUpdate(data,'修改工作经历',"${pageContext.request.contextPath}/emp/jobUpPage?eid="+data.empHisId);
+                addTab("修改记录","${pageContext.request.contextPath}/emp/jobUpPage?eid="+data.empHisId);
             } else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/jobDel',{id:data.empHisId},function (data) {
@@ -200,7 +203,7 @@
         table.on('tool(fam)', function (obj) {
             var data = obj.data;
             if (obj.event === 'up') {
-                openUpdate(data,'修改家庭信息',"${pageContext.request.contextPath}/emp/famUpPage?eid="+data.empFamImfId);
+                addTab("修改记录","${pageContext.request.contextPath}/emp/famUpPage?eid="+data.empFamImfId);
             } else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/famDel',{id:data.empFamImfId},function (data) {
@@ -224,17 +227,36 @@
             //console.log(data.othis); //得到美化后的DOM对象
         });
     });
-    function openUpdate(data,title,url) {
-        index1=layer.open({
-            type: 2,
-            title:title,
-            area: ['500px', '300px'],
-            content: url, //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-            anim: 2
-        });
+    function addTab(title, url) {
+        if ($('#empTabs').tabs('exists', title)) { //如果存在
+            $('#empTabs').tabs('select', title); //让标签页选中
+
+            var currTab = $('#empTabs').tabs('getSelected'); //获取当前选中的选项页(返回panel对象)
+            $('#empTabs').tabs('update', {
+                tab: currTab,
+                options: {
+                    content: createFrame(url)
+                }
+            })
+        } else { //如果这个标题的选项卡不存在
+            var content = createFrame(url);
+            $('#empTabs').tabs('add', {
+                title: title, //标题
+                content: content, //内容
+                closable: true //显示关闭按钮
+            });
+        }
+        tabClose();
     }
-    function closeupdate() {
-        layer.close(index1);
+    function createFrame(url) { //创建窗口
+        var s = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:99%;"></iframe>';
+        return s;
+    }
+    function tabClose() {
+        $(".tabs-inner").dblclick(function() {
+            var subtitle = $(this).children(".tabs-closable").text();
+            $('#empTabs').tabs('close', subtitle);
+        })
     }
 </script>
 <!-- 表格头部工具栏 -->

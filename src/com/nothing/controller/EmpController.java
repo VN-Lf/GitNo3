@@ -2,7 +2,10 @@ package com.nothing.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmpService;
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.emp.*;
+import com.nothing.vo.wintable.chatRecord;
+import org.hibernate.annotations.Check;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -42,6 +45,7 @@ public class EmpController {
     public String eduUp(String eid, HttpServletRequest req) {
         int id = Integer.parseInt(eid);
         EmpEducation edu = empService.getEdu(id);
+        System.out.println(edu.toString());
         req.setAttribute("edu",edu);
         return "emp/edu/eduUp";
     }
@@ -169,4 +173,71 @@ public class EmpController {
     public void famDel(String id) {
         empService.famDel(id);
     }
+
+    //谈心记录
+    @RequestMapping("/tochatList")
+    public String tochatList(){return "emp/chat/chatRecordList";}
+    //谈心记录数据
+    @RequestMapping("/chatList")
+    @ResponseBody
+    public JSONObject chatList(){
+        List jobHisList = empService.chatList();
+        int con = empService.chatCount();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count",con);
+        jsonObject.put("data", jobHisList);
+        return jsonObject;
+    }
+    @RequestMapping("/toChatUp")
+    public String toChatUp(String cid,HttpServletRequest req){
+        List chat = empService.getChat(Integer.parseInt(cid));
+        req.setAttribute("chat",chat);
+        return "emp/chat/chatUp";
+    }
+    @RequestMapping("/toChatAdd")
+    public String chatAdd(){
+        return "emp/chat/chatAdd";
+    }
+    //谈心记录删除操作
+    @RequestMapping({"/chatDel"})
+    @ResponseBody
+    public void chatDel(String id) {
+        empService.chatDel(id);
+    }
+    //谈心记录新增操作
+    @RequestMapping({"/chatAdd"})
+    @ResponseBody
+    public void chatAdd(chatRecord cr,String face, String date) throws ParseException {
+        Student student = empService.getStu(face);
+        if (student!=null){
+            cr.setSayface(student.getStudId());
+            empService.chatAdd(cr);
+        }
+    }
+    //谈心记录修改操作
+    @RequestMapping({"/chatUp"})
+    @ResponseBody
+    public void chatUp(chatRecord cr,String cid,String face) throws ParseException {
+        Student student = empService.getStu(face);
+        if (student!=null){
+            cr.setChatid(Integer.parseInt(cid));
+            cr.setSayface(student.getStudId());
+            empService.chatUp(cr);
+        }
+    }
+
+    @RequestMapping("/checkStudent")
+    @ResponseBody
+    public JSONObject checkStudent(String name){
+        JSONObject jsonObject = new JSONObject();
+        Student student = empService.getStu(name);
+        if (student==null){
+            jsonObject.put("result","查无此人！");
+        }
+        return jsonObject;
+
+    }
 }
+
