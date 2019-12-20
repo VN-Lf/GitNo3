@@ -113,7 +113,6 @@ public class Emp2Controller {
         }else {
             emps+=eid+",";
         }
-
         notice.setEmps(emps);
         System.out.println(notice.toString());
         empService.addNotice(notice,2);
