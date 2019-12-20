@@ -257,7 +257,7 @@
                     <a>公告发布</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toMyNotice" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a>查看公共</a>
+                    <a>查看公告</a>
                 </li>
             </ul>
         </div>
