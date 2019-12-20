@@ -66,7 +66,7 @@ public interface EmpService {
     //修改谈心记录
     void chatUp(chatRecord cr);
     //查询谈心记录
-    List chatList();
+    List chatList(String sql);
     //根据Id查谈心记录
     List getChat(int id);
     public int chatCount();

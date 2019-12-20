@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("emp")
@@ -181,13 +182,26 @@ public class EmpController {
     @RequestMapping("/chatList")
     @ResponseBody
     public JSONObject chatList(){
-        List jobHisList = empService.chatList();
+        List jobHisList = empService.chatList("select  c.*,e1.empName,stu.stuName from chatrecord as c left join " +
+                "student  as stu on c.sayface=stu.studId left join emp as e1 on c.teacher=e1.empId");
         int con = empService.chatCount();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
         jsonObject.put("count",con);
         jsonObject.put("data", jobHisList);
+        return jsonObject;
+    }
+    @RequestMapping("/Chatsize")
+    @ResponseBody
+    public JSONObject taskSize(String empId,String ks,String end){
+        JSONObject jsonObject = new JSONObject();
+        String sql = "select  c.*,stu.stuName from chatrecord as c left join student  as stu on c.sayface=stu.studId left join emp as e1 on c.teacher=e1.empId";
+        sql += " where e1.empId ="+empId+" and chatDate between '"+ks+"' and '"+end+"'";
+        List<Map> list = empService.chatList(sql);
+
+        jsonObject.put("size", list.size());
+        jsonObject.put("chat",list);
         return jsonObject;
     }
     @RequestMapping("/toChatUp")

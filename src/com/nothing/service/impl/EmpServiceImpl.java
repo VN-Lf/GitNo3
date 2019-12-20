@@ -273,8 +273,8 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
-    public List chatList() {
-        return this.listBySQL("select  c.*,e1.empName,stu.stuName from chatrecord as c left join student  as stu on c.sayface=stu.studId left join emp as e1 on c.teacher=e1.empId");
+    public List chatList(String sql) {
+        return this.listBySQL(sql);
     }
 
     @Override

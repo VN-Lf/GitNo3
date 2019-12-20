@@ -39,32 +39,35 @@
     <div data-options="region:'center',title:'信息管理'" style="background:#eee;" >
         <form action="<%=request.getContextPath()%>/email/sendEmail"  enctype="multipart/form-data" id="addDor" method="post" style="width: 1205px;margin: 20px 0px 0px 10px">
 
-            <div style="width: 400px; left:250px; top:15px;height: 100px;position: relative">
+            <div style="width: 400px; left:250px; top:15px;height: 100px;position: relative;font-size: 14px">
                 <div>
-                    标题 : <input type="text" name="topic"  required lay-verify="required" placeholder="请输人标题"  class="layui-input" style="width:180px;display:inline-block" />
+                    标题 :
+                    <input type="text" name="topic"  required lay-verify="required" placeholder="请输人标题" class="layui-input"
+                                style="width:238px;display:inline-block;margin-left: 10px;" />
                 </div>
                 <div>
-                    接收人：
-                    <input type="text" name="receId" id="receId" autocomplete="off" required lay-verify="required"   class="layui-input" style="width:180px;display:inline-block" />
-
-                    <br>
-                    部门：<select id="deptId" style="width: 80px;height: 35px">
+                    部门：<select id="deptId" style="width: 90px;height: 35px;margin: 10px">
                             <c:forEach items="${Edeptlist}" var="li">
                                 <option value=${li.get("deptId")}>${li.get("deptName")}</option>
                             </c:forEach>
                         </select>
-                        <div id="test2" class="demo-transfer"></div>
-                    员工：<select id="empnames" style="width: 80px;height: 35px"></select>
-
-                        <a id="adddept" name="adddept">添加</a>
-                        <a id="deldept" name="deldept" style="left: 225px">重 置</a>
+                    员工：<select id="empnames" style="width: 90px;height: 35px"></select>
                 </div>
-                    <br>
-                <div>
+                <div style="margin: 10px 48px">
+                    <a style="font-size: 16px;cursor: pointer;" id="adddept" name="adddept">添加</a>
+                    <a style="font-size: 16px;margin-left: 102px;color: red;cursor: pointer;" id="deldept"
+                       name="deldept" style="left: 225px">重 置</a>
+                </div>
+                <div style="margin-top: 15px">
+                    接收人：
+                    <input type="text" name="receId" id="receId" autocomplete="off" disabled required style="width:228px;height:30px;
+                    display:inline-block;padding-left:10px;background-Color: transparent;border: none;border-bottom: 1px solid #000;" />
+                </div>
+                <div style="margin-top: 15px">
                     附件：<input type="file" name="face" id="file" >
                 </div>
                     <br>
-                <div>
+                <div style="margin-top: 15px">
                     <h3> 邮件内容:</h3>
                     <textarea name="content" id="content" style=" left: 400px;width: 500px; height: 200px"></textarea>
                 </div>
