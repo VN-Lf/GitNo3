@@ -96,6 +96,27 @@ public class Emp2Controller {
         empService.addNotice(notice,1);
         return "emp/noticelist";
     }
+    //标记是否查看公告
+    @RequestMapping("/martNotice")
+    @ResponseBody
+    public void martNotice(String eid,String nid){
+        Notice notice = empService.chaNotice(nid);
+        String emps = notice.getEmps();
+        String[] split = emps.split(",");
+        for (int i=0;i<split.length;i++){
+            if (split[i].equals(eid)){
+                return;
+            }
+        }
+        if (emps==null){
+            emps=eid+",";
+        }else {
+            emps+=eid+",";
+        }
+        notice.setEmps(emps);
+        System.out.println(notice.toString());
+        empService.addNotice(notice,2);
+    }
 
     @RequestMapping("/empadd")
     public void EmpList(Emp emp, EmpEducation empEducation, Post post, String ruzhitime, String birthday) throws ParseException {

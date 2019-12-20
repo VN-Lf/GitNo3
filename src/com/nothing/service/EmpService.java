@@ -20,7 +20,7 @@ public interface EmpService {
     EmpEducation sqlEduVo(String eid);
     void empUpdate(Emp emp, EmpEducation Edu, Post post);
     void addNotice(Notice notice, int lx);//发布公告
-    Notice chaNotice(String nid);    //根据id查员工
+    Notice chaNotice(String nid);    //根据id查公告
 
     //根据Id查教育经历列表
     List selEmpEducation(int id);
