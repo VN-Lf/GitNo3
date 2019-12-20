@@ -162,7 +162,7 @@ public class ExamController {
     @RequestMapping(value = "/emplistexam")
     @ResponseBody
     public JSONObject emplistexam(){
-        List examlist = examservice.examlist("select e.empAssessId,c.className,ex.empexamname,em.empName,e.scores from empassessment as e left join classvo as c on c.classId=e.classid left join empexam as ex on ex.empexamid=e.empexamid left join emp as em on em.empId=e.empid");
+        List examlist = examservice.examlist("select * from empassessment");
 
         JSONObject jsonObject=new JSONObject();
         int selectcount = examservice.Selectcount("select count(empAssessId) from empassessment");
@@ -261,42 +261,74 @@ public class ExamController {
     }
 
     @RequestMapping(value = "/addkaohu")
-    @ResponseBody
-    public void addkaohu(String empname, String classname, HttpSession session){
+    public String addkaohu(String empname, String classname, HttpSession session,HttpServletRequest request){
+        //添加一条考评
+        List  existexam = examservice.examlist("select * from empassessment where classId='"+classname+"' and empId='"+empname+"'");
+        if(existexam.size()!=0){
+        }else {
+            List examtype = examservice.examlist("select postName from post where empId=(select empId from emp where empName='"+empname+"') ");
+            List examtype1=new ArrayList();
+            for(int i=0;i<examtype.size();i++){
+                Map map= (Map) examtype.get(i);
+                examtype1.add(map.get("postName"));
+            }
+
+            empAssessment empAssessment=new empAssessment();
+            empAssessment.setEmpid(empname);
+            empAssessment.setClassid(classname);
+            empAssessment.setEmpexamid(String.valueOf(examtype1.get(0)));
+            empAssessment.setScores(0);
+            examservice.addexam(empAssessment);
+        }
+
+        //给选中的班级发送邮寄
         Email email=new Email();
         List stuname = examservice.examlist("\n" +
                 "select stuName from student where classId=(select classId from classvo where className='"+classname+"')");
-
         List stuname1=new ArrayList();
-
         for(int i=0;i<stuname.size();i++){
             Map map= (Map) stuname.get(i);
             stuname1.add(map.get("stuName"));
         }
 
+        List empkaohuid = examservice.examlist("select empAssessId from empassessment where classId='"+classname+"' and empId='"+empname+"'");
+        List empkaohuid1=new ArrayList();
+        for(int i=0;i<empkaohuid.size();i++){
+            Map map= (Map) empkaohuid.get(i);
+            empkaohuid1.add(map.get("empAssessId"));
+        }
+
         List emptype =examservice.examlist("select postName from post where  empId =(select empId from emp where empName='"+empname+"')");
-
-
-
         List emptype1=new ArrayList();
 
         for(int i=0;i<emptype.size();i++){
             Map map= (Map) emptype.get(i);
             emptype1.add(map.get("postName"));
         }
-
         email.setEmpId("刘飞");
         email.setContent("对"+empname+"老师进行考核,考核类型:"+emptype1.get(0));
         email.setTopic("考核");
+        email.setImage(String.valueOf(empkaohuid1.get(0)));
         email.setSendtime(new java.util.Date());
         email.setIsRead(2);
-
         session.setAttribute("kaohuempname",empname);
-
         for(int i=0;i<stuname1.size();i++){
             email.setReceId(String.valueOf(stuname1.get(i)));
             examservice.addexam(email);
-
         }
+        return "redirect:empexam";
+    }
+
+    //结束考核，统计分数
+    @RequestMapping("/endexam")
+    @ResponseBody
+    public String endexam(String empAssessId){
+        List kaohuscore1 = examservice.examlist1("select sum(kaohuscore)/(count(studentname)/5) as kaohuscore from emkaohu where empAssessId="+empAssessId+"");
+        if(kaohuscore1.get(0)==null){
+            examservice.updateend("update empassessment set scores ="+0+" where empAssessId ="+empAssessId+"");
+        }else {
+            examservice.updateend("update empassessment set scores ="+kaohuscore1.get(0)+" where empAssessId ="+empAssessId+"");
+        }
+        return "考核结束";
     }
 }
