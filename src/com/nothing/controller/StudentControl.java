@@ -187,16 +187,20 @@ public class StudentControl{
 
     @RequestMapping("add")
     public String add(Student student,String enterDate,String birthday) throws ParseException{
+        System.out.println("=============================="+student.getStudId());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date enterD = formatter.parse(enterDate);
         Date birD = formatter.parse(birthday);
         student.setStuBirthday(birD);
         student.setStuEnterTime(enterD);
-        if(student.getStudId()!=0||student.getStudId()!=null){
+        stuSer.addStu(student);
+        /*if(student.getStudId()!=0||student.getStudId()!=null){
             stuSer.updateStu(student);
             return "成功";
-        }
-        stuSer.addStu(student);
+        }else if(student.getStudId()==0){
+            stuSer.addStu(student);
+        }*/
+
         return "成功";
     }
 

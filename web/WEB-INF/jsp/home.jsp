@@ -176,7 +176,7 @@
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',split:true" class="hometop">
-    <h1>管理员界面</h1>
+    <h1 style="margin: 1% 0">管理员界面</h1>
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
     <div title="Base" id="caidan" fit="true" style="height: 16px;font-size: 16px" class="easyui-accordion">
@@ -223,7 +223,7 @@
                     <a>部门管理</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/emp/tochatList" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">谈心记录</a>
+                    <a>谈心记录</a>
                 </li>
                 <%if(post.getPostName().indexOf("部长")!=-1 || post.getPostName().indexOf("校长")!=-1){%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myTask" onclick="qiehuan(this)" class="cs-navi-tab">
