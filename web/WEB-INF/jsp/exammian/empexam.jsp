@@ -57,6 +57,7 @@
 </body>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-bg-blue  layui-btn-xs"  lay-event="endexam">结束考核</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>
 </script>
 <script type="text/javascript">
@@ -75,11 +76,23 @@
             ,cols: [[ //表头
                 {type:'checkbox',fixed:'left'}
                 ,{field: 'empAssessId', title: '考核编号', sort: true}
-                ,{field: 'empexamname', title: '员工类型'}
-                ,{field: 'empName', title: '任课老师/班主任', sort: true}
-                ,{field: 'classRemark', title: '任课班级'}
-                ,{field: 'scores', title: '总评分'}
-                ,{ fixed: 'right', title: '操作', width: 180, align: 'center', toolbar: '#barDemo' }
+                ,{field: 'empexamid', title: '员工类型'}
+                ,{field: 'empid', title: '任课老师/班主任', sort: true}
+                ,{field: 'classid', title: '任课班级'}
+                ,{field: 'scores', title: '总评分',templet:function (data) {
+                        if(data.scores == 0){
+                            return '考核中'
+                        }else {
+                            return  data.scores
+                        }}}
+                ,{ fixed: 'right', title: '操作', width: 380, align: 'center',templet:function (data) {
+                        if(data.scores == 0){
+                            return '<a class="layui-btn layui-bg-blue  layui-btn-xs"  lay-event="endexam">结束考核</a>\n' +
+                                '    <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>'
+                        }else {
+                            return  '<a class="layui-btn layui-bg-blue  layui-btn-xs">考核已结束</a>\n' +
+                                '    <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>'
+                        }} }
             ]]
         });
         //监听行工具栏
@@ -89,6 +102,14 @@
             if(layevent=='del'){
                 layer.confirm('确认删除  '+data.empAssessId+'?',{icon: 3, title: '提示信息'},function (data1) {
                     $.post('${pageContext.request.contextPath}/exam/deleteemp',{empAssessId:data.empAssessId},function (data) {
+                        layer.msg(data);
+                        table.reload("demo");
+                    })
+                })
+            }
+            if(layevent=='endexam'){
+                layer.confirm('确认结束考核  '+data.empAssessId+'?',{icon: 3, title: '提示信息'},function (data1) {
+                    $.post('${pageContext.request.contextPath}/exam/endexam',{empAssessId:data.empAssessId},function (data) {
                         layer.msg(data);
                         table.reload("demo");
                     })
