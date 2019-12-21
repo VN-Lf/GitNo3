@@ -17,7 +17,7 @@
     <div>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" style="float: left">
-                <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="isAdd">录入考核</button>
+                <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="isAdd">新建考评</button>
             </div>
             <div class="layui-btn-container" style="float: left">
                 <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
@@ -47,8 +47,15 @@
                     </select>
                 </div>
             </div>
+            <div class="layui-form-item" style="width: 450px">
+                <label class="layui-form-label">结束时间:</label>
+                <div class="layui-input-block" style="padding-top:7px">
+                    <input id="godate" onblur="panduanDate()" name="date" type="date"/>
+                    <input id="gotime" onblur="panduanTime()" name="time" value="00:00" type="time"/>
+                </div>
+            </div>
             <div class="layui-btn-container">
-                <input class="layui-btn layui-btn-normal" type="submit" value="录入考核" style="margin-left: 150px" />
+                <input class="layui-btn layui-btn-normal" type="submit" value="发起考核" style="margin-left: 150px" />
                 <input 	class="layui-btn layui-btn-primary" type="button" onclick="closekaohu()"  value="取消"/>
             </div>
 
@@ -69,7 +76,8 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/exam/emplistexam' //数据接口
             ,page: true //开启分页
@@ -82,7 +90,9 @@
                 ,{field: 'scores', title: '总评分',templet:function (data) {
                         if(data.scores == 0){
                             return '考核中'
-                        }else {
+                        }else if(data.scores==null){
+                            return  '0'
+                        }else{
                             return  data.scores
                         }}}
                 ,{ fixed: 'right', title: '操作', width: 380, align: 'center',templet:function (data) {
@@ -184,6 +194,44 @@
         window.location.reload();
     }
 
+    function panduanDate() {
+        var gd = document.getElementById("godate").value;
+        var date = new Date();
+        var year = date.getFullYear();
+        var day = date.getDate();
+        var yue = date.getMonth()+1;
+        var godt = year+"-"+yue+"-"+day;
+        var cha =(new Date(gd)).getTime()-(new Date(godt)).getTime();
+        if(cha < 0){
+            alert("不能填写过去的时间为结束时间");
+            document.getElementById("godate").value = "";
+        }
+    }
 
+    function panduanTime() {
+        var ti = document.getElementById("gotime").value+":00";
+        var da = document.getElementById("godate").value;
+        var date = new Date();
+        var year = date.getFullYear();
+        var day = date.getDate();
+        var yue = date.getMonth()+1;
+        var godt = year+"-"+yue+"-"+day;
+        if(date.getHours() < 10){
+            var hh = "0"+date.getHours();
+        }else {
+            var hh = ""+date.getHours();
+        }
+        if(date.getMinutes() < 10){
+            var mm = "0"+date.getMinutes();
+        }else {
+            var mm = ""+date.getMinutes();
+        }
+        var xz = hh+":"+mm+":00";
+        var cha = (new Date(da+" "+ti)).getTime() - (new Date(godt+" "+xz)).getTime();
+        if(cha < 0){
+            alert("不能填写过去的时间为结束时间");
+            document.getElementById("gotime").value = "";
+        }
+    }
 </script>
 </html>

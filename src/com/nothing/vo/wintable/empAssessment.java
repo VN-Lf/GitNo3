@@ -16,6 +16,7 @@ public class empAssessment {
     private String empid;//员工id
     private String classid;//班级id
     private Integer scores;//总评分
+    private String endtime;
 
     public Integer getEmpAssessId() {
         return empAssessId;
@@ -55,5 +56,13 @@ public class empAssessment {
 
     public void setScores(Integer scores) {
         this.scores = scores;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
     }
 }

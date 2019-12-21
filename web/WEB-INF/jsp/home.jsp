@@ -112,7 +112,7 @@
                 dataType:"json",
                 success:function (data) {
                     var empact = data.size;
-                    if(empact != 0){
+                    if(empact !== 0){
                         var taskl = data.task;
                         actTaskTis(empact,1);
                         $.each(taskl,function (index,item) {
@@ -146,7 +146,7 @@
                 success:function (data) {
                     var size = data.size;
                     var weekl = data.week;
-                    if(size != 0){
+                    if(size !== 0){
                         weekTis(size);
                         $.each(weekl,function (index,item) {
                             var misu = item.weekDescription;
@@ -185,7 +185,7 @@
                 success:function (data) {
                     var size = data.size;
                     var chat = data.chat;
-                    if(size != 0){
+                    if(size !== 0){
                         chatTis(size);
                         $.each(chat,function (index,item) {
                             var di = item.addr;
@@ -203,7 +203,7 @@
         }
 
         function shuaF5(f) {
-            if(f == 1){
+            if(f === 1){
                 $("#weektask").remove();
                 $("#emptask").remove();
                 $("#chattask").remove();
@@ -239,9 +239,6 @@
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">学生请假</a>
-                </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我的周报</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">考勤管理</a>

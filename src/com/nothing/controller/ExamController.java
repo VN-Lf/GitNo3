@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.Examservice;
 import com.nothing.service.impl.Examserviceimpl;
 import com.nothing.vo.Email.Email;
+import com.nothing.vo.emp.Emp;
 import com.nothing.vo.wintable.aduitLog;
 import com.nothing.vo.wintable.aduitModel;
 import com.nothing.vo.wintable.empAssessment;
@@ -175,7 +176,7 @@ public class ExamController {
     }
 
     @RequestMapping(value = "/addempexam")
-    public String addempexam(String aduitName,String empname){
+    public String addempexam(String aduitName,String empname,HttpSession session){
         aduitLog aduitLog=new aduitLog();
         List aduitModellist = examservice.examlist("select * from aduitmodel where aduitName='"+aduitName+"'");
         List empId = examservice.examlist("select empId from emp where empName='"+empname+"'");
@@ -199,7 +200,8 @@ public class ExamController {
         aduitLog.setAduitModelid(String.valueOf(aduitModel.get(0)));
         aduitLog.setEmpid((Integer) empid.get(0));
         aduitLog.setAuditDate(new java.sql.Date(new java.util.Date().getTime()));
-        aduitLog.setAuditPerson("陈老板");
+        Emp emp = (Emp) session.getAttribute("empId");
+        aduitLog.setAuditPerson(emp.getEmpName());
         examservice.addexam(aduitLog);
         return "redirect:lookexam";
     }
@@ -255,14 +257,16 @@ public class ExamController {
     @RequestMapping(value = "/classlist")
     @ResponseBody
     public List examempname(String empname,HttpServletRequest request){
-        List classlist = examservice.examlist1("select classRemark from classvo where classTeacher in (select empId from emp where empName='" + empname + "') or classAdviser in(select empId from emp where empName='" + empname + "')");
+        List classlist = examservice.examlist1("select className from classvo where classTeacher in (select empId from emp where empName='" + empname + "') or classAdviser in(select empId from emp where empName='" + empname + "')");
 
         return classlist;
     }
 
     @RequestMapping(value = "/addkaohu")
-    public String addkaohu(String empname, String classname, HttpSession session,HttpServletRequest request){
+    public String addkaohu(String empname, String classname, HttpSession session,String date,String time){
         //添加一条考评
+        String endtime = date+" "+time+":00";
+        System.out.println("-------"+endtime);
         List  existexam = examservice.examlist("select * from empassessment where classId='"+classname+"' and empId='"+empname+"'");
         if(existexam.size()!=0){
         }else {
@@ -275,6 +279,7 @@ public class ExamController {
 
             empAssessment empAssessment=new empAssessment();
             empAssessment.setEmpid(empname);
+            empAssessment.setEndtime(endtime);
             empAssessment.setClassid(classname);
             empAssessment.setEmpexamid(String.valueOf(examtype1.get(0)));
             empAssessment.setScores(0);
@@ -305,7 +310,8 @@ public class ExamController {
             Map map= (Map) emptype.get(i);
             emptype1.add(map.get("postName"));
         }
-        email.setEmpId("刘飞");
+        Emp empId =(Emp) session.getAttribute("empId");
+        email.setEmpId(empId.getEmpName());
         email.setContent("对"+empname+"老师进行考核,考核类型:"+emptype1.get(0));
         email.setTopic("考核");
         email.setImage(String.valueOf(empkaohuid1.get(0)));
@@ -324,11 +330,7 @@ public class ExamController {
     @ResponseBody
     public String endexam(String empAssessId){
         List kaohuscore1 = examservice.examlist1("select sum(kaohuscore)/(count(studentname)/5) as kaohuscore from emkaohu where empAssessId="+empAssessId+"");
-        if(kaohuscore1.get(0)==null){
-            examservice.updateend("update empassessment set scores ="+0+" where empAssessId ="+empAssessId+"");
-        }else {
-            examservice.updateend("update empassessment set scores ="+kaohuscore1.get(0)+" where empAssessId ="+empAssessId+"");
-        }
+        examservice.updateend("update empassessment set scores ="+kaohuscore1.get(0)+" where empAssessId ="+empAssessId+"");
         return "考核结束";
     }
 }

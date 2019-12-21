@@ -51,7 +51,7 @@ public class EmailController {
         String topic = email.getTopic();
         String student = email.getReceId();
         String examtype="";
-        String kaohuid = request.getParameter("kaohuid");
+        String kaohuid = request.getParameter("empkaohuid");
         if(topic.equals("考核")){
             //考核类邮件
             List kaohuscore1 =service.selectEmaillist("select scores  from empassessment where empAssessId="+kaohuid+"");

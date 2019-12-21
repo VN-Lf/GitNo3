@@ -29,7 +29,7 @@
                 <h2>内容：<%=email.getContent()%></h2>
             </div><br>
             <c:if test='${emalilist.topic=="考核"}'>
-                <form style="height: 400px;width: 500px;margin-left: 580px;" action="${pageContext.request.contextPath}/email/examscore" method="post" >
+                <form style="height: 400px;width: 400px;margin:0 auto;" action="${pageContext.request.contextPath}/email/examscore" method="post" >
                     <c:if test='${examtype=="授课老师"}'>
                         <input type="hidden" name="empkaohuid" value="${emalilist.image}">
                         <table border="1px" style="width: 400px;height: 400px;text-align: center">
