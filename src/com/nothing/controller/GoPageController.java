@@ -138,6 +138,11 @@ public class GoPageController {
     public String toNotice(){
         return "emp/noticelist";
     }
+    //前往查看公告
+    @RequestMapping("/toMyNotice")
+    public String toMyNotice(){
+        return "emp/myNotice";
+    }
     //前往子表信息
     @RequestMapping({"/empEdu"})
     public String toEmpEducation(String id, HttpSession session) {
