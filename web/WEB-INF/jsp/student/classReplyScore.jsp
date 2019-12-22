@@ -69,9 +69,10 @@
                                 projectId:${requestScope.pro.projectId}
                             },
                             success:function(data){
-                                window.open("${pageContext.request.contextPath}/sco/main","_self");
+
                             }
                         });
+                        window.open("${pageContext.request.contextPath}/sco/reply","_self");
                     });
                     break;
             };

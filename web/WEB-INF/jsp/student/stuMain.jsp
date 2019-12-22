@@ -18,21 +18,21 @@
 </head>
 <body>
 
-<!----><!---->
-<h1></h1>
 <div class="layui-row">
     </div>
     <table id="demo" lay-filter="test">
 
     </table>
 </div>
+
 <div class="layui-row" style="height:45%">
     下面部分的
     <div class="layui-tab">
         <ul class="layui-tab-title">
             <li>家庭情况</li>
             <li>教育经历</li>
-            <li>事故记录</li>
+            <li>请假记录</li>
+            <li>考试成绩</li>
             <li>答辩成绩</li>
         </ul>
         <div class="layui-tab-content">
@@ -43,7 +43,10 @@
                 <table id="edu" lay-filter="test2"></table>
             </div>
             <div class="layui-tab-item">
-                <table id="stuHap" lay-filter="test2"></table>
+                <table id="stuHol" lay-filter="test2"></table>
+            </div>
+            <div class="layui-tab-item">
+                <table id="stuScore" lay-filter="test2"></table>
             </div>
             <div class="layui-tab-item">
                 <table id="stuReply" lay-filter="test2"></table>
@@ -111,38 +114,6 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemoEdu">确定</button>
-        </div>
-    </div>
-</form>
-<!--附表事故-->
-<form  class="layui-form" id="addHapForm" style="display:none;height: auto;width: 600px" method="post">
-
-    <input type="hidden" name="stuHappenId" id="stuHappenId">
-    <input type="hidden" name="hapEmpID" id="hapEmpID">
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">事件</label>
-        <div class="layui-input-block">
-            <input id="happening" type="text" name="happening" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">发生时间</label>
-        <div class="layui-input-block">
-            <input id="opTime" type="text" name="opTime" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">记录老师</label>
-        <div class="layui-input-block">
-            <input id="hapEmpName" type="text" name="hapEmpName" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input" disabled>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemoHap">确定</button>
         </div>
     </div>
 </form>
@@ -231,7 +202,7 @@
                     break;
                     case 'isAdd':
                         var sid = 0;
-                        window.open("${pageContext.request.contextPath}/stu/toAdd?stuId="+sid);
+                        window.open("${pageContext.request.contextPath}/stu/toAdd?stuId="+sid,"_self");
                     break;
                     case 'isSelect':
                         var stuSelectName = $('input[name="stuSelectName"]').val();
@@ -260,7 +231,7 @@
             switch(obj.event){
                 case 'edit':
                     var stuId = data.studId;
-                    window.open("${pageContext.request.contextPath}/stu/toAdd?stuId="+stuId);
+                    window.open("${pageContext.request.contextPath}/stu/toAdd?stuId="+stuId,"_self");
                     break;
             }
         });
@@ -295,6 +266,26 @@
         var str = y+"-"+m+"-"+d;
         return str;
     }
+    function process(v){
+        if(v==1){
+            return "审批中"
+        }else if(v==2){
+            return "审批通过"
+        }else if(v==3) {
+            return "审批否决";
+        }
+        return""
+    }
+    function scType(v){
+        if(v==1){
+            return "笔试"
+        }else if(v==2){
+            return "机试"
+        }else if(v==3) {
+            return "面试";
+        }
+        return""
+    }
 
     //底部的
     function addTable(studId,stuName){
@@ -310,64 +301,83 @@
                 ,page: true //开启分页
                 ,cols: [[ //表头
                     {type:'checkbox'}//复选框
-                    ,{field: 'stuFamilyid', title: 'ID', width:100, sort: true}
-                    ,{field: 'familyPhone', title: '电话', width:100, sort: true}
+                    ,{field: 'stuFamilyid', title: 'ID', width:100}
+                    ,{field: 'familyPhone', title: '电话', width:100}
                     ,{field: 'relation', title:'与学生关系', width:80}
-                    ,{field: 'stuFamilyName', title: '姓名', width:80, sort: true}
-                    ,{field: stuName, title: '学生名字', width:80 ,templet:function (stuName){
-                            return stuName+"";
+                    ,{field: 'stuFamilyName', title: '姓名', width:80}
+                    ,{field: '', title: '学生名字', width:80 ,templet:function(){
+                            return stuName.toString();
                         }}
                     ,{width:150, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo2'}
                 ]]
             });
-            //事件表
+            //请假
            table.render({
-                elem: '#stuHap'
+                elem: '#stuHol'
                 ,height: 200
-                ,toolbar: '#toolbarDemo4' //开启头部工具栏，并为其绑定左侧模板
-                ,url: '${pageContext.request.contextPath}/stu/stuHap/select?studId='+studId//数据接口
+                ,url: '${pageContext.request.contextPath}/stu/stuHol/select?studId='+studId//数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
-                    {type:'checkbox'}//复选框
-                    ,{field: 'stuHappenId', title: 'ID', width:100, sort: true}
-                    ,{field: 'opTime', title: '时间', width:100, sort: true,
-                           templet:function (row){
-                               return createTime(row.opTime);
-                           }}
-                    ,{field: 'empNames', title:'教师名称', width:80}
-                   ,{field: 'empId', title:'教师ID', width:80}
-                    ,{field: 'happening', title: '事件', width:80, sort: true}
-                    ,{field: stuName, title: '学生名字', width:80 ,templet:function (stuName){
-                            return  stuName+"";
+                    ,{field: 'stuName', title: '学生名字', width:100}
+                    ,{field: 'day', title: '请假天数', width:100}
+                    ,{field: 'goDate', title:'开始日期', width:80}
+                   ,{field: 'endDate', title:'结束日期', width:80}
+                    ,{field: 'remark', title: '事件', width:80, sort: true}
+                    ,{field: 'jobDate', title: '请假日期', width:80 ,templet:function (row){
+                            return  createTime(row.jobDate);
                     }}
+                   ,{field:'processFlag', title: '审批状态',templet:function (row){
+                           return process(row.processFlag);
+                       }
+                   }
                 ]]
             });
             //答辩表
             table.render({
                 elem: '#stuReply'
                 ,height: 200
-                ,toolbar: '#toolbarDemo2' //开启头部工具栏，并为其绑定左侧模板
                 ,url: '${pageContext.request.contextPath}/stu/stuReply/select?studId='+studId//数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
-                    {type:'checkbox'}//复选框
-                    ,{field: 'stuReplyId', title: 'ID', width:100, sort: true}
-                    ,{field: 'Score1', title: '1', width:100, sort: true}
-                    ,{field: 'Score2', title:'2', width:80}
-                    ,{field: 'Score3', title: '3', width:80, sort: true}
-                    ,{field: 'Score4', title: '4', width:100, sort: true}
-                    ,{field: 'Score5', title:'5', width:80}
-                    ,{field: 'Score6', title: '6', width:80, sort: true}
-                    ,{field: 'Score7', title: '7', width:100, sort: true}
-                    ,{field: 'Score8', title:'8', width:80}
-                    ,{field: 'Score8', title:'9', width:80}
-                    ,{field: 'empNames', title:'教师名字', width:80}
-                    ,{field: 'empId', title:'教师ID', width:80}
-                    ,{field: stuName, title: '学生名字', width:80 ,templet:function(stuName){
-                            return stuName+"";
+                    ,{field: 'stuReplyId', title: 'ID', width:100}
+                    ,{field: 'proName', title: '项目名称', width:100}
+                    ,{field: 'Score1', title: '功能完善50', width:100}
+                    ,{field: 'Score2', title: '技术难度10', width:80}
+                    ,{field: 'Score3', title: '界面完美10', width:80}
+                    ,{field: 'Score4', title: '回答问题10', width:100}
+                    ,{field: 'Score5', title: '演示方法10', width:80}
+                    ,{field: 'Score6', title: '语言表达10', width:80}
+                    ,{field: 'Score7', title: '总分100 ', width:100}
+                    ,{field: 'empName', title:'教师名字', width:80}
+                    ,{field: '', title: '学生名字', width:80 ,templet:function(){
+                            return stuName.toString();
                         }}
                 ]]
             });
+            //成绩表
+            table.render({
+                elem: '#stuScore'
+                ,height: 200
+                ,url: '${pageContext.request.contextPath}/stu/stuScore/select?studId='+studId//数据接口
+                ,page: true //开启分页
+                ,cols: [[ //表头
+                    ,{field:'stuName', title: '学生姓名'}
+                    ,{field:'courseName', title: '学生姓名'}
+                    ,{field:'termName', title: '学生姓名'}
+                    ,{field:'score', title: '成绩'}
+                    ,{field:'bukao', title: '补考成绩'}
+                    ,{field:'empName', title: '教师'}
+                    ,{field:'scoreTime', title: '考试时间'
+                    ,templet:function (row){
+                            return createTime(row.scoreTime);
+                        }}
+                    ,{field:'testType', title: '考试类型'
+                        ,templet:function (row){
+                            return scType(row.testType);
+                        }}
+                ]]
+            });
+
             //教育表
             table.render({
                 elem: '#edu'
@@ -387,8 +397,8 @@
                             return createTime(row.endDate);
                         }}
                     ,{field: 'hisSchool', title: '毕业院校', width:80, sort: true}
-                    ,{field: stuName, title: '学生名字', width:80 ,templet:function (stuName){
-                            return stuName+"";
+                    ,{field: stuName, title: '学生名字', width:80 ,templet:function (){
+                            return stuName.toString();
                         }}
                     ,{width:150, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo3'}
                 ]]
@@ -420,19 +430,6 @@
                             success: function(layero, index){
                                 document.getElementById("addEduForm").reset();
                                 $("#EduId").val(0);
-                            }
-                        });
-                        break;
-                    case 'addHap':
-                        openStuAc = layer.open({
-                            type: 1,
-                            title:"新增",
-                            area:['700px','400px'],
-                            content: $("#addHapForm"),
-                            closeBtn :1,
-                            success: function(layero, index){
-                                document.getElementById("addHapForm").reset();
-                                $("#stuHappenId").val(0);
                             }
                         });
                         break;
@@ -476,27 +473,6 @@
                             layer.msg('请选择需要删除的数据');
                         };
                         break;
-                    case 'delHap':
-                        var checkStatus = table.checkStatus('stuHap'),
-                            data = checkStatus.data,
-                            employeesId = "";
-                        if(data.length > 0){
-                            for (var i in data){
-                                employeesId+=data[i].stuHappenId+",";
-                            }
-                            layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'},function (index){
-                                $.post('--%>/stu/toDel/hap',{
-                                    id:employeesId
-                                },function(data){
-                                    table.reload("stuHap");
-                                    layer.close(index);
-                                });
-                            });
-                        }else{
-                            layer.msg('请选择需要删除的数据');
-                        };
-                        break;
-
                 };
             });
 
@@ -564,7 +540,9 @@
             });
             document.getElementById("addFalForm").reset();
             layer.close(openStuAc);
-            table.reload('fal');
+            setTimeout(function () {
+            table.reload('fal')
+            },1000);
             return false;
         });
 
@@ -579,35 +557,19 @@
             });
             document.getElementById("addEduForm").reset();
             layer.close(openStuAc);
+            setTimeout(function(){
             table.reload('edu');
+            },1000);
             return false;
         });
-
-        form.on('submit(formDemoHap)', function(data){
-            $.ajax({
-                url:'/stu/toStuHap/add?studId='+studId,
-                type:'post',
-                data:data.field,
-                dataType:'json',
-                success:function (data){
-                }
-            });
-        });
-        document.getElementById("addHapForm").reset();
-        layer.close(openStuAc);
-        table.reload('stuHap');
-        return false;
-
-
-
     }
+
     layui.use(['element','tab'], function(){
         var element = layui.element;
         var tab = layui.tab;
         tab.render({
             elem: '#commodity',
             toolbar: '#toolbarDemo5'
-
         })
     });
 
@@ -624,21 +586,21 @@
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">学生姓名</label>
             <div class="layui-input-block">
-                <input id="stuSelectName" type="text" name="stuSelectName" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                <input id="stuSelectName" type="text" name="stuSelectName"   placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">学生电话</label>
             <div class="layui-input-block">
-                <input id="stuSelectPhone" type="text" name="stuSelectPhone" required  lay-verify="phone" placeholder="" autocomplete="off" class="layui-input">
+                <input id="stuSelectPhone" type="text" name="stuSelectPhone"  placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">所在班级</label>
             <div class="layui-input-block">
-                <select name="stuSelectCla" lay-verify="required" placeholder=" " id="stuSelectCla">
+                <select name="stuSelectCla"  placeholder=" " id="stuSelectCla">
                     <option></option>
                     <c:forEach items="${classList}" var="stuClass">
                         <option>${stuClass.className}</option>
@@ -650,7 +612,7 @@
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">所在寝室</label>
             <div class="layui-input-block">
-                <select name="stuSelectFloor" lay-verify="required" placeholder=" " id="stuSelectFloor">
+                <select name="stuSelectFloor"  placeholder=" " id="stuSelectFloor">
                     <option></option>
                     <c:forEach items="${hoursList}" var="hours">
                         <option>${hours.hourName}</option>
@@ -666,22 +628,15 @@
 
 <script type="text/html" id="toolbarDemo2">
     <div class="layui-btn-container">
-        <button class="layui-btn  layui-btn-warm" lay-event="addFal">添加</button>
-        <button class="layui-btn  layui-btn-warm" lay-event="delFal">批量删除</button>
+        <button class="layui-btn  layui-btn-s" lay-event="addFal">添加</button>
+        <button class="layui-btn  layui-btn-s" lay-event="delFal">批量删除</button>
     </div>
 </script>
 
 <script type="text/html" id="toolbarDemo3">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addEdu">添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delEdu">批量删除</button>
-    </div>
-</script>
-
-<script type="text/html" id="toolbarDemo4">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addHap">添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delHap">批量删除</button>
+        <button class="layui-btn layui-btn-s" lay-event="addEdu">添加</button>
+        <button class="layui-btn layui-btn-s" lay-event="delEdu">批量删除</button>
     </div>
 </script>
 
@@ -705,10 +660,5 @@
     </button>
 </script>
 
-<script type="text/html" id="barDemo4">
-    <button type="button" class="layui-btn layui-btn-sm" lay-event="editHap">
-        <i class="layui-icon">&#xe642;</i>
-    </button>
-</script>
 </body>
 </html>

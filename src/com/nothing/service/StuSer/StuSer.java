@@ -16,15 +16,23 @@ public interface StuSer{
     List listObj(Object o);
     Object findO(Object o,int id);
     List toStuAddition(Object o,String studId);
+    int  toStuAdditionCount(Object o,String studId);
     void delEdu(String id);
-    void delHap(String id);
     void delFal(String id);
-    List toStuConList(String stuSelectName,String  stuSelectPhone,String stuSelectCla,String stuSelectFloor);
-    List stuHap(String studId);
+
+    List stuHol(String studId);
     List stuRep(String studId);
+    List stuScore(String studId);
+    int stuHolCount(String studId);
+    int stuRepCount(String studId);
+    int stuScoreCount(String studId);
+
+
     List listO (Object o);
     List classList();
     void delCla(String ids);
+
+    List toStuConList(String stuSelectName,String  stuSelectPhone,String stuSelectCla,String stuSelectFloor);
     int conStu(String stuSelectName, String stuSelectPhone, String stuSelectCla, String stuSelectFloor);
     List  classTeacher(String type);
     void delClaStu(String classId);
@@ -37,4 +45,7 @@ public interface StuSer{
     List classByFall(String fallId);
     //给某个班新增学生
     void classAddStu(String cid,String studIds);
+    //根据学生id查授课教师和班主任
+    List selectTeacherByStuId(String studId);
+
 }

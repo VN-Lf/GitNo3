@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GoPageService {
     List selectGoPage(String sql);
-    Object selectEmpGoPage(Emp obj, int id);
+    Object selectEmpGoPage(Object obj, int id);
     List deptList();
     List empList();
 }

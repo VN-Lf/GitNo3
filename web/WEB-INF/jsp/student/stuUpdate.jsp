@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<form class="layui-form" action="${pageContext.request.contextPath}/stu/add" method="post" lay-filter="gg">
+<form class="layui-form" action="${pageContext.request.contextPath}/stu/update/up" method="post" lay-filter="gg">
     <input id="stuId" type="hidden" name="studId" lay-verify="required" autocomplete="off" class="layui-input" value="${stu.studId}">
     <div style="width: 100%;height: 69%;margin-top: 1%">
         <div style="width:33%;height:100%;float: left">
@@ -36,7 +36,6 @@
                     <input id="stuPsw" type="text" name="stuPsw" required  lay-verify="required"  autocomplete="off" class="layui-input" title="默认123456" value="${stu.stuPsw}">
                 </div>
             </div>
-
 
             <div class="layui-form-item">
                 <label class="layui-form-label">性别</label>
@@ -64,7 +63,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">毕业院校</label>
                 <div class="layui-input-block">
-                    <input id="stuHisSchool" type="text" name="stuHisSchool" required  lay-verify="required" placeholder="毕业院校" autocomplete="off" class="layui-input" value="${stu.stuHisSchool}">
+                    <input id="stuHisSchool" type="text" name="stuHisSchool"   placeholder="毕业院校" autocomplete="off" class="layui-input" value="${stu.stuHisSchool}">
                 </div>
             </div>
 
@@ -84,7 +83,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">入学时间</label>
                 <div class="layui-input-block">
-                    <input type="text" id="enterDate" name="enterDate" required  lay-verify="required" placeholder="单击此处选择日期" id="rutime" autocomplete="off" class="layui-input">
+                    <input type="text" id="enterDate" name="enterDate" required  lay-verify="required" placeholder="单击此处选择日期" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
@@ -113,7 +112,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">低保</label>
                 <div class="layui-input-block">
-                    <input type="text" id="dibao" name="dibao" placeholder="低保类型" required lay-verify="required"  autocomplete="off" class="layui-input" value="${stu.dibao}">
+                    <input type="text" id="dibao" name="dibao" placeholder="低保类型"  autocomplete="off" class="layui-input" value="${stu.dibao}">
                 </div>
             </div>
 
@@ -131,7 +130,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在班级</label>
                 <div class="layui-input-block">
-                    <select name="classId" lay-verify="required" placeholder=" ">
+                    <select name="classId" placeholder=" ">
                         <c:forEach items="${classList}" var="stuClass">
                             <option value="${stuClass.classId}">${stuClass.className}</option>
                         </c:forEach>
@@ -142,7 +141,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在楼栋</label>
                 <div class="layui-input-block">
-                    <select name="floorId" lay-verify="required"  placeholder=" ">
+                    <select name="floorId"  placeholder=" ">
                         <c:forEach items="${foolList}" var="fool">
                             <option value="${fool.floorId}">${fool.floorName}</option>
                         </c:forEach>
@@ -153,7 +152,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在楼栋</label>
                 <div class="layui-input-block">
-                    <select name="stuHours" lay-verify="required"  placeholder="  ">
+                    <select name="stuHours"   placeholder="  ">
                         <option value=" "> </option>
                         <c:forEach items="${hoursList}" var="hours">
                             <option value="${hours.stuHours}">${hours.hourName}</option>
@@ -178,14 +177,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">专业</label>
                 <div class="layui-input-block">
-                    <input id="stuProfessional" type="text" name="stuProfessional" required  placeholder="所学专业" lay-verify="required" autocomplete="off" class="layui-input" value="${stu.stuProfessional}">
+                    <input id="stuProfessional" type="text" name="stuProfessional"   placeholder="所学专业" autocomplete="off" class="layui-input" value="${stu.stuProfessional}">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">专业类别</label>
                 <div class="layui-input-block">
-                    <input id="stuProLevel" type="text" name="stuProLevel" required  lay-verify="required" placeholder="专业所属" autocomplete="off" class="layui-input" value="${stu.stuProLevel}">
+                    <input id="stuProLevel" type="text" name="stuProLevel"  placeholder="专业所属" autocomplete="off" class="layui-input" value="${stu.stuProLevel}">
                 </div>
             </div>
 
@@ -209,21 +208,21 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">中专学校</label>
                 <div class="layui-input-block">
-                    <input id="vocationalsch" type="text" name="vocationalsch" required  lay-verify="required" placeholder="毕业中专名" autocomplete="off" class="layui-input" value="${stu.vocationalsch}">
+                    <input id="vocationalsch" type="text" name="vocationalsch"  placeholder="毕业中专名" autocomplete="off" class="layui-input" value="${stu.vocationalsch}">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">中专学籍</label>
                 <div class="layui-input-block">
-                    <input id="vocationalflag" type="text" name="vocationalflag" required  lay-verify="required" autocomplete="off" class="layui-input" value="${stu.vocationalflag}">
+                    <input id="vocationalflag" type="text" name="vocationalflag"  autocomplete="off" class="layui-input" value="${stu.vocationalflag}">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">学号</label>
                 <div class="layui-input-block">
-                    <input type="text" id="stuno" name="stuno" required lay-verify="number" placeholder="在校学号" autocomplete="off" class="layui-input" value="${stu.stuno}">
+                    <input type="text" id="stuno" name="stuno"  lay-verify="number" placeholder="在校学号" autocomplete="off" class="layui-input" value="${stu.stuno}">
                 </div>
             </div>
 
@@ -239,7 +238,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">省录取号</label>
                 <div class="layui-input-block">
-                    <input type="text" id="enrollno" name="enrollno" required lay-verify="number" autocomplete="off" class="layui-input" value="${stu.enrollno}">
+                    <input type="text" id="enrollno" name="enrollno"  lay-verify="number" autocomplete="off" class="layui-input" value="${stu.enrollno}">
                 </div>
             </div>
 
@@ -247,14 +246,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">欠款金额</label>
                 <div class="layui-input-block">
-                    <input type="text" id="qkMoney" name="qkMoney" required lay-verify="number" autocomplete="off" class="layui-input" value="${stu.qkMoney}}">
+                    <input type="text" id="qkMoney" name="qkMoney"  lay-verify="number" autocomplete="off" class="layui-input" value="${stu.qkMoney}}">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">入学成绩</label>
                 <div class="layui-input-block">
-                    <input type="text" id="score" name="score" required lay-verify="required" autocomplete="off" class="layui-input" value="${stu.score}">
+                    <input type="text" id="score" name="score"  lay-verify="number" autocomplete="off" class="layui-input" value="${stu.score}">
                 </div>
             </div>
 
@@ -276,14 +275,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">报名号</label>
                 <div class="layui-input-block">
-                    <input type="text" id="baominghao" name="baominghao" required lay-verify="number"  autocomplete="off" class="layui-input" value="${stu.baominghao}">
+                    <input type="text" id="baominghao" name="baominghao"  lay-verify="number"  autocomplete="off" class="layui-input" value="${stu.baominghao}">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">助学金</label>
                 <div class="layui-input-block">
-                    <input type="text" id="zhuxuejin" name="zhuxuejin" required lay-verify="number"  autocomplete="off" class="layui-input" value="${stu.zhuxuejin}">
+                    <input type="text" id="zhuxuejin" name="zhuxuejin"  lay-verify="number"  autocomplete="off" class="layui-input" value="${stu.zhuxuejin}">
                 </div>
             </div>
 
@@ -291,7 +290,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">面试人</label>
                 <div class="layui-input-block">
-                    <input type="text" id="audition" name="audition" required lay-verify="required"  autocomplete="off" class="layui-input" value="${stu.audition}">
+                    <input type="text" id="audition" name="audition"  autocomplete="off" class="layui-input" value="${stu.audition}">
                 </div>
             </div>
 

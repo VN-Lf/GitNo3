@@ -16,7 +16,7 @@ public class GoPageServiceImpl extends BaseDao implements GoPageService {
     }
 
     @Override
-    public Object selectEmpGoPage(Emp obj, int id) {
+    public Object selectEmpGoPage(Object obj, int id) {
         return getObject(obj.getClass(),id);
     }
 

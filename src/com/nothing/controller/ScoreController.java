@@ -73,31 +73,57 @@ public class ScoreController{
         return jsonObject;
     }
 
-
+    @ResponseBody
     @RequestMapping("toScoreMa")
-    public String   toScore(StudentScore studentScore, String testDH, String classId,HttpServletRequest request) throws ParseException{
+    public String   toScore(StudentScore studentScore, int classId){
+        int tId = studentScore.getTermId();
+        int cId = studentScore.getCourseId();
+        int typeId = studentScore.getTestType();
+        List list = stuScoSer.isExistsTest(tId,cId,typeId,classId);
+        if (list.size()>0){
+            return "no";
+        }
+        return "yes";
+    }
+
+    @RequestMapping("toClassScoByCid")
+    public String toClassScoByCid( String testDH, String classId,StudentScore studentScore,HttpServletRequest request) throws ParseException{
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
         Date testD = formatter.parse(testDH);
         studentScore.setScoreTime(testD);
         ClassVo classVo = (ClassVo) stuSer.findO(new ClassVo(), Integer.parseInt(classId));
         Term term = (Term)stuSer.findO(new Term(),studentScore.getTermId());
         Course course =(Course) stuSer.findO(new Course(),studentScore.getCourseId());
+
         request.setAttribute("time",testDH);
         request.setAttribute("cla",classVo);
         request.setAttribute("term",term);
         request.setAttribute("courseList",course);
         request.setAttribute("studentScore",studentScore);
-        System.out.println("考试对象"+studentScore.toString());
         return "student/classScore";
     }
 
-    @RequestMapping("toReplyMa")
-    public String toReply(String classId,String projectId,HttpServletRequest request){
+
+    @RequestMapping("toClassRepScoByCid")
+    public String toClassRepScoByCid(String classId,String projectId,HttpServletRequest request){
         ClassVo classVo = (ClassVo) stuSer.findO(new ClassVo(), Integer.parseInt(classId));
         StudentProject project = (StudentProject)stuSer.findO(new StudentProject(), Integer.parseInt(projectId));
         request.setAttribute("cla",classVo);
         request.setAttribute("pro",project);
         return "student/classReplyScore";
+    }
+
+    @ResponseBody
+    @RequestMapping("toReplyMa")
+    public String toReply(String classId,String projectId,HttpServletRequest request){
+        ClassVo classVo = (ClassVo) stuSer.findO(new ClassVo(), Integer.parseInt(classId));
+        StudentProject project = (StudentProject)stuSer.findO(new StudentProject(), Integer.parseInt(projectId));
+       /* //List list = stuScoSer.isExistsTest(tId,cId,typeId,classId);
+        if (list.size()>0){
+            return "no";
+        }*/
+        return "yes";
     }
 
 
@@ -109,7 +135,7 @@ public class ScoreController{
         int title = 0;
         JSONObject jsonObject = new JSONObject();
         if("score".equals(ac)){
-            list= stuScoSer.stuByClassId(classId);
+            list = stuScoSer.stuByClassId(classId);
             title = stuScoSer.countStuByClassId(classId);
             jsonObject.put("code",0);
             jsonObject.put("msg","");
@@ -128,14 +154,8 @@ public class ScoreController{
 
     @RequestMapping("toAddScore")
     @ResponseBody
-    public String toAddScore(String  tableList, StudentScore studentScore, String testDH, HttpSession session) throws ParseException{
-        int tId = studentScore.getTermId();
-        int cId = studentScore.getCourseId();
-        int typeId = studentScore.getTestType();
-       /* List list = stuScoSer.isExistsTest(tId,cId,typeId);
-        if (list.size()>0){
-            return "no";
-        }*/
+    public String toAddScore(String tableList, StudentScore studentScore, String testDH, HttpSession session) throws ParseException{
+
         Emp e = (Emp)session.getAttribute("empId");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date testD = formatter.parse(testDH);
@@ -148,10 +168,14 @@ public class ScoreController{
             System.out.println("成绩成绩成绩"+o.get("chengji"));
             s.setScore(Integer.parseInt(o.get("chengji").toString()));
             s.setStudId(Integer.parseInt(o.get("studId").toString()));
-            s.setBukao(Integer.parseInt(o.get("chengji2").toString()));
-            s.setCourseId(cId);
-            s.setTermId(tId);
-            s.setTestType(typeId);
+            if(null==o.get("chengji2")){
+                s.setBukao(0);
+            }else{
+                s.setBukao(Integer.parseInt(o.get("chengji2").toString()));
+            }
+            s.setCourseId(studentScore.getCourseId());
+            s.setTermId( studentScore.getTermId());
+            s.setTestType(studentScore.getTestType());
             s.setScoreTime(testD);
             //s.setEmpId(e.getEmpId());
             System.out.println("循环内的考试对象"+s.toString());
@@ -159,7 +183,6 @@ public class ScoreController{
         }
         return "yes";
     }
-
 
     @RequestMapping("toAddReplyScore")
     public String toAddReplyScore(String tableList,String projectId,HttpSession session){
@@ -177,6 +200,7 @@ public class ScoreController{
             s.setScore7(Float.valueOf(o.get("s7").toString()));
             s.setStudId(Integer.parseInt(o.get("sid").toString()));
             s.setProjectId(Integer.parseInt(projectId));
+            s.setReplyScoreRemark(o.get("rs").toString());
             //s.setEmpId(e.getEmpId());
             System.out.println("循环内的考试对象"+s.toString());
             stuSer.addStu(s);
@@ -200,13 +224,16 @@ public class ScoreController{
     }
 
     //删除
+    @ResponseBody
     @RequestMapping("{ac}/del")
-    public void del(String  id,@PathVariable("ac")String ac){
+    public String del(String id,@PathVariable("ac")String ac){
+        id = id.substring(0,id.length()-1);
         if("score".equals(ac)){
             stuScoSer.delSco(id);
         }else if("reply".equals(ac)){
             stuScoSer.delReply(id);
         }
+        return "chenggong";
     }
 
 

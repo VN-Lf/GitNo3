@@ -21,9 +21,9 @@
 
 </table>
 
-<!----><!---->
+
 <!--考试成绩表单-->
-<form  class="layui-form" id="addTextForm" style="display:none;height: auto;width: 600px" method="post" action="${pageContext.request.contextPath}/sco/toScoreMa" target="_self">
+<form  class="layui-form" id="addTextForm" style="display:none;height: auto;width: 600px" method="post"  target="_self">
 
     <div class="layui-form-item">
         <label class="layui-form-label" style="width:100px">班级名</label>
@@ -83,7 +83,7 @@
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit type="submit">确定</button>
+            <button class="layui-btn" lay-submit lay-filter="formSub">确定</button>
         </div>
     </div>
 </form>
@@ -157,10 +157,11 @@
                             $.post('${pageContext.request.contextPath}/sco/score/del',{
                                 id:employeesId,
                             },function(data){
-                                table.reload("demo")
+                                table.reload("demo");
                                 layer.close(index);
                             });
                         });
+
                     }else{
                         layer.msg('请选择需要删除的的成绩');
                     };
@@ -186,6 +187,31 @@
         laydate.render({
             elem: '#testDH' //指定元素o
         });
+
+
+        form.on('submit(formSub)', function(data){
+            $.ajax({
+                url:'${pageContext.request.contextPath}/sco/toScoreMa',
+                type:'post',
+                data:data.field,
+                dataType:'text',
+                success:function (da){
+                   var d = da
+                    if(''+d=='no'){
+                        alert("此班级已有此学期成绩存在");
+                        return;
+                    }else{
+                       var classId =$('#classId').val();
+                       var courseId =$('#courseId').val();
+                        var testType =$('#testType').val();
+                        var termId  = $('#termId').val();
+                        var testDH = $('#testDH').val();
+                        self.location= "${pageContext.request.contextPath}/sco/toClassScoByCid?classId="+classId+"&courseId="+courseId+"&testType="+testType+"&termId="+termId+"&testDH="+testDH;
+                    }
+                }
+            });
+        });
+
     });
 
     function createTime(v){

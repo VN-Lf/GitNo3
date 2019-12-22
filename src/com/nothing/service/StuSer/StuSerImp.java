@@ -25,7 +25,6 @@ public class StuSerImp extends BaseDao implements StuSer{
         return selTotalRow("select count(*) from "+o.getClass().getSimpleName());
 
     }
-
     @Override
     public void addStu(Object o){
         addObject(o);
@@ -61,10 +60,6 @@ public class StuSerImp extends BaseDao implements StuSer{
         executeSQL("delete from StuEdu where EduId in ("+id+")");
     }
 
-    @Override
-    public void delHap(String id){
-        executeSQL("delete from StuHappening where stuHappenId in ("+id+")");
-    }
 
     @Override
     public void delFal(String id) {
@@ -81,14 +76,20 @@ public class StuSerImp extends BaseDao implements StuSer{
     }
 
     @Override
-    public List stuHap(String  studId) {
-        return listBySQL("select * , e.empName as empNames from stuhappening hap left join emp e using(empId) where hap.studId = "+studId );
+    public List stuHol(String  studId){
+        return listBySQL("select j.*,s.stuName from jobs j left join student s on j.userId = s.studId where s.studId = "+studId );
     }
-
 
     @Override
     public List stuRep(String  studId){
-        return listBySQL("select * , e.empName as empNames from stuReplyScore rep left join emp e  using(empId)  where rep.studId = "+studId );
+        return listBySQL("select * from stuReplyScore rep left join emp e using(empId) left join studentProject p using(projectId)  where rep.studId = "+studId);
+    }
+
+    @Override
+    public List stuScore(String studId) {
+        return listBySQL(
+                "select sc.*,stuName,empName ,termName,courseName from studentscore sc left join student s using(studId) left join term t using (termId) left join \n" +
+                "course c using(courseId) left join emp e using(empId) where studId = "+studId);
     }
 
     @Override
@@ -184,5 +185,32 @@ public class StuSerImp extends BaseDao implements StuSer{
         executeSQL("update student set classId = "+cid+" where studId in ("+studIds+")");
     }
 
+    @Override
+    public List selectTeacherByStuId(String studId){
+        return listBySQL("select c.className , e.empId ,e.empName,p.postName ,s.stuName,s.studId\n" +
+                "from emp e left join classvo c on c.classAdviser = e.empId left join classVo cc on cc.classTeacher = e.empId\n" +
+                "left join student s on c.classId = s.classId left join post p on p.empId = e.empId where postName like '%授课教师%' and studId  = "+studId);
+    }
 
+
+    @Override
+    public int toStuAdditionCount(Object o, String studId) {
+        return selTotalRow("select count(*) from "+o.getClass().getSimpleName()+" where studId = "+studId);
+    }
+
+    @Override
+    public int stuHolCount(String studId) {
+        return selTotalRow("select count(*) from jobs j left join student s on j.userId = s.studId where s.studId ="+studId);
+    }
+
+    @Override
+    public int stuRepCount(String studId) {
+        return selTotalRow("select count(*) from stuReplyScore rep left join emp e using(empId) left join studentProject p using(projectId)  where rep.studId = "+studId);
+    }
+
+    @Override
+    public int stuScoreCount(String studId){
+        return selTotalRow("select count(*) from studentscore sc left join student s using(studId) left join term t using (termId) left join "+
+                "course c using(courseId) left join emp e using(empId) where studId = "+studId);
+    }
 }

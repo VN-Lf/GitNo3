@@ -44,7 +44,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     private EmpService empService;
 
     @Override
-    public void upLiuCheng(MultipartFile pdFile) {
+    public void upLiuCheng(MultipartFile pdFile){
         try {
             //创建临时file对象
             File file=File.createTempFile("tmp", null);
@@ -59,7 +59,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     }
 
     @Override
-    public void xiaZaiLiu(String id, HttpServletResponse resp) {
+    public void xiaZaiLiu(String id, HttpServletResponse resp){
         try {
             //设置response对象的头参数，attachment就是附件，filename=文件名称
             resp.setHeader("Content-disposition","attachment;filename=" +id+".zip" );
@@ -132,29 +132,29 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
         variables.put("userId",job.getUserId());//员工id
         variables.put("day",job.getDay());//天数
         variables.put("jobId",job.getJobId());//单据ID
-        //根据用户设置下一个办理人（）
-        String  zxempid = ""+sqlZhixin(dept);
-        System.out.println("zxempid:"+zxempid);
-        if(zxempid.equals(job.getUserId())){ //这个员工是主任
-            List list = listBySQL2("select empId from post where postName like '%校长%'");
-            System.out.println("下一个办理人id："+list.get(0));
-            variables.put("x","zr");//单据ID
-            variables.put("assignee",""+list.get(0));
-        }else {
-            System.out.println("下一个 id："+zxempid);
-            variables.put("x","yg");//单据ID
-            variables.put("assignee",""+zxempid);
-        }
 
-        //启动实例（通过流程定义的key来启动一个实例）
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(job.getJobType(),variables);
-        System.out.println("流程实例 "+processInstance.getId());
+            //根据用户设置下一个办理人（）
+            String  zxempid = ""+sqlZhixin(dept);
+            System.out.println("zxempid:"+zxempid);
+            if(zxempid.equals(job.getUserId())){ //这个员工是主任
+                List list = listBySQL2("select empId from post where postName like '%校长%'");
+                System.out.println("下一个办理人id："+list.get(0));
+                variables.put("x","zr");//单据ID
+                variables.put("assignee",""+list.get(0));
+            }else {
+                System.out.println("下一个 id："+zxempid);
+                variables.put("x","yg");//单据ID
+                variables.put("assignee",""+zxempid);
+            }
+            //启动实例（通过流程定义的key来启动一个实例）
+            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(job.getJobType(),variables);
+            System.out.println("流程实例 "+processInstance.getId());
 
-        //根据流程实例ID获取当前实例正在执行的任务
-        Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).orderByProcessInstanceId().desc().singleResult();
-        System.out.println("任务ID： "+task.getId());
-        //完成任务(通过任务ID完成该任务)
-        taskService.complete(task.getId(),variables);
+            //根据流程实例ID获取当前实例正在执行的任务
+            Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).orderByProcessInstanceId().desc().singleResult();
+            System.out.println("任务ID： "+task.getId());
+            //完成任务(通过任务ID完成该任务)
+            taskService.complete(task.getId(),variables);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     }
 
     @Override
-    public Map lookLiuCheng(String jobId,String instId) {
+    public Map lookLiuCheng(String jobId,String instId){
         Map<String, Object> rmap = new HashMap<>();
         String LiuId = "";//流程实例ID
         if(jobId!=null&&!"".equals(jobId)){
@@ -248,7 +248,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     }
 
     @Override
-    public Map zhixieTask(String taskId, String instId) {
+    public Map zhixieTask(String taskId, String instId){
         Map<String, Object> rmap = new HashMap<>();
         //根据流程实例ID查询流程实例
         ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(instId).singleResult();
@@ -282,7 +282,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
     }
 
     @Override
-    public void xiuGaiTask(int jobId,String taskId,String flow,String comment,String userId) {
+    public void xiuGaiTask(int jobId,String taskId,String flow,String comment,String userId){
         //根据任务ID得到任务对象
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         //通过任务对象获取流程实例ID
@@ -327,14 +327,13 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService {
         //获取流程实例id （查询历史批注）
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());        //System.out.println("历史时间"+commentList.get(0).getTime());
         //将com中的emp id转换成用户名
-
         List empList = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId"); //查询所有员工
         List comList = chuliComm(commentList,empList);
         return comList;
     }
 
     @Override
-    public int sqlZhixin(String deptid) {
+    public int sqlZhixin(String deptid){
         List list = listBySQL2("select empId from post where postName like '%部长%' and deptId ="+deptid);
         if(list.size() == 0){
             return 1; //无主任则给总经理审批
