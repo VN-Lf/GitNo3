@@ -102,6 +102,12 @@ public class StudentControl{
         if(stuSelectFloor==null||"".equals(stuSelectFloor)){
             stuSelectFloor="";
         }
+        if(stuSelectPhone==null||"".equals(stuSelectPhone)){
+            stuSelectPhone ="";
+        }
+        if(stuSelectName==null||"".equals(stuSelectName)){
+            stuSelectName="";
+        }
         List<Map> list = stuSer.toStuConList(stuSelectName,stuSelectPhone,stuSelectCla,stuSelectFloor);
         int title = stuSer.conStu( stuSelectName ,stuSelectPhone, stuSelectCla, stuSelectFloor);
         JSONObject jsonObject = new JSONObject();
@@ -200,7 +206,7 @@ public class StudentControl{
                  stuSer.updateStu(student);
              }
 
-            return "成功";
+            return "redirect: /stu/home";
     }
 
 
@@ -318,6 +324,8 @@ public class StudentControl{
         return jsonArray;
     }
 
+
+
     //给学生分配班级
     @RequestMapping("toClassAddStu")
     @ResponseBody
@@ -327,8 +335,6 @@ public class StudentControl{
         }catch (IndexOutOfBoundsException e){
 
         }
-
-
         return "";
     }
 

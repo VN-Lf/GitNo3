@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.ActivitiService;
 import com.nothing.service.EmpService;
 import com.nothing.service.StuSer.ActStuSer;
+import com.nothing.service.StuSer.StuSer;
 import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.JobsVo;
@@ -22,8 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("actStu")
@@ -40,6 +40,8 @@ public class StuHolidayController{
     private ActStuSer actStuSer;
     @Resource
     private HistoryService historyService;
+    @Resource
+    StuSer stuSer;
 
     @RequestMapping("toApply")
     public String toApplyPage(){
@@ -58,7 +60,7 @@ public class StuHolidayController{
         return "actStu/stuActMyJob";
     }
 
-    @RequestMapping("toMyJob")
+        @RequestMapping("toMyJob")
     public String toMyJobPage(){
         return "actStu/stuActMyJob";
     }
@@ -77,16 +79,35 @@ public class StuHolidayController{
         jsonObject.put("count",title);
         return jsonObject;
     }
+
     //我的请假单中查看备注
     @ResponseBody
     @RequestMapping("lookComment")
     public JSONObject lookComment(int jobId) throws ParseException{
-            JSONObject jsonObject = new JSONObject();
+        //通过jobId查询历史变量对象
+               JSONObject jsonObject = new JSONObject();
                 //通过jobID查询历史变量对象
                 HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("jobId", jobId).singleResult();
                 //获取流程实例id （查询历史批注）
-                List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
-                return jsonObject;
+                List<Comment>  commentList =new ArrayList<>();
+                    System.out.println("hvi:"+hvi);
+                    try{ commentList =taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
+                    }catch (NullPointerException e){
 
+                    }
+                    List list=new ArrayList();
+                    for(Comment comment:commentList){
+                        Map dataMap=new HashMap();
+                        Emp emp   = (Emp) stuSer.findO(new Emp(),Integer.parseInt(comment.getUserId()));
+                        dataMap.put("empName",emp.getEmpName());
+                        dataMap.put("fullMessage",comment.getFullMessage());
+                        dataMap.put("sj",comment.getTime());
+                        list.add(dataMap);
+                        }
+                jsonObject.put("code",0);
+                jsonObject.put("msg","");
+                jsonObject.put("data",list);
+                jsonObject.put("count",list.size());
+                return jsonObject;
     }
 }

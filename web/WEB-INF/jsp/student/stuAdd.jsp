@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
 </head>
 <body>
-<form class="layui-form" action="${pageContext.request.contextPath}/stu/update/add" method="post">
+<form class="layui-form" action="${pageContext.request.contextPath}/stu/update/add" method="post" target="_self">
     <div style="width: 100%;height: 69%;margin-top: 1%">
         <div style="width:33%;height:100%;float: left">
         <input type="hidden" value="0">

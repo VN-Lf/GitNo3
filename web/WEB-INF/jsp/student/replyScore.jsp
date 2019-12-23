@@ -154,16 +154,13 @@
                 dataType:'text',
                 success:function (da){
                     var d = da
-                    if(''+d=='no'){
+                    if(d=='no'){
                         alert("此班级已有此答辩成绩存在");
                         return;
                     }else{
                         var classId =$('#classId').val();
-                        var courseId =$('#courseId').val();
-                        var testType =$('#testType').val();
-                        var termId  = $('#termId').val();
-                        var testDH = $('#testDH').val();
-                        self.location= "${pageContext.request.contextPath}/sco/toClassScoByCid?classId="+classId+"&courseId="+courseId+"&testType="+testType+"&termId="+termId+"&testDH="+testDH;
+                        var projectId = $('#projectId').val();
+                        self.location= "${pageContext.request.contextPath}/sco/toClassRepScoByCid?classId="+classId+"&projectId="+projectId;
                     }
                 }
             });

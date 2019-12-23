@@ -26,27 +26,22 @@
 
 <div class="layui-row" style="height:45%">
     下面部分的
-    <div class="layui-tab" id="commentTab">
+    <div class="layui-tab">
         <ul class="layui-tab-title">
             <li>批注</li>
-        </ul>
-        <div class="layui-tab-content">
-            <div class="layui-tab-item layui-show">
-                <table id="comment" lay-filter="test"></table>
-            </div>
-        </div>
-    </div>
-    <div class="layui-tab" id="progressTab">
-        <ul class="layui-tab-title">
             <li>进度</li>
         </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <table id=" progress" lay-filter="test"></table>
+                <table id="commentT" lay-filter="test"></table>
+            </div>
+            <div class="layui-tab-item">
+                <table id="progressT" lay-filter="test"></table>
             </div>
         </div>
     </div>
 </div>
+
 
 <script src="${pageContext.request.contextPath}/layui/layui.js">
 
@@ -113,27 +108,47 @@
             switch(obj.event){
                 case 'comment':
                     table.render({
-                        elem: '#demo'
-                        ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                        elem: '#commentT'
                         ,url: '${pageContext.request.contextPath}/actStu/lookComment?jobId='+jId //数据接口
                         ,title: '批注'
                         ,cols: [[
-                            ,{field:'jobId',  title: '单据编号'}
+                            ,{field:' ',  title: '单据编号',
+                                templet: function (){
+                                    return jId;
+                                }
+                            }
                             , {
                                 field: ' ', title: '单据名称',
                                 templet: function (){
                                     return name;
                                 }
                             }
-                            ,{field:'sj',  title: '审批时间 '}
-                            ,{field:'userId', title:   '审批人 '}
+                            ,{field:'sj',  title: '审批时间 ',
+                                templet: function (row){
+                                    return createTime(row.sj);
+                                }
+                            }
+                            ,{field:'empName', title:   '审批人 '}
                             ,{field:'fullMessage', title:'批注内容'}
                         ]]
                     });
                     break;
+                case 'progress':
+                    window.open('${pageContext.request.contextPath}/lookMyJob?jobId='+jId,'self');
+                    break;
                 }
         });
     })
+
+    layui.use(['element','tab'], function(){
+        var element = layui.element;
+        var tab = layui.tab;
+        tab.render({
+            elem: '#commodity',
+            toolbar: '#toolbarDemo5'
+        })
+    });
+
     function process(v){
         if(v==1){
             return "审批中"
@@ -144,6 +159,16 @@
         }
         return""
     }
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var str = y+"-"+m+"-"+d;
+        return str;
+    }
 
 </script>
 
@@ -151,9 +176,9 @@
     <button type="button" class="layui-btn layui-btn-s" lay-event="comment">
        查看批注
     </button>
-    <button type="button" class="layui-btn layui-btn-s" lay-event="jindu">
+   <%-- <button type="button" class="layui-btn layui-btn-s" lay-event="progress">
         查看进度
-    </button>
+    </button>--%>
 </script>
 </body>
 </html>

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
 </head>
-<body><!----><!---->
+<body><!----><!----->
 <table id="demo" lay-filter="test">
 
 </table>

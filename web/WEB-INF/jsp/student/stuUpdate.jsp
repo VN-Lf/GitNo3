@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<form class="layui-form" action="${pageContext.request.contextPath}/stu/update/up" method="post" lay-filter="gg">
+<form class="layui-form" action="${pageContext.request.contextPath}/stu/update/up" method="post" lay-filter="gg" target="_self">
     <input id="stuId" type="hidden" name="studId" lay-verify="required" autocomplete="off" class="layui-input" value="${stu.studId}">
     <div style="width: 100%;height: 69%;margin-top: 1%">
         <div style="width:33%;height:100%;float: left">

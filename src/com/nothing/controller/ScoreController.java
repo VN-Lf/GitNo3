@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-////
+///////
 @Controller
 @RequestMapping("/sco")
 public class ScoreController{
@@ -89,7 +89,6 @@ public class ScoreController{
     @RequestMapping("toClassScoByCid")
     public String toClassScoByCid( String testDH, String classId,StudentScore studentScore,HttpServletRequest request) throws ParseException{
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
         Date testD = formatter.parse(testDH);
         studentScore.setScoreTime(testD);
         ClassVo classVo = (ClassVo) stuSer.findO(new ClassVo(), Integer.parseInt(classId));
@@ -104,7 +103,6 @@ public class ScoreController{
         return "student/classScore";
     }
 
-
     @RequestMapping("toClassRepScoByCid")
     public String toClassRepScoByCid(String classId,String projectId,HttpServletRequest request){
         ClassVo classVo = (ClassVo) stuSer.findO(new ClassVo(), Integer.parseInt(classId));
@@ -116,13 +114,11 @@ public class ScoreController{
 
     @ResponseBody
     @RequestMapping("toReplyMa")
-    public String toReply(String classId,String projectId,HttpServletRequest request){
-        ClassVo classVo = (ClassVo) stuSer.findO(new ClassVo(), Integer.parseInt(classId));
-        StudentProject project = (StudentProject)stuSer.findO(new StudentProject(), Integer.parseInt(projectId));
-       /* //List list = stuScoSer.isExistsTest(tId,cId,typeId,classId);
+    public String toReply(String classId,String projectId){
+       List list = stuScoSer.isExistsTestReply(classId,projectId);
         if (list.size()>0){
             return "no";
-        }*/
+        }
         return "yes";
     }
 
@@ -155,7 +151,6 @@ public class ScoreController{
     @RequestMapping("toAddScore")
     @ResponseBody
     public String toAddScore(String tableList, StudentScore studentScore, String testDH, HttpSession session) throws ParseException{
-
         Emp e = (Emp)session.getAttribute("empId");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date testD = formatter.parse(testDH);
@@ -177,7 +172,7 @@ public class ScoreController{
             s.setTermId( studentScore.getTermId());
             s.setTestType(studentScore.getTestType());
             s.setScoreTime(testD);
-            //s.setEmpId(e.getEmpId());
+            s.setEmpId(e.getEmpId());
             System.out.println("循环内的考试对象"+s.toString());
             stuSer.addStu(s);
         }
@@ -201,7 +196,7 @@ public class ScoreController{
             s.setStudId(Integer.parseInt(o.get("sid").toString()));
             s.setProjectId(Integer.parseInt(projectId));
             s.setReplyScoreRemark(o.get("rs").toString());
-            //s.setEmpId(e.getEmpId());
+            s.setEmpId(e.getEmpId());
             System.out.println("循环内的考试对象"+s.toString());
             stuSer.addStu(s);
         }

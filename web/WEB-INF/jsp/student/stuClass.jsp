@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head><!----><!---->
-    <title>班级管理/</title>
+    <title>班级管理</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
 </head>

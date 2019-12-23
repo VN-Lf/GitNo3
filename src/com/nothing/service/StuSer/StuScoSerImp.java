@@ -87,8 +87,8 @@ public class StuScoSerImp extends BaseDao implements StuScoSer{
     }
 
     @Override
-    public List isExistsTestReply(String classId, String projectId) {
-        return null;
+    public List isExistsTestReply(String classId, String projectId){
+        return listBySQL("select * from stureplyscore where exists(select *,classId from stureplyscore left join student s using(studId) left join studentproject using(projectId) where classId = "+classId+" and projectId = "+projectId+")");
     }
 
 }

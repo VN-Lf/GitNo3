@@ -53,16 +53,10 @@
             </div>
         </div>
 
-        <div class="layui-form-item" style="display: inline-block">
-            <label class="layui-form-label" style="width:100px">班级类型</label>
-            <div class="layui-input-block">
-                <input id="stuSelectType" type="text" name="stuSelectType" required  lay-verify="phone" placeholder="" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-
         <button class="layui-btn layui-btn-sm" lay-event="isSelect">条件筛选</button>
     </div>
 </script>
+
 </body>
 
 <script src="${pageContext.request.contextPath}/layui/layui.js">
@@ -165,7 +159,6 @@
                 case 'isSelect':
                     var stuSelectName = $('input[name="stuSelectName"]').val();
                     var stuSelectPhone = $('input[name="stuSelectPhone"]').val();
-                    var stuSelectFloor = $("#stuSelectFloor").val();
                     table.reload('studentData',{
                         page: {
                             curr: 1 //重新从第 1 页开始
@@ -175,11 +168,11 @@
                         ,where:{
                             stuSelectName:stuSelectName,
                             stuSelectPhone:stuSelectPhone,
-                            stuSelectCla:" ",
+                            stuSelectCla:"",
                             stuSelectFloor:""
                         }
                     });
-                    table.reload('test');
+                    table.reload('studentData');
                     break;
             };
         });
@@ -198,7 +191,7 @@
                             employeesId+=data[i].studId+",";
                         }
                         layer.confirm('确定从此班级移除学生？', {icon: 3, title: '提示信息'},function (index){
-                            $.post('${pageContext.request.contextPath}/stu/toClassAddStu',{
+                            $.post('${pageContext.request.contextPath}/stu/toDel/cla',{
                                 studIds:employeesId,
                                 cid :0
                             },function(data){
@@ -228,7 +221,7 @@
                             stuSelectFloor:""
                         }
                     });
-                    table.reload('studentData');
+                    table.reload('test');
                     break;
             };
         });

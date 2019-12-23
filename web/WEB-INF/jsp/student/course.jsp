@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>课程管理</title>
+    <title>课程管理/</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
 </head><!----><!---->
