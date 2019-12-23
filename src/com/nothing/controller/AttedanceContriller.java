@@ -28,6 +28,11 @@ public class AttedanceContriller {
         return "Attend/Attendance";
     }
 
+    @RequestMapping("toSupAttedance")
+    public String toSupAttedance(){
+        return "Attend/SupAttendance";
+    }
+
     @ResponseBody
     @RequestMapping("list")
     public JSONObject list(HttpSession session){
@@ -73,13 +78,11 @@ public class AttedanceContriller {
         String superiorname = "";
         if(postname.equals("部长")){
             superiorname = "校长";
-            List<Map> maxid = service.selectAttendanlist("select empId from post where postName = '校长'");
+            List<Map> maxid = service.selectAttendanlist("select empId from post where postName like '%校长%'");
             i = (int) maxid.get(0).get("empId");
             System.out.println("校长的id为"+i);
-        }else if(postname.equals("高级讲师")){
+        }else{
             superiorname = "部长";
-        }else if(postname.equals("校长")){
-            superiorname = "校长";
         }
 
         List<Map> emplistid = service.selectAttendanlist("select empId from post where postName like '%"+superiorname+" %'and deptId in(select deptId from post where empId = "+i+" )");
@@ -88,7 +91,7 @@ public class AttedanceContriller {
         if(emplistid.size() == 0 ){
             System.out.println("没有上级");
             superiorname = "校长";
-            List<Map> maxid = service.selectAttendanlist("select empId from post where postName = '校长'");
+            List<Map> maxid = service.selectAttendanlist("select empId from post where postName like '%校长%'");
             i = (int) maxid.get(0).get("empId");
             System.out.println("校长的id为"+i);
         }

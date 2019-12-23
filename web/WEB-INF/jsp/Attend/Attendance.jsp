@@ -44,9 +44,9 @@
                 <a id="add"  onclick="add();"  class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加未打卡说明</a>
                 <table id="demo" lay-filter="test"  ></table>
             </div>
-            <div title="我的审批">
+           <%-- <div title="我的审批">
                 <table id="Senddemo" lay-filter="test" ></table>
-            </div>
+            </div>--%>
         </div>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" style="left: 300px">
@@ -54,12 +54,6 @@
             </div>
         </script>
 
-    </div>
-    <div data-options="region:'east',split:true,collapsed:true,title:'修改'" style="width:350px;">
-        <div id="tt" class="easyui-tabs"  data-options="tools:'#tabs1'" style="height: 600px;">
-            <div title="新增">
-            </div>
-        </div>
     </div>
 
     <%--隐藏提交表单--%>
@@ -183,26 +177,27 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/attedance/list' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
-                {type:'checkbox',width:100}//复选框
-                ,{field: 'attId', title: '编号', width:100, sort: true}
-                ,{field: 'punckClockTime', title: '未打卡时间  ', width:100,templet:function (row){
+                {type:'checkbox'}//复选框
+                ,{field: 'attId', title: '编号', width:73, sort: true}
+                ,{field: 'punckClockTime', title: '未打卡时间  ', width:150,templet:function (row){
                         return createTime(row.punckClockTime);
                     }}
-                ,{field: 'empname', title: '员工姓名 ', width:100}
-                ,{field: 'cause', title: '原因说明', width:100}
+                ,{field: 'empname', title: '员工姓名 ', width:120}
+                ,{field: 'cause', title: '原因说明', width:250}
                 ,{field: 'audName', title: '审核人', width:100}
-                ,{field: 'examineTime', title: '审核时间', width:100, width:100,templet:function (row){
+                ,{field: 'examineTime', title: '审核时间', width:200,templet:function (row){
                     if(row.examineTime == null){
                         return "";
                     }
                     return createTime(row.examineTime);
                     }}
-                ,{field: 'examineExplain', title: '审核说明  ', width:100}
+                ,{field: 'examineExplain', title: '审核说明  '}
                 ,{field: 'status', title: '状态  ', width:100,templet:function (data) {
                         if( data.status ==1 ){
                             return '审核通过'
@@ -358,7 +353,7 @@
         $("#updform").form("submit",{
             success : function () {
                 $("#updform").form("clear");
-                window.location.href="<%=request.getContextPath()%>/attedance/toAttedance";
+                window.location.href="<%=request.getContextPath()%>/attedance/toSupAttedance";
             }
         })
 
@@ -370,7 +365,7 @@
         $("#updform").form("submit",{
             success : function () {
                 $("#updform").form("clear");
-                window.location.href="<%=request.getContextPath()%>/attedance/toAttedance";
+                window.location.href="<%=request.getContextPath()%>/attedance/toSupAttedance";
             }
         })
         $("#wins").window("close");

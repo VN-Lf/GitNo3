@@ -241,7 +241,7 @@
                     <a style="color: green">学生请假</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>考勤管理</a>
+                    <a>我的考勤</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
@@ -277,8 +277,8 @@
                     <a>周报汇总</a>
                 </li>
                 <%}%>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考勤管理-上级可看</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toSupAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>上级可看</a>
                 </li>
             </ul>
         </div>
@@ -288,7 +288,7 @@
                     <a>学生资料</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">学生请假</a>
+                    <a style="color: green">学生请假（完善中）</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>考试成绩</a>
