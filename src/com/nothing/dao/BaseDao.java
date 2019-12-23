@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 public class BaseDao {
     @Resource
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
 
     /**

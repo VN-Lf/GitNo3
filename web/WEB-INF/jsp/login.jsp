@@ -62,6 +62,16 @@
             font-size: 20px;
             color: rgb(100, 92, 92);
         }
+        #stu{
+            float: left;width: 18%;height:20px;padding: 10px;background-color:#00FA9A;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        #emp{
+            float: left;width: 68%;height:20px;background-color: #ff0;padding: 10px;
+            cursor: pointer;
+            transition: 0.5s;
+        }
     </style>
 </head>
 
@@ -75,6 +85,13 @@
     <div style="width: 100%;height: 40%;">
         <div style="width: 350px;height: 100%;margin: 0 auto;">
             <form action="<%=request.getContextPath()%>/to/login" method="post" style="position: relative;">
+                <input type="hidden" name="type" value="emp" id="type">
+                <div style="width: 100%;height: 40px;margin-bottom: 10px">
+                    <div style="width: 315px;margin: 0 auto;height: 40px">
+                        <div align="center" id="stu" onclick="qiehuanLog('stu')">学生端</div>
+                        <div align="center" id="emp" onclick="qiehuanLog('emp')">教师端</div>
+                    </div>
+                </div>
                 <div style="position: relative;">
                     <input id="name" type="text" name="zhanghao" oninput="donTai()" />
                     <span id="tishi" class="tishis">手机号</span>
@@ -83,7 +100,7 @@
                     <input id="pwd" type="password" name="pwd" style="outline: none;" ondblclick="lookNo(1)" oninput="donTai2('pwd')" ;/>
                     <input id="pwdLook" type="text" style="display: none" ondblclick="lookNo(2)" oninput="donTai2('pwdLook')" ;/>
                 </div>
-                <span id="tishi2" style="top:75px" class="tishis">密码</span>
+                <span id="tishi2" style="top:125px" class="tishis">密码</span>
                 <div>
                     <input type="submit" id="login" value="登录" />
                 </div>
@@ -98,6 +115,18 @@
 </div>
 </body>
 <script language="JavaScript">
+    function qiehuanLog(id) {
+        document.getElementById("type").value=id;
+        if(id == "stu"){
+            $("#stu").css("width","68%");
+            $("#emp").css("width","18%");
+            $("#login").css("background-color","#00FA9A");
+        }else if(id == "emp"){
+            $("#emp").css("width","68%");
+            $("#stu").css("width","18%");
+            $("#login").css("background-color","yellow");
+        }
+    }
     function donTai() {
         var name = document.getElementById("name").value;
 
@@ -105,7 +134,7 @@
             $("#tishi").css("top", "20px");
             $("#tishi").css("left", "20px");
             $("#tishi").css("font-size", "20px");
-            document.getElementById("tishi").innerText = "账号/密码";
+            document.getElementById("tishi").innerText = "手机号";
 
             $("#name").css("width", "100%");
             $("#name").css("height", "40px");
@@ -136,7 +165,7 @@
             document.getElementById("pwd").value = name;
         }
         if (name == null || name == "") {
-            $("#tishi2").css("top", "75px");
+            $("#tishi2").css("top", "125px");
             $("#tishi2").css("left", "20px");
             $("#tishi2").css("font-size", "20px");
 
@@ -147,7 +176,7 @@
             id.style.border = "none";
             id.style.borderBottom = "1px solid #000";
         } else {
-            $("#tishi2").css("top", "77px");
+            $("#tishi2").css("top", "127px");
             $("#tishi2").css("left", "-35px");
             $("#tishi2").css("font-size", "16px");
 

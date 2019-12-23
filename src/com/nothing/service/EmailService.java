@@ -1,6 +1,7 @@
 package com.nothing.service;
 
 import com.nothing.vo.Email.Email;
+import com.nothing.vo.wintable.Empkaohe;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ public interface EmailService {
     void delEmail(Object id);
     //添加Email的方法
     void addEmail(Email email);
+    //添加考核录入
+    void addkaohe(Empkaohe empkaohe);
     //修改Email为已读
     void updateEmailIsRead(String sql);
     //添加文件的方法

@@ -3,6 +3,7 @@ package com.nothing.service.impl;
 import com.nothing.dao.BaseDao;
 import com.nothing.service.EmailService;
 import com.nothing.vo.Email.Email;
+import com.nothing.vo.wintable.Empkaohe;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,6 +43,12 @@ public class EmailServlceImpl extends BaseDao implements EmailService {
 
         addObject(email);
     }
+
+    @Override
+    public void addkaohe(Empkaohe empkaohe) {
+        addObject(empkaohe);
+    }
+
     //修改email为已读
     @Override
     public void updateEmailIsRead(String sql) {

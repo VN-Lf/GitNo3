@@ -39,7 +39,7 @@ public class DormitoryServiceImpl extends BaseDao implements DormitoryService {
 
     @Override
     public void delDormitory(Object id) {
-        executeSQL("delete from studenthour where HourId in ("+id+")");
+        executeSQL("delete from studenthour where stuHours in ("+id+")");
     }
 
 }

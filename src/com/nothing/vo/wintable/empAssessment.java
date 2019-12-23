@@ -12,10 +12,11 @@ public class empAssessment {
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
     private Integer empAssessId;
-    private Integer empexamid;   //考核类型id
-    private Integer empid;//员工id
-    private Integer classid;//班级id
+    private String empexamid;   //考核类型id
+    private String empid;//员工id
+    private String classid;//班级id
     private Integer scores;//总评分
+    private String endtime;
 
     public Integer getEmpAssessId() {
         return empAssessId;
@@ -25,27 +26,27 @@ public class empAssessment {
         this.empAssessId = empAssessId;
     }
 
-    public Integer getEmpexamid() {
+    public String getEmpexamid() {
         return empexamid;
     }
 
-    public void setEmpexamid(Integer empexamid) {
+    public void setEmpexamid(String empexamid) {
         this.empexamid = empexamid;
     }
 
-    public Integer getEmpid() {
+    public String getEmpid() {
         return empid;
     }
 
-    public void setEmpid(Integer empid) {
+    public void setEmpid(String empid) {
         this.empid = empid;
     }
 
-    public Integer getClassid() {
+    public String getClassid() {
         return classid;
     }
 
-    public void setClassid(Integer classid) {
+    public void setClassid(String classid) {
         this.classid = classid;
     }
 
@@ -55,5 +56,13 @@ public class empAssessment {
 
     public void setScores(Integer scores) {
         this.scores = scores;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
     }
 }

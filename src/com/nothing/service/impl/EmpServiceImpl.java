@@ -2,8 +2,12 @@ package com.nothing.service.impl;
 
 import com.nothing.dao.BaseDao;
 import com.nothing.service.EmpService;
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.charge.Notice;
 import com.nothing.vo.emp.*;
+import com.nothing.vo.wintable.chatRecord;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -258,4 +262,42 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         executeSQL("delete from weekarrange where weekArrangeId in ("+id+")");
     }
 
+    @Override
+    public void chatAdd(chatRecord cr) {
+        this.addObject(cr);
+    }
+
+    @Override
+    public void chatUp(chatRecord cr) {
+        this.updObject(cr);
+    }
+
+    @Override
+    public List chatList(String sql) {
+        return this.listBySQL(sql);
+    }
+
+    @Override
+    public List getChat(int id) {
+        return listBySQL("select  c.*,e1.empName,stu.stuName from chatrecord as c left join student  as stu on c.sayface=stu.studId left join emp as e1 on c.teacher=e1.empId where c.chatid ='"+id+"'");
+    }
+
+    @Override
+    public int chatCount() {
+        return this.selectcount("select count(*) from chatRecord");
+    }
+    @Override
+    public void chatDel(String id) {
+        this.executeSQL("delete from chatRecord where Chatid in("+id+")");
+    }
+
+    @Override
+    public Student getStu(String name) {
+        Session session = sessionFactory.openSession();
+        SQLQuery sqlquery =session .createSQLQuery("select * from student where stuName = '"+name+"'");
+        Student student = (Student)sqlquery.addEntity(Student.class).uniqueResult();
+        session.flush();
+        session.close();
+        return student;
+    }
 }

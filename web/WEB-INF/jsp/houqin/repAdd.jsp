@@ -12,28 +12,30 @@
     <title>Title</title>
 </head>
 <body>
-<form class="layui-form" method="post" action="/houqin/repAdd" lay-filter="gg">
-    <input type="hidden" name="equipmentId">
-    <input type="hidden" name="status">
-    <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">维修事项</label>
-        <div class="layui-input-block">
-            <input type="text" name="equipmentType" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
+<div style="width: 450px;margin: 50px auto">
+    <form class="layui-form" method="post" action="/houqin/repAdd" lay-filter="gg">
+        <input type="hidden" name="equipmentId">
+        <input type="hidden" name="status">
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">维修事项</label>
+            <div class="layui-input-block">
+                <input type="text" name="equipmentType" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-block">
-            <input type="text" name="remark" placeholder="请输入.." autocomplete="off" class="layui-input">
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input type="text" name="remark" placeholder="请输入.." autocomplete="off" class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 </body>
 <script>
 
@@ -59,6 +61,7 @@
         //监听提交
         form.on('submit(formDemo)', function(data){
             layer.msg(JSON.stringify(data.field));
+            window.location.reload();
             return true;
         });
     });

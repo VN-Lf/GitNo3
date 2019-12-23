@@ -3,8 +3,8 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmailService;
 import com.nothing.vo.Email.Email;
-import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.emp.Emp;
+import com.nothing.vo.wintable.Empkaohe;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("email")
@@ -39,7 +39,7 @@ public class EmailController {
 
     //去邮件查看界面
     @RequestMapping("toemailServlet")
-    public String toemailServlet(HttpServletRequest request, int emailId){
+    public String toemailServlet(HttpServletRequest request, int emailId,HttpSession session) throws ParseException {
         int eId = emailId;
         System.out.println("查看邮件的Id为"+eId);
 
@@ -48,11 +48,35 @@ public class EmailController {
         Email email = new Email();
         email = (Email) service.SelectEmailContent(email, eId);
         String content = email.getContent();
+        String topic = email.getTopic();
+        String student = email.getReceId();
+        String examtype="";
+        String kaohuid = request.getParameter("empkaohuid");
+        if(topic.equals("考核")){
+            //考核类邮件
+            List kaohuscore1 =service.selectEmaillist("select scores  from empassessment where empAssessId="+kaohuid+"");
+            List kaohuscore=new ArrayList();
+            for(int i=0;i<kaohuscore1.size();i++){
+                Map map= (Map) kaohuscore1.get(i);
+                kaohuscore.add(map.get("kaohuscore"));
+            }
+            if(kaohuscore.get(0)==null){
+                List examkaohu =service.selectEmaillist("select kaohuscore  from emkaohu where empAssessId="+kaohuid+" and studentname='"+student+"'");
 
-        String substring = content.substring(content.lastIndexOf(":"));
-        String substring1 = substring.substring(1, substring.length());
+                if(examkaohu.size()==0){
+                    String substring = content.substring(content.lastIndexOf(":"));
+                    String substring1 = substring.substring(1, substring.length());
+                    examtype=substring1;
+                }else {
+                    examtype="你已经考核过了";
+                }
 
-        System.out.println("考核类型："+substring1);
+            }else {
+                examtype="考核已结束";
+            }
+            request.setAttribute("examtype",examtype);
+
+        }
 
         request.setAttribute("emalilist",email);
         return "MyEmail/SelectEmail";
@@ -163,6 +187,26 @@ public class EmailController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("data", list);
         return jsonObject;
+    }
+
+
+    //回应邮件
+    @RequestMapping("examscore")
+    public String examscore(HttpServletRequest request,HttpSession session){
+        Empkaohe empkaohu=new Empkaohe();
+        Emp emp = (Emp) session.getAttribute("empId");
+        String name = emp.getEmpName();
+        int empkaohuid = Integer.parseInt(request.getParameter("empkaohuid"));
+        for(int i=1;i<6;i++){
+            String exam =request.getParameter("exam"+i);
+            int examscore=Integer.parseInt( request.getParameter("examscore"+i));
+            empkaohu.setStudentname(name);
+            empkaohu.setExamtype(exam);
+            empkaohu.setEmpAssessId(empkaohuid);
+            empkaohu.setKaohuscore(examscore);
+            service.addkaohe(empkaohu);
+        }
+        return "redirect:toemail";
     }
     //删除的方法
     @RequestMapping("deleteEmail")

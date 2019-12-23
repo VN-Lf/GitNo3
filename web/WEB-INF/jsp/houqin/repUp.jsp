@@ -36,13 +36,13 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">开始时间</label>
         <div class="layui-input-block">
-            <input id="start" type="text" name="startTime" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input id="start" type="text" name="start" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">结束时间</label>
         <div class="layui-input-block">
-            <input id="end" type="text" name="eedTime" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
+            <input id="end" type="text" name="end" required  lay-verify="required" placeholder="请选择..." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
@@ -53,7 +53,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button class="layui-btn" onclick="a()" lay-submit lay-filter="formDemo">立即修改</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -73,8 +73,8 @@
             ,"student":"${er.student}"
             ,"remark":"${er.remark}"
             ,"userType":"${er.userType}"
-            ,"startTime":"${er.startTime}"
-            ,"eedTime":"${er.eedTime}"
+            ,"start":"${er.startTime}"
+            ,"end":"${er.eedTime}"
         })
 
         //日期
@@ -90,8 +90,8 @@
         //监听提交
         form.on('submit(formDemo)', function(data){
             layer.msg(JSON.stringify(data.field));
+            window.parent.location.reload();
             return true;
-            parent.layui.admin.events.closeThisTabs();
         });
     });
 
@@ -100,6 +100,10 @@
             var subtitle = $(this).children(".tabs-closable").text();
             $('#tabs').tabs('close', subtitle);
         })
+    }
+    function a() {
+        var index = layer.open();
+        layer.close(index);
     }
 </script>
 <script>
