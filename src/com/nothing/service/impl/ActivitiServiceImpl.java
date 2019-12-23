@@ -30,7 +30,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-@Service
+@Service//
 public class ActivitiServiceImpl extends BaseDao implements ActivitiService{
     @Resource
     private RepositoryService repositoryService;
