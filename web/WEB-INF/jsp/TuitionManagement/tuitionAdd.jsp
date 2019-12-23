@@ -133,6 +133,7 @@
                     //append后必须从新渲染
                     form.render('select');
                 }
+
             },"json");
         });
     });
