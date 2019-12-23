@@ -41,7 +41,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public List selNoticeAll(String type) {
-        List list = listBySQL("select * from notice");
+        List list = listBySQL("select * from notice GROUP BY noticeTime "+type+",noticeId "+type);
         return list;
     }
 

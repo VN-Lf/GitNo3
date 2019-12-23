@@ -20,8 +20,23 @@ public class Email {
     private Integer isRead;     //是否已读,1:已读;2:未读
     private String image;       //附件
     private String oldFileName;
-    private String tis;
     private String endTime;
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public String getReceName() {
+        return receName;
+    }
+
+    public void setReceName(String receName) {
+        this.receName = receName;
+    }
 
     public Integer getEmailId() {
         return emailId;
@@ -93,30 +108,6 @@ public class Email {
 
     public void setOldFileName(String oldFileName) {
         this.oldFileName = oldFileName;
-    }
-
-    public String getEmpName() {
-        return empName;
-    }
-
-    public void setEmpName(String empName) {
-        this.empName = empName;
-    }
-
-    public String getReceName() {
-        return receName;
-    }
-
-    public void setReceName(String receName) {
-        this.receName = receName;
-    }
-
-    public String getTis() {
-        return tis;
-    }
-
-    public void setTis(String tis) {
-        this.tis = tis;
     }
 
     public String getEndTime() {

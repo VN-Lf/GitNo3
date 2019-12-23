@@ -61,6 +61,9 @@ public class EmailServlceImpl extends BaseDao implements EmailService {
         Email email = new Email();
 
         String filename = face.getOriginalFilename();
+        if(filename == null || "".equals(filename)){
+            return email;
+        }
         System.out.println("文件名:"+filename);
 
         email.setOldFileName(filename);
