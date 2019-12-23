@@ -12,5 +12,5 @@ public interface FinanceService {
     void tiotionAdd(financeshouldTuitionRecord ft);
     void tuitionUp(financeshouldTuitionRecord ft);
     List getC();
-    List getS();
+    List getS(int id);
 }

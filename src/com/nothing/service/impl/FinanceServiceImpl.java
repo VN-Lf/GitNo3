@@ -42,7 +42,7 @@ public class FinanceServiceImpl extends BaseDao implements FinanceService {
     }
 
     @Override
-    public List getS() {
-        return this.listBySQL("select * from student");
+    public List getS(int id) {
+        return this.listBySQL("select * from student where classId="+id);
     }
 }

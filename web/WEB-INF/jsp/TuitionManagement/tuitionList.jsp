@@ -12,9 +12,9 @@
     <title>Title</title>
 </head>
 <body id="tuition">
-    <div>
-        <table id="tt" lay-filter="tt"></table>
-    </div>
+<div>
+    <table id="tt" lay-filter="tt"></table>
+</div>
 </body>
 <script>
     layui.use('table', function(){

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -17,16 +18,29 @@
     <input type="hidden" name="financedate">
     <input type="hidden" name="empid">
     <input type="hidden" name="Invalid">
+    <div class="layui-inline" style="margin-bottom: 15px;">
+        <label class="layui-form-label">班级</label>
+        <div class="layui-input-inline" style="width:340px">
+            <select id="class" required  lay-filter="classFilter">
+                <option value="">请选择班级</option>
+                <c:forEach items="${c}" var="cc">
+                    <option value="${cc.classId}">${cc.className}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
     <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">学生姓名</label>
+        <label class="layui-form-label">学生</label>
         <div class="layui-input-block">
-            <input id="student" onclick="" type="text" name="stuid" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input" value="1">
+            <select  name="stuid" id="student" required  lay-filter="studentFilter">
+                <option value="">请选择学生</option>
+            </select>
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">付款方式</label>
         <div class="layui-input-block">
-            <select name="receipt" lay-verify="required" style="width: 250px">
+            <select name="receipt" required lay-verify="required" style="width: 250px">
                 <option value="支付宝支付">支付宝</option>
                 <option value="微信支付">微信支付</option>
                 <option value="银行卡转账">银行卡转账</option>
@@ -38,7 +52,7 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">收费项</label>
         <div class="layui-input-block">
-            <select name="tuitionTypeId" lay-verify="required" style="width: 250px">
+            <select name="tuitionTypeId" required  lay-verify="required" style="width: 250px">
                 <option value="1">学费</option>
                 <option value="2">白费</option>
             </select>
@@ -47,7 +61,7 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">类型</label>
         <div class="layui-input-block">
-            <select name="financeType" lay-verify="required" style="width: 250px">
+            <select name="financeType" required lay-verify="required" style="width: 250px">
                 <option value="1">缴费</option>
                 <option value="2">退费</option>
             </select>
@@ -56,7 +70,7 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">学期</label>
         <div class="layui-input-block">
-            <select name="termId" lay-verify="required" style="width: 250px">
+            <select name="termId" required  lay-verify="required" style="width: 250px">
                 <option value="1">第一学期</option>
                 <option value="2">第二学期</option>
                 <option value="3">第三学期</option>
@@ -97,12 +111,31 @@
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            layer.msg(JSON.stringify(data.field));
-            self.close();
+            window.parent.tabsClose();
             return true;
         });
+        var classText = "";
+        //监听下拉框
+        form.on('select(classFilter)', function(data){
+            //移除学生下拉框所有选项
+            $("#student").empty();
+            var studentHtml = '<option value="">请选择学生</option>';
+            $("#student").html(studentHtml);
+            var value = $("#class").val();
+            //异步加载下拉框数据
+            $.post('${pageContext.request.contextPath}/finance/getS',{id:value},function (data) {
+                var $html = "";
+                if(data.data != null) {
+                    $.each(data.data, function (index, item) {
+                        $html += "<option value='" + item.studId + "'>" + item.stuName + "</option>";
+                    });
+                    $("#student").append($html);
+                    //append后必须从新渲染
+                    form.render('select');
+                }
+            },"json");
+        });
     });
-
     function tabClose() {
         $(".tabs-inner").dblclick(function() {
             var subtitle = $(this).children(".tabs-closable").text();

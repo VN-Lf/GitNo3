@@ -3,12 +3,14 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.FinanceService;
+import com.nothing.vo.Edu.ClassVo;
 import com.nothing.vo.tuition.financeshouldTuitionRecord;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +26,10 @@ public class FinanceController {
         return "TuitionManagement/tuitionList";
     }
     @RequestMapping("/toTuitionAdd")
-    public String toTuitionAdd(){
+    public String toTuitionAdd(HttpServletRequest req){
+        List<ClassVo> list = fs.getC();
+        System.out.println(list.toString());
+        req.setAttribute("c",list);
         return "TuitionManagement/tuitionAdd";
     }
 
@@ -52,9 +57,9 @@ public class FinanceController {
         financeshouldTuitionRecord f = fs.getf(Integer.parseInt(id));
         f.setInvalid(2);
         fs.tuitionUp(f);
-        f.setInvalid(1);
-        f.setFactMoney(f.getFactMoney()-2*f.getFactMoney());
-        fs.tiotionAdd(f);
+//        f.setInvalid(1);
+//        f.setFactMoney(f.getFactMoney()-2*f.getFactMoney());
+//        fs.tiotionAdd(f);
     }
     @RequestMapping("/tuitionList")
     @ResponseBody
@@ -66,14 +71,15 @@ public class FinanceController {
         jsonObject.put("msg", "");
         jsonObject.put("count",con);
         jsonObject.put("data", tList);
-        System.out.println(jsonObject.toJSONString());
         return jsonObject;
     }
 
-
-    @RequestMapping("/getClass")
+    @RequestMapping("/getS")
     @ResponseBody
-    public List getC(){
-        return fs.getC();
+    public JSONObject getS(int id){
+        JSONObject jsonObject = new JSONObject();
+        List list = fs.getS(id);
+        jsonObject.put("data",list);
+        return jsonObject;
     }
 }
