@@ -112,7 +112,7 @@
                 dataType:"json",
                 success:function (data) {
                     var empact = data.size;
-                    if(empact != 0){
+                    if(empact !== 0){
                         var taskl = data.task;
                         actTaskTis(empact,1);
                         $.each(taskl,function (index,item) {
@@ -146,12 +146,12 @@
                 success:function (data) {
                     var size = data.size;
                     var weekl = data.week;
-                    if(size != 0){
+                    if(size !== 0){
                         weekTis(size);
                         $.each(weekl,function (index,item) {
                             var misu = item.weekDescription;
                             var time = new Date(item.weekCycle);
-                            var d = new Date(time)
+                            var d = new Date(time);
                             var t=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+ d.getSeconds();
                             tianjiaWeek(misu,t);
                         })
@@ -185,7 +185,7 @@
                 success:function (data) {
                     var size = data.size;
                     var chat = data.chat;
-                    if(size != 0){
+                    if(size !== 0){
                         chatTis(size);
                         $.each(chat,function (index,item) {
                             var di = item.addr;
@@ -203,7 +203,7 @@
         }
 
         function shuaF5(f) {
-            if(f == 1){
+            if(f === 1){
                 $("#weektask").remove();
                 $("#emptask").remove();
                 $("#chattask").remove();
@@ -227,7 +227,7 @@
         <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/email/toemail" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">我的邮件</a>
+                    <a>我的邮件</a>
                 </li>
                 <%if(post.getPostName().indexOf("校长")==-1){%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myJobList" onclick="qiehuan(this)" class="cs-navi-tab">
@@ -240,11 +240,8 @@
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">学生请假</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我的周报</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考勤管理</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的考勤</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
@@ -280,8 +277,8 @@
                     <a>周报汇总</a>
                 </li>
                 <%}%>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考勤管理-上级可看</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toSupAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>上级可看</a>
                 </li>
             </ul>
         </div>
@@ -291,7 +288,7 @@
                     <a>学生资料</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">学生请假</a>
+                    <a style="color: green">学生请假（完善中）</a>
                 </li>
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>考试成绩</a>
@@ -662,7 +659,7 @@
                 html = "<div id=\"chattask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
                     " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'chat')\">\n" +
                     "<p align=\"left\" style=\"font-size: 24px;padding-right: 30px;float:left;width:45%;\">本月谈心任务已完成 "+size+" 条 还有 "+js+" 条待完成</p>\n"+
-                    "<p align=\"left\" id='sysj2' style=\"padding-right: 18px;float:right;width:18%;font-size: 16px\"></p>\n"+
+                    "<p align=\"left\" id='sysj2' style=\"padding-right: 9px;float:right;width:18%;font-size: 16px\"></p>\n"+
                 "       <p align=\"right\" id='tishi3' style=\"padding-right: 30px;margin-top: 45px;font-size: 16px\">点击查看更多</p>\n" +
                 "   </div>";
                 $("#hometask").append(html);

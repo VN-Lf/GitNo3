@@ -125,17 +125,18 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/exam/examlist' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox',fixed:'left'}
                 ,{field: 'aduitModelid', title: '编号', sort: true}
-                ,{field: 'Remark', title: '考核内容'}
+                ,{field: 'aduitName', title: '考核内容'}
                 ,{field: 'Scores', title: '考核分数', sort: true}
                 ,{field: 'deptName', title: '部门名称'}
-                ,{field: 'aduitName', title: '说明'}
+                ,{field: 'Remark', title: '说明'}
                 ,{ fixed: 'right', title: '操作', width: 180, align: 'center', toolbar: '#barDemo' }
             ]]
         });

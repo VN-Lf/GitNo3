@@ -93,7 +93,8 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,method:'post'
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/exam/empexamlist' //数据接口

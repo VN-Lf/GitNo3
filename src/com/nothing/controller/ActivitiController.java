@@ -91,6 +91,7 @@ public class ActivitiController {
         actservice.lookLiuTu(did,imageName,resp);
         return null;
     }
+
     //查看我的发起事务列表
     @RequestMapping("/myJobList")
     public String myJobList(HttpSession session, Model model){
@@ -109,7 +110,6 @@ public class ActivitiController {
     @RequestMapping("/lookMyJob")
     public String LookMyJob(String jobId,Model model,String instId){
         Map rmap = actservice.lookLiuCheng(jobId,instId);
-
         model.addAttribute("pd",rmap.get("pd"));
         model.addAttribute("mapList",rmap.get("maplist"));
         return "act/image";
@@ -226,7 +226,6 @@ public class ActivitiController {
     public String lookComment(int jobId,Model model) throws ParseException {
         //获取流程实例id （查询历史批注）
         List commentList = actservice.lookMyBeiZhu(jobId);
-
         if(commentList.size() == 0){
             model.addAttribute("zhi",0);
         }else {

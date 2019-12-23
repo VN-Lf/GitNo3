@@ -78,7 +78,7 @@
                             var title = item.title;
                             var tishi = "";
                             if(content.length > 100){
-                                tishi = "<p text-align:center style='margin: 0 0 0 40%;color: #f1f1f1'>单击显示更多</p>\n";
+                                tishi = "<p text-align:center style='margin: 0 0 0 28%;color: #f1f1f1'>单击显示更多</p>\n";
                             }
                             deptIds = noticeType;
                             switch (noticeType){
@@ -176,12 +176,17 @@
     }//展开一个公告
     function zanKai(id) {
         if(jinzhi == 1){
+            jinzhi = 0;
             var div = $(id).parent();
             div.css("height","300px");
             $(id).css("height","300px");
             var nnnnid = $(id).parent().children('div').find(".id").html().slice(3);
             document.getElementById(nnnnid).innerHTML="已读";
+            $(id).children().siblings(".tishi2").css("color","#9f9f9f");
             $.post('${pageContext.request.contextPath}/emp/martNotice',{eid:${empId.empId},nid:nnnnid},function (data) {},"json");
+        }else {
+            $(id).children().siblings(".tishi2").css("color","#f1f1f1");
+            jinzhi = 1;
         }
     }//添加一个公告
     function addMovk(nid,tishi,con,dep,name,ntime,ntype,title,emps) {
@@ -200,11 +205,11 @@
             "            <div style=\"float: left;width: 10%;height: 100%\">\n" +
             "                <p class='id' style=\"margin: 0;color: #f1f1f1\">编号："+nid+"</p>\n" +
             "                <p style=\"margin: 0\">发布："+name+"</p>\n" +
+            "                <p class='biti' style='color: #f1f1f1'>"+ntime+"</p>\n" +
             "            </div>\n" +
             "            <div style=\"float: left;width: 15%;height: 100%\">\n" +
             "                <p class=\"biti\" id='ti"+nid+"'>"+title+"</p>\n" +
             "                <input type='text' id='ti"+nid+"b' value='"+title+"' style='display: none'/>"+
-            "                <p class='biti' style='color: #f1f1f1'>"+ntime+"</p>\n" +
             "            </div>\n" +
             "            <div class=\"wenben\" onclick='zanKai(this)' style=\"float: left;width: 60%;height: 100%;margin: 0 2.5%;transition: 0.5s;\">\n" +
             "                 <textarea id='text"+nid+"' readonly class='textcss'>"+con+"</textarea>\n"+tishi+
