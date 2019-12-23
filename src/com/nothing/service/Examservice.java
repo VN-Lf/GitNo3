@@ -1,6 +1,7 @@
 package com.nothing.service;
 
 import com.nothing.vo.gongon.dataDoc;
+import com.nothing.vo.wintable.empAssessment;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ public interface Examservice {
     int Selectcount(String sql);
 
     void updateexam(Object obj);
+
+    void updateend(String sql);
 
     void deleteexam(Object obj);
 

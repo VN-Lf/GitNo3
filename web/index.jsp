@@ -18,7 +18,60 @@
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script src="<%=request.getContextPath()%>/jquery.js"></script>
 
+
 <style type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     .layui-table-tool {
         z-index: 0;
     }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: freedom
@@ -6,27 +7,24 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="source.jsp"%>
+<%@ include file="index.jsp"%>
 <head>
     <meta charset="utf-8">
     <title>员工考核</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
-    <script src="<%=request.getContextPath()%>/jquery.js"></script>
 </head>
 <body>
 <%--表格数据--%>
 <div>
-    <form style="width: 1205px;margin: 20px 0px 0px 10px">
+    <form style="width: 1205px;margin: 20px 0px 0px 150px">
         员工姓名:<input type="text" name="empname" id="empname" required lay-verify="required" placeholder="请输人姓名"  class="layui-input" style="width:180px;display:inline-block" />
-        <div class="layui-form-item" style="width:280px;display:inline-block;margin-left: -30px;margin-right: 20px">
+        <div class="layui-form-item" style="width:324px;display:inline-block;margin-left: -30px;margin-right: 20px">
             <label class="layui-form-label" style="width: 97px;margin-left: 10px;"> 部门名称:</label>
             <div class="layui-input-block">
                 <select name="Depid" id="Depid" lay-filter="aihao" style="width: 180px;height: 38px;border: 1px solid rgba(216,216,216,0.5)">
                     <option value="">请选择部门</option>
-                    <option value="1">教研部</option>
-                    <option value="2">财务部</option>
-                    <option value="3">体育部</option>
-                    <option value="4">咨询部</option>
+                    <c:forEach items="${dept}" var="deptname">
+                        <option value="${deptname}">${deptname}</option>
+                    </c:forEach>
                 </select>
             </div>
         </div>
@@ -41,14 +39,48 @@
         <input class="layui-btn layui-btn-normal" id="selectexam" style="width: 80px" value="搜索" />
     </form>
     <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
+        <div class="layui-btn-container" style="float: left">
+            <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="isAdd">新增巡查</button>
+        </div>
+        <div class="layui-btn-container" style="float: left">
             <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
         </div>
     </script>
+
     <table class="layui-table" id="demo" lay-data="{id: 'idTest'}" lay-filter="test"></table>
 </div>
 
-<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+<%--添加查询--%>
+<div style="display: none" id="add">
+    <form class="layui-form" method="post" action="${pageContext.request.contextPath}/exam/addempexam" lay-filter="dataf">
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">考核内容</label>
+            <div class="layui-input-block">
+                <select name="aduitName"  lay-filter="demo" lay-verify="required" style="width: 250px">
+                    <c:forEach items="${aduit}" var="aduitName">
+                        <option value="${aduitName}">${aduitName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width: 450px">
+            <label class="layui-form-label">员工姓名</label>
+            <div class="layui-input-block">
+                <select name="empname"  lay-filter="demo" lay-verify="required" style="width: 250px">
+                    <c:forEach items="${emp}" var="empname">
+                        <option value="${empname}">${empname}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="layui-btn-container">
+            <input class="layui-btn layui-btn-normal" type="submit" value="新增" style="margin-left: 190px" />
+            <input 	class="layui-btn layui-btn-primary" type="button" onclick="closekaohu()"  value="取消"/>
+        </div>
+
+    </form>
+</div>
+
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>
 </script>
@@ -61,7 +93,8 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,method:'post'
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/exam/empexamlist' //数据接口
@@ -70,12 +103,12 @@
             ,cols: [[ //表头
                 {type:'checkbox',fixed:'left'}
                 ,{field: 'aduitLogid', title: '编号', sort: true}
-                ,{field: 'Remark', title: '考核内容'}
+                ,{field: 'aduitName', title: '考核内容'}
                 ,{field: 'empName', title: '员工姓名'}
                 ,{field: 'Scores', title: '考核分数', sort: true}
                 ,{field: 'auditDate', title: '考核时间',templet: function(d){return dateFormat(d.auditDate)}}
                 ,{field: 'auditPerson', title: '录入人员'}
-                ,{field: 'aduitName', title: '说明'}
+                ,{field: 'Remark', title: '说明'}
                 ,{ fixed: 'right', title: '操作', width: 180, align: 'center', toolbar: '#barDemo' }
             ]]
         });
@@ -121,8 +154,23 @@
                         layer.msg('请选择需要删除的数据');
                     }
                     break;
+                case 'isAdd':
+                    openaddeexam();
+                    break;
             };
         });
+
+        function openaddeexam(data) {
+            index1=layer.open({
+                type: 1,
+                title:'修改内容',
+                area: ['500px', '300px'],
+                content:$('#add') ,
+                cancel:function () {
+                    window.location.reload();
+                }
+            });
+        }
 
         //时间选择器
         laydate.render({
@@ -151,6 +199,10 @@
             });
         })
     });
+
+    function closekaohu() {
+        window.location.reload();
+    }
 </script>
 
 <script type="text/javascript">

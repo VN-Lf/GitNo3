@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 public class BaseDao {
     @Resource
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
 
     /**
@@ -123,6 +123,7 @@ public class BaseDao {
     public Object getObject(Class clazz, Integer id) {
         Session session = sessionFactory.openSession();
         Object obj=  session.get(clazz, id);
+        session.flush();
         session.close();
         return obj;
     }

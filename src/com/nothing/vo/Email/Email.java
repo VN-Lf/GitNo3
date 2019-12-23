@@ -11,13 +11,32 @@ public class Email {
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
     private Integer emailId;
     private String empId;       //发布人
+    private String empName;
     private String receId;      //接收人
+    private String receName;
     private String topic;       //标题
     private String content;     //发布内容
     private Date sendtime;      //发布时间
     private Integer isRead;     //是否已读,1:已读;2:未读
     private String image;       //附件
     private String oldFileName;
+    private String endTime;
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public String getReceName() {
+        return receName;
+    }
+
+    public void setReceName(String receName) {
+        this.receName = receName;
+    }
 
     public Integer getEmailId() {
         return emailId;
@@ -89,5 +108,13 @@ public class Email {
 
     public void setOldFileName(String oldFileName) {
         this.oldFileName = oldFileName;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

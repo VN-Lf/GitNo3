@@ -295,29 +295,29 @@
         <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
     </div>
 
-    <div style="float: left;height: 50px;width: 1600px;margin-top:-5px">
-        <div class="layui-form-item" style="display: inline-block;width: 250px">
-            <label class="layui-form-label" style="width:90px">班级名称</label>
-            <div class="layui-input-block">
+    <div style="float: left;height: 50px;width: 1380px;margin-top:-5px">
+        <div class="layui-form-item" style="display: inline-block;width: 210px">
+            <label class="layui-form-label" style="width:70px;padding: 13px 0">班级名称</label>
+            <div class="layui-input-block" style="margin-left: 80px">
                 <input id="claSelectName" type="text" name="claSelectName" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
 
-        <div class="layui-form-item" style="display: inline-block;width: 250px">
-            <label class="layui-form-label" style="width:90px">班主任</label>
-            <div class="layui-input-block">
+        <div class="layui-form-item" style="display: inline-block;width: 210px">
+            <label class="layui-form-label" style="width:70px;padding: 13px 0">班主任</label>
+            <div class="layui-input-block" style="margin-left: 80px">
                 <select name="claSelectAdviser" lay-verify="required" placeholder=" " id="claSelectAdviser">
                     <option> </option>
-                <c:forEach items="${bzrList}" var="bzr">
-                    <option value="${bzr.names}">${bzr.names}</option>
-                </c:forEach>
-            </select>
+                    <c:forEach items="${bzrList}" var="bzr">
+                        <option value="${bzr.names}">${bzr.names}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
-        <div class="layui-form-item" style="display: inline-block;width: 250px">
-            <label class="layui-form-label" style="width:90px">授课教师</label>
-            <div class="layui-input-block">
+        <div class="layui-form-item" style="display: inline-block;width: 210px">
+            <label class="layui-form-label" style="width:80px;padding: 13px 0">授课教师</label>
+            <div class="layui-input-block" style="margin-left: 90px">
                 <select name="claSelectTeacher" lay-verify="required" placeholder=" " id="claSelectTeacher">
                     <option> </option>
                     <c:forEach items="${jsList}" var="js">
@@ -327,9 +327,9 @@
             </div>
         </div>
 
-        <div class="layui-form-item" style="display: inline-block;width: 250px">
-            <label class="layui-form-label" style="width:90px">学期</label>
-            <div class="layui-input-block">
+        <div class="layui-form-item" style="display: inline-block;width: 200px">
+            <label class="layui-form-label" style="width:60px;padding: 13px 0">学期</label>
+            <div class="layui-input-block" style="margin-left: 70px">
                 <select name="claSelectTerm" lay-verify="required" placeholder=" " id="claSelectTerm">
                     <option> </option>
                     <c:forEach items="${term}" var="te">
@@ -339,9 +339,9 @@
             </div>
         </div>
 
-        <div class="layui-form-item" style="display: inline-block;width: 250px">
-            <label class="layui-form-label" style="width:90px">班级类型</label>
-            <div class="layui-input-block">
+        <div class="layui-form-item" style="display: inline-block;width: 210px">
+            <label class="layui-form-label" style="width:70px;padding: 13px 0">班级类型</label>
+            <div class="layui-input-block" style="margin-left: 80px">
                 <select name="claSelectType" lay-verify="required" placeholder=" " id="claSelectType">
                     <option> </option>
                     <c:forEach items="${classType}" var="ct">
@@ -351,17 +351,15 @@
             </div>
         </div>
 
-
-
-        <div class="layui-form-item" style="display: inline-block;width: 250px">
-            <label class="layui-form-label" style="width:90px">学年</label>
-            <div class="layui-input-block">
-            <select name="claSelectFall" lay-verify="required" placeholder="" id="claSelectFall">
-                <option> </option>
-                <c:forEach items="${fall}" var="fa">
-                    <option value="${fa.fallLevel}">${fa.fallLevel}</option>
-                </c:forEach>
-            </select>
+        <div class="layui-form-item" style="display: inline-block;width: 210px">
+            <label class="layui-form-label" style="width:60px;padding: 13px 0">学年</label>
+            <div class="layui-input-block" style="margin-left: 70px">
+                <select name="claSelectFall" lay-verify="required" placeholder="" id="claSelectFall">
+                    <option> </option>
+                    <c:forEach items="${fall}" var="fa">
+                        <option value="${fa.fallLevel}">${fa.fallLevel}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 

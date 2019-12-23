@@ -1,7 +1,9 @@
 package com.nothing.service;
 
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.charge.Notice;
 import com.nothing.vo.emp.*;
+import com.nothing.vo.wintable.chatRecord;
 
 import java.util.List;
 //jiekou
@@ -18,7 +20,7 @@ public interface EmpService {
     EmpEducation sqlEduVo(String eid);
     void empUpdate(Emp emp, EmpEducation Edu, Post post);
     void addNotice(Notice notice, int lx);//发布公告
-    Notice chaNotice(String nid);    //根据id查员工
+    Notice chaNotice(String nid);    //根据id查公告
 
     //根据Id查教育经历列表
     List selEmpEducation(int id);
@@ -58,6 +60,20 @@ public interface EmpService {
     void famDel(String id);
     //新增家庭信息
     void famAdd(EmpFamilyImf efi);
+
+    //新增谈心记录
+    void chatAdd(chatRecord cr);
+    //修改谈心记录
+    void chatUp(chatRecord cr);
+    //查询谈心记录
+    List chatList(String sql);
+    //根据Id查谈心记录
+    List getChat(int id);
+    public int chatCount();
+    //删除谈心记录
+    public void chatDel(String id);
+    //根据名字得到学生
+    public Student getStu(String name);
 
     //查找所有值班
     List weekList(String sql);

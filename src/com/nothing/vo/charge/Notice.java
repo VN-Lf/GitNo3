@@ -15,7 +15,8 @@ public class Notice {
     private Integer noticeType;   // 1 所有人 2员工 3学生 4班级
     private String empName;//发布人
     private Date noticeTime;
-    private String deptIds;//多部门id
+    private String emps;//已读员工
+    private String students;//已读学生
 
     public Integer getNoticeId() {
         return noticeId;
@@ -65,11 +66,33 @@ public class Notice {
         this.noticeTime = noticeTime;
     }
 
-    public String getDeptIds() {
-        return deptIds;
+    public String getEmps() {
+        return emps;
     }
 
-    public void setDeptIds(String deptIds) {
-        this.deptIds = deptIds;
+    public void setEmps(String emps) {
+        this.emps = emps;
+    }
+
+    public String getStudents() {
+        return students;
+    }
+
+    public void setStudents(String students) {
+        this.students = students;
+    }
+
+    @Override
+    public String toString() {
+        return "Notice{" +
+                "noticeId=" + noticeId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", noticeType=" + noticeType +
+                ", empName='" + empName + '\'' +
+                ", noticeTime=" + noticeTime +
+                ", emps='" + emps + '\'' +
+                ", students='" + students + '\'' +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.nothing.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.ActivitiService;
 import com.nothing.service.EmpService;
 import com.nothing.vo.emp.Emp;
@@ -13,6 +14,7 @@ import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -112,7 +114,6 @@ public class ActivitiController {
         model.addAttribute("mapList",rmap.get("maplist"));
         return "act/image";
     }
-
     //查看我的任务
     @RequestMapping("/myTask")
     public String LookMyTask(HttpSession session,Model model){
@@ -147,6 +148,38 @@ public class ActivitiController {
             model.addAttribute("taskList",mlist);
         }
         return "act/myTask";
+    }
+    @RequestMapping("/tasksize")
+    @ResponseBody
+    public JSONObject taskSize(HttpSession session){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        JSONObject jsonObject = new JSONObject();
+        Emp emp = (Emp)session.getAttribute("empId");
+        String actorId = ""+emp.getEmpId();
+        List<Task> list = taskService.createTaskQuery().taskAssignee(actorId).list();
+        List mlist = new ArrayList();
+        List empList = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId"); //查询所有员工
+        //将com中的emp id转换成用户名
+        for (int i = 0;i < list.size(); i++){
+            Map map = new HashMap();
+            Task jvo = list.get(i);
+            String shijian = formatter.format(jvo.getCreateTime());
+            for(int j = 0;j < empList.size(); j++){
+                Map map1 = (Map)empList.get(j);
+                if(jvo.getAssignee().equals(""+map1.get("empId"))){
+                    jvo.setAssignee(""+map1.get("empName"));
+                    break;
+                }
+            }
+
+            list.set(i,jvo);
+            map.put("name",jvo.getName());
+            map.put("sj",shijian);
+            mlist.add(i,map);
+        }
+        jsonObject.put("size", list.size());
+        jsonObject.put("task", mlist);
+        return jsonObject;
     }
     //执行任务
     @RequestMapping("/taskDetail")

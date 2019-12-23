@@ -10,12 +10,12 @@ public class Trial{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =700, allocationSize = 1)
     private Integer trialId;
-    private  Date  trialDate;
-    private  Integer trialWeekDay;
-    private  Integer  courseId;
-    private  Integer trialType;
-    private  Integer    empId;
-    private  String   trialRemark;
+    private  Date  trialDate; //日期
+    private  Integer trialWeekDay; //工作日
+    private  Integer  courseId; //关联课程/章节id
+    private  Integer trialType; //授课类型(试讲/培训)
+    private  Integer    empId; //授课老师
+    private  String   trialRemark; //备注
 
     public Integer getTrialId() {
         return trialId;
