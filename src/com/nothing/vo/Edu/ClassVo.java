@@ -117,4 +117,22 @@ public class ClassVo{
     public void setMajorId(Integer majorId) {
         MajorId = majorId;
     }
+
+    @Override
+    public String toString() {
+        return "ClassVo{" +
+                "classId=" + classId +
+                ", classNo=" + classNo +
+                ", classAdviser=" + classAdviser +
+                ", className='" + className + '\'' +
+                ", classCount=" + classCount +
+                ", classTeacher=" + classTeacher +
+                ", classTerm=" + classTerm +
+                ", classType=" + classType +
+                ", classRemark='" + classRemark + '\'' +
+                ", classFall=" + classFall +
+                ", deptId=" + deptId +
+                ", MajorId=" + MajorId +
+                '}';
+    }
 }

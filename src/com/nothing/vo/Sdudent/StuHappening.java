@@ -9,7 +9,7 @@ public class StuHappening{
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =2400, allocationSize = 1)
     private Integer stuHappenId;
-    private Integer   studId;
+    private Integer studId;
     private String happening;
     private String opTime;
     private String empId;

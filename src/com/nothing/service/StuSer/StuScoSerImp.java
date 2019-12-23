@@ -29,9 +29,9 @@ public class StuScoSerImp extends BaseDao implements StuScoSer{
     }
 
     @Override
-    public List isExistsTest(int tId, int cId, int typeId){
-        return listBySQL("\n" +
-                "select * from studentscore where exists(select * from studentscore where courseId = "+cId+" and termId = "+tId+" and testType = "+typeId+")");
+    public List isExistsTest(int tId, int cId, int typeId,int classId){
+        return listBySQL("select * from studentscore where exists(select *,classId from studentscore left join student using(studId) where courseId = "+cId+" and termId = "+tId+" and testType = "+typeId+" and testType = 1 and classId = "+classId+")"
+                );
     }
 
     @Override
@@ -68,7 +68,7 @@ public class StuScoSerImp extends BaseDao implements StuScoSer{
     public int repConCount(String stuSelectName, String stuSelectCla, String stuSelectPro) {
         return selTotalRow("\tselect count(*) from stuReplyScore ss left join studentProject p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classvo c using(classId)\n" +
                 "\t\n" +
-                "\twhere stuName like '%%' and className like '%%' and proName like '%%'");
+                "\twhere stuName like '%"+stuSelectName+"%' and className like '%"+stuSelectCla+"%' and proName like '%"+stuSelectPro+"%'");
     }
 
     @Override
@@ -85,5 +85,11 @@ public class StuScoSerImp extends BaseDao implements StuScoSer{
     public int stuReplyByClassIdCount(String classId) {
         return selTotalRow("select count(*) from student ss left join stureplyscore sc using(studId) where classId = "+classId);
     }
+
+    @Override
+    public List isExistsTestReply(String classId, String projectId){
+        return listBySQL("select * from stureplyscore where exists(select *,classId from stureplyscore left join student s using(studId) left join studentproject using(projectId) where classId = "+classId+" and projectId = "+projectId+")");
+    }
+    ////
 
 }

@@ -7,7 +7,8 @@ import javax.persistence.*;
 public class StudentProject{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
+    @TableGenerator(name = "tableGenerator",initialValue =3000, allocationSize = 1)
     private Integer projectId;//答辩项目id
     private String proName;//项目名称
 
