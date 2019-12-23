@@ -26,7 +26,6 @@
 </div>
 
 <div class="layui-row" style="height:45%">
-    下面部分的
     <div class="layui-tab">
         <ul class="layui-tab-title">
             <li>家庭情况</li>

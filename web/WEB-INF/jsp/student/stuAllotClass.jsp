@@ -22,7 +22,6 @@
 </div>
 
 <div style="width: 86%;float: left;">
-    此班级的学生/
     <table class="layui-hide" id="test" lay-filter="cla"></table>
 </div>
 
