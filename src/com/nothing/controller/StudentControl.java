@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.JarEntry;
-///
+
 @Controller
 @RequestMapping("/stu")
 public class StudentControl{
@@ -102,6 +102,12 @@ public class StudentControl{
         if(stuSelectFloor==null||"".equals(stuSelectFloor)){
             stuSelectFloor="";
         }
+        if(stuSelectPhone==null||"".equals(stuSelectPhone)){
+            stuSelectPhone ="";
+        }
+        if(stuSelectName==null||"".equals(stuSelectName)){
+            stuSelectName="";
+        }
         List<Map> list = stuSer.toStuConList(stuSelectName,stuSelectPhone,stuSelectCla,stuSelectFloor);
         int title = stuSer.conStu( stuSelectName ,stuSelectPhone, stuSelectCla, stuSelectFloor);
         JSONObject jsonObject = new JSONObject();
@@ -156,8 +162,6 @@ public class StudentControl{
             stuSer.delFal(id);
         }else if("edu".equals(ac)){
             stuSer.delEdu(id);
-        }else if("hap".equals(ac)){
-            stuSer.delHap(id);
         }else if("cla".equals(ac)){
             stuSer.delCla(id);
             stuSer.delClaStu(id);
@@ -185,24 +189,28 @@ public class StudentControl{
             return "student/stuUpdate";
         }
 
-    @RequestMapping("add")
-    public String add(Student student,String enterDate,String birthday) throws ParseException{
-        System.out.println("=============================="+student.getStudId());
+    @RequestMapping("update/{ac}")
+    public String add(Student student,String enterDate,String birthday,@PathVariable("ac")String ac) throws ParseException{
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date enterD = formatter.parse(enterDate);
         Date birD = formatter.parse(birthday);
         student.setStuBirthday(birD);
         student.setStuEnterTime(enterD);
-        stuSer.addStu(student);
-        /*if(student.getStudId()!=0||student.getStudId()!=null){
-            stuSer.updateStu(student);
-            return "成功";
-        }else if(student.getStudId()==0){
-            stuSer.addStu(student);
-        }*/
+             if("add".equals(ac)){
+                 try{
+                     stuSer.addStu(student);
+                 }catch (IndexOutOfBoundsException e){
 
-        return "成功";
+                 }
+             }else if("up".equals(ac)){
+                 stuSer.updateStu(student);
+             }
+
+            return "redirect: /stu/home";
     }
+
+
+
 
 
     @RequestMapping("{ac}/select")
@@ -215,20 +223,23 @@ public class StudentControl{
         int title = 0;
         if("stuFal".equals(ac)){
             list = stuSer.toStuAddition(new StuFimaly(),studId);
-            title = stuSer.allTitle(new StuFimaly());
+            title = stuSer.toStuAdditionCount(new StuFimaly(),studId);
         }else if("stuEdu".equals(ac)){
             list = stuSer.toStuAddition(new StuEdu(),studId);
-            title = stuSer.allTitle(new StuEdu());
-        }else if("stuHap".equals(ac)){
-            list = stuSer.stuHap(studId);
-            title = stuSer.allTitle(new StuHappening());
+            title = stuSer.toStuAdditionCount(new StuEdu(),studId);
+        }else if("stuHol".equals(ac)){
+            list = stuSer.stuHol(studId);
+            title = stuSer.stuHolCount(studId);
         }else if("stuReply".equals(ac)){
             list = stuSer.stuRep(studId);
-            title = stuSer.allTitle(new StuReplyScore());
+            title = stuSer.stuRepCount(studId);
         }else if("stuByClass".equals(ac)){
             //根据班级找到所有学生
             list = stuSer.stuByClaId(studId);
             title = stuSer.stuByClaIdCount(studId);
+        }else if("stuScore".equals(ac)){
+            list = stuSer.stuScore(studId);
+            title = stuSer.stuScoreCount(studId);
         }
         jsonObject.put("data",list);
         jsonObject.put("count",title);
@@ -242,7 +253,11 @@ public class StudentControl{
         if(stuFimaly.getStuFamilyid()!=0){
             stuSer.updateStu(stuFimaly);
         }else{
-            stuSer.addStu(stuFimaly);
+            try{
+                stuSer.addStu(stuFimaly);
+            }catch (IndexOutOfBoundsException e){
+
+            }
         }
         return "成功";
     }
@@ -258,38 +273,30 @@ public class StudentControl{
         if(stuEdu.getEduId()!=0){
             stuSer.updateStu(stuEdu);
         }else{
-            stuSer.addStu(stuEdu);
+            try{
+                stuSer.addStu(stuEdu);
+            }catch (IndexOutOfBoundsException e){
+
+            }
+
         }
         return "成功";
     }
-    @RequestMapping("toStuHap")
-    public String toStuHap(StuHappening stuHappening,String hapEmpID,String studId){
-            stuHappening.setEmpId(hapEmpID);
-            System.out.println("进啦啊~"+stuHappening.toString()+"studId"+studId);
-        return "成功";
-    }
-
-
-    @RequestMapping("toStuClss")
-    @ResponseBody
-    public String toStuClss(ClassVo classVo){
-        stuSer.addStu(classVo);
-        return "成功";
-    }
-
 
     @RequestMapping("toStuCla")
     @ResponseBody
     public String  toStuCla(ClassVo classVo){
-        System.out.println("classId++++++++++++++++++++++++++"+classVo.getClassId());
         if(classVo.getClassId()==0){
-            stuSer.addStu(classVo);
+            try{
+                stuSer.addStu(classVo);
+            }catch (IndexOutOfBoundsException e){
+
+            }
 
         }
         stuSer.updateStu(classVo);
         return "成功";
     }
-
 
 
     @RequestMapping("clatree")
@@ -317,11 +324,17 @@ public class StudentControl{
         return jsonArray;
     }
 
+
+
     //给学生分配班级
     @RequestMapping("toClassAddStu")
     @ResponseBody
     public String toClassAddStu(String studIds,String cid){
-        stuSer.classAddStu(cid,studIds);
+        try{
+            stuSer.classAddStu(cid,studIds);
+        }catch (IndexOutOfBoundsException e){
+
+        }
         return "";
     }
 

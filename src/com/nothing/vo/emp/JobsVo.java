@@ -8,7 +8,8 @@ import java.util.Date;
 @Table(name ="jobs")
 public class JobsVo implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
+	@TableGenerator(name = "tableGenerator",initialValue =3000, allocationSize = 1)
 	private int jobId;   //主键
 	private String jobType;//申请类型 qingjia    baoxiao
 	private String jobName;//申请类型

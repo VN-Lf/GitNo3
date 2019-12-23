@@ -123,6 +123,7 @@ public class BaseDao {
     public Object getObject(Class clazz, Integer id) {
         Session session = sessionFactory.openSession();
         Object obj=  session.get(clazz, id);
+        session.flush();
         session.close();
         return obj;
     }

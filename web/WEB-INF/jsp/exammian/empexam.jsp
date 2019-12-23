@@ -32,9 +32,10 @@
             <div class="layui-form-item" style="width: 450px">
                 <label class="layui-form-label">班主任/任课老师:</label>
                 <div class="layui-input-block">
-                    <select name="empname" onchange="changeemp()"  lay-filter="demo" lay-verify="required" style="width: 250px">
-                        <c:forEach items="${empnamelist}" var="empname">
-                            <option value="${empname}">${empname}</option>
+                    <input name="empName" type="hidden" id="empNamekh">
+                    <select name="empId" id="empIdkh"  lay-filter="demo" lay-verify="required" style="width: 250px">
+                        <c:forEach items="${empnamelist}" var="list">
+                            <option value="${list.empId}">${list.empName}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -173,6 +174,10 @@
 
         //下拉框监听
         form.on('select(demo)', function(data){
+            var index=document.getElementById("empIdkh").selectedIndex;//获取当前选择项的索引.
+            var name = document.getElementById("empIdkh").options[index].text;//获取当前选择项的文本
+            document.getElementById("empNamekh").value=name;
+
             $("#class").empty();
             $.post('${pageContext.request.contextPath}/exam/classlist',{
                 empname:data.value
@@ -180,7 +185,7 @@
                 var classlist=data;
                 $.each(classlist,function(key,val){
                     //回调函数有两个参数,第一个是元素索引,第二个为当前值
-                    var str="<option value='"+val+"'>"+val+"</option>"
+                    var str="<option value='"+val+"'>"+val+"</option>";
                     $("#class").append(str);
                     form.render('select');
                 });
