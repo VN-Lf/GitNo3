@@ -354,7 +354,7 @@
         </div>
         <div title="财务管理" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/finance/toTuitionList" class="cs-navi-tab">
                     <a style="color: green">学费管理</a>
                 </li>
             </ul>
