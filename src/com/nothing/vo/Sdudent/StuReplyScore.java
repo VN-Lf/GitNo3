@@ -12,14 +12,14 @@ public class StuReplyScore{
    private Integer  studId;
    private Integer projectId;//答辩项目表Id
    private Integer   empId;
-   private     Float score1;
+   private  Float score1;
    private Float   Score2;
-   private Float Score3;
-   private  Float       Score4;
+   private Float  Score3;
+   private  Float Score4;
    private  Float Score5;
-   private  Float       Score6;;
+   private  Float Score6;
    private  Float Score7;
-   private  Float   replyScoreRemark;
+   private  String   replyScoreRemark;
 
     public Integer getStuReplyId() {
         return stuReplyId;
@@ -109,11 +109,11 @@ public class StuReplyScore{
         Score7 = score7;
     }
 
-    public Float getReplyScoreRemark() {
+    public String getReplyScoreRemark() {
         return replyScoreRemark;
     }
 
-    public void setReplyScoreRemark(Float replyScoreRemark) {
+    public void setReplyScoreRemark(String replyScoreRemark) {
         this.replyScoreRemark = replyScoreRemark;
     }
 }

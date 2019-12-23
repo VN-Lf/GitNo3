@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
-    <script src="http://localhost:8888/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <%
         HttpSession sess = request.getSession();
         String message = (String)sess.getAttribute("mes");
