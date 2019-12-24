@@ -21,7 +21,7 @@
     <div data-options="region:'center',split:true">
         <form class="layui-form" style="width: 1205px;margin: 20px 0px 0px 10px">
             所在部门:
-            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元素并不是必须的 -->
+            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元-->
                 <select id="sxdept">
                     <option value=""></option>
                 </select>
