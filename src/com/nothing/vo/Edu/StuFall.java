@@ -4,7 +4,7 @@ import javax.persistence.*;
 //
 //学年表
 @Entity
-@Table(name="StuFall")
+@Table(name="stuFall")
 public class StuFall{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")

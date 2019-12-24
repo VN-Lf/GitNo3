@@ -59,7 +59,7 @@
             ,cols: [[ //表头
                 {type:'checkbox'}
                 ,{field: 'empId', title: '编号', width:73, sort: true}
-                ,{field: 'empName', title: '姓名', width:87}
+                ,{field: 'empName', title: '姓名', width:150}
                 ,{field: 'deptName', title: '部门', width:87}
                 ,{field: 'postName', title: '职务', width:150}
                 ,{field: 'empSex', title: '性别', width: 63}

@@ -205,8 +205,8 @@ public class Emp2Controller {
     @RequestMapping("/weeklist")
     @ResponseBody
     public JSONObject weekList() {
-        List wlist = empService.weekList("select * from weekarrange");
-        int con = empService.selEmpCont("select count(WeekArrangeId) from weekarrange");
+        List wlist = empService.weekList("select * from weekArrange");
+        int con = empService.selEmpCont("select count(WeekArrangeId) from weekArrange");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
@@ -217,8 +217,8 @@ public class Emp2Controller {
     @RequestMapping("/weeklistsx")
     @ResponseBody
     public JSONObject weekListSx(String emp,String date) throws UnsupportedEncodingException {
-        String sql = "select * from weekarrange";
-        String consql = "select count(WeekArrangeId) from weekarrange";
+        String sql = "select * from weekArrange";
+        String consql = "select count(WeekArrangeId) from weekArrange";
         emp = new String(emp.getBytes("iso-8859-1"),"utf-8");
         emp = java.net.URLDecoder.decode(emp,"UTF-8");
         date = new String(date.getBytes("iso-8859-1"),"utf-8");

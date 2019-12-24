@@ -3,7 +3,7 @@ package com.nothing.vo.Edu;
 import javax.persistence.*;
 import java.util.Date;
 //试讲与培训计划表  Trial
-@Table(name="Trial")
+@Table(name="trial")
 @Entity
 public class Trial{
     @Id

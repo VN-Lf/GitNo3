@@ -246,7 +246,7 @@
                             return '审核拒绝'
                         }
                     }}
-                ,{ title: '操作', width:75,
+                ,{ title: '操作', width:120,
                     templet:function (row){
                         return chaozuoPand(row.empId,row.status);
                     }

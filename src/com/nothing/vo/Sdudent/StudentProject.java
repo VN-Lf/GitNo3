@@ -3,7 +3,7 @@ package com.nothing.vo.Sdudent;
 import javax.persistence.*;
 ////
 @Entity
-@Table(name="StudentProject")
+@Table(name="studentProject")
 public class StudentProject{
 
     @Id

@@ -34,7 +34,6 @@ public class ActStuSerImpl extends BaseDao implements ActStuSer{
     @Override
     //申请单填写后
     public void addApply(JobsVo jobsVo)throws IndexOutOfBoundsException{
-        System.out.println("liuchengliuchengliuchengliuchengcliucheng"+jobsVo.toString());
         jobsVo.setJobDate(new Date());//创建时间
         jobsVo.setProcessFlag(1);//状态1、审批中
         try {
@@ -51,7 +50,8 @@ public class ActStuSerImpl extends BaseDao implements ActStuSer{
 
         //下一个执行 授课教师
         List<Map> list = stuSer.selectTeacherByStuId(jobsVo.getUserId());
-        String js = list.get(0).get("empId").toString();
+        String js = list.get(0).get("classTeacher").toString();
+        System.out.println("教师："+js);
         variables.put("assignee",js);
 
         //启动实例（通过流程定义的key来启动一个实例）

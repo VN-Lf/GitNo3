@@ -24,7 +24,7 @@ public class TuitionServiceImpl extends BaseDao implements TuitionService {
 
     @Override
     public void deleteTuition(String id) {
-        executeSQL("delete from studenthour where HourId in ("+id+")");
+        executeSQL("delete from studentHour where HourId in ("+id+")");
     }
 
     @Override

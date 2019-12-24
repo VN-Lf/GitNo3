@@ -54,14 +54,30 @@ public class AttedanceContriller {
     public JSONObject lists(HttpSession session){
         Emp emp = (Emp) session.getAttribute("empId");
         int i = emp.getEmpId();
-        List<Map> list = service.selectAttendanlist("select att.* ,e.empName as empname,(select empName from emp where empId = att.auditor ) as audName from attendance att left join emp e using(empId) where att.auditor = "+i);
+        List<Map> list = service.selectAttendanlist("select att.* ,e.empName as empname,(select empName from emp " +
+                "where empId = att.auditor ) as audName from attendance att left join emp e using(empId) where att.auditor = "+i);
         int count = service.SelcctAttendancount("select count(*) from attendance");
 
         JSONObject json = new JSONObject();
         json.put("code",0);
         json.put("msg","");
         json.put("data",list);
+        json.put("size",list.size());
         json.put("count",count);
+        return json;
+    }
+
+    @ResponseBody
+    @RequestMapping("attlist")
+    public JSONObject liststis(HttpSession session){
+        Emp emp = (Emp) session.getAttribute("empId");
+        int i = emp.getEmpId();
+        List<Map> list = service.selectAttendanlist("select att.* ,e.empName as empname,(select empName from emp " +
+                "where empId = att.auditor ) as audName from attendance att left join emp e using(empId) where att.auditor ="+i+" and att.status =2");
+
+        JSONObject json = new JSONObject();
+        json.put("data",list);
+        json.put("size",list.size());
         return json;
     }
 
@@ -71,42 +87,18 @@ public class AttedanceContriller {
         Emp emp = (Emp) session.getAttribute("empId");
         int i = emp.getEmpId();
         attendanceVo.setEmpId(i);
-        String name = emp.getEmpName();
-        List<Map> namelist  = service.selectAttendanlist("select postName from post where empId = " + i);
-        String postname = (String) namelist.get(0).get("postName");
-        System.out.println("所在的部门为"+postname);
-        String superiorname = "";
-        if(postname.equals("部长")){
-            superiorname = "校长";
+        List<Map> namelist  = service.selectAttendanlist("select deptId from post where empId ="+i+" and postName not like '%部长%'");
+        if(namelist.size() == 0){
             List<Map> maxid = service.selectAttendanlist("select empId from post where postName like '%校长%'");
-            i = (int) maxid.get(0).get("empId");
-            System.out.println("校长的id为"+i);
-        }else{
-            superiorname = "部长";
+            attendanceVo.setAuditor(""+maxid.get(0).get("empId"));
+        }else {
+            String deptid = ""+namelist.get(0).get("deptId");
+            List<Map> deptlist = service.selectAttendanlist("select empId from post where postName like '%部长%' and deptId ="+deptid);
+            attendanceVo.setAuditor(""+deptlist.get(0).get("empId"));
         }
 
-        List<Map> emplistid = service.selectAttendanlist("select empId from post where postName like '%"+superiorname+" %'and deptId in(select deptId from post where empId = "+i+" )");
-        /*int empid = (int) emplistid.get(0).get("empId");
-        System.out.println("他上级的id为" + empid);*/
-        if(emplistid.size() == 0 ){
-            System.out.println("没有上级");
-            superiorname = "校长";
-            List<Map> maxid = service.selectAttendanlist("select empId from post where postName like '%校长%'");
-            i = (int) maxid.get(0).get("empId");
-            System.out.println("校长的id为"+i);
-        }
-        //获取到他的审核人
-        List<Map>  list =  service.selectAttendanlist("select * from emp where empId  IN (\n" +
-                "select empId from post where postName like '%"+superiorname+"%' and deptId in\n" +
-                "\t(select deptId from post where empId ="+i+") \n" +
-                ")");
-        int shempid = (int) list.get(0).get("empId");
-        System.out.println(shempid);
-        attendanceVo.setAuditor(String.valueOf(shempid));
-        //转换时间
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date1 = formatter.parse(String.valueOf(punckClockTimes));
-        attendanceVo.setPunckClockTime(date1);
+        //转换时间 new Date()
+        attendanceVo.setPunckClockTime(new Date());
 
         String apply = punckClockTimes + applyTimes;
         System.out.println("未打卡的时间"+apply);
