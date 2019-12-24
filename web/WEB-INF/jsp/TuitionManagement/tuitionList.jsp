@@ -17,8 +17,9 @@
 </div>
 </body>
 <script>
-    layui.use('table', function(){
-        var table = layui.table;
+    layui.use(['table','laypage'], function(){
+        var table = layui.table,
+            laypage = layui.laypage;
         table.render({
             elem: '#tt'
             ,height:'full-200'
@@ -38,7 +39,7 @@
                 ,{field: 'remark', title: '说明', width:110}
                 ,{field: 'tuitionTypeId', title: '收款项', width:100,templet:function (d) { return d.typeName; }}
                 ,{field: 'Invalid', title: '状态', width:110,templet:function (d) {if(d.Invalid==1){return "有效";}else {return "作废"}}}
-                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
+                ,{field: 'empId', title: '操作', width: 200,toolbar: '#barOption'}
             ]]
         });
         //监听顶部按钮
@@ -132,6 +133,6 @@
 <!-- 表格操作按钮集 -->
 <script type="text/html" id="barOption">
     <a class="layui-btn layui-btn-sm" lay-event="cancel">作废</a>
-    <a class="layui-btn layui-btn-sm" lay-event="back">退款</a>
+    <%--<a class="layui-btn layui-btn-sm" lay-event="back">退款</a>--%>
 </script>
 </html>

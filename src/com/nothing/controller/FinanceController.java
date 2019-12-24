@@ -34,8 +34,7 @@ public class FinanceController {
     }
 
     @RequestMapping("/tuitionAdd")
-    @ResponseBody
-    public void tuitionAdd(financeshouldTuitionRecord ft,String money){
+    public String tuitionAdd(financeshouldTuitionRecord ft,String money){
         ft.setFactMoney(Float.valueOf(money));
         System.out.println(Float.valueOf(money));
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
@@ -43,6 +42,7 @@ public class FinanceController {
         ft.setFinancedate(date);
         ft.setInvalid(1);
         fs.tiotionAdd(ft);
+        return "redirect:toTuitionAdd";
     }
     @RequestMapping("/cencal")
     @ResponseBody
@@ -64,6 +64,18 @@ public class FinanceController {
     @RequestMapping("/tuitionList")
     @ResponseBody
     public JSONObject tuitionList(){
+        List tList = fs.tuitionList();
+        int con = fs.getTuitionCount();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count",con);
+        jsonObject.put("data", tList);
+        return jsonObject;
+    }
+    @RequestMapping("/pageList")
+    @ResponseBody
+    public JSONObject pageList(int page,int limit){
         List tList = fs.tuitionList();
         int con = fs.getTuitionCount();
         JSONObject jsonObject = new JSONObject();

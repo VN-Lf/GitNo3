@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<form class="layui-form" method="post" action="/finance/tuitionAdd" lay-filter="gg">
+<form class="layui-form" method="post" action="${pageContext.request.contextPath}/finance/tuitionAdd" lay-filter="gg">
     <input type="hidden" name="financeId">
     <input type="hidden" name="financedate">
     <input type="hidden" name="empid">
@@ -21,7 +21,7 @@
     <div class="layui-inline" style="margin-bottom: 15px;">
         <label class="layui-form-label">班级</label>
         <div class="layui-input-inline" style="width:340px">
-            <select id="class" required  lay-filter="classFilter">
+            <select id="class" lay-filter="classFilter" lay-verify="cla">
                 <option value="">请选择班级</option>
                 <c:forEach items="${c}" var="cc">
                     <option value="${cc.classId}">${cc.className}</option>
@@ -32,7 +32,7 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">学生</label>
         <div class="layui-input-block">
-            <select  name="stuid" id="student" required  lay-filter="studentFilter">
+            <select  name="stuid" id="student" lay-filter="studentFilter" lay-verify="stu">
                 <option value="">请选择学生</option>
             </select>
         </div>
@@ -88,7 +88,7 @@
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">实交金额</label>
         <div class="layui-input-block">
-            <input type="number" name="money" placeholder="请输入.." autocomplete="off" class="layui-input">
+            <input type="number" name="money" required placeholder="请输入.." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -111,7 +111,7 @@
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            window.parent.tabsClose();
+            layer.msg('新增成功！');
             return true;
         });
         var classText = "";
@@ -136,6 +136,19 @@
 
             },"json");
         });
+        form.verify({
+            cla:function (value) {
+               if (value.length<1 || value==""){
+                   return'请选择班级';
+               }
+            },
+            stu:function (value) {
+                if (value.length<1 || value==""){
+                    return'请选择学生';
+                }
+            }
+        });
+
     });
     function tabClose() {
         $(".tabs-inner").dblclick(function() {

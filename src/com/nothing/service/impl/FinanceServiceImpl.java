@@ -10,13 +10,14 @@ import java.util.List;
 public class FinanceServiceImpl extends BaseDao implements FinanceService {
     @Override
     public List tuitionList() {
-        List list = listBySQL("select  f.*,e1.empName,stu.stuName,t.typeName,t2.termName from financeshouldtuitionrecord as f left join student  as stu on f.stuid=stu.studId left join emp as e1 on f.empid=e1.empId LEFT JOIN tuitiontype as t on f.tuitionTypeId=t.tuitionTypeId LEFT JOIN term as t2 on f.termId=t2.termId");
+        List list = listBySQL("select  f.*,e1.empName,stu.stuName,t.typeName,t2.termName from financeshouldTuitionRecord as f LEFT JOIN term as t2 on f.termId=t2.termId left join student  as stu on f.stuid=stu.studId left join emp as e1 on f.empid=e1.empId LEFT JOIN tuitiontype as t on f.tuitionTypeId=t.tuitionTypeId");
         return list;
     }
 
+
     @Override
     public int getTuitionCount() {
-        int con = selTotalRow("select count(*) from financeshouldtuitionrecord");
+        int con = selTotalRow("select count(*) from financeshouldTuitionRecord");
         return con;
     }
 
@@ -38,11 +39,16 @@ public class FinanceServiceImpl extends BaseDao implements FinanceService {
 
     @Override
     public List getC() {
-        return this.listBySQL("select * from classvo");
+        return this.listBySQL("select * from classVo");
     }
 
     @Override
     public List getS(int id) {
         return this.listBySQL("select * from student where classId="+id);
+    }
+
+    @Override
+    public List pageList(int page, int size) {
+        return this.pageBySQL("select  f.*,e1.empName,stu.stuName,t.typeName,t2.termName from financeshouldTuitionRecord as f LEFT JOIN term as t2 on f.termId=t2.termId left join student  as stu on f.stuid=stu.studId left join emp as e1 on f.empid=e1.empId LEFT JOIN tuitiontype as t on f.tuitionTypeId=t.tuitionTypeId",page,size);
     }
 }

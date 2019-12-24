@@ -13,4 +13,5 @@ public interface FinanceService {
     void tuitionUp(financeshouldTuitionRecord ft);
     List getC();
     List getS(int id);
+    List pageList(int page,int size);
 }

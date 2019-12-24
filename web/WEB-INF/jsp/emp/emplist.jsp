@@ -260,7 +260,6 @@
             '<object type="text/html" data="${pageContext.request.contextPath}/to/empEdu?id='+empid+'" width="100%" height="100%"></object>';
     }
 </script>
-
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container" style="float: left">
         <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="isDele">批量删除</button>
