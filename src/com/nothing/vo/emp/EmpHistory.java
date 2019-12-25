@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 //员工作经历表
 @Entity
-@Table(name = "EmpHistory")
+@Table(name = "empHistory")
 public class EmpHistory{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")

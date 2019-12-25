@@ -123,23 +123,61 @@ public class ActivitiController {
         List<Task> list = taskService.createTaskQuery().taskAssignee(actorId).list();
         List mlist = new ArrayList();
         List empList = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId"); //查询所有员工
+        int jj = 0;
         //将com中的emp id转换成用户名
         for (int i = 0;i < list.size(); i++){
             Map map = new HashMap();
             Task jvo = list.get(i);
             String shijian = formatter.format(jvo.getCreateTime());
-            for(int j = 0;j < empList.size(); j++){
-                Map map1 = (Map)empList.get(j);
-                if(jvo.getAssignee().equals(""+map1.get("empId"))){
-                    jvo.setAssignee(""+map1.get("empName"));
-                    break;
+            if(jvo.getName().equals("上级审批")){
+                for(int j = 0;j < empList.size(); j++){
+                    Map map1 = (Map)empList.get(j);
+                    if(jvo.getAssignee().equals(""+map1.get("empId"))){
+                        jvo.setAssignee(""+map1.get("empName"));
+                        map.put("com",jvo);
+                        map.put("sj",shijian);
+                        mlist.add(jj,map);
+                        break;
+                    }
                 }
+                jj++;
             }
-
-            list.set(i,jvo);
-            map.put("com",jvo);
-            map.put("sj",shijian);
-            mlist.add(i,map);
+        }
+        if(list.size() == 0){
+            model.addAttribute("zhi",0);
+        }else {
+            model.addAttribute("zhi",1);
+            model.addAttribute("taskList",mlist);
+        }
+        return "act/myTask";
+    }
+    @RequestMapping("/myTaskStu")
+    public String LookMyTaskStu(HttpSession session,Model model){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Emp emp = (Emp)session.getAttribute("empId");
+        String actorId = ""+emp.getEmpId();
+        List<Task> list = taskService.createTaskQuery().taskAssignee(actorId).list();
+        List empList = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId");
+        List mlist = new ArrayList();
+        int jj = 0;
+        //将com中的emp id转换成用户名
+        for (int i = 0;i < list.size(); i++){
+            Map map = new HashMap();
+            Task jvo = list.get(i);
+            String shijian = formatter.format(jvo.getCreateTime());
+            if(jvo.getName().equals("授课教师") || jvo.getName().equals("班主任") || jvo.getName().equals("校长")){
+                for(int j = 0;j < empList.size(); j++){
+                    Map map1 = (Map)empList.get(j);
+                    if(jvo.getAssignee().equals(""+map1.get("empId"))){
+                        jvo.setAssignee(""+map1.get("empName"));
+                        map.put("com",jvo);
+                        map.put("sj",shijian);
+                        mlist.add(jj,map);
+                        break;
+                    }
+                }
+                jj++;
+            }
         }
         if(list.size() == 0){
             model.addAttribute("zhi",0);
@@ -213,12 +251,16 @@ public class ActivitiController {
     }
     //执行审批的内容
     @RequestMapping("/complete")
-    public String complete(int jobId,String taskId,String flow,String comment,HttpSession session){
+    public String complete(int jobId,String taskId,String flow,String comment,String jobType,HttpSession session){
         //获取用户名称
         Emp emp = (Emp)session.getAttribute("empId");
         String actorId = ""+emp.getEmpId();
-        System.out.println(jobId+":flow:"+flow);
-        actservice.xiuGaiTask(jobId,taskId,flow,comment,actorId);
+        if("stuLeave".equals(jobType)){
+            actservice.xiuGaiTaskStu(jobId,taskId,flow,comment,actorId);
+        }else {
+            actservice.xiuGaiTask(jobId,taskId,flow,comment,actorId);
+        }
+
 
         return "redirect:myTask";
     }

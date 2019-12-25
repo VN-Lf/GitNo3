@@ -3,7 +3,7 @@ package com.nothing.vo.Sdudent;
 import javax.persistence.*;
 //学生家庭信息//
 @Entity
-@Table(name="StuFimaly")
+@Table(name="stuFimaly")
 public class StuFimaly{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")

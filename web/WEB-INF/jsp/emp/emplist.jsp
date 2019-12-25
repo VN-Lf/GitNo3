@@ -21,7 +21,7 @@
     <div data-options="region:'center',split:true">
         <form class="layui-form" style="width: 1205px;margin: 20px 0px 0px 10px">
             所在部门:
-            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元素并不是必须的 -->
+            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元-->
                 <select id="sxdept">
                     <option value=""></option>
                 </select>
@@ -59,7 +59,7 @@
             ,cols: [[ //表头
                 {type:'checkbox'}
                 ,{field: 'empId', title: '编号', width:73, sort: true}
-                ,{field: 'empName', title: '姓名', width:87}
+                ,{field: 'empName', title: '姓名', width:150}
                 ,{field: 'deptName', title: '部门', width:87}
                 ,{field: 'postName', title: '职务', width:150}
                 ,{field: 'empSex', title: '性别', width: 63}

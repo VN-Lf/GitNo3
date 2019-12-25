@@ -34,7 +34,7 @@ public class EmailServlceImpl extends BaseDao implements EmailService {
     }
     @Override
     public void delEmail(Object id) {
-        executeSQL("delete from myemail where emailId in ("+id+")");
+        executeSQL("delete from myEmail where emailId in ("+id+")");
     }
 
     //添加邮件的方法

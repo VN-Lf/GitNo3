@@ -7,7 +7,7 @@ import java.util.Date;
  * 谈心表
  */
 @Entity
-@Table(name = "chatRecord")
+@Table(name = "chatrecord")
 public class chatRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")

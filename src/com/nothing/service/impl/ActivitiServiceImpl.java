@@ -5,6 +5,7 @@ import com.nothing.service.ActivitiService;
 import com.nothing.service.EmpService;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.JobsVo;
+import com.nothing.vo.emp.Post;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
@@ -303,6 +304,52 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService{
         List list = listBySQL2("select empId from post where postName like '%校长%' and deptId = 0");
         System.out.println("办理人id："+list.get(0));
         variable.put("assignee",""+list.get(0));
+        //完成当前任务
+        taskService.complete(taskId,variable);
+
+        //根据流程实例获取实例对象(完成流程的实例依然会存放在数据库中 但是查询出来是null的)
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstId).singleResult();
+        if(processInstance == null){
+            if(flow.equals("拒绝")){
+                //修改单据状态
+                job.setProcessFlag(3);//3、审批不通过
+            }else{
+                //修改单据状态
+                job.setProcessFlag(2);//2、审批通过
+            }
+            updJob(job);
+        }
+    }
+
+    @Override
+    public void xiuGaiTaskStu(int jobId, String taskId, String flow, String comment, String userId) {
+        //根据任务ID得到任务对象
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        //通过任务对象获取流程实例ID
+        String processInstId = task.getProcessInstanceId();
+        //根据单据ID查询单据对象
+        JobsVo job = selJobById(jobId);
+        //设置当前任务办理人（主要是备注表）
+        Authentication.setAuthenticatedUserId(userId);
+        //设置备注信息(任务ID，实例ID，页面上的备注)
+        taskService.addComment(taskId,processInstId,comment);
+
+        //添加任务变量
+        Map variable = new HashMap();
+        variable.put("flow",flow);
+        //设置办理人
+        if("授课教师".equals(task.getName())){//当前审批为科任老师
+            String studId = job.getUserId();
+            List list = listBySQL2("select classAdviser from classVo where classId = (select classId from student where studId = "+studId+")");
+
+            System.out.println("班主任id："+list.get(0));
+            variable.put("assignee",""+list.get(0));
+        }else if("班主任".equals(task.getName())){
+            List list = listBySQL2("select empId from post where postName like '%校长%' and deptId = 0");
+            System.out.println("校长id："+list.get(0));
+            variable.put("assignee",""+list.get(0));
+        }
+
         //完成当前任务
         taskService.complete(taskId,variable);
 
