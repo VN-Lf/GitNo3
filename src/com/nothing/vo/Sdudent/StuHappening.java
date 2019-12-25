@@ -2,14 +2,14 @@ package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
 //学生事故状况表//
-@Table(name = "StuHappening")
+@Table(name = "stuHappening")
 @Entity
 public class StuHappening{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =2400, allocationSize = 1)
     private Integer stuHappenId;
-    private Integer   studId;
+    private Integer studId;
     private String happening;
     private String opTime;
     private String empId;

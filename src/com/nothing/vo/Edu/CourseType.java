@@ -3,7 +3,7 @@ package com.nothing.vo.Edu;
 import javax.persistence.*;
 //课程类型表
 @Entity
-@Table(name="CourseType")
+@Table(name="courseType")
 public class CourseType{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")

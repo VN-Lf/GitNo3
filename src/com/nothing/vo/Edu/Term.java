@@ -3,7 +3,7 @@ package com.nothing.vo.Edu;
 import javax.persistence.*;
 //
 //学期表
-@Table(name="Term")
+@Table(name="term")
 @Entity
 public class Term {
     @Id

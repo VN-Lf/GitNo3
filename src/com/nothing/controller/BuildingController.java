@@ -36,8 +36,8 @@ public class BuildingController {
     public JSONObject list() {
         System.out.println("进来了");
         //List list = this.service.selectDormitorylist(page, rows);
-        List list = service.selectBuildinglists("select * from studentfloor");
-        int count = service.SelcctBuildingcount("select count(*) from studentfloor");
+        List list = service.selectBuildinglists("select * from studentFloor");
+        int count = service.SelcctBuildingcount("select count(*) from studentFloor");
 
         /*Map map = new HashMap();
         map.put("total", count);

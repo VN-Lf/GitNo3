@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>添加Email</title>
+    <%String yangshi = (String) session.getAttribute("color");%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     <%
         HttpSession sess = request.getSession();
@@ -27,6 +28,15 @@
             sess.setAttribute("Repeat", "");
         }
     %>
+    <style>
+        div{
+        <%if("dark-hive".equals(yangshi)){%>
+            color: white;
+        <%}else {%>
+            color: black;
+        <%}%>
+        }
+    </style>
     <style type="text/css">
         .layui-table-tool {
             z-index: 0;
@@ -39,32 +49,37 @@
     <div data-options="region:'center',title:'信息管理'" style="background:#eee;" >
         <form action="<%=request.getContextPath()%>/email/sendEmail"  enctype="multipart/form-data" id="addDor" method="post" style="width: 1205px;margin: 20px 0px 0px 10px">
 
-            <div style="width: 400px; left:250px; top:15px;height: 100px;position: relative">
+            <div style="width: 400px; left:250px; top:15px;height: 100px;position: relative;font-size: 14px">
                 <div>
-                    标题 : <input type="text" name="topic"  required lay-verify="required" placeholder="请输人标题"  class="layui-input" style="width:180px;display:inline-block" />
+                    标题 :
+                    <input type="text" name="topic"  required lay-verify="required" placeholder="请输人标题" class="layui-input"
+                                style="width:238px;display:inline-block;margin-left: 10px;" />
                 </div>
                 <div>
-                    接收人：
-                    <input type="text" name="receId" id="receId" autocomplete="off" required lay-verify="required"   class="layui-input" style="width:180px;display:inline-block" />
-
-                    <br>
-                    部门：<select id="deptId" style="width: 80px;height: 35px">
+                    部门：<select id="deptId" style="width: 90px;height: 35px;margin: 10px">
                             <c:forEach items="${Edeptlist}" var="li">
                                 <option value=${li.get("deptId")}>${li.get("deptName")}</option>
                             </c:forEach>
                         </select>
-                        <div id="test2" class="demo-transfer"></div>
-                    员工：<select id="empnames" style="width: 80px;height: 35px"></select>
-
-                        <a id="adddept" name="adddept">添加</a>
-                        <a id="deldept" name="deldept" style="left: 225px">重 置</a>
+                    员工：<select id="empnames" style="width: 90px;height: 35px"></select>
                 </div>
-                    <br>
-                <div>
+                <div style="margin: 10px 48px">
+                    <a style="font-size: 16px;cursor: pointer;" id="adddept" name="adddept">添加</a>
+                    <a style="font-size: 16px;margin-left: 102px;color: red;cursor: pointer;" id="deldept"
+                       name="deldept" style="left: 225px">重 置</a>
+                </div>
+                <div style="margin-top: 15px">
+                    接收人：
+                    <input type="hidden" name="receId" id="receId">
+                    <input type="hidden" name="receName" id="receName2">
+                    <input type="text" id="receName" autocomplete="off" disabled required style="width:228px;height:30px;
+                    display:inline-block;padding-left:10px;background-Color: transparent;border: none;border-bottom: 1px solid #000;" />
+                </div>
+                <div style="margin-top: 15px">
                     附件：<input type="file" name="face" id="file" >
                 </div>
                     <br>
-                <div>
+                <div style="margin-top: 15px">
                     <h3> 邮件内容:</h3>
                     <textarea name="content" id="content" style=" left: 400px;width: 500px; height: 200px"></textarea>
                 </div>
@@ -131,75 +146,13 @@
 
                     $.each(List,function(index,obj){
                         /*alert(this.empName);*/
-                        var html = "<option value=\"" +this.empName + "\"> " + this.empName + "</option>";
+                        var html = "<option value=\"" +this.empId + "\"> " + this.empName + "</option>";
                         //给省下拉框加上拼接的option
                         sesslist =this.empName;
                         /*data2= {"value": this.empName, "title": this.empName}*/
                         $("#empnames").append(html);
                     });
                 }
-            })
-        })
-
-        layui.use(['transfer', 'layer', 'util'], function(){
-            var $ = layui.$
-                ,transfer = layui.transfer
-                ,layer = layui.layer
-                ,util = layui.util;
-
-
-            //模拟数据
-            var data1 = [
-                {"value": "1", "title": "李白"}
-                ,{"value": "2", "title": "杜甫"}
-                ,{"value": "3", "title": "苏轼"}
-                ,{"value": "4", "title": "李清照"}
-                ,{"value": "5", "title": "鲁迅", "disabled": true}
-                ,{"value": "6", "title": "巴金"}
-                ,{"value": "7", "title": "冰心"}
-                ,{"value": "8", "title": "矛盾"}
-                ,{"value": "9", "title": "贤心"}
-            ]
-            /*var List;
-            $.ajax({
-                url : "<%=request.getContextPath()%>/email/selsendEmail",
-                type: "post",
-                data :{
-                    deptname :deptId
-                },
-                dataType : "json",
-                success : function (data) {
-                   List  = data.data;
-
-                }
-            })*/
-            //定义标题及数据源
-            transfer.render({
-                elem: '#test2'
-                ,title: ['筛选', '接收人']  //自定义标题
-                ,data: List
-                ,width: 150 //定义宽度
-                ,height: 410 //定义高度
-            })
-
-
-            //数据格式解析
-            transfer.render({
-                elem: '#test5'
-                ,parseData: function(res){
-                    return {
-                        "value": res.id //数据值
-                        ,"title": res.name //数据标题
-                        ,"disabled": res.disabled  //是否禁用
-                        ,"checked": res.checked //是否选中
-                    }
-                }
-                ,data: [
-                    {"id": "1", "name": "李白"}
-                    ,{"id": "2", "name": "杜甫"}
-                    ,{"id": "3", "name": "贤心"}
-                ]
-                ,height: 150
             })
         });
 
@@ -210,16 +163,23 @@
 </script>
 <script>
     var seleVal='';
+    var NameVal='';
     $("#adddept").on("click",function(){
-
-         var  s = $("#empnames>option:selected").val()+',';
-         if(s == seleVal){
+        //var  id = $("#empnames>option:selected").val()+',';
+        var id = $('#empnames').val()+',';
+        var index=document.getElementById("empnames").selectedIndex;//获取当前选择项的索引.
+        var name = document.getElementById("empnames").options[index].text;//获取当前选择项的文本.
+         if(id == seleVal){
              alert("不能添加相同的用户");
              return;
          }
-        seleVal+=s;
+        seleVal+=id;
+        NameVal+=name+',';
         $("#receId").val(seleVal);
-    })
+        $("#receName").val(NameVal);
+        $("#receName2").val(NameVal);
+    });
+
     $("#deldept").on("click",function(){
         seleVal = '';
         $("#receId").val(" ");

@@ -9,7 +9,7 @@ public class financeshouldTuitionRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
     private Integer financeId;      //主键，标识列，自动生成
-    private Integer financedate;    //缴费日期/退款日期
+    private String financedate;    //缴费日期/退款日期
     private Integer stuid;          //关联学生表的主键
     //标示那个学期的收费”第一学期”，”第二学期”，
     // ”第三学期”，”第四学期”，”第五学期”	,外键关联到学期表主键
@@ -30,11 +30,11 @@ public class financeshouldTuitionRecord {
         this.financeId = financeId;
     }
 
-    public Integer getFinancedate() {
+    public String getFinancedate() {
         return financedate;
     }
 
-    public void setFinancedate(Integer financedate) {
+    public void setFinancedate(String financedate) {
         this.financedate = financedate;
     }
 

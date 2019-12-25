@@ -3,7 +3,7 @@ package com.nothing.vo.emp;
 import javax.persistence.*;
 //员工家庭
 @Entity
-@Table(name="EmpFamilyImf")
+@Table(name="empFamilyImf")
 public class EmpFamilyImf{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")

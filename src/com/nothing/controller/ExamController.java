@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.Examservice;
 import com.nothing.service.impl.Examserviceimpl;
 import com.nothing.vo.Email.Email;
+import com.nothing.vo.emp.Emp;
 import com.nothing.vo.wintable.aduitLog;
 import com.nothing.vo.wintable.aduitModel;
 import com.nothing.vo.wintable.empAssessment;
@@ -38,7 +39,7 @@ public class ExamController {
     public String lookexam(HttpServletRequest request){
         List deptname = examservice.examlist("select deptName from dept");
         List empname = examservice.examlist("select empName from emp");
-        List aduitName = examservice.examlist("select aduitName from aduitmodel");
+        List aduitName = examservice.examlist("select aduitName from aduitModel");
         List deptname1=new ArrayList();
         List empname1=new ArrayList();
         List aduitName1=new ArrayList();
@@ -66,25 +67,16 @@ public class ExamController {
 
     @RequestMapping(value = "empexam")
     public String empexam(HttpServletRequest request){
-        List examlist = examservice.examlist("select e.empName,c.classRemark from emp  as e left join classvo as c on e.empId=c.classTeacher");
-
-        Set empname=new HashSet();
-        Set classname=new HashSet();
-
-        for(int i=0;i<examlist.size();i++){
-            Map map= (Map) examlist.get(i);
-            empname.add(map.get("empName"));
-            classname.add(map.get("classRemark"));
-        }
-        request.setAttribute("empnamelist",empname);
-        request.setAttribute("classnamelist",classname);
+        List examlist = examservice.examlist("select empName,empId from emp where empId in(select DISTINCT classTeacher from classVo)");
+        System.out.println(examlist);
+        request.setAttribute("empnamelist",examlist);
         return "exammian/empexam";
     }
 
     @RequestMapping(value = "/examlist")
     @ResponseBody
     public JSONObject examlist(){
-        List examlist = examservice.examlist("select m.*,d.deptName from  aduitmodel   as m left join dept as d  on m.Depid=d.deptId");
+        List examlist = examservice.examlist("select m.*,d.deptName from  aduitModel as m left join dept as d  on m.Depid=d.deptId");
 
         JSONObject jsonObject=new JSONObject();
         int selectcount = examservice.Selectcount("select count(aduitModelid) from aduitModel");
@@ -102,7 +94,7 @@ public class ExamController {
     public JSONObject empexamlist(String empname,String  Depid,String starttime,String endtime){
         String Starttime=null;
         String Endtime=null;
-        List examdate = examservice.examdate("select auditDate from aduitlog ORDER BY auditDate");
+        List examdate = examservice.examdate("select auditDate from aduitLog ORDER BY auditDate");
         List date=new ArrayList();
         for(int i=0;i<examdate.size();i++){
             Map map=(HashMap)examdate.get(i);
@@ -136,9 +128,10 @@ public class ExamController {
             yuJu += x+"%";
         }
         List examlist = examservice.examlist("\n" +
-                "select l.*,m.Remark,m.Scores,m.aduitName,e.empName from  aduitlog  as l left join aduitmodel as m  on l.aduitModelid=m.aduitModelid left join emp as e on l.empid=e.empId where e.empName like '"+yuJu+"' and m.Depid like '%"+Depid+"%' and l.auditDate between '"+starttime+"' and '"+endtime+"'");
+                "select l.*,m.Remark,m.Scores,m.aduitName,e.empName from  aduitLog  as l left join aduitModel as m  on " +
+                "l.aduitModelid=m.aduitModelid left join emp as e on l.empid=e.empId where e.empName like '"+yuJu+"' and m.Depid like '%"+Depid+"%' and l.auditDate between '"+starttime+"' and '"+endtime+"'");
         JSONObject jsonObject=new JSONObject();
-        int selectcount = examservice.Selectcount("select count(aduitLogid) from aduitlog");
+        int selectcount = examservice.Selectcount("select count(aduitLogid) from aduitLog");
         jsonObject.put("code",0);
         jsonObject.put("msg","");
         jsonObject.put("data",examlist);
@@ -162,10 +155,10 @@ public class ExamController {
     @RequestMapping(value = "/emplistexam")
     @ResponseBody
     public JSONObject emplistexam(){
-        List examlist = examservice.examlist("select * from empassessment");
+        List examlist = examservice.examlist("select * from empAssessment");
 
         JSONObject jsonObject=new JSONObject();
-        int selectcount = examservice.Selectcount("select count(empAssessId) from empassessment");
+        int selectcount = examservice.Selectcount("select count(empAssessId) from empAssessment");
         jsonObject.put("code",0);
         jsonObject.put("msg","");
         jsonObject.put("data",examlist);
@@ -175,9 +168,9 @@ public class ExamController {
     }
 
     @RequestMapping(value = "/addempexam")
-    public String addempexam(String aduitName,String empname){
+    public String addempexam(String aduitName,String empname,HttpSession session){
         aduitLog aduitLog=new aduitLog();
-        List aduitModellist = examservice.examlist("select * from aduitmodel where aduitName='"+aduitName+"'");
+        List aduitModellist = examservice.examlist("select * from aduitModel where aduitName='"+aduitName+"'");
         List empId = examservice.examlist("select empId from emp where empName='"+empname+"'");
 
 
@@ -199,7 +192,8 @@ public class ExamController {
         aduitLog.setAduitModelid(String.valueOf(aduitModel.get(0)));
         aduitLog.setEmpid((Integer) empid.get(0));
         aduitLog.setAuditDate(new java.sql.Date(new java.util.Date().getTime()));
-        aduitLog.setAuditPerson("陈老板");
+        Emp emp = (Emp) session.getAttribute("empId");
+        aduitLog.setAuditPerson(emp.getEmpName());
         examservice.addexam(aduitLog);
         return "redirect:lookexam";
     }
@@ -223,7 +217,7 @@ public class ExamController {
     @ResponseBody
     public String alldelete(String id){
         id = id.substring(0,id.length()-1);
-        examservice.alldelete("delete from aduitmodel where aduitModelid in("+id+")");
+        examservice.alldelete("delete from aduitModel where aduitModelid in("+id+")");
         return "删除成功";
     }
 
@@ -231,7 +225,7 @@ public class ExamController {
     @ResponseBody
     public String alldeleteemp(String id){
         id = id.substring(0,id.length()-1);
-        examservice.alldelete("delete from empassessment where empAssessId in("+id+")");
+        examservice.alldelete("delete from empAssessment where empAssessId in("+id+")");
         return "删除成功";
     }
 
@@ -248,25 +242,27 @@ public class ExamController {
     @ResponseBody
     public String empalldelete(String id){
         id = id.substring(0,id.length()-1);
-        examservice.alldelete("delete from aduitlog where aduitLogid in("+id+")");
+        examservice.alldelete("delete from aduitLog where aduitLogid in("+id+")");
         return "删除成功";
     }
 
     @RequestMapping(value = "/classlist")
     @ResponseBody
-    public List examempname(String empname,HttpServletRequest request){
-        List classlist = examservice.examlist1("select classRemark from classvo where classTeacher in (select empId from emp where empName='" + empname + "') or classAdviser in(select empId from emp where empName='" + empname + "')");
+    public List examempname(String empname){
+        List classlist = examservice.examlist1("select className from classVo where classTeacher = "+empname);
 
         return classlist;
     }
 
     @RequestMapping(value = "/addkaohu")
-    public String addkaohu(String empname, String classname, HttpSession session,HttpServletRequest request){
+    public String addkaohu(String empName,String empId,String classname, HttpSession session,String date,String time){
         //添加一条考评
-        List  existexam = examservice.examlist("select * from empassessment where classId='"+classname+"' and empId='"+empname+"'");
+        String endtime = date+" "+time+":00";
+        System.out.println(empName+"-------"+empId);
+        List  existexam = examservice.examlist("select * from empAssessment where classId='"+classname+"' and empId='"+empId+"'");
         if(existexam.size()!=0){
         }else {
-            List examtype = examservice.examlist("select postName from post where empId=(select empId from emp where empName='"+empname+"') ");
+            List examtype = examservice.examlist("select postName from post where empId="+empId);
             List examtype1=new ArrayList();
             for(int i=0;i<examtype.size();i++){
                 Map map= (Map) examtype.get(i);
@@ -274,7 +270,9 @@ public class ExamController {
             }
 
             empAssessment empAssessment=new empAssessment();
-            empAssessment.setEmpid(empname);
+            empAssessment.setEmpName(empName);
+            empAssessment.setEmpid(empId);
+            empAssessment.setEndtime(endtime);
             empAssessment.setClassid(classname);
             empAssessment.setEmpexamid(String.valueOf(examtype1.get(0)));
             empAssessment.setScores(0);
@@ -283,37 +281,37 @@ public class ExamController {
 
         //给选中的班级发送邮寄
         Email email=new Email();
-        List stuname = examservice.examlist("\n" +
-                "select stuName from student where classId=(select classId from classvo where className='"+classname+"')");
-        List stuname1=new ArrayList();
-        for(int i=0;i<stuname.size();i++){
-            Map map= (Map) stuname.get(i);
-            stuname1.add(map.get("stuName"));
-        }
+        List stuname = examservice.examlist("select studId,stuName from student where classId=(select classId from " +
+                "classVo where className='"+classname+"')");
 
-        List empkaohuid = examservice.examlist("select empAssessId from empassessment where classId='"+classname+"' and empId='"+empname+"'");
+        List empkaohuid = examservice.examlist("select empAssessId from empAssessment where classid='"+classname+"' and empId='"+empId+"'");
         List empkaohuid1=new ArrayList();
         for(int i=0;i<empkaohuid.size();i++){
             Map map= (Map) empkaohuid.get(i);
             empkaohuid1.add(map.get("empAssessId"));
         }
 
-        List emptype =examservice.examlist("select postName from post where  empId =(select empId from emp where empName='"+empname+"')");
+        List emptype =examservice.examlist("select postName from post where  empId ="+empId);
         List emptype1=new ArrayList();
 
         for(int i=0;i<emptype.size();i++){
             Map map= (Map) emptype.get(i);
             emptype1.add(map.get("postName"));
         }
-        email.setEmpId("刘飞");
-        email.setContent("对"+empname+"老师进行考核,考核类型:"+emptype1.get(0));
+        Emp emp =(Emp) session.getAttribute("empId");
+        email.setEmpId(emp.getEmpId()+"");
+        email.setEmpName(emp.getEmpName());
+        email.setContent("对"+empName+"老师进行考核,考核类型:"+emptype1.get(0));
         email.setTopic("考核");
         email.setImage(String.valueOf(empkaohuid1.get(0)));
         email.setSendtime(new java.util.Date());
+        email.setEndTime(endtime);
         email.setIsRead(2);
-        session.setAttribute("kaohuempname",empname);
-        for(int i=0;i<stuname1.size();i++){
-            email.setReceId(String.valueOf(stuname1.get(i)));
+        session.setAttribute("kaohuempname",empName);
+        for(int i=0;i<stuname.size();i++){
+            Map map= (Map) stuname.get(i);
+            email.setReceId(""+map.get("studId"));
+            email.setReceName(""+map.get("stuName"));
             examservice.addexam(email);
         }
         return "redirect:empexam";
@@ -323,12 +321,9 @@ public class ExamController {
     @RequestMapping("/endexam")
     @ResponseBody
     public String endexam(String empAssessId){
-        List kaohuscore1 = examservice.examlist1("select sum(kaohuscore)/(count(studentname)/5) as kaohuscore from emkaohu where empAssessId="+empAssessId+"");
-        if(kaohuscore1.get(0)==null){
-            examservice.updateend("update empassessment set scores ="+0+" where empAssessId ="+empAssessId+"");
-        }else {
-            examservice.updateend("update empassessment set scores ="+kaohuscore1.get(0)+" where empAssessId ="+empAssessId+"");
-        }
+        List kaohuscore1 = examservice.examlist1("select sum(kaohuscore)/(count(studentname)/5) as kaohuscore from " +
+                "emkaohu where empAssessId="+empAssessId+"");
+        examservice.updateend("update empAssessment set scores ="+kaohuscore1.get(0)+" where empAssessId ="+empAssessId+"");
         return "考核结束";
     }
 }

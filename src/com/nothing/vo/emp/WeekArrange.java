@@ -2,7 +2,7 @@ package com.nothing.vo.emp;
 
 import javax.persistence.*;
 
-@Table(name="WeekArrange")
+@Table(name="weekArrange")
 @Entity
 public class WeekArrange{
     @Id

@@ -1,9 +1,9 @@
 package com.nothing.vo.Sdudent;
-////
+
 import javax.persistence.*;
 import java.util.Date;
 @Entity
-@Table(name="StudentScore")
+@Table(name="studentScore")
 public class StudentScore{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
@@ -41,8 +41,6 @@ public class StudentScore{
     public void setScore(Integer score) {
         this.score = score;
     }
-
-
 
     public Integer getCourseId() {
         return courseId;

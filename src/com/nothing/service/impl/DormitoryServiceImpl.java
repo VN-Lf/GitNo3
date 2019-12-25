@@ -18,7 +18,7 @@ public class DormitoryServiceImpl extends BaseDao implements DormitoryService {
     }
 
     public List selectDormitorylist(int page, int rows) {
-        return this.pageByHql("select * from studenthour", page, rows);
+        return this.pageByHql("select * from studentHour", page, rows);
     }
     //查询出宿舍总数
     public int SelcctDormitorycount(String sql) {
@@ -39,7 +39,7 @@ public class DormitoryServiceImpl extends BaseDao implements DormitoryService {
 
     @Override
     public void delDormitory(Object id) {
-        executeSQL("delete from studenthour where stuHours in ("+id+")");
+        executeSQL("delete from studentHour where stuHours in ("+id+")");
     }
 
 }

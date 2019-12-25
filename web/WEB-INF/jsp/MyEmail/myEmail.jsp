@@ -76,8 +76,8 @@
                 ,cols: [[ //表头-
                     {type:'checkbox'}//复选框
                     ,{field: 'emailId', title: '编号', width:80, sort: true}
-                    ,{field: 'receId', title: '接收人', width:120, sort: true}
-                    ,{field: 'topic', title: '标题', width:80}
+                    ,{field: 'receName', title: '接收人', width:120, sort: true}
+                    ,{field: 'topic', title: '标题', width:200}
                     ,{field: 'sendtime', title: '时间', width:120,templet:function (row){
                             return createTime(row.sendtime);
                         }}
@@ -100,15 +100,16 @@
             //第二个实例
             table.render({ //我收 到的邮件
                 elem: '#Senddemo'
-                ,height: 312
+                ,height:'full-200'
+                ,cellMinWidth: 80
                 ,toolbar: '#toolbarDemo'
                 ,url: '${pageContext.request.contextPath}/email/SendEmail' //数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
                     {type:'checkbox'}//复选框
                     ,{field: 'emailId', title: '编号', width:80, sort: true}
-                    ,{field: 'empId', title: '发送人', width:120, sort: true}
-                    ,{field: 'topic', title: '标题', width:80}
+                    ,{field: 'empName', title: '发送人', width:120}
+                    ,{field: 'topic', title: '标题', width:200}
                     ,{field: 'sendtime', title: '时间', width:120,templet:function (row){
                             return createTime(row.sendtime);
                         }}
@@ -189,7 +190,7 @@
                 if(obj.event === 'selectedit'){
                     var emailId = data.emailId;
                     var kaohuid = data.image;
-                    window.location.href="<%=request.getContextPath()%>/email/toemailServlet?emailId="+emailId+"&kaohuid="+kaohuid;
+                    window.location.href="<%=request.getContextPath()%>/email/toemailServlet?emailId="+emailId+"&empkaohuid="+kaohuid;
                 }else if(obj.event === 'edit'){
                     var emailId = data.emailId;
                     window.location.href="<%=request.getContextPath()%>/email/againEmail?emailId="+emailId;

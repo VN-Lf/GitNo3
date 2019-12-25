@@ -85,7 +85,6 @@ public class Emp2Controller {
         jsonObject.put("data", notlist);
         return jsonObject;
     }
-
     @RequestMapping("/notadd")
     public String NotAdd(Notice notice,String time) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -95,6 +94,28 @@ public class Emp2Controller {
         System.out.println(notice.getNoticeType());
         empService.addNotice(notice,1);
         return "emp/noticelist";
+    }
+
+    //标记是否查看公告
+    @RequestMapping("/martNotice")
+    @ResponseBody
+    public void martNotice(String eid,String nid){
+        Notice notice = empService.chaNotice(nid);
+        String emps = notice.getEmps();
+        if (emps==null){
+            emps=eid+",";
+        }else {
+            String[] split = emps.split(",");
+            for (int i=0;i<split.length;i++){
+                if (split[i].equals(eid)){
+                    return;
+                }
+            }
+            emps+=eid+",";
+        }
+        notice.setEmps(emps);
+        System.out.println(notice.toString());
+        empService.addNotice(notice,2);
     }
 
     @RequestMapping("/empadd")
@@ -184,8 +205,8 @@ public class Emp2Controller {
     @RequestMapping("/weeklist")
     @ResponseBody
     public JSONObject weekList() {
-        List wlist = empService.weekList("select * from weekarrange");
-        int con = empService.selEmpCont("select count(WeekArrangeId) from weekarrange");
+        List wlist = empService.weekList("select * from weekArrange");
+        int con = empService.selEmpCont("select count(WeekArrangeId) from weekArrange");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
@@ -196,8 +217,8 @@ public class Emp2Controller {
     @RequestMapping("/weeklistsx")
     @ResponseBody
     public JSONObject weekListSx(String emp,String date) throws UnsupportedEncodingException {
-        String sql = "select * from weekarrange";
-        String consql = "select count(WeekArrangeId) from weekarrange";
+        String sql = "select * from weekArrange";
+        String consql = "select count(WeekArrangeId) from weekArrange";
         emp = new String(emp.getBytes("iso-8859-1"),"utf-8");
         emp = java.net.URLDecoder.decode(emp,"UTF-8");
         date = new String(date.getBytes("iso-8859-1"),"utf-8");

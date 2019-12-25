@@ -34,7 +34,7 @@ public class EmailServlceImpl extends BaseDao implements EmailService {
     }
     @Override
     public void delEmail(Object id) {
-        executeSQL("delete from myemail where emailId in ("+id+")");
+        executeSQL("delete from myEmail where emailId in ("+id+")");
     }
 
     //添加邮件的方法
@@ -61,6 +61,9 @@ public class EmailServlceImpl extends BaseDao implements EmailService {
         Email email = new Email();
 
         String filename = face.getOriginalFilename();
+        if(filename == null || "".equals(filename)){
+            return email;
+        }
         System.out.println("文件名:"+filename);
 
         email.setOldFileName(filename);

@@ -75,6 +75,7 @@
             <td align="right">请假事由：</td>
             <td><input type="text" name="remark"/></td>
         </tr>
+
         <tr style="padding: 8px" bgcolor="white">
             <td colspan="2" align="center">
                 <input style="width: 100px;height: 25px" type="submit" value="提交">

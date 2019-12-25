@@ -112,7 +112,7 @@
                 dataType:"json",
                 success:function (data) {
                     var empact = data.size;
-                    if(empact != 0){
+                    if(empact !== 0){
                         var taskl = data.task;
                         actTaskTis(empact,1);
                         $.each(taskl,function (index,item) {
@@ -127,6 +127,44 @@
             });
         }
 
+        function chazhaoAtt() {  //查找员工未打卡审批任务
+            $.ajax({
+                url:"${pageContext.request.contextPath}/attedance/attlist",
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    var size = data.size;
+                    if(size !== 0){
+                        var list = data.data;
+                        attTaskTis(size,1);
+                        $.each(list,function (index,item) {
+                            var name = item.empname;
+                            var time = new Date(item.applyTime);
+                            var y = time.getFullYear();
+                            var m = time.getMonth()+1;
+                            m = m<10?'0'+m:m;
+                            var dd = time.getDate();
+                            dd = dd<10?("0"+dd):dd;
+                            var H = time.getHours();
+                            H = H<10?("0"+H):H;
+                            var M = time.getMinutes();
+                            M = M<10?("0"+M):M;
+                            var S = time.getSeconds();
+                            S = S<10?("0"+S):S;
+                            time = y+"-"+m+"-"+dd+" "+H+":"+M+":"+S;
+                            var uptime =  new Date(item.punckClockTime);
+                            var b = new Date(uptime);
+                            uptime=b.getFullYear()+'-'+(b.getMonth()+1)+'-'+b.getDate()+' '+b.getHours()+':'+b.getMinutes()+':'+ b.getSeconds();
+                            tianjiaAtt(name,time,uptime);
+                        })
+                    }else {
+                        attTaskTis(size,0);
+                    }
+                }
+            });
+        }
+
+        //查找周报
         function chazhaoWeek() {
             var date = new Date();
             date.setDate(date.getDate() - date.getDay() + 1);
@@ -146,12 +184,12 @@
                 success:function (data) {
                     var size = data.size;
                     var weekl = data.week;
-                    if(size != 0){
+                    if(size !== 0){
                         weekTis(size);
                         $.each(weekl,function (index,item) {
                             var misu = item.weekDescription;
                             var time = new Date(item.weekCycle);
-                            var d = new Date(time)
+                            var d = new Date(time);
                             var t=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+ d.getSeconds();
                             tianjiaWeek(misu,t);
                         })
@@ -162,16 +200,62 @@
             });
         }
 
+        //查找谈心
+        function chazhaoChat() {
+            var now = new Date(); //当前日期
+            var nowMonth = now.getMonth(); //当前月
+            var nowYear = now.getFullYear(); //当前年
+            //本月的开始时间
+            var mont = new Date(nowYear, nowMonth, 1);
+            var ks=mont.getFullYear()+'-'+(mont.getMonth()+1)+'-'+mont.getDate()+' 00:00:00';
+            //本月的结束时间
+            var mEndD = new Date(nowYear, nowMonth+1, 0);
+            var end=mEndD.getFullYear()+'-'+(mEndD.getMonth()+1)+'-'+mEndD.getDate()+' 00:00:00';
+
+            $.ajax({
+                url:"${pageContext.request.contextPath}/emp/Chatsize",
+                type:"post",
+                data: {
+                    empId:""+<%=use.getEmpId()%>,
+                    ks:ks,
+                    end:end
+                },
+                dataType:"json",
+                success:function (data) {
+                    var size = data.size;
+                    var chat = data.chat;
+                    if(size !== 0){
+                        chatTis(size);
+                        $.each(chat,function (index,item) {
+                            var di = item.addr;
+                            var name = item.stuName;
+                            var time = new Date(item.chatDate);
+                            var d = new Date(time);
+                            var t=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+ d.getSeconds();
+                            tianjiaChat(di,name,t);
+                        })
+                    }else {
+                        chatTis(size);
+                    }
+                }
+            });
+        }
+
         function shuaF5(f) {
-            if(f == 1){
+            if(f === 1){
                 $("#weektask").remove();
                 $("#emptask").remove();
+                $("#chattask").remove();
             }
             chazhaoWeek();
             chazhaoAct();
+            chazhaoChat();
+            chazhaoAtt();
         }
 
+        <%if(post.getPostName().indexOf("部长")!=-1 || post.getPostName().indexOf("校长")!=-1){%>
         shuaF5(0);
+        <%}%>
     </script>
 </head>
 <body class="easyui-layout">
@@ -183,7 +267,7 @@
         <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/email/toemail" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">我的邮件</a>
+                    <a>我的邮件</a>
                 </li>
                 <%if(post.getPostName().indexOf("校长")==-1){%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myJobList" onclick="qiehuan(this)" class="cs-navi-tab">
@@ -193,14 +277,8 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>我的周报</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">学生请假</a>
-                </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我的周报</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考勤管理</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的考勤</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
@@ -211,6 +289,9 @@
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/tonotice" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>公告发布</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toMyNotice" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>查看公告</a>
                 </li>
             </ul>
         </div>
@@ -233,8 +314,8 @@
                     <a>周报汇总</a>
                 </li>
                 <%}%>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考勤管理-上级可看</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toSupAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>员工考勤管理</a>
                 </li>
             </ul>
         </div>
@@ -243,17 +324,17 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/home" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>学生资料</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">学生请假</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myTaskStu" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>学生请假</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考试成绩</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/sco/main" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>考试成绩</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">答辩成绩</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/sco/reply" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>答辩成绩</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">班级分配</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/allotStu" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>班级分配</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/claMian" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>班级管理</a>
@@ -298,38 +379,27 @@
                     <a>考核指标</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/lookexam" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>考核巡查</a>
+                    <a>员工考核</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/empexam" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>考核录入</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>教师考评</a>
                 </li>
             </ul>
         </div>
-        <div title="财务管理" style="list-style-type:none;padding: 0">
-            <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" class="cs-navi-tab">
-                    <a style="color: green">学费管理</a>
-                </li>
-            </ul>
-        </div>
-        <div title="问题反馈" style="list-style-type:none;padding: 0">
+        <div title="其它" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" class="cs-navi-tab">
                     <a style="color: green">问题反馈</a>
                 </li>
-            </ul>
-        </div>
-        <div title="文件管理" style="overflow:auto;padding:0;">
-            <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
+                <li href="javascript:void(0);" src="" class="cs-navi-tab">
+                    <a style="color: green">学费管理</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/upload/toupload" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>资料文档</a>
                 </li>
             </ul>
         </div>
-        <div title="系统报表" style="overflow:auto;padding:0;">
+        <div title="系统报表" style="overflow:auto;padding:0;height: 50px;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">日常考核</a>
@@ -374,11 +444,10 @@
                     <option value="pepper-grinder" <%if("pepper-grinder".equals(yangshi)){%>selected<%}%>>咖啡主题</option>
                 </select>
                 <fieldset id="hometask" class="layui-elem-field">
-                    <legend><h3>任务 <button onclick="shuaF5(1)">刷新列表</button></h3></legend>
+                    <legend><h3 onclick="shuaF5(1)" style="cursor: pointer;" title="点我可刷新哦">任务</h3></legend>
                     <div class="layui-field-box">
                         学生请假待审批()<br>
                         未打卡待审批()<br>
-                        <h4>月谈心记录() &nbsp;&nbsp;<font color="#8b0000">每周需完成5个</font></h4> <br>
                     </div>
 
                 </fieldset>
@@ -440,44 +509,17 @@
 </script>
 <script>
     var shang = null;
-
-    //请假提示区
-    function actTaskTis(san,pand) {
-        var html = "";
-        if(pand == 1){
-            html = "<div id=\"emptask\"  onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
-                " onmouseleave=\"baoyichu(this)\" class='emptask' onclick=\"zhankaiAct(this,"+san+",'act')\">\n" +
-                "           <span style=\"font-size: 24px\">有 "+san+" 个员工任务待审核</span>\n" +
-                "           <p class=\"tishi\" id='tishi' align=\"right\">点击展开</p>\n" +
-                "        </div>"
-        }else if(pand == 0){
-            html = "<div id=\"emptask\" class='emptask'  onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
-                "           <span style=\"font-size: 24px\">暂无员工申请假期</span>\n" +
-                "           <p class=\"tishi\" align=\"right\"></p>\n" +
-                "        </div>"
-        }
-        $("#hometask").append(html);
-        if(san > 4){
-            $("#emptask").css("background-color","red");
-        }else if(san >= 3) {
-            $("#emptask").css("background-color","#f47920");
-        }
-    }
-    function tianjiaAct(name,time) {
-        var html = "<div class=\"xxnr\" style=\"padding:8px 50px;display: none\">\n" +
-            "            <p align=\"left\" class=\"pzuo\">任务名称："+name+"</p>\n" +
-            "            <p align=\"right\" class=\"pyou\">请假单申请时间："+time+"</p>\n" +
-            "       </div>"
-        $("#emptask").append(html);
-    }
+    //动态效果区
     var dianji = 0;
     var dianjiw = 0;
-    var cid,wid;
+    var dianjic = 0;
+    var dianjia = 0;
+    var cid,wid,aid,tid;
     function zhankaiAct(id,san,type) {
         if(type == "act"){
             if(dianji == 0){
                 cid = id;
-                var he = 65 + san*70;
+                var he = 65 + san*75;
                 $(id).css("height",he+"px");
                 document.getElementById("tishi").innerHTML="点击关闭";
                 setTimeout("yanchiguan()","300");
@@ -492,7 +534,7 @@
         }else if(type == "week"){
             if(dianjiw == 0){
                 wid = id;
-                var he = 65 + san*70;
+                var he = 65 + san*75;
                 $(id).css("height",he+"px");
                 document.getElementById("tishi2").innerHTML="点击关闭";
                 setTimeout("yanchiguan2()","300");
@@ -504,33 +546,130 @@
                 $(id).children(".xxnr").css("display","none");
                 dianjiw = 0;
             }
+        }else if(type == "chat"){
+            if(dianjic == 0){
+                tid = id;
+                var he = 65 + san*75;
+                $(id).css("height",he+"px");
+                document.getElementById("tishi3").innerHTML="点击关闭";
+                setTimeout("yanchiguan3()","300");
+                dianjic = 1;
+            }else {
+                tid = id;
+                $(id).css("height","65px");
+                document.getElementById("tishi3").innerHTML="点击展开";
+                $(id).children(".xxnr").css("display","none");
+                dianjic = 0;
+            }
+        }else if(type == "att"){
+            if(dianjia == 0){
+                aid = id;
+                var he = 65 + san*75;
+                $(id).css("height",he+"px");
+                document.getElementById("tishi4").innerHTML="点击关闭";
+                setTimeout("yanchiguan4()","300");
+                dianjia = 1;
+            }else {
+                aid = id;
+                $(id).css("height","65px");
+                document.getElementById("tishi4").innerHTML="点击展开";
+                $(id).children(".xxnr").css("display","none");
+                dianjia = 0;
+            }
         }
-
     }
+    //延迟暂时里数据
     function yanchiguan() {
         $(cid).children(".xxnr").css("display","block");
     }
     function yanchiguan2() {
         $(wid).children(".xxnr").css("display","block");
     }
+    function yanchiguan3() {
+        $(tid).children(".xxnr").css("display","block");
+    }
+    function yanchiguan4() {
+        $(aid).children(".xxnr").css("display","block");
+    }
+
+    //请假提示区
+    function actTaskTis(san,pand) {
+        var html = "";
+        if(pand == 1){
+            html = "<div id=\"emptask\" title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+                " onmouseleave=\"baoyichu(this)\" class='emptask' onclick=\"zhankaiAct(this,"+san+",'act')\">\n" +
+                "           <span style=\"font-size: 24px\">有 "+san+" 个员工请假待审核</span>\n" +
+                "           <p class=\"tishi\" id='tishi' align=\"right\">点击展开</p>\n" +
+                "        </div>"
+        }else if(pand == 0){
+            html = "<div id=\"emptask\" class='emptask' title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
+                "           <span style=\"font-size: 24px\">暂无员工申请假期</span>\n" +
+                "           <p class=\"tishi\" align=\"right\"></p>\n" +
+                "        </div>"
+        }
+        $("#hometask").append(html);
+        if(san > 4){
+            $("#emptask").css("background-color","red");
+        }else if(san >= 3) {
+            $("#emptask").css("background-color","#FF5722");
+        }
+    }
+    function tianjiaAct(name,time) {
+        var html = "<div class=\"xxnr\" style=\"padding:8px 50px;display: none\">\n" +
+            "            <p align=\"left\" class=\"pzuo\">任务名称："+name+"</p>\n" +
+            "            <p align=\"right\" class=\"pyou\">请假单申请时间："+time+"</p>\n" +
+            "       </div>"
+        $("#emptask").append(html);
+    }
+
+    //未打卡提示区
+    function attTaskTis(san,pand) {
+        var html = "";
+        if(pand == 1){
+            html = "<div id=\"atttask\" title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+                " onmouseleave=\"baoyichu(this)\" class='emptask' onclick=\"zhankaiAct(this,"+san+",'att')\">\n" +
+                "           <span style=\"font-size: 24px\">有 "+san+" 个员工考勤待审核</span>\n" +
+                "           <p class=\"tishi\" id='tishi4' align=\"right\">点击展开</p>\n" +
+                "        </div>"
+        }else if(pand == 0){
+            html = "<div id=\"atttask\" class='emptask' title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
+                "           <span style=\"font-size: 24px\">暂无待审核员工考勤</span>\n" +
+                "           <p class=\"tishi\" align=\"right\"></p>\n" +
+                "        </div>"
+        }
+        $("#hometask").append(html);
+        if(san > 4){
+            $("#atttask").css("background-color","red");
+        }else if(san >= 3) {
+            $("#atttask").css("background-color","#FF5722");
+        }
+    }
+    function tianjiaAtt(name,time,uptime) {
+        var html = "<div class=\"xxnr\" style=\"padding:8px 50px;display: none\">\n" +
+            "            <p align=\"left\" class=\"pzuo\">"+name+"在 "+time+" 未按时打卡</p>\n" +
+            "            <p align=\"right\" class=\"pyou\">提交时间："+uptime+"</p>\n" +
+            "       </div>"
+        $("#atttask").append(html);
+    }
 
     //周报提示区
     function weekTis(size) {
         var html = "";
         if(size == 0){
-            setInterval("gettime()","1000");
-            html = "<div class=\"emptask\"  onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
+            html = "<div class=\"emptask\" title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
                 "       <span style=\"font-size: 24px\">本周周报尚未完成</span>\n" +
-                "       <p align=\"right\" id=\"sysj\" style=\"padding-right: 30px;margin-top: 10px;font-size: 16px\"></p>\n" +
+                "       <p align=\"right\" id=\"sysj\" class='tishi'></p>\n" +
                 "   </div>";
+            $("#hometask").append(html);
+            setInterval("gettime('week')","1000");
         }else {
-            html = "<div id=\"weektask\" onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+            html = "<div id=\"weektask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
                 " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'week')\">\n" +
                 "       <span style=\"font-size: 24px\">本周周报已填写 "+size+" 条</span>\n" +
-                "       <p align=\"right\" id='tishi2' style=\"padding-right: 30px;margin-top: 10px;font-size: 16px\">点击查看更多</p>\n" +
+                "       <p align=\"right\" id='tishi2' class='tishi'>点击展开</p>\n" +
                 "   </div>";
+            $("#hometask").append(html);
         }
-        $("#hometask").append(html);
     }
     function tianjiaWeek(misu,time) {
         var html = "<div class=\"xxnr\" style=\"padding:8px 50px;display: none\">\n" +
@@ -540,16 +679,27 @@
         $("#weektask").append(html);
     }
 
-    function gettime(){
-        var date = new Date();
-        date.setDate(date.getDate() - date.getDay() + 1);
-        var begin = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " 00:00:00";
-        // 本周日的日期
-        date.setDate(date.getDate() + 6);
-        var end = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " 17:00:00";
-
+    function gettime(type){
+        if(type == "week"){
+            var date = new Date();
+            date.setDate(date.getDate() - date.getDay() + 1);
+            var begin = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " 00:00:00";
+            // 本周日的日期
+            date.setDate(date.getDate() + 6);
+            var end = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " 17:00:00";
+            document.getElementById("sysj").innerText = "剩余 "+huoquEndDate(end,'#sysj');
+        }else if(type == "chat"){
+            var now = new Date(); //当前日期
+            var nowMonth = now.getMonth(); //当前月
+            var nowYear = now.getFullYear(); //当前年
+            //本月的结束时间
+            var mEndD = new Date(nowYear, nowMonth+1, 0);
+            document.getElementById("sysj2").innerText = "距离月底剩余 "+huoquEndDate(mEndD,'#sysj2');
+        }
+    }
+    function huoquEndDate(date,id) {
         var Today = new Date();
-        var endDate = new Date(end);
+        var endDate = new Date(date);
         var leftTime = endDate.getTime() - Today.getTime();
         var leftSecond = parseInt(leftTime / 1000);
         var Day = Math.floor(leftSecond / (60 * 60 * 24));
@@ -557,11 +707,49 @@
         var Minute = Math.floor((leftSecond - Day * 24 * 60 * 60 - Hour * 3600) / 60);
         var Second = Math.floor(leftSecond - Day * 24 * 60 * 60 - Hour * 3600 - Minute * 60);
         if(Day == 1){
-            $("#sysj").parent().css("background-color","red");
+            $(id).parent().css("background-color","red");
         }else if(Day <= 3) {
-            $("#sysj").parent().css("background-color","#f47920");
+            $(id).parent().css("background-color","#FF5722");
         }
-        document.getElementById("sysj").innerText = "剩余 "+Day+"日 "+Hour+"时 "+Minute+"分 "+Second+"秒";
+        return Day+"日 "+Hour+"时 "+Minute+"分 "+Second+"秒";
+    }
+    //谈心提示区
+    function chatTis(size) {
+        var html = "";
+        if(size == 0){
+            html = "<div class=\"emptask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
+                "       <span style=\"font-size: 24px\">本月谈心还未完成 5 条</span>\n" +
+                "       <p align=\"right\" id=\"sysj2\" class='tishi'></p>\n" +
+                "   </div>";
+            $("#hometask").append(html);
+            setInterval("gettime('chat')","1000");
+        }else {
+            if(size > 4){
+                html = "<div id=\"chattask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+                    " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'chat')\">\n" +
+                    "<span style=\"font-size: 24px\">本月谈心任务已完成 数量："+size+"</span>\n"+
+                    "       <p align=\"right\" id='tishi3' style='margin-top: 40px;'  class='tishi'>点击展开</p>\n" +
+                    "   </div>";
+                $("#hometask").append(html);
+            }else {
+                var js = 5 - size;
+                html = "<div id=\"chattask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+                    " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'chat')\">\n" +
+                    "<p align=\"left\" style=\"font-size: 24px;padding-right: 30px;float:left;width:45%;\">本月谈心任务已完成 "+size+" 条 还有 "+js+" 条待完成</p>\n"+
+                    "<p align=\"left\" id='sysj2' style=\"padding-right: 9px;float:right;width:18%;font-size: 16px\"></p>\n"+
+                "       <p align=\"right\" id='tishi3' style='margin-top: 40px;'  class='tishi'>点击展开</p>\n" +
+                "   </div>";
+                $("#hometask").append(html);
+                setInterval("gettime('chat')","1000");
+            }
+        }
+    }
+    function tianjiaChat(di,name,time) {
+        var html = "<div class=\"xxnr\" style=\"padding:8px 50px;display: none\">\n" +
+            "            <p align=\"left\" class=\"pzuo\">在"+di+"与 "+name+" 完成了一次谈心</p>\n" +
+            "            <p align=\"right\" class=\"pyou\">时间："+time+"</p>\n" +
+            "       </div>"
+        $("#chattask").append(html);
     }
 
     function biaoti() {

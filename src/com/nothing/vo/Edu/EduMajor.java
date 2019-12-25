@@ -5,7 +5,7 @@ import javax.persistence.*;
 //
 //专业设置表
 @Entity
-@Table(name="EduMajor")
+@Table(name="eduMajor")
 public class EduMajor {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
