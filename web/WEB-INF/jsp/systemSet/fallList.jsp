@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2019/12/21
-  Time: 11:01
+  Date: 2019/12/25
+  Time: 8:48
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,7 +13,7 @@
 </head>
 <body>
 <div>
-    <table id="tt" lay-filter="tt"></table>
+    <table id="sf" lay-filter="sf"></table>
 </div>
 </body>
 <script>
@@ -21,25 +21,17 @@
         var table = layui.table,
             laypage = layui.laypage;
         table.render({
-            elem: '#tt'
+            elem: '#sf'
             ,height:'full-200'
             ,cellMinWidth: 80
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
-            ,url: '${pageContext.request.contextPath}/finance/tuitionList' //数据接口
+            ,url: '${pageContext.request.contextPath}/sys/fallList' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
-                {field: 'financeId', title: '编号', width:110}
-                ,{field: 'financedate', title: '时间', width:110}
-                ,{field: 'stuid', title: '学生', width:110,templet:function (d) { return d.stuName; }}
-                ,{field: 'termId', title: '学期', width:110,templet:function (d) { return d.termName; }}
-                ,{field: 'receipt', title: '付款方式', width:110}
-                ,{field: 'financeType', title: '类型', width:110,templet:function (d) {if(d.financeType==1){return "缴费";}else {return "退费"}}}
-                ,{field: 'factMoney', title: '金额(元)', width:110}
-                ,{field: 'empid', title: '收款人', width:100,templet:function (d) { return d.empName; }}
-                ,{field: 'remark', title: '说明', width:110}
-                ,{field: 'tuitionTypeId', title: '收款项', width:100,templet:function (d) { return d.typeName; }}
-                ,{field: 'Invalid', title: '状态', width:110,templet:function (d) {if(d.Invalid==1){return "有效";}else {return "作废"}}}
-                ,{field: 'empId', title: '操作', width: 200,toolbar: '#barOption'}
+                {field: 'fallId', title: '编号', width:110}
+                ,{field: 'fallLevel', title: '学期', width:110}
+                ,{field: 'fallRemark', title: '说明', width:110}
+                ,{field: 'fallId', title: '操作', width: 200,toolbar: '#barOption'}
             ]]
         });
         //监听顶部按钮
@@ -74,23 +66,23 @@
 
         });
         //监听工具条
-        table.on('tool(tt)', function (obj) {
+        table.on('tool(sf)', function (obj) {
             var data = obj.data;
-            if (obj.event === 'cancel') {
-                layer.confirm('真的作废该记录吗？', function (index) {
-                    $.post('${pageContext.request.contextPath}/finance/cencal',{id:data.financeId},function (data) {
+            if (obj.event === 'del') {
+                layer.confirm('确定删除记录吗？', function (index) {
+                    $.post('${pageContext.request.contextPath}/sys/fallDel',{id:data.fallId},function (data) {
                         //显示提示框
                         layer.msg("操作成功", {icon: 6});
-                        table.reload("tt");
+                        table.reload("sf");
                     });
                     return false;
                 });
-            }else if (obj.event === 'back'){
+            }else if (obj.event === 'up'){
                 layer.confirm('确认为学生'+data.stuName+'办理退款吗？', function (index) {
                     $.post('${pageContext.request.contextPath}/finance/back',{id:data.financeId},function (data) {
                         //显示提示框
                         layer.msg("操作成功", {icon: 6});
-                        table.reload("tt");
+                        table.reload("sf");
                     });
                     return false;
                 });
@@ -126,13 +118,13 @@
 <!-- 表格头部工具栏 -->
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增收费</button>
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="isAdd">新增</button>
     </div>
 </script>
 
 <!-- 表格操作按钮集 -->
 <script type="text/html" id="barOption">
-    <a class="layui-btn layui-btn-sm" lay-event="cancel">作废</a>
-    <%--<a class="layui-btn layui-btn-sm" lay-event="back">退款</a>--%>
+    <a class="layui-btn layui-btn-sm" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-sm" lay-event="up">编辑</a>
 </script>
 </html>
