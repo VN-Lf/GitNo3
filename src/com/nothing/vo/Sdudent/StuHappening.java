@@ -2,7 +2,7 @@ package com.nothing.vo.Sdudent;
 
 import javax.persistence.*;
 //学生事故状况表//
-@Table(name = "StuHappening")
+@Table(name = "stuHappening")
 @Entity
 public class StuHappening{
     @Id

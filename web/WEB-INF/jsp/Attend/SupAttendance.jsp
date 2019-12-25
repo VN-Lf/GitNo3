@@ -126,10 +126,10 @@
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
                 ,{field: 'attId', title: '编号', width:73, sort: true}
-                ,{field: 'punckClockTime', title: '未打卡日期  ', width:150,templet:function (row){
+                ,{field: 'punckClockTime', title: '提交日期  ', width:200,templet:function (row){
                         return createTime(row.punckClockTime);
                     }}
-                ,{field: 'applyTime', title: '未打卡时间  ', width:150,templet:function (row){
+                ,{field: 'applyTime', title: '未打卡时间  ', width:200,templet:function (row){
                         return createTimes(row.applyTime);
                     }}
                 ,{field: 'empname', title: '员工姓名 ', width:100}
@@ -264,21 +264,28 @@
         var d = date.getDate();
         d = d<10?("0"+d):d;
         var H = date.getHours();
+        H = H<10?("0"+H):H;
         var M = date.getMinutes();
+        M = M<10?("0"+M):M;
         var S = date.getSeconds();
-        var str = y+"-"+m+"-"+d +" "+H +":"+M + ":" +S;
-        return str;
+        S = S<10?("0"+S):S;
+        return y+"-"+m+"-"+d+" "+H+":"+M+":"+S ;
     }
     //时间修改方法
     function createTimes(v){
         var date = new Date(v);
-        var y = date.getHours();
-        var m = date.getMinutes();
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
         m = m<10?'0'+m:m;
-        var d = date.getSeconds();
+        var d = date.getDate();
         d = d<10?("0"+d):d;
-        var str = y+"："+m+"："+d;
-        return str;
+        var H = date.getHours();
+        H = H<10?("0"+H):H;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        return y+"-"+m+"-"+d+" "+H+":"+M+":"+S ;
     }
 </script>
 

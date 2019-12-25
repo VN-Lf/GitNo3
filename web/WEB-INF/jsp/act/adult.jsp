@@ -20,11 +20,12 @@
     </style>
 </head>
 <body>
-<h2 align="center" style="background-color: #D0E5F5;margin: 0;padding: 15px">审核员工请假单</h2>
+<h2 align="center" style="background-color: #D0E5F5;margin: 0;padding: 15px">审核请假单</h2>
 <hr/>
 <form action="${pageContext.request.contextPath}/complete" theme="simple" method="post">
     <input type="hidden" name="jobId" value="${job.jobId}"/>
     <input type="hidden" name="taskId" value="${taskId}"/>
+    <input type="hidden" name="jobType" value="${job.jobType}"/>
     <table style="width: 50%;margin: 0 auto" cellspacing="1" bgcolor="#6495ED">
         <tr bgcolor="white">
             <td align="right" style="width: 35%">请假人：</td>

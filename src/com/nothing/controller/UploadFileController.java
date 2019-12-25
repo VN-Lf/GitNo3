@@ -39,10 +39,10 @@ public class UploadFileController {
     @RequestMapping(value = "/uploadlist")
     @ResponseBody
     public JSONObject uploadlist() {
-        List uploadlist = examserviceimpl.examlist("select * from datadoc");
+        List uploadlist = examserviceimpl.examlist("select * from dataDoc");
 
         JSONObject jsonObject = new JSONObject();
-        int selectcount = examserviceimpl.Selectcount("select count(docId) from datadoc");
+        int selectcount = examserviceimpl.Selectcount("select count(docId) from dataDoc");
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
         jsonObject.put("data", uploadlist);
@@ -71,14 +71,14 @@ public class UploadFileController {
     @ResponseBody
     public String allfiledelete(String id) {
         id = id.substring(0, id.length() - 1);
-        examserviceimpl.alldelete("delete from datadoc where docId in(" + id + ")");
+        examserviceimpl.alldelete("delete from dataDoc where docId in(" + id + ")");
         return "删除成功";
     }
 
     @RequestMapping("/downfile")
     @ResponseBody
     public String downfile(String docId, HttpServletResponse response, HttpServletRequest request) throws IOException {
-        List fileurl = examserviceimpl.fileurl("select url from datadoc where docId=" + docId);
+        List fileurl = examserviceimpl.fileurl("select url from dataDoc where docId=" + docId);
         try {
             String filename = (String) fileurl.get(0);
 

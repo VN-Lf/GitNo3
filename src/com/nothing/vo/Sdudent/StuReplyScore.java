@@ -3,7 +3,7 @@ package com.nothing.vo.Sdudent;
 import javax.persistence.*;
 //学生答辩成绩//////
 @Entity
-@Table(name="StuReplyScore")
+@Table(name="stuReplyScore")
 public class StuReplyScore{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")

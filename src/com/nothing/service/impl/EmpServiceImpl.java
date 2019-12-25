@@ -69,7 +69,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override
     public void delete(String ids){
         String sql = "delete from emp where empId in ("+ids+");";
-        String sql2 = "delete from empeducation where empId in ("+ids+");";
+        String sql2 = "delete from empEducation where empId in ("+ids+");";
         String sql3 = "delete from post where empId in ("+ids+");";
         executeSQL(sql);
         executeSQL(sql2);
@@ -128,7 +128,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override
     public EmpEducation sqlEduVo(String eid) {
         EmpEducation emp = new EmpEducation();
-        List list = listBySQL2("select empEduId from empeducation where empId ="+eid);
+        List list = listBySQL2("select empEduId from empEducation where empId ="+eid);
         int empid = (int)list.get(0);
         return (EmpEducation)getObject(emp.getClass(),empid);
         /*List list = listBySQL(" select * from empeducation where empId = "+eid);
@@ -144,12 +144,12 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override//根据Id获取教育经历列表
     public List selEmpEducation(int id) {
-        return this.listBySQL("select * from empeducation where empId="+id);
+        return this.listBySQL("select * from empEducation where empId="+id);
     }
 
     @Override//根据Id获取教育经历的数量
     public int getEmpEducationCount(int id) {
-        return this.selectcount("select count(*) from empeducation where empId ="+id);
+        return this.selectcount("select count(*) from empEducation where empId ="+id);
     }
 
     @Override//根据Id获取教育经历
@@ -165,7 +165,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override//删除教育经历
     public void eduDel(String id) {
-        this.executeSQL("delete from empeducation where empEduId in("+id+")");
+        this.executeSQL("delete from empEducation where empEduId in("+id+")");
     }
 
     @Override//新增教育经历
@@ -175,12 +175,12 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override//根据Id获取工作经历列表
     public List jobHis(int id) {
-        return this.listBySQL("select * from emphistory where empId="+id);
+        return this.listBySQL("select * from empHistory where empId="+id);
     }
 
     @Override//根据Id获取工作经历条数
     public int jobHisCount(int id) {
-        return this.selectcount("select count(*) from emphistory where empId ="+id);
+        return this.selectcount("select count(*) from empHistory where empId ="+id);
     }
 
     @Override//根据Id获取工作经历
@@ -197,7 +197,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override///根据Id删除工作经历
     public void jobDel(String id) {
-        this.executeSQL("delete from emphistory where empHisId in("+id+")");
+        this.executeSQL("delete from empHistory where empHisId in("+id+")");
     }
 
     @Override//新增工作经历
@@ -207,12 +207,12 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public List famInf(int id) {
-        return this.listBySQL("select * from EmpFamilyImf where empId="+id);
+        return this.listBySQL("select * from empFamilyImf where empId="+id);
     }
 
     @Override
     public int famInfCount(int id) {
-        return this.selectcount("select count(*) from EmpFamilyImf where empId ="+id);
+        return this.selectcount("select count(*) from empFamilyImf where empId ="+id);
     }
 
     @Override
@@ -228,7 +228,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public void famDel(String id) {
-        this.executeSQL("delete from EmpFamilyImf where empFamImfId in("+id+")");
+        this.executeSQL("delete from empFamilyImf where empFamImfId in("+id+")");
     }
 
     @Override
@@ -248,7 +248,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public void delWeek(String id) {
-        executeSQL("delete from weekarrange where weekArrangeId ="+id);
+        executeSQL("delete from weekArrange where weekArrangeId ="+id);
     }
 
     @Override
@@ -259,7 +259,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override
     public void delWeekAll(String id) {
         id = id.substring(0,id.length()-1);
-        executeSQL("delete from weekarrange where weekArrangeId in ("+id+")");
+        executeSQL("delete from weekArrange where weekArrangeId in ("+id+")");
     }
 
     @Override
@@ -284,11 +284,11 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public int chatCount() {
-        return this.selectcount("select count(*) from chatRecord");
+        return this.selectcount("select count(*) from chatrecord");
     }
     @Override
     public void chatDel(String id) {
-        this.executeSQL("delete from chatRecord where Chatid in("+id+")");
+        this.executeSQL("delete from chatrecord where Chatid in("+id+")");
     }
 
     @Override

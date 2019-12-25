@@ -3,7 +3,7 @@ package com.nothing.vo.emp;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "EmpEducation")
+@Table(name = "empEducation")
 
 //员工教育经历表
 public class EmpEducation{

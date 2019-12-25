@@ -14,15 +14,15 @@ public class StuSerImp extends BaseDao implements StuSer{
     public List toStuList(){
             return listBySQL("select *\n" +
                     ",cla.className as classNames,floor.floorName as floorNames,house.hourName as hourNames from student stu \n" +
-                    "left join classvo cla using(classId)\n" +
-                    "left join studentfloor floor using(floorId)\n" +
-                    "left join studenthour house using(stuHours,floorId)");
+                    "left join classVo cla using(classId)\n" +
+                    "left join studentFloor floor using(floorId)\n" +
+                    "left join studentHour house using(stuHours,floorId)");
     }
 
 
     @Override
     public int allTitle(Object o) {
-        return selTotalRow("select count(*) from "+o.getClass().getSimpleName());
+        return selTotalRow("select count(*) from student");
 
     }
     @Override
@@ -94,7 +94,7 @@ public class StuSerImp extends BaseDao implements StuSer{
 
     @Override
     public List listO(Object o) {
-        return listBySQL("select * from "+o.getClass().getSimpleName());
+        return listBySQL("select * from dept");
     }
 
     @Override
@@ -102,7 +102,7 @@ public class StuSerImp extends BaseDao implements StuSer{
         return listBySQL("select c.classId,c.classAdviser,c.classCount,c.classFall,c.MajorId,c.classNo,c.classRemark,\n" +
                 "c.classTeacher,c.classTerm,c.classType,c.deptId,c.className,t.termName as tnames,d.deptName,\n" +
                 "ma.MajorName ,ma.deptId as maDept, ma.MajorRemark,ct.classTypeName, \n" +
-                "e.empName as bzr,ee.empName as js ,f.fallLevel from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join Term t on c.classTerm = t.termId left join StuFall f on c.classFall = f.fallId left join edumajor ma using(deptId,MajorId) left join dept d using(deptId) left join classType ct using(classType) \n");
+                "e.empName as bzr,ee.empName as js ,f.fallLevel from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join term t on c.classTerm = t.termId left join stuFall f on c.classFall = f.fallId left join eduMajor ma using(deptId,MajorId) left join dept d using(deptId) left join classtype ct using(classType) \n");
     }
 
     @Override
@@ -152,7 +152,7 @@ public class StuSerImp extends BaseDao implements StuSer{
     @Override
     public int countClaCon(String claSelectName, String claSelectAdviser, String claSelectTeacher, String claSelectTerm, String claSelectType, String claSelectFall) {
         return selTotalRow("\n" +
-                "select count(*) from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join Term t on c.classTerm = t.termId left join StuFall f on c.classFall = f.fallId left join edumajor ma using(MajorId,deptId) left join dept d using(deptId) left join classType ct using(classType) \n" +
+                "select count(*) from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join Term t on c.classTerm = t.termId left join StuFall f on c.classFall = f.fallId left join edumajor ma using(MajorId,deptId) left join dept d using(deptId) left join classtype ct using(classType) \n" +
                 "where className like '%"+claSelectName+"%' \n" +
                 "and e.empName like '%"+claSelectAdviser+"%'\n" +
                 "and ee.empName like '%"+claSelectTeacher+"%'\n" +
@@ -166,7 +166,7 @@ public class StuSerImp extends BaseDao implements StuSer{
         return listBySQL("select c.classId,c.classAdviser,c.classCount,c.classFall,c.MajorId,c.classNo,c.classRemark,\n" +
                 "c.classTeacher,c.classTerm,c.classType,c.deptId,c.className,t.termName as tnames,d.deptName,\n" +
                 "ma.MajorName ,ma.deptId as maDept, ma.MajorRemark,ct.classTypeName,\n" +
-                "e.empName as bzr,ee.empName as js ,f.fallLevel from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join Term t on c.classTerm = t.termId left join StuFall f on c.classFall = f.fallId left join edumajor ma using(MajorId,deptId) left join dept d using(deptId) left join classType ct using(classType) \n" +
+                "e.empName as bzr,ee.empName as js ,f.fallLevel from classVo c left join emp e on  c.classAdviser = e.empId left join  emp ee on  c.classTeacher = ee.empId left join Term t on c.classTerm = t.termId left join StuFall f on c.classFall = f.fallId left join edumajor ma using(MajorId,deptId) left join dept d using(deptId) left join classtype ct using(classType) \n" +
                 "where className like '%"+claSelectName+"%' \n" +
                 "and e.empName like '%"+claSelectAdviser+"%'\n" +
                 "and ee.empName like '%"+claSelectTeacher+"%'\n" +
@@ -186,10 +186,8 @@ public class StuSerImp extends BaseDao implements StuSer{
     }
 
     @Override
-    public List selectTeacherByStuId(String studId){
-        return listBySQL("select c.className , e.empId ,e.empName,p.postName ,s.stuName,s.studId\n" +
-                "from emp e left join classvo c on c.classAdviser = e.empId left join classVo cc on cc.classTeacher = e.empId\n" +
-                "left join student s on c.classId = s.classId left join post p on p.empId = e.empId where postName like '%授课教师%' and studId  = "+studId);
+    public List selectTeacherByStuId(String studId) {
+        return listBySQL("select classTeacher from classvo where classId = (select classId from student where studId = "+studId+")");
     }
 
 

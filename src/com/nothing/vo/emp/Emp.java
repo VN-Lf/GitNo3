@@ -7,7 +7,7 @@ import java.util.Date;
  * 员工表
  */
 @Entity
-@Table(name = "Emp")
+@Table(name = "emp")
 public class Emp{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")

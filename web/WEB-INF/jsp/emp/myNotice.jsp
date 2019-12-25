@@ -71,25 +71,15 @@
                             var empId= item.emps;
                             var noticeId = item.noticeId;
                             var content = item.content;
-                            var deptIds = item.deptIds;
                             var empName = item.empName;
                             var noticeTime = new Date(item.noticeTime).format("yyyy-MM-dd");
-                            var noticeType = item.noticeType;
                             var title = item.title;
                             var tishi = "";
                             if(content.length > 100){
                                 tishi = "<p text-align:center style='margin: 0 0 0 28%;color: #f1f1f1'>单击显示更多</p>\n";
                             }
-                            deptIds = noticeType;
-                            switch (noticeType){
-                                case 1:noticeType="所有人";break;
-                                case 2:noticeType="员工";break;
-                                case 3:noticeType="学生";break;
-                                case 4:noticeType="班级";break;
-                                default:noticeType="---";
-                            }
 
-                            addMovk(noticeId,tishi,content,deptIds,empName,noticeTime,noticeType,title,empId);
+                            addMovk(noticeId,tishi,content,empName,noticeTime,title,empId);
                         });
                         tishi('已加载完毕');
                     }
@@ -189,7 +179,7 @@
             jinzhi = 1;
         }
     }//添加一个公告
-    function addMovk(nid,tishi,con,dep,name,ntime,ntype,title,emps) {
+    function addMovk(nid,tishi,con,name,ntime,title,emps) {
         var emp = new Array();
         if (emps){
             emp = emps.split(",");
@@ -235,19 +225,6 @@
             "       </div>";
         $("#list").append(html);
     }
-
-    function delShuju(id) {
-        if (confirm("确定删除吗？")) {
-            $.post('${pageContext.request.contextPath}/emp/notdel?id='+id,{
-            },function(data){
-                alert(data);
-                location.reload();
-            });
-        }
-    }
-
-    var textnei = "";
-    var dianId = "";//修改信息
 </script>
 </body>
 </html>

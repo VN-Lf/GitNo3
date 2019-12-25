@@ -4,7 +4,7 @@ import javax.persistence.*;
 //
 //班级表
 @Entity
-@Table(name="ClassVo")
+@Table(name="classVo")
 public class ClassVo{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
