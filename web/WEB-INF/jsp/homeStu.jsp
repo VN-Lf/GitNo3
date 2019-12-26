@@ -152,8 +152,8 @@
                 <li href="javascript:void(0);" src="" class="cs-navi-tab">
                     <a>查看学费</a>
                 </li>
-                <li href="javascript:void(0);" src="" class="cs-navi-tab">
-                    <a style="color: green">问题反馈</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/feedback/toStufeedback" class="cs-navi-tab">
+                    <a>问题反馈</a>
                 </li>
             </ul>
         </div>

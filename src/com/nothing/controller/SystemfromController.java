@@ -82,7 +82,10 @@ public class SystemfromController {
             yuJu += x+"%";
         }
 
-        List examlist = serviceimpl.kaohelist("select e.empId,e.empName as  name,p.postName,e.empSex,e.empPhone,sum(m.Scores) as value  from emp as e left join post as p on e.empPostId=p.postId left join aduitlog as l on e.empId=l.empid  left join aduitmodel as m on l.aduitModelid=m.aduitModelid  where e.empDeptId like '%"+Depid+"%' and e.empName like '"+yuJu+"' GROUP BY e.empName");
+        List examlist = serviceimpl.kaohelist("select e.empId,e.empName as  name,p.postName,e.empSex,e.empPhone,sum(m.Scores)" +
+                " as value  from emp as e left join post as p on e.empId=p.empId left join aduitlog as l on e.empId=l.empid " +
+                " left join aduitmodel as m on l.aduitModelid=m.aduitModelid  where e.empDeptId like '%"+Depid+"%' " +
+                "and e.empName like '"+yuJu+"' GROUP BY e.empName");
 
         JSONObject jsonObject=new JSONObject();
         int selectcount = serviceimpl.Selectcount("select count(empId) from emp");

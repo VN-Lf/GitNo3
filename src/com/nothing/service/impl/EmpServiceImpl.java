@@ -90,7 +90,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
         cha.setKecheng(0);
         cha.setZhiban(0);
-        cha.setFanKui(0);
+        cha.setDeptGuan(0);
         cha.setZhaosheng(0);
         addObject(cha);
     }
@@ -139,7 +139,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public Post sqlPostVo(String eid) {
-        List list = listBySQL(" select * from post where empId = "+eid);
+        List list = listBySQL("select * from post where empId = "+eid);
         Map map = (Map) list.get(0);
         Post post = new Post();
         post.setPostId((int)map.get("postId"));
@@ -173,7 +173,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
         cha.setKecheng((int)map.get("kecheng"));
         cha.setZhiban((int)map.get("zhiban"));
-        cha.setFanKui((int)map.get("fanKui"));
+        cha.setDeptGuan((int)map.get("deptGuan"));
         cha.setZhaosheng((int)map.get("zhaosheng"));
 
         return cha;

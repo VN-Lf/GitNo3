@@ -1,4 +1,5 @@
-<%@ page import="com.nothing.vo.emp.Post" %><%--
+<%@ page import="com.nothing.vo.emp.Post" %>
+<%@ page import="com.nothing.vo.charge.charModule" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/4
@@ -10,7 +11,7 @@
 <html>
 <head>
     <title>员工列表页</title>
-    <% Post post = (Post) session.getAttribute("post");%>
+    <% charModule post = (charModule) session.getAttribute("mod");%>
     <style type="text/css">
         .layui-table-tool {
             z-index: 0;
@@ -72,7 +73,7 @@
                     templet:function (row){
                         return loginStatus(row.empLoginStatus);
                     }}
-                <%if(post.getPostName().indexOf("部长")!=-1 || post.getPostName().indexOf("校长")!=-1){%>
+                <%if(post.getUpdateEmp()== 1){%>
                 ,{field: 'empLoginStatus', title: '是否禁用', width:95,templet:function (row){
                         return onclikId(row.empLoginStatus);
                     }
@@ -173,7 +174,6 @@
                 form.render("select");
             }
         })
-
     });
     //判断当前用户的状态
     function loginStatus(v){

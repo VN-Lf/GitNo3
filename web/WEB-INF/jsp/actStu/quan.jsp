@@ -19,6 +19,15 @@
 </head>
 <body id="main" style="height: 100%;width: 100%" class="easyui-layout">
     <div data-options="region:'center',split:true">
+        <form class="layui-form" style="width: 1205px;margin: 20px 0px 0px 10px">
+            所在部门:
+            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元-->
+                <select id="sxdept">
+                    <option value=""></option>
+                </select>
+            </div>
+            <input class="layui-btn layui-btn-normal" id="shaixuan" style="width: 80px" value="筛选" />
+        </form>
         <table id="demo" class="layui-bg-black" lay-filter="test"></table>
     </div>
 </body>
@@ -43,6 +52,7 @@
                 },{field: 'weekEmp', title: '周报审批',event: 'weekEmp', width:90,templet:function (row){return onclikId(row.weekEmp);}
                 },{field: 'attkEmp', title: '员工考勤',event: 'attkEmp', width:90,templet:function (row){return onclikId(row.attkEmp);}
                 },{field: 'weixiu', title: '维修管理',event: 'weixiu', width:90,templet:function (row){return onclikId(row.weixiu);}
+                },{field: 'deptGuan', title: '部门管理',event: 'deptGuan', width:90,templet:function (row){return onclikId(row.deptGuan);}
                 },{field: 'kaoheEmp', title: '纪检权限',event: 'kaoheEmp', width:90,templet:function (row){return onclikId(row.kaoheEmp);}
                 },{field: 'stuBze', title: '班主任',event: 'stuBze', width:90,templet:function (row){return onclikId(row.stuBze);}
                 },{field: 'stuJs', title: '教师权限',event: 'stuJs', width:90,templet:function (row){return onclikId(row.stuJs);}
@@ -144,6 +154,22 @@
                             lie:'kaoheEmp',
                             cid:data.charId,
                             zt:data.kaoheEmp
+                        },function(data){
+                            layer.msg('<div style="padding: 20px 100px;">'+"操作成功"+'</div>');
+                            location.reload();
+                        });
+                    },function () {
+                        location.reload();
+                    });
+                    break;
+                case 'deptGuan':
+                    if(data.deptGuan == '0') var tishi = "确认提供该权限吗？";
+                    else if(data.deptGuan == '1') var tishi = "确认撤销该权限吗？";
+                    layer.confirm(tishi, {icon: 3, title: '提示信息'}, function (index){
+                        $.post('${pageContext.request.contextPath}/Building/up',{
+                            lie:'deptGuan',
+                            cid:data.charId,
+                            zt:data.deptGuan
                         },function(data){
                             layer.msg('<div style="padding: 20px 100px;">'+"操作成功"+'</div>');
                             location.reload();
@@ -286,6 +312,21 @@
                 });
             }
         });
+    });
+    layui.use(['form', 'upload', 'layer'], function () {
+        var form = layui.form;
+        $.ajax({
+            url: '${pageContext.request.contextPath}/to/deptlist',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                var json = data.data;
+                $.each(json, function (index, item) {
+                    $('#sxdept').append(new Option(item.deptName,item.deptId));// 下拉菜单里添加元素
+                });
+                form.render("select");
+            }
+        })
     });
     function onclikId(v) {
         if(v == 0){

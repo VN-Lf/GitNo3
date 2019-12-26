@@ -309,14 +309,18 @@
 
         function shuaF5(f) {
             if(f === 1){
-                $("#weektask").remove();
-                $("#emptask").remove();
+                <%if(mod.getBoss() != 0){%>
                 $("#chattask").remove();
+                $("#weektask").remove();
+                <%}%>
+                $("#emptask").remove();
                 $("#atttask").remove();
             }
-            chazhaoWeek();
-            chazhaoAct();
+            <%if(mod.getBoss() != 0){%>
             chazhaoChat();
+            chazhaoWeek();
+            <%}%>
+            chazhaoAct();
             chazhaoAtt();
         }
 
@@ -418,11 +422,11 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>员工资料</a>
                 </li>
-                <li href="javascript:void(0);" <%if(mod.getWeekEmp() == 0){%>
+                <li href="javascript:void(0);" <%if(mod.getDeptGuan() == 0){%>
                     src="${pageContext.request.contextPath}/to/notquan"
-                    <%}else {%>
+                        <%}else {%>
                     src="${pageContext.request.contextPath}/Tuition/todept"
-                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
+                        <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>部门管理</a>
                 </li>
                 <li href="javascript:void(0);" <%if(mod.getStuJs() == 0){%>
@@ -460,7 +464,11 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/home" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>学生资料</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myTaskStu" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getStuBze() == 1 || mod.getStuJs() == 1){%>
+                    src="${pageContext.request.contextPath}/myTaskStu"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>学生请假</a>
                 </li>
                 <li href="javascript:void(0);" <%if(mod.getStuJs() == 0){%>
@@ -530,7 +538,7 @@
                     <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>试讲培训</a>
                 </li>
-                <li href="javascript:void(0);" <%if(mod.getKaoheEmp() == 0){%>
+                <li href="javascript:void(0);" <%if(mod.getZhiban() == 0){%>
                     src="${pageContext.request.contextPath}/to/notquan"
                     <%}else {%>
                     src="${pageContext.request.contextPath}/to/weeklist"
@@ -565,7 +573,7 @@
                 <li href="javascript:void(0);" <%if(mod.getKaoheEmp() == 0){%>
                     src="${pageContext.request.contextPath}/to/notquan"
                     <%}else {%>
-                    src="${pageContext.request.contextPath}/exam/lookexaml"
+                    src="${pageContext.request.contextPath}/exam/lookexam"
                     <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>员工考核</a>
                 </li>
@@ -580,8 +588,8 @@
         </div>
         <div title="其它" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/feedback/toStufeedback" class="cs-navi-tab">
-                    <a style="color: green">问题反馈</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/feedback/tofeedback" class="cs-navi-tab">
+                    <a>问题反馈</a>
                 </li>
                 <li href="javascript:void(0);" <%if(mod.getStuMoney() == 0){%>
                     src="${pageContext.request.contextPath}/to/notquan"
@@ -595,29 +603,13 @@
                 </li>
             </ul>
         </div>
-        <div title="系统报表" style="overflow:auto;padding:0;height: 50px;">
-            <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">日常考核</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">员工请假</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">学生请假</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">未打卡说明</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">宿舍统计报表</a>
-                </li>
-            </ul>
-        </div>
         <div title="系统设置" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>流程</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/System/toSystem" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>统计报表</a>
                 </li>
                 <li href="javascript:void(0);" <%if(mod.getBoss() == 0 || mod.getBoss() == 1){%>
                     src="${pageContext.request.contextPath}/Building/toQuan"
@@ -627,7 +619,7 @@
                     <a>权限管理</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/sys/toSetList" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">系统设置</a>
+                    <a>系统设置</a>
                 </li>
             </ul>
         </div>
