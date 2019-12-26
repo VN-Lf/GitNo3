@@ -9,7 +9,7 @@
 <%@ include file="index.jsp"%>
 <html>
 <head>
-    <title>员工请假详情</title>
+    <title>学生请假详情</title>
 </head>
 <body>
 <div data-options="region:'center'">
@@ -26,14 +26,13 @@
             elem: '#demo'
             ,height: 312
             ,toolbar: '#toolbarDemo'
-            ,url: '${pageContext.request.contextPath}/System/leadatalist?id='+${id} //数据接口
+            ,url: '${pageContext.request.contextPath}/System/stuleadatalist?id='+${id} //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
-                {field: 'empName', title: '员工姓名', sort: true}
+                {field: 'stuName', title: '学生姓名', sort: true}
                 ,{field: 'day', title: '请假天数'}
-                ,{field: 'time', title: '小时(包含4小时带薪假)', sort: true}
-                ,{field: 'starttime', title: '开始时间'}
-                ,{field: 'endtime', title: '结束时间'}
+                ,{field: 'goDate', title: '请假时间', sort: true}
+                ,{field: 'endDate', title: '结束时间'}
                 ,{field: 'remark', title: '说明'}
                 ,{field: 'processFlag', title: '状态',templet:function (data) {
                         if(data.processFlag == 1){

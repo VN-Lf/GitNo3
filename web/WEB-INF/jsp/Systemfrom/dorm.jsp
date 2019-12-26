@@ -9,7 +9,7 @@
 <%@ include file="index.jsp"%>
 <html>
 <head>
-    <title>员工请假统计</title>
+    <title>宿舍人数统计</title>
     <script  type="text/javascript" src="${pageContext.request.contextPath}/echarts.min.js"></script>
 </head>
 <body id="kaohe">
@@ -21,10 +21,10 @@
 <script type="text/javascript">
     var myEcharts=echarts.init(document.getElementById("pie"));
     var str="";
-    $.post("${pageContext.request.contextPath}/System/leavelist",{},function (d) {
+    $.post("${pageContext.request.contextPath}/System/dormlist",{},function (d) {
         myEcharts.setOption({
                 title:{
-                    text:'员工请假统计',
+                    text:'宿舍人数统计',
                     x:'center',
                     y:'top',
                     textAlign:'left'
@@ -42,7 +42,8 @@
                     textStyle: {
                         fontSize: 20,
                     },
-                    data: ['请假天数','请假次数']
+                    data: ['人数'],
+
                 },
                 xAxis:{
                     data:d.name,
@@ -55,16 +56,11 @@
                         fontSize:20,
                     }
                 },
-                series:[{
-
-                    name:'请假天数',
-                    type:'bar',
-                    data:d.day
-                },{
-                    name:'请假次数',
+                series:{
+                    name:'人数',
                     type:'bar',
                     data:d.count
-                }]
+                }
             }
         )
     },"json");
@@ -72,7 +68,7 @@
 
     function kaohe() {
         document.getElementById("kaohe").innerHTML =
-            '<object type="text/html" data="${pageContext.request.contextPath}/System/leavedata" width="100%" height="100%"></object>';
+            '<object type="text/html" data="${pageContext.request.contextPath}/System/dormdata" width="100%" height="100%"></object>';
     }
 </script>
 </html>

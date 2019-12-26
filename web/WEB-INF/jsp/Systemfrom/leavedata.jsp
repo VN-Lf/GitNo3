@@ -28,7 +28,7 @@
         </script>
         <table class="layui-table" id="demo" lay-data="{id: 'idTest'}" lay-filter="test"></table>
     </div>
-    <div id="east" data-options="region:'east',collapsed:true,title:'其他信息'" style="width: 650px;">
+    <div id="east" data-options="region:'east',collapsed:true,title:'其他信息'" style="width: 1050px;">
         <h1 style="text-align: center" >单击数据查看详情</h1>
     </div>
 </body>
@@ -40,7 +40,7 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height: 500
             ,toolbar: '#toolbarDemo'
             ,method:'post'
             ,url: '${pageContext.request.contextPath}/System/leavedatalist' //数据接口
