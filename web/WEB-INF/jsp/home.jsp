@@ -426,6 +426,9 @@
                 <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a style="color: green">权限管理</a>
                 </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/sys/toSetList" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: green">系统设置</a>
+                </li>
             </ul>
         </div>
     </div>

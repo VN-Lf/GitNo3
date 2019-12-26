@@ -11,7 +11,7 @@
 <head>
     <title>Title</title>
 </head>
-<body id="tuition">
+<body>
 <div>
     <table id="tt" lay-filter="tt"></table>
 </div>
