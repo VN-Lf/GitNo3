@@ -11,7 +11,7 @@
 <head>
     <title>Title</title>
 </head>
-<body id="tuition">
+<body>
 <div>
     <table id="tt" lay-filter="tt"></table>
 </div>
@@ -27,19 +27,22 @@
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/finance/tuitionList' //数据接口
             ,page: true //开启分页
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[ //表头
-                {field: 'financeId', title: '编号', width:110}
-                ,{field: 'financedate', title: '时间', width:110}
-                ,{field: 'stuid', title: '学生', width:110,templet:function (d) { return d.stuName; }}
-                ,{field: 'termId', title: '学期', width:110,templet:function (d) { return d.termName; }}
-                ,{field: 'receipt', title: '付款方式', width:110}
-                ,{field: 'financeType', title: '类型', width:110,templet:function (d) {if(d.financeType==1){return "缴费";}else {return "退费"}}}
-                ,{field: 'factMoney', title: '金额(元)', width:110}
-                ,{field: 'empid', title: '收款人', width:100,templet:function (d) { return d.empName; }}
-                ,{field: 'remark', title: '说明', width:110}
-                ,{field: 'tuitionTypeId', title: '收款项', width:100,templet:function (d) { return d.typeName; }}
-                ,{field: 'Invalid', title: '状态', width:110,templet:function (d) {if(d.Invalid==1){return "有效";}else {return "作废"}}}
-                ,{field: 'empId', title: '操作', width: 200,toolbar: '#barOption'}
+                {field: 'financeId', title: '编号'}
+                ,{field: 'financedate', title: '时间'}
+                ,{field: 'stuid', title: '学生',templet:function (d) { return d.stuName; }}
+                ,{field: 'termId', title: '学期',templet:function (d) { return d.termName; }}
+                ,{field: 'receipt', title: '付款方式',}
+                ,{field: 'financeType', title: '类型',templet:function (d) {if(d.financeType==1){return "缴费";}else {return "退费"}}}
+                ,{field: 'factMoney', title: '金额(元)'}
+                ,{field: 'empid', title: '收款人',templet:function (d) { return d.empName; }}
+                ,{field: 'remark', title: '说明'}
+                ,{field: 'tuitionTypeId', title: '收款项',templet:function (d) { return d.typeName; }}
+                ,{field: 'Invalid', title: '状态',templet:function (d) {if(d.Invalid==1){return "有效";}else {return "作废"}}}
+                ,{field: 'empId', title: '操作',toolbar: '#barOption'}
             ]]
         });
         //监听顶部按钮

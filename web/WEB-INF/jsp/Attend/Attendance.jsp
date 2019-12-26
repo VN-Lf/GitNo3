@@ -427,13 +427,5 @@
         return str;
     }
 </script>
-<%--<script type="text/html" id="barDemo">
-    {{#  if($('#sfqr').val() == 0){ }}
-            <privilege:operation operationId="10044" clazz="layui-btn layui-btn-xs" onClick=""   name="核验"  iconCls="icon-edit" layEvent="check" ></privilege:operation>
-            <privilege:operation operationId="10044" clazz="layui-btn layui-btn-xs" onClick=""   name="详情"  iconCls="icon-edit" layEvent="look" ></privilege:operation>
-          {{#  } else { }}
-            <privilege:operation operationId="10044" clazz="layui-btn layui-btn-xs" onClick=""   name="详情"  iconCls="icon-edit" layEvent="look" ></privilege:operation>
-         {{#  } }}
-</script>--%>
 </body>
 </html>

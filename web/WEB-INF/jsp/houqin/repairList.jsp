@@ -31,16 +31,19 @@
             ,cellMinWidth: 80
             ,url: '${pageContext.request.contextPath}/houqin/repairList' //数据接口
             ,page: true //开启分页
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[ //表头
-                {field: 'equipmentId', title: '编号', width:80, sort: true, fixed: 'left'}
-                ,{field: 'equipmentType', title: '保修事项', width:100}
-                ,{field: 'status', title: '修理状态', width:100,templet:function (d) {if (d.status==1){return'已完成'}else{return'未完成'}}}
-                ,{field: 'classes', title: '部门班级', width:100,templet:function (d) {if (d.userType==1){return d.classId;}else{return d.empDeptId;}}}
-                ,{field: 'student', title: '报修人', width:150,templet:function (d) {if (d.userType==1){return d.stuName;}else{return d.empName;}}}
+                {field: 'equipmentId', title: '编号',sort: true, fixed: 'left'}
+                ,{field: 'equipmentType', title: '保修事项'}
+                ,{field: 'status', title: '修理状态',templet:function (d) {if (d.status==1){return'已完成'}else{return'未完成'}}}
+                ,{field: 'classes', title: '部门班级',templet:function (d) {if (d.userType==1){return d.classId;}else{return d.empDeptId;}}}
+                ,{field: 'student', title: '报修人',templet:function (d) {if (d.userType==1){return d.stuName;}else{return d.empName;}}}
                 ,{field: 'remark', title: '备注'}
-                ,{field: 'userType', title: '报修身份', width:100,templet:function (d) {if (d.userType==1){return'学生';}else{return'员工';}}}
-                ,{field: 'startTime', title: '保修时间', width:150,sort:true,templet: function(d){return dateFormat(d.startTime)}}
-                ,{field: 'eedTime', title: '完成时间', width: 150,sort:true,templet: function(d){if (d.eedTime==null){return "";}else {return dateFormat(d.eedTime)}}}
+                ,{field: 'userType', title: '报修身份',templet:function (d) {if (d.userType==1){return'学生';}else{return'员工';}}}
+                ,{field: 'startTime', title: '保修时间',sort:true,templet: function(d){return dateFormat(d.startTime)}}
+                ,{field: 'eedTime', title: '完成时间',sort:true,templet: function(d){if (d.eedTime==null){return "";}else {return dateFormat(d.eedTime)}}}
                 ,{field: 'eedTime', title: '操作', width: 150,toolbar:"#barOption"}
             ]]
         });
@@ -50,7 +53,7 @@
             if (obj.event === 'up') {
                 openUpdate(data.equipmentId);
             } else if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('真的要删除该记录吗？', function (index) {
                     $.post('${pageContext.request.contextPath}/houqin/repDel',{id:data.equipmentId},function (data) {
                         //显示提示框
                         layer.msg("删除成功", {icon: 6});

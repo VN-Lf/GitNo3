@@ -25,14 +25,17 @@
             ,toolbar:'#toolbar'
             ,url: '${pageContext.request.contextPath}/emp/chatList' //数据接口
             ,page: true //开启分页
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[ //表头
-                {field: 'chatid', title: '编号', width:80,sort: true, fixed: 'left'}
-                ,{field: 'sayface', title: '学生', width:100,templet:function (d) { return d.stuName; }}
-                ,{field: 'teacher', title: '老师', width:100,templet:function (d) { return d.empName; }}
-                ,{field: 'addr', title: '地点', width:120}
-                ,{field: 'sayscon', title: '内容', width:00}
-                ,{field: 'chatDate', title: '时间', width: 120,sort: true}
-                ,{field: 'chatDate', title: '操作', width: 150,toolbar:"#barOption"}
+                {field: 'chatid', title: '编号',sort: true, fixed: 'left'}
+                ,{field: 'sayface', title: '学生',templet:function (d) { return d.stuName; }}
+                ,{field: 'teacher', title: '老师',templet:function (d) { return d.empName; }}
+                ,{field: 'addr', title: '地点'}
+                ,{field: 'sayscon', title: '内容'}
+                ,{field: 'chatDate', title: '时间',sort: true}
+                ,{field: 'chatDate', title: '操作',toolbar:"#barOption"}
             ]]
         });
         //监听顶部按钮
@@ -71,7 +74,7 @@
             if (obj.event === 'up'){
                 open("修改",'${pageContext.request.contextPath}/emp/toChatUp?cid='+data.chatid);
             }else if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('真的要删除该记录吗？', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/chatDel',{id:data.chatid},function (data) {
                         //显示提示框
                         layer.msg("删除成功", {icon: 6});

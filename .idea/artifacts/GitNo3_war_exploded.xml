@@ -87,6 +87,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/web/lib/activiti-simple-workflow-5.22.0-sources.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/lib/hibernate-commons-annotations-4.0.4.Final.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/lib/jboss-transaction-api_1.2_spec-1.0.0.Final.jar" />
+          <element id="library" level="project" name="lib" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="GitNo3/web/Web" />

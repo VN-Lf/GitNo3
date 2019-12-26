@@ -100,19 +100,19 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         String sql = "delete from emp where empId in ("+ids+");";
         String sql2 = "delete from empEducation where empId in ("+ids+");";
         String sql3 = "delete from post where empId in ("+ids+");";
+        String sql4 = "delete from empFamilyImf where empId in ("+ids+");";
+        String sql5 = "delete from empHistory where empId in ("+ids+");";
+        String sql6 = "delete from empFamilyImf where empId in ("+ids+");";
+        String sql7 = "delete from aduitLog where empid in ("+ids+");";
+        String sql8 = "delete from jobs where empid in ("+ids+");";
         executeSQL(sql);
         executeSQL(sql2);
         executeSQL(sql3);
-        /*Emp emp = new Emp();
-        Post psot = new Post();
-        EmpEducation edu = new EmpEducation();
-        emp.setEmpId(Integer.parseInt(ids));
-        psot.setEmpId(Integer.parseInt(ids));
-        edu.setEmpId(Integer.parseInt(ids));
-
-        delObject(emp);
-        delObject(psot);
-        delObject(edu);*/
+        executeSQL(sql4);
+        executeSQL(sql5);
+        executeSQL(sql6);
+        executeSQL(sql7);
+        executeSQL(sql8);
     }
 
     @Override
