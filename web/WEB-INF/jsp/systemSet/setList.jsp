@@ -35,13 +35,13 @@
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                🎭
             </a>
         </td>
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                ⚓
             </a>
         </td>
     </tr>
@@ -49,25 +49,25 @@
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                届别设置
+                ❄
             </a>
         </td>
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                🍤
             </a>
         </td>
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                🙄
             </a>
         </td>
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                🙃
             </a>
         </td>
     </tr>

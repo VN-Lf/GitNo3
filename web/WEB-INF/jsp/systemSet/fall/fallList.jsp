@@ -13,7 +13,7 @@
 </head>
 <body>
 <div>
-    <table id="sf" lay-filter="sf"></table>
+    <table id="sf" lay-filter="sf" style="text-align: center;"></table>
 </div>
 </body>
 <script>
@@ -27,11 +27,14 @@
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/sys/fallList' //数据接口
             ,page: true //开启分页
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[ //表头
-                {field: 'fallId', title: '编号', width:110}
-                ,{field: 'fallLevel', title: '学期', width:110}
-                ,{field: 'fallRemark', title: '说明', width:110}
-                ,{field: 'fallId', title: '操作', width: 200,toolbar: '#barOption'}
+                {field: 'fallId', title: '编号'}
+                ,{field: 'fallLevel', title: '学期'}
+                ,{field: 'fallRemark', title: '说明'}
+                ,{field: 'fallId', title: '操作',toolbar: '#barOption'}
             ]]
         });
         //监听顶部按钮
