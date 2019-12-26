@@ -9,7 +9,7 @@
 <%@ include file="index.jsp"%>
 <html>
 <head>
-    <title>员工请假统计</title>
+    <title>学生请假统计</title>
     <script  type="text/javascript" src="${pageContext.request.contextPath}/echarts.min.js"></script>
 </head>
 <body id="kaohe">
@@ -21,16 +21,16 @@
 <script type="text/javascript">
     var myEcharts=echarts.init(document.getElementById("pie"));
     var str="";
-    $.post("${pageContext.request.contextPath}/System/leavelist",{},function (d) {
+    $.post("${pageContext.request.contextPath}/System/stuleavelist",{},function (d) {
         myEcharts.setOption({
                 title:{
-                    text:'员工请假统计',
+                    text:'学生请假统计',
                     x:'center',
                     y:'top',
                     textAlign:'left'
                 },
                 tooltip:{
-                    text:'count'
+                    text:'sales'
                 },
                 legend: {
                     x:'left',
@@ -56,7 +56,6 @@
                     }
                 },
                 series:[{
-
                     name:'请假天数',
                     type:'bar',
                     data:d.day
@@ -72,7 +71,7 @@
 
     function kaohe() {
         document.getElementById("kaohe").innerHTML =
-            '<object type="text/html" data="${pageContext.request.contextPath}/System/leavedata" width="100%" height="100%"></object>';
+            '<object type="text/html" data="${pageContext.request.contextPath}/System/stuleavedata" width="100%" height="100%"></object>';
     }
 </script>
 </html>
