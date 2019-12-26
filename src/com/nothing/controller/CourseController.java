@@ -20,7 +20,7 @@ public class CourseController {
 
     @RequestMapping("toCourse")
     public String toCourse(HttpServletRequest request){
-        List list = service.Courselist("SELECT * FROM coursetype ");
+        List list = service.Courselist("SELECT * FROM courseType ");
         request.setAttribute("courseList",list);
         return "course/Course";
     }
@@ -28,7 +28,7 @@ public class CourseController {
     @RequestMapping("list")
     @ResponseBody
     public JSONObject list(){
-        List list = service.Courselist("select c.*,ct.courseTypeName as typeName from course c left join coursetype ct  using(courseTypeId)");
+        List list = service.Courselist("select c.*,ct.courseTypeName as typeName from course c left join courseType ct  using(courseTypeId)");
         int count = service.Coursecount("select count(*) from course");
 
         JSONObject json = new JSONObject();

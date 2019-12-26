@@ -14,11 +14,11 @@ public class houqinServiceImpl extends  BaseDao implements houqinService {
 
     //获取保修列表
     public List repairList(){
-        return listBySQL( "select  e.*,e1.empName,e1.empDeptId,stu.stuName,stu.classId from equipmentrepair as e left join student  as stu on e.student=stu.studId left join emp as e1 on e.student=e1.empId");
+        return listBySQL( "select  e.*,e1.empName,e1.empDeptId,stu.stuName,stu.classId from equipmentRepair as e left join student  as stu on e.student=stu.studId left join emp as e1 on e.student=e1.empId");
     }
     //获取数据数量
     public int getCount(){
-        return selectcount("select count(equipmentId) from equipmentrepair");
+        return selectcount("select count(equipmentId) from equipmentRepair");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class houqinServiceImpl extends  BaseDao implements houqinService {
 
     @Override
     public void erDel(String id) {
-        this.executeSQL("delete from equipmentrepair where equipmentId in("+id+")");
+        this.executeSQL("delete from equipmentRepair where equipmentId in("+id+")");
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.nothing.service;
 
 import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.charge.Notice;
+import com.nothing.vo.charge.charModule;
 import com.nothing.vo.emp.*;
 import com.nothing.vo.wintable.chatRecord;
 
@@ -9,7 +10,7 @@ import java.util.List;
 //jiekou
 public interface EmpService {
     List selEmpAll(String sql);
-    List selNoticeAll(String type);
+    List selNoticeAll(String type,String ntp);
     int selEmpCont(String sql);
     void addEmp(Emp emp, EmpEducation empEducation, Post post);
     void delete(String ids);
@@ -17,6 +18,7 @@ public interface EmpService {
     void banEmp(String id, String zt);
     Emp sqlEmpVo(String id);
     Post sqlPostVo(String eid);
+    charModule getModule(String id);
     EmpEducation sqlEduVo(String eid);
     void empUpdate(Emp emp, EmpEducation Edu, Post post);
     void addNotice(Notice notice, int lx);//发布公告

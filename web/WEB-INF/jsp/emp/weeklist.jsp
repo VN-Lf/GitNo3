@@ -194,7 +194,7 @@
             });
         });
         table.on('rowDouble(test)',function(obj){
-            var o = obj.data //得到当前行数据
+            var o = obj.data; //得到当前行数据
             openUpdate2(o);
         });
         table.on('toolbar(test)', function(obj){
@@ -213,7 +213,6 @@
                                 id:employeesId
                             },function(data){
                                 table.reload("demo");
-                                layer.close(index);
                             });
                         });
                     }else{

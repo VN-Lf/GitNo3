@@ -21,7 +21,7 @@
     <div data-options="region:'center',split:true">
         <form class="layui-form" style="width: 1205px;margin: 20px 0px 0px 10px">
             所在部门:
-            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元素并不是必须的 -->
+            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元-->
                 <select id="sxdept">
                     <option value=""></option>
                 </select>
@@ -42,7 +42,7 @@
         </form>
         <table id="demo" class="layui-bg-black" lay-filter="test"></table>
     </div>
-    <div id="east" data-options="region:'east',collapsed:true,title:'其他信息'" style="width: 650px;">
+    <div id="east" data-options="region:'east',collapsed:true,title:'其他信息',split:true" style="width: 650px;">
         <h1 style="text-align: center" >单击操作最右侧图标以查看</h1>
     </div>
 </body>
@@ -56,16 +56,19 @@
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/emplist' //数据接口
             ,page: true //开启分页
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[ //表头
                 {type:'checkbox'}
-                ,{field: 'empId', title: '编号', width:73, sort: true}
-                ,{field: 'empName', title: '姓名', width:87}
-                ,{field: 'deptName', title: '部门', width:87}
-                ,{field: 'postName', title: '职务', width:150}
-                ,{field: 'empSex', title: '性别', width: 63}
-                ,{field: 'empPhone', title: '手机号码', width:150}
-                ,{field: 'empAddress', title: '家庭地址',width:400}
-                ,{field: 'empLoginStatus', title: '当前状态', width:87,
+                ,{field: 'empId', title: '编号',sort: true}
+                ,{field: 'empName', title: '姓名'}
+                ,{field: 'deptName', title: '部门'}
+                ,{field: 'postName', title: '职务'}
+                ,{field: 'empSex', title: '性别'}
+                ,{field: 'empPhone', title: '手机号码'}
+                ,{field: 'empAddress', title: '家庭地址'}
+                ,{field: 'empLoginStatus', title: '当前状态',
                     templet:function (row){
                         return loginStatus(row.empLoginStatus);
                     }}
@@ -73,17 +76,17 @@
                 ,{field: 'empLoginStatus', title: '是否禁用', width:95,templet:function (row){
                         return onclikId(row.empLoginStatus);
                     }
-                },{field: 'empId', title: '密码', width:88,
+                },{field: 'empId', title: '密码',
                     templet:function (row){
                         return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" style='margin-top: 3px' onclick='chonZhi("+row.empId+")' lay-event=\"del\">重置密码</a>";
                     }
-                },{field: 'empId', title: '操作', width:150,
+                },{field: 'empId', title: '操作', width:160,
                     templet:function (row){
                         return chaoZuo(row.empId,0);
                     }
                 }
                 <%}else {%>
-                ,{field: 'empId', title: '操作', width:150,
+                ,{field: 'empId', title: '操作', width:160,
                     templet:function (row){
                         return chaoZuo(row.empId,1);
                     }
@@ -220,23 +223,31 @@
         window.location.href="${pageContext.request.contextPath}/emp/empup?id="+id;
     }
     function delUser(id) {
-        layer.confirm('确定删除该员工吗？', {icon: 3, title: '提示信息'}, function (index){
-            $.ajax({
-                url:'${pageContext.request.contextPath}/emp/toDelon?sid='+id,
-                type:'post',
-                dataType:'json',
-                success:function (data){
-                    if(data.msg == 'you'){
-                        layer.msg('删除成功', {icon: 1});
-                        location.reload();
-                    }else {
-                        layer.confirm('删除失败 请重试', {
-                            btn: ['我知道了'],anim: 6,icon: 5,btnAlign: 'c'
-                        });
+        if (id==${empId.empId}){
+            layer.confirm('确定自我了断吗？', {icon: 3, title: '提示信息'}, function (index){
+                layer.confirm('客官不可以！', {
+                    btn: ['我知道了'],anim: 6,icon: 5,btnAlign: 'c'
+                });
+            })
+        }else{
+            layer.confirm('确定删除该员工吗？', {icon: 3, title: '提示信息'}, function (index){
+                $.ajax({
+                    url:'${pageContext.request.contextPath}/emp/toDelon?sid='+id,
+                    type:'post',
+                    dataType:'json',
+                    success:function (data){
+                        if(data.msg == 'you'){
+                            layer.msg('删除成功', {icon: 1});
+                            location.reload();
+                        }else {
+                            layer.confirm('删除失败 请重试', {
+                                btn: ['我知道了'],anim: 6,icon: 5,btnAlign: 'c'
+                            });
+                        }
                     }
-                }
-            });
-        })
+                });
+            })
+        }
     }
     function chonZhi(id) {
         layer.confirm('重置密码后为123456 确认吗？', {icon: 3, title: '提示信息'}, function (index){
@@ -260,7 +271,6 @@
             '<object type="text/html" data="${pageContext.request.contextPath}/to/empEdu?id='+empid+'" width="100%" height="100%"></object>';
     }
 </script>
-
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container" style="float: left">
         <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="isDele">批量删除</button>

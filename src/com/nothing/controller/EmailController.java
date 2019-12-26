@@ -53,7 +53,7 @@ public class EmailController {
         String kaohuid = request.getParameter("empkaohuid");
         if(topic.equals("考核")){
             //考核类邮件
-            List kaohuscore1 =service.selectEmaillist("select scores  from empassessment where empAssessId="+kaohuid+"");
+            List kaohuscore1 =service.selectEmaillist("select scores  from empAssessment where empAssessId="+kaohuid+"");
             List kaohuscore=new ArrayList();
             for(int i=0;i<kaohuscore1.size();i++){
                 Map map= (Map) kaohuscore1.get(i);
@@ -108,8 +108,8 @@ public class EmailController {
             eid = emp.getEmpId()+"";
             ename = emp.getEmpName();
         }
-        List list = service.selectEmaillist("select * from myemail where receId = '"+eid+"' and empName <> '"+ename+"'");
-        int count = service.SelcctEmailcount("select count(*) from myemail where receId = '"+eid+"'and empName <> '"+ename+"'");
+        List list = service.selectEmaillist("select * from myEmail where receId = '"+eid+"' and empName <> '"+ename+"'");
+        int count = service.SelcctEmailcount("select count(*) from myEmail where receId = '"+eid+"'and empName <> '"+ename+"'");
 
         JSONObject json = new JSONObject();
         json.put("code",0);
@@ -132,8 +132,8 @@ public class EmailController {
             Emp emp = (Emp) session.getAttribute("empId");
             id = emp.getEmpId()+"";
         }
-        List list = service.selectEmaillist("select * from myemail where empId = '"+id+"'");
-        int count = service.SelcctEmailcount("select count(*) from myemail where empId = '"+id+"'");
+        List list = service.selectEmaillist("select * from myEmail where empId = '"+id+"'");
+        int count = service.SelcctEmailcount("select count(*) from myEmail where empId = '"+id+"'");
 
         JSONObject json = new JSONObject();
         json.put("code",0);

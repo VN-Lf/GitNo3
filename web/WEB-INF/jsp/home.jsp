@@ -1,5 +1,5 @@
 <%@ page import="com.nothing.vo.emp.Emp" %>
-<%@ page import="com.nothing.vo.emp.Post" %><%--
+<%@ page import="com.nothing.vo.charge.charModule" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/3
@@ -12,8 +12,14 @@
     <title>主界面</title>
     <jsp:include page="../../index.jsp"></jsp:include>
     <%String yangshi = (String) session.getAttribute("color");%>
+    <% String ntp = "";
+        if(session.getAttribute("stuId")==null){
+            ntp = "3";
+        }else{
+            ntp = "2";
+        };%>
     <% Emp use = (Emp) session.getAttribute("empId");%>
-    <% Post post = (Post) session.getAttribute("post");%>
+    <% charModule mod = (charModule) session.getAttribute("mod");%>
     <!--dark-hive 纯黑   gray 灰色 pepper-grinder咖啡色-->
     <style>
         #caidan li {
@@ -104,6 +110,66 @@
         <%}%>
         }
     </style>
+    <style>
+        #tianjia{
+            height: auto;
+            width: 10%;
+            position: absolute;
+            display: block;
+            top: 50px;
+            left: 90%;
+            transition: 0.5s;
+            font-size: 14px;
+        }
+        #list{
+            width: 80%;
+            height: auto;
+            margin: 0 auto;
+        }
+        .kuai{
+            height: 65px;
+            width: 95%;
+            margin: 10px 0;
+            padding:10px 0 10px 15px;
+        <%if("dark-hive".equals(yangshi)){%>
+            background-color: #9F9F9F;
+        <%}else {%>
+            background-color: #f1f1f1;
+        <%}%>
+            border-radius: 8px;
+            transition: 0.5s;
+        }
+        .biti{
+            margin:0;
+            font-size: 10px;
+        }
+        .qihuan{
+            width: 50px;
+            padding-top: 10px;
+            float: right;
+            border-radius: 8px;
+            cursor:pointer;
+        <%if("dark-hive".equals(yangshi)){%>
+            background-color: #9F9F9F;
+        <%}else {%>
+            background-color: #f1f1f1;
+        <%}%>
+        }
+        .textcss{
+            height: 90%;
+            width: 100%;
+            resize:none;
+            outline: none;
+            border: 0;
+        <%if("dark-hive".equals(yangshi)){%>
+            color: white;
+        <%}else {%>
+            color: black;
+        <%}%>
+            background-color: transparent;
+            overflow:hidden;
+        }
+    </style>
     <script>
         function chazhaoAct() {  //查找员工请假任务
             $.ajax({
@@ -127,6 +193,44 @@
             });
         }
 
+        function chazhaoAtt() {  //查找员工未打卡审批任务
+            $.ajax({
+                url:"${pageContext.request.contextPath}/attedance/attlist",
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    var size = data.size;
+                    if(size !== 0){
+                        var list = data.data;
+                        attTaskTis(size,1);
+                        $.each(list,function (index,item) {
+                            var name = item.empname;
+                            var time = new Date(item.applyTime);
+                            var y = time.getFullYear();
+                            var m = time.getMonth()+1;
+                            m = m<10?'0'+m:m;
+                            var dd = time.getDate();
+                            dd = dd<10?("0"+dd):dd;
+                            var H = time.getHours();
+                            H = H<10?("0"+H):H;
+                            var M = time.getMinutes();
+                            M = M<10?("0"+M):M;
+                            var S = time.getSeconds();
+                            S = S<10?("0"+S):S;
+                            time = y+"-"+m+"-"+dd+" "+H+":"+M+":"+S;
+                            var uptime =  new Date(item.punckClockTime);
+                            var b = new Date(uptime);
+                            uptime=b.getFullYear()+'-'+(b.getMonth()+1)+'-'+b.getDate()+' '+b.getHours()+':'+b.getMinutes()+':'+ b.getSeconds();
+                            tianjiaAtt(name,time,uptime);
+                        })
+                    }else {
+                        attTaskTis(size,0);
+                    }
+                }
+            });
+        }
+
+        //查找周报
         function chazhaoWeek() {
             var date = new Date();
             date.setDate(date.getDate() - date.getDay() + 1);
@@ -162,6 +266,7 @@
             });
         }
 
+        //查找谈心
         function chazhaoChat() {
             var now = new Date(); //当前日期
             var nowMonth = now.getMonth(); //当前月
@@ -207,41 +312,87 @@
                 $("#weektask").remove();
                 $("#emptask").remove();
                 $("#chattask").remove();
+                $("#atttask").remove();
             }
             chazhaoWeek();
             chazhaoAct();
             chazhaoChat();
+            chazhaoAtt();
         }
 
-        <%if(post.getPostName().indexOf("部长")!=-1 || post.getPostName().indexOf("校长")!=-1){%>
         shuaF5(0);
-        <%}%>
+    </script>
+    <script language="JavaScript">
+        function czNotice(type) {
+            $.ajax({
+                url:'${pageContext.request.contextPath}/emp/notlist',
+                type:'post',
+                data: {
+                    type:type,
+                    ntp:"<%=ntp%>",
+                },
+                dataType:'json',
+                success:function (data){
+                    var json = data.data;
+                    if(json == ''){
+                        tishi('暂无数据');
+                    }else {
+                        $.each(json, function (index,item) {
+                            var empId= item.emps;
+                            var noticeId = item.noticeId;
+                            var content = item.content;
+                            var empName = item.empName;
+                            var noticeTime = new Date(item.noticeTime).format("yyyy-MM-dd");
+                            var title = item.title;
+                            var tishi = "";
+                            if(content.length > 100){
+                                tishi = "<p text-align:center style='margin: 0 0 0 28%;color: #f1f1f1'>单击显示更多</p>\n";
+                            }
+
+                            addMovk(noticeId,tishi,content,empName,noticeTime,title,empId);
+                        });
+                        tishi('已加载完毕');
+                    }
+                },
+                error:function () {
+                    alert("后台数据错误，请稍后再试")
+                }
+            });
+        }
+        czNotice('desc');
+
+        Date.prototype.format = function (fmt) { //author: meizz 
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("("+k+")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        };
     </script>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',split:true" class="hometop">
+
     <h1 style="margin: 1% 0">管理员界面</h1>
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
     <div title="Base" id="caidan" fit="true" style="height: 16px;font-size: 16px" class="easyui-accordion">
         <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/email/toemail" onclick="qiehuan(this)"  class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/email/toemail" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>我的邮件</a>
                 </li>
-                <%if(post.getPostName().indexOf("校长")==-1){%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myJobList" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>请假相关</a>
                 </li>
-                <%}%>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeekly" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>我的周报</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">学生请假</a>
-                </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>考勤管理</a>
+                    <a>我的考勤</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
@@ -250,7 +401,11 @@
         </div>
         <div title="通知面板" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/tonotice" onclick="qiehuan(this)"  class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getWeixiu() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                        <%}else {%>
+                    src="${pageContext.request.contextPath}/to/tonotice"
+                        <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>公告发布</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toMyNotice" onclick="qiehuan(this)"  class="cs-navi-tab">
@@ -263,22 +418,40 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>员工资料</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Tuition/todept" onclick="qiehuan(this)"  class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getWeekEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/Tuition/todept"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>部门管理</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/emp/tochatList" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getStuJs() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/emp/tochatList"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>谈心记录</a>
                 </li>
-                <%if(post.getPostName().indexOf("部长")!=-1 || post.getPostName().indexOf("校长")!=-1){%>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myTask" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getActEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/myTask"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>员工请假管理</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Weekly/toWeeklyCollect" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getWeekEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/Weekly/toWeeklyCollect"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>周报汇总</a>
                 </li>
-                <%}%>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">考勤管理-上级可看</a>
+                <li href="javascript:void(0);" <%if(mod.getAttkEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/attedance/toSupAttedance"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>员工考勤管理</a>
                 </li>
             </ul>
         </div>
@@ -287,41 +460,81 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/home" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>学生资料</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">学生请假</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/myTaskStu" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>学生请假</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getStuJs() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/sco/main"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>考试成绩</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getStuJs() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/sco/reply"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>答辩成绩</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getStuBze() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/stu/allotStu"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>班级分配</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/claMian" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getKecheng() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/stu/claMian"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>班级管理</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/dormitory/todormitory" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getStuBze() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/dormitory/todormitory"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>宿舍管理</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Building/toys" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getStuBze() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/Building/toys"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>楼栋管理</a>
                 </li>
             </ul>
         </div>
         <div title="教务管理" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/course/toCourseType" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getKecheng() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/course/toCourseType"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>课程类别</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/courseManage/toCourse" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getKecheng() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/courseManage/toCourse"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>课程管理</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Trial/toTrial" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getKaoheEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/Trial/toTrial"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>试讲培训</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/weeklist" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getKaoheEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/to/weeklist"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>值班管理</a>
                 </li>
             </ul>
@@ -331,46 +544,58 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/repAddPage" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>报修申请</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/toRepairListPage" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getWeixiu() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/houqin/toRepairListPage"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>维修管理</a>
                 </li>
             </ul>
         </div>
         <div title="考核管理" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/toexam" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getKaoheEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/exam/toexam"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>考核指标</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/lookexam" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getKaoheEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/exam/lookexaml"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>员工考核</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/exam/empexam" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" <%if(mod.getKaoheEmp() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/exam/empexam"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>教师考评</a>
                 </li>
             </ul>
         </div>
-        <div title="财务管理" style="list-style-type:none;padding: 0">
+        <div title="其它" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" class="cs-navi-tab">
-                    <a style="color: green">学费管理</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/feedback/toStufeedback" class="cs-navi-tab">
+                    <a style="color: green">问题反馈</a>
                 </li>
-            </ul>
-        </div>
-        <div title="问题反馈" style="list-style-type:none;padding: 0">
-            <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" class="cs-navi-tab">
-                    <a>问题反馈</a>
+                <li href="javascript:void(0);" <%if(mod.getStuMoney() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/finance/toTuitionList"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>学费管理</a>
                 </li>
-            </ul>
-        </div>
-        <div title="文件管理" style="overflow:auto;padding:0;">
-            <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/upload/toupload" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>资料文档</a>
                 </li>
             </ul>
         </div>
-        <div title="系统报表" style="overflow:auto;padding:0;">
+        <div title="系统报表" style="overflow:auto;padding:0;height: 50px;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a style="color: green">日常考核</a>
@@ -391,11 +616,18 @@
         </div>
         <div title="系统设置" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/list" onclick="qiehuan(this)" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>流程</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">权限管理</a>
+                <li href="javascript:void(0);" <%if(mod.getBoss() == 0 || mod.getBoss() == 1){%>
+                    src="${pageContext.request.contextPath}/Building/toQuan"
+                    <%}else {%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                    <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>权限管理</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/sys/toSetList" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a style="color: green">系统设置</a>
                 </li>
             </ul>
         </div>
@@ -403,8 +635,8 @@
 </div>
 <div data-options="region:'center',title:'操作区'" style="background:#eee;">
     <div id="tabs" class="easyui-tabs" fit="true">
-        <div title="首页">
-            <div style="width: 90%;margin: 0 auto;padding: 50px 0">
+        <div title="首页" style="position: relative;">
+            <div id="zhanshi" style="width: 85%;padding: 50px 20px;position: absolute;transition: 0.5s;">
                 <h1>欢迎到来，<%=use.getEmpName()%> 今天有哪些任务呢？</h1>
                 <h2 id="time"></h2>
                 <!--dark-hive 纯黑   gray 灰色 pepper-grinder咖啡色-->
@@ -416,15 +648,38 @@
                 </select>
                 <fieldset id="hometask" class="layui-elem-field">
                     <legend><h3 onclick="shuaF5(1)" style="cursor: pointer;" title="点我可刷新哦">任务</h3></legend>
-                    <div class="layui-field-box">
-                        学生请假待审批()<br>
-                        未打卡待审批()<br>
-                    </div>
-
                 </fieldset>
             </div>
+            <div id="tianjia">
+                <div id="dkai" style="width: 100%;height: 150px;padding-top: 78px;display: block">
+                    <div class="qihuan" style="height: 160px" onclick="tianJia(1)">
+                        <h1 align="center">查</h1>
+                        <h1 align="center">看</h1>
+                        <h1 align="center">公</h1>
+                        <h1 align="center">告</h1>
+                    </div>
+                </div>
+                <div id="off" style="width: 7%;height: 150px;padding-top: 78px;display: none;float: left">
+                    <div class="qihuan" style="height: 92px" onclick="tianJia(0)">
+                        <h1 align="center">收</h1>
+                        <h1 align="center">回</h1>
+                    </div>
+                </div>
+                <div id="biaoti" style="display: none;width: 80%;height: auto;margin: 0 auto;">
+                    <div class="kuai" style="height: 30px;padding:10px 0 0 15px">
+                        <p style="float: left;width:10%;margin-top: 0">
+                            <select id="timexz" onchange="timeList();">
+                                <option value="desc">距我最近</option>
+                                <option value="asc">距我最远</option>
+                            </select>
+                        </p>
+                        <p style="float: left;width:15%;margin-top: 0">标题</p>
+                        <p style="float: left;width:60%;margin:0 2.5%">内容（单击可显示更多）</p>
+                    </div>
+                </div>
+                <div id="list" style="display: none;"></div>
+            </div>
         </div>
-
     </div>
 </div>
 <div data-options="region:'south'" style="text-align:center">版权所有：宏图18级开发1班</div>
@@ -480,40 +735,12 @@
 </script>
 <script>
     var shang = null;
-
-    //请假提示区
-    function actTaskTis(san,pand) {
-        var html = "";
-        if(pand == 1){
-            html = "<div id=\"emptask\" title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
-                " onmouseleave=\"baoyichu(this)\" class='emptask' onclick=\"zhankaiAct(this,"+san+",'act')\">\n" +
-                "           <span style=\"font-size: 24px\">有 "+san+" 个员工任务待审核</span>\n" +
-                "           <p class=\"tishi\" id='tishi' align=\"right\">点击展开</p>\n" +
-                "        </div>"
-        }else if(pand == 0){
-            html = "<div id=\"emptask\" class='emptask'  onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
-                "           <span style=\"font-size: 24px\">暂无员工申请假期</span>\n" +
-                "           <p class=\"tishi\" align=\"right\"></p>\n" +
-                "        </div>"
-        }
-        $("#hometask").append(html);
-        if(san > 4){
-            $("#emptask").css("background-color","red");
-        }else if(san >= 3) {
-            $("#emptask").css("background-color","#FF5722");
-        }
-    }
-    function tianjiaAct(name,time) {
-        var html = "<div class=\"xxnr\" style=\"padding:8px 50px;display: none\">\n" +
-            "            <p align=\"left\" class=\"pzuo\">任务名称："+name+"</p>\n" +
-            "            <p align=\"right\" class=\"pyou\">请假单申请时间："+time+"</p>\n" +
-            "       </div>"
-        $("#emptask").append(html);
-    }
+    //动态效果区
     var dianji = 0;
     var dianjiw = 0;
     var dianjic = 0;
-    var cid,wid,tid;
+    var dianjia = 0;
+    var cid,wid,aid,tid;
     function zhankaiAct(id,san,type) {
         if(type == "act"){
             if(dianji == 0){
@@ -560,6 +787,21 @@
                 $(id).children(".xxnr").css("display","none");
                 dianjic = 0;
             }
+        }else if(type == "att"){
+            if(dianjia == 0){
+                aid = id;
+                var he = 65 + san*75;
+                $(id).css("height",he+"px");
+                document.getElementById("tishi4").innerHTML="点击关闭";
+                setTimeout("yanchiguan4()","300");
+                dianjia = 1;
+            }else {
+                aid = id;
+                $(id).css("height","65px");
+                document.getElementById("tishi4").innerHTML="点击展开";
+                $(id).children(".xxnr").css("display","none");
+                dianjia = 0;
+            }
         }
     }
     //延迟暂时里数据
@@ -572,6 +814,69 @@
     function yanchiguan3() {
         $(tid).children(".xxnr").css("display","block");
     }
+    function yanchiguan4() {
+        $(aid).children(".xxnr").css("display","block");
+    }
+
+    //请假提示区
+    function actTaskTis(san,pand) {
+        var html = "";
+        if(pand == 1){
+            html = "<div id=\"emptask\" title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+                " onmouseleave=\"baoyichu(this)\" class='emptask' onclick=\"zhankaiAct(this,"+san+",'act')\">\n" +
+                "           <span style=\"font-size: 24px\">有 "+san+" 个员工/学生请假待审核</span>\n" +
+                "           <p class=\"tishi\" id='tishi' align=\"right\">点击展开</p>\n" +
+                "        </div>"
+        }else if(pand == 0){
+            html = "<div id=\"emptask\" class='emptask' title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
+                "           <span style=\"font-size: 24px\">暂无员工/学生申请假期</span>\n" +
+                "           <p class=\"tishi\" align=\"right\"></p>\n" +
+                "        </div>"
+        }
+        $("#hometask").append(html);
+        if(san > 4){
+            $("#emptask").css("background-color","red");
+        }else if(san >= 3) {
+            $("#emptask").css("background-color","#FF5722");
+        }
+    }
+    function tianjiaAct(name,time) {
+        var html = "<div class=\"xxnr\" style=\"padding:8px 50px;display: none\">\n" +
+            "            <p align=\"left\" class=\"pzuo\">任务名称："+name+"</p>\n" +
+            "            <p align=\"right\" class=\"pyou\">请假单申请时间："+time+"</p>\n" +
+            "       </div>"
+        $("#emptask").append(html);
+    }
+
+    //未打卡提示区
+    function attTaskTis(san,pand) {
+        var html = "";
+        if(pand == 1){
+            html = "<div id=\"atttask\" title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
+                " onmouseleave=\"baoyichu(this)\" class='emptask' onclick=\"zhankaiAct(this,"+san+",'att')\">\n" +
+                "           <span style=\"font-size: 24px\">有 "+san+" 个员工考勤待审核</span>\n" +
+                "           <p class=\"tishi\" id='tishi4' align=\"right\">点击展开</p>\n" +
+                "        </div>"
+        }else if(pand == 0){
+            html = "<div id=\"atttask\" class='emptask' title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
+                "           <span style=\"font-size: 24px\">暂无员工考勤待审核</span>\n" +
+                "           <p class=\"tishi\" align=\"right\"></p>\n" +
+                "        </div>"
+        }
+        $("#hometask").append(html);
+        if(san > 4){
+            $("#atttask").css("background-color","red");
+        }else if(san >= 3) {
+            $("#atttask").css("background-color","#FF5722");
+        }
+    }
+    function tianjiaAtt(name,time,uptime) {
+        var html = "<div class=\"xxnr\" style=\"padding:8px 50px;display: none\">\n" +
+            "            <p align=\"left\" class=\"pzuo\">"+name+"在 "+time+" 未按时打卡</p>\n" +
+            "            <p align=\"right\" class=\"pyou\">提交时间："+uptime+"</p>\n" +
+            "       </div>"
+        $("#atttask").append(html);
+    }
 
     //周报提示区
     function weekTis(size) {
@@ -579,7 +884,7 @@
         if(size == 0){
             html = "<div class=\"emptask\" title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
                 "       <span style=\"font-size: 24px\">本周周报尚未完成</span>\n" +
-                "       <p align=\"right\" id=\"sysj\" style=\"padding-right: 30px;margin-top: 10px;font-size: 16px\"></p>\n" +
+                "       <p align=\"right\" id=\"sysj\" class='tishi' style='color: black'></p>\n" +
                 "   </div>";
             $("#hometask").append(html);
             setInterval("gettime('week')","1000");
@@ -587,7 +892,7 @@
             html = "<div id=\"weektask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
                 " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'week')\">\n" +
                 "       <span style=\"font-size: 24px\">本周周报已填写 "+size+" 条</span>\n" +
-                "       <p align=\"right\" id='tishi2' style=\"padding-right: 30px;margin-top: 10px;font-size: 16px\">点击查看更多</p>\n" +
+                "       <p align=\"right\" id='tishi2' class='tishi'>点击展开</p>\n" +
                 "   </div>";
             $("#hometask").append(html);
         }
@@ -640,7 +945,7 @@
         if(size == 0){
             html = "<div class=\"emptask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,0)\">\n" +
                 "       <span style=\"font-size: 24px\">本月谈心还未完成 5 条</span>\n" +
-                "       <p align=\"right\" id=\"sysj2\" style=\"padding-right: 30px;margin-top: 10px;font-size: 16px\"></p>\n" +
+                "       <p align=\"right\" id=\"sysj2\" class='tishi' style='color: black'></p>\n" +
                 "   </div>";
             $("#hometask").append(html);
             setInterval("gettime('chat')","1000");
@@ -649,18 +954,16 @@
                 html = "<div id=\"chattask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
                     " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'chat')\">\n" +
                     "<span style=\"font-size: 24px\">本月谈心任务已完成 数量："+size+"</span>\n"+
-                    "       <p align=\"right\" id='tishi3' style=\"padding-right: 30px;margin-top: 10px;font-size: 16px\">点击查看更多</p>\n" +
+                    "       <p align=\"right\" id='tishi3' style='margin-top: 40px;'  class='tishi'>点击展开</p>\n" +
                     "   </div>";
                 $("#hometask").append(html);
             }else {
                 var js = 5 - size;
-                var ti ="<p align='left' style='width:50%;padding-right: 30px;margin-top: 10px;font-size: 16px;float: left'>本月谈心已完成 "+size+" 条 还需 "+js+" 条</p>";
-
                 html = "<div id=\"chattask\"  title='长按清除该通知' onmousedown=\"holdDown(this)\" onmouseup=\"holdUp(this,1)\" onmouseenter=\"baoyiru(this)\"" +
                     " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'chat')\">\n" +
                     "<p align=\"left\" style=\"font-size: 24px;padding-right: 30px;float:left;width:45%;\">本月谈心任务已完成 "+size+" 条 还有 "+js+" 条待完成</p>\n"+
                     "<p align=\"left\" id='sysj2' style=\"padding-right: 9px;float:right;width:18%;font-size: 16px\"></p>\n"+
-                "       <p align=\"right\" id='tishi3' style=\"padding-right: 30px;margin-top: 45px;font-size: 16px\">点击查看更多</p>\n" +
+                "       <p align=\"right\" id='tishi3' style='margin-top: 40px;'  class='tishi'>点击展开</p>\n" +
                 "   </div>";
                 $("#hometask").append(html);
                 setInterval("gettime('chat')","1000");
@@ -767,6 +1070,135 @@
             var subtitle = $(this).children(".tabs-closable").text();
             $('#tabs').tabs('close', subtitle);
         })
+    }
+</script>
+<script>
+    //重新加载
+    function timeList() {
+        var type = document.getElementById("timexz").value;
+        var div = document.getElementById("list");
+        while(div.hasChildNodes()){
+            div.removeChild(div.firstChild);
+        }
+        czNotice(type);
+    }
+    var jinzhi = 1;//移入列表区
+    function baoyiru2(id) {
+        if(jinzhi == 1){
+            <%if("dark-hive".equals(yangshi)){%>
+            $(id).css("background-color","black");
+            <%}else {%>
+            $(id).css("background-color","#9F9F9F");
+            <%}%>
+            $(id).css("height","75px");
+            $(id).css("margin","5px 0");
+        }
+    }//移除列表区
+    function baoyichu2(id) {
+        if(jinzhi == 1){
+            <%if("dark-hive".equals(yangshi)){%>
+            $(id).css("background-color","#9F9F9F");
+            <%}else {%>
+            $(id).css("background-color","#f1f1f1");
+            <%}%>
+            $(id).css("height","65px");
+            $(".wenben").css("height","65px");
+            $(id).css("margin","10px 0");
+        }
+    }//展开一个公告
+    function zanKai(id) {
+        if(jinzhi == 1){
+            jinzhi = 0;
+            var div = $(id).parent();
+            div.css("height","300px");
+            $(id).css("height","300px");
+            var nnnnid = $(id).parent().children('div').find(".id").html().slice(3);
+            document.getElementById(nnnnid).innerHTML="已读";
+            $(id).children().siblings(".tishi2").css("color","#9f9f9f");
+            var use = '${empId.empId}';
+            if(use === ''){
+                use = '${stuId.studId}';
+            }
+            $.post('${pageContext.request.contextPath}/emp/martNotice',{eid:use,nid:nnnnid},function (data) {},"json");
+        }else {
+            $(id).children().siblings(".tishi2").css("color","#f1f1f1");
+            jinzhi = 1;
+        }
+    }//添加一个公告
+    function tianJia(ty) {
+        if(ty == 1){
+            $("#zhanshi").css("left","-80%");
+            $("#dkai").css("display","none");
+            $("#tianjia").css("width","90%");
+            $("#tianjia").css("left","10%");
+            $("#biaoti").css("display","block");
+            $("#list").css("display","block");
+            setTimeout("guanbi2()","300");
+        }else if(ty == 0){
+            $("#tianjia").css("width","10%");
+            $("#zhanshi").css("left","0");
+            $("#tianjia").css("left","90%");
+            setTimeout("guanbi()","230");
+        }
+    }
+    //将添加模块隐藏
+    function guanbi() {
+        $("#dkai").css("display","block");
+        $("#off").css("display","none");
+        $("#biaoti").css("display","none");
+        $("#list").css("display","none");
+    }
+    function guanbi2() {
+        $("#off").css("display","block");
+    }
+    function addMovk(nid,tishi,con,name,ntime,title,emps) {
+        var emp = new Array();
+        if (emps){
+            emp = emps.split(",");
+        }
+        var a = "<p id='"+nid+"' class=\"biti\">未读</p>";
+        var empId = '${empId.empId}';
+        if(empId === ''){
+            empId = '${stuId.studId}';
+        }
+        for(var i=0;i<emp.length;i++){
+            if(empId==emp[i]){
+                a="<p id='"+nid+"' class=\"biti2\">已读</p>";
+            }
+        }
+        var html = "<div class=\"kuai\" onmouseenter=\"baoyiru2(this)\" onmouseleave=\"baoyichu2(this)\">\n" +
+            "            <div style=\"float: left;width: 10%;height: 100%\">\n" +
+            "                <p class='id' style=\"margin: 0;color: #f1f1f1\">编号："+nid+"</p>\n" +
+            "                <p style=\"margin: 0\">发布："+name+"</p>\n" +
+            "                <p class='biti' style='color: #f1f1f1'>"+ntime+"</p>\n" +
+            "            </div>\n" +
+            "            <div style=\"float: left;width: 15%;height: 100%\">\n" +
+            "                <p class=\"biti\" id='ti"+nid+"'>"+title+"</p>\n" +
+            "                <input type='text' id='ti"+nid+"b' value='"+title+"' style='display: none'/>"+
+            "            </div>\n" +
+            "            <div class=\"wenben\" onclick='zanKai(this)' style=\"float: left;width: 60%;height: 100%;margin: 0 2.5%;transition: 0.5s;\">\n" +
+            "                 <textarea id='text"+nid+"' readonly class='textcss'>"+con+"</textarea>\n"+tishi+
+            "            </div>\n" +
+            "            <div style=\"float: left;width: 10%;height: 100%;\">\n" +a+
+            "            </div>\n" +
+            "        </div>";
+
+        $("#list").append(html);
+    }
+
+    function qinKon() {//清空列表
+        var div = document.getElementById("list");
+        while(div.hasChildNodes()){
+            div.removeChild(div.firstChild);
+        }
+        tishi('暂无数据');
+    }
+
+    function tishi(type) {//提示信息生成
+        var html = "<div class=\"kuai\" style=\"height: 50px;padding:0;width:96.3%\">\n" +
+            "           <h2 align=\"center\" style=\"padding-top: 10px\">"+type+"</h2>\n" +
+            "       </div>";
+        $("#list").append(html);
     }
 </script>
 </html>

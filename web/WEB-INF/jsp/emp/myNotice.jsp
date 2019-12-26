@@ -10,6 +10,12 @@
 <head>
     <title>公告列表</title>
     <%String yangshi = (String) session.getAttribute("color");%>
+    <% String ntp = "";
+        if(session.getAttribute("stuId")==null){
+        ntp = "3";
+    }else{
+        ntp = "2";
+    };%>
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <style>
         body{
@@ -59,8 +65,12 @@
     <script language="JavaScript">
         function czNotice(type) {
             $.ajax({
-                url:'${pageContext.request.contextPath}/emp/notlist?type='+type,
+                url:'${pageContext.request.contextPath}/emp/notlist',
                 type:'post',
+                data: {
+                    type:type,
+                    ntp:"<%=ntp%>",
+                },
                 dataType:'json',
                 success:function (data){
                     var json = data.data;
@@ -71,25 +81,15 @@
                             var empId= item.emps;
                             var noticeId = item.noticeId;
                             var content = item.content;
-                            var deptIds = item.deptIds;
                             var empName = item.empName;
                             var noticeTime = new Date(item.noticeTime).format("yyyy-MM-dd");
-                            var noticeType = item.noticeType;
                             var title = item.title;
                             var tishi = "";
                             if(content.length > 100){
                                 tishi = "<p text-align:center style='margin: 0 0 0 28%;color: #f1f1f1'>单击显示更多</p>\n";
                             }
-                            deptIds = noticeType;
-                            switch (noticeType){
-                                case 1:noticeType="所有人";break;
-                                case 2:noticeType="员工";break;
-                                case 3:noticeType="学生";break;
-                                case 4:noticeType="班级";break;
-                                default:noticeType="---";
-                            }
 
-                            addMovk(noticeId,tishi,content,deptIds,empName,noticeTime,noticeType,title,empId);
+                            addMovk(noticeId,tishi,content,empName,noticeTime,title,empId);
                         });
                         tishi('已加载完毕');
                     }
@@ -183,19 +183,26 @@
             var nnnnid = $(id).parent().children('div').find(".id").html().slice(3);
             document.getElementById(nnnnid).innerHTML="已读";
             $(id).children().siblings(".tishi2").css("color","#9f9f9f");
-            $.post('${pageContext.request.contextPath}/emp/martNotice',{eid:${empId.empId},nid:nnnnid},function (data) {},"json");
+            var use = '${empId.empId}';
+            if(use === ''){
+                use = '${stuId.studId}';
+            }
+            $.post('${pageContext.request.contextPath}/emp/martNotice',{eid:use,nid:nnnnid},function (data) {},"json");
         }else {
             $(id).children().siblings(".tishi2").css("color","#f1f1f1");
             jinzhi = 1;
         }
     }//添加一个公告
-    function addMovk(nid,tishi,con,dep,name,ntime,ntype,title,emps) {
+    function addMovk(nid,tishi,con,name,ntime,title,emps) {
         var emp = new Array();
         if (emps){
             emp = emps.split(",");
         }
         var a = "<p id='"+nid+"' class=\"biti\">未读</p>";
-        var empId = ${empId.empId};
+        var empId = '${empId.empId}';
+        if(empId === ''){
+            empId = '${stuId.studId}';
+        }
         for(var i=0;i<emp.length;i++){
             if(empId==emp[i]){
                 a="<p id='"+nid+"' class=\"biti2\">已读</p>";
@@ -235,19 +242,6 @@
             "       </div>";
         $("#list").append(html);
     }
-
-    function delShuju(id) {
-        if (confirm("确定删除吗？")) {
-            $.post('${pageContext.request.contextPath}/emp/notdel?id='+id,{
-            },function(data){
-                alert(data);
-                location.reload();
-            });
-        }
-    }
-
-    var textnei = "";
-    var dianId = "";//修改信息
 </script>
 </body>
 </html>

@@ -59,7 +59,7 @@ public class StuHolidayController{
         return "actStu/stuActMyJob";
     }
 
-        @RequestMapping("toMyJob")
+    @RequestMapping("toMyJob")
     public String toMyJobPage(){
         return "actStu/stuActMyJob";
     }

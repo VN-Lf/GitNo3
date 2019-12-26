@@ -24,8 +24,8 @@ public class CourseTypeController {
     @RequestMapping("list")
     @ResponseBody
     public JSONObject list(){
-        List list = service.selectCourselist("select * from CourseType");
-        int count = service.SelcctCoursecount("select count(*) from CourseType");
+        List list = service.selectCourselist("select * from courseType");
+        int count = service.SelcctCoursecount("select count(*) from courseType");
 
         JSONObject json = new JSONObject();
         json.put("code",0);

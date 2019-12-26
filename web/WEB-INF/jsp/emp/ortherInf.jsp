@@ -34,6 +34,9 @@
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/empEducationList?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[ //表头
                 {type:'checkbox'}
                 ,{field: 'empUniversity', title: '学校名称', width:110}
@@ -41,7 +44,7 @@
                 ,{field: 'empEucStartDay', title: '入校时间', width:110}
                 ,{field: 'empEucEndDay', title: '毕业时间', width:110}
                 ,{field: 'empEucRemark', title: '说明', width:100}
-                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
+                ,{field: 'empId', title: '操作', width: 150, toolbar: '#barOption'}
             ]]
         });
         table.render({
@@ -51,6 +54,9 @@
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/emp/empHis?eid='+${currActEmpId} //数据接口
             ,page: true //开启分页
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[ //表头
                 {type:'checkbox'}
                 ,{field: 'empHisCompany', title: '公司名称', width:110}
@@ -59,7 +65,7 @@
                 ,{field: 'empHisEndDay', title: '离职时间', width:110}
                 ,{field: 'empLiftReason', title: '离职原因', width:100}
                 ,{field: 'empHisRemark', title: '说明', width:100}
-                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
+                ,{field: 'empId', title: '操作', width: 150, toolbar: '#barOption'}
             ]]
         });
         table.render({
@@ -75,7 +81,7 @@
                 ,{field: 'empRelation', title: '关系', width:110}
                 ,{field: 'empContactphone', title: '联系电话', width:100}
                 ,{field: 'empFamImfRemark', title: '说明', width:100}
-                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
+                ,{field: 'empId', title: '操作', width: 150, toolbar: '#barOption'}
             ]]
         });
         //监听顶部按钮
@@ -173,7 +179,7 @@
             if (obj.event === 'up') {
                 addTab("修改记录","${pageContext.request.contextPath}/emp/eduUpPage?eid="+data.empEduId)
             } else if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('真的要删除该记录吗？', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/eduDel',{id:data.empId},function (data) {
                         //显示提示框
                         layer.msg("删除成功", {icon: 6});
@@ -188,7 +194,7 @@
             if (obj.event === 'up') {
                 addTab("修改记录","${pageContext.request.contextPath}/emp/jobUpPage?eid="+data.empHisId);
             } else if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('真的要删除该记录吗？', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/jobDel',{id:data.empHisId},function (data) {
                         //显示提示框
                         layer.msg("删除成功", {icon: 6});
@@ -205,7 +211,7 @@
             if (obj.event === 'up') {
                 addTab("修改记录","${pageContext.request.contextPath}/emp/famUpPage?eid="+data.empFamImfId);
             } else if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('真的要删除该记录吗？', function (index) {
                     $.post('${pageContext.request.contextPath}/emp/famDel',{id:data.empFamImfId},function (data) {
                         //显示提示框
                         layer.msg("删除成功", {icon: 6});

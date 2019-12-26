@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -79,19 +81,24 @@ public class Emp2Controller {
     }
     @RequestMapping("/notlist")
     @ResponseBody
-    public JSONObject NoticeList(String type){
-        List notlist = empService.selNoticeAll(type);
+    public JSONObject NoticeList(String type,String ntp){
+        List notlist;
+        if("".equals(ntp) || ntp == null){
+            notlist = empService.selNoticeAll(type,"");
+        }else {
+            notlist = empService.selNoticeAll(type,ntp);
+        }
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("data", notlist);
         return jsonObject;
     }
     @RequestMapping("/notadd")
-    public String NotAdd(Notice notice,String time) throws ParseException {
+    public String NotAdd(Notice notice, String time, HttpSession session) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("时间"+time);
+        Emp emp = (Emp)session.getAttribute("empId");
         notice.setNoticeTime(simpleDateFormat.parse(time));
-        System.out.println(notice.getContent()+notice.getTitle()+notice.getNoticeTime());
-        System.out.println(notice.getNoticeType());
+        notice.setEmpName(emp.getEmpName());
         empService.addNotice(notice,1);
         return "emp/noticelist";
     }
@@ -205,8 +212,8 @@ public class Emp2Controller {
     @RequestMapping("/weeklist")
     @ResponseBody
     public JSONObject weekList() {
-        List wlist = empService.weekList("select * from weekarrange");
-        int con = empService.selEmpCont("select count(WeekArrangeId) from weekarrange");
+        List wlist = empService.weekList("select * from weekArrange");
+        int con = empService.selEmpCont("select count(WeekArrangeId) from weekArrange");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
         jsonObject.put("msg", "");
@@ -217,8 +224,8 @@ public class Emp2Controller {
     @RequestMapping("/weeklistsx")
     @ResponseBody
     public JSONObject weekListSx(String emp,String date) throws UnsupportedEncodingException {
-        String sql = "select * from weekarrange";
-        String consql = "select count(WeekArrangeId) from weekarrange";
+        String sql = "select * from weekArrange";
+        String consql = "select count(WeekArrangeId) from weekArrange";
         emp = new String(emp.getBytes("iso-8859-1"),"utf-8");
         emp = java.net.URLDecoder.decode(emp,"UTF-8");
         date = new String(date.getBytes("iso-8859-1"),"utf-8");

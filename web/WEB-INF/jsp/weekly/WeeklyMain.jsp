@@ -66,7 +66,7 @@
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
                 ,{field: 'weekPaperId', title: '编号', sort: true}
-                ,{field: 'empNames', title: '员工', sort: true}
+                ,{field: 'empName', title: '员工姓名'}
                 ,{field: 'weekCycle', title: '填写日期', templet:function (row){
                         return createTime(row.weekCycle);
                     }, sort: true}

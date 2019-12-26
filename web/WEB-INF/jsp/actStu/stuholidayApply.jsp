@@ -50,7 +50,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">请假事由</label>
             <div class="layui-input-block">
-                <input id="remark" type="text" name="remark" required  lay-verify="required" placeholder="学生年纪" autocomplete="off" class="layui-input">
+                <input id="remark" type="text" name="remark" required  lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
 

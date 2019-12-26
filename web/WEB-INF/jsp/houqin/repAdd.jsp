@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<div style="width: 450px;margin: 50px auto">
+<div style="width: 450px;margin: 50px">
     <form class="layui-form" method="post" action="/houqin/repAdd" lay-filter="gg">
         <input type="hidden" name="equipmentId">
         <input type="hidden" name="status">

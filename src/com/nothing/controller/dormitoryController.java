@@ -25,7 +25,7 @@ public class dormitoryController {
     //去宿舍页面
     @RequestMapping("todormitory")
     public String todormitory(HttpServletRequest request) {
-        List<Map> list = service.selectDormitorylists("select * from studentfloor");
+        List<Map> list = service.selectDormitorylists("select * from studentFloor");
         request.setAttribute("dlist",list);
         return "DormitoryManagement/Dormitiry";
     }
@@ -35,8 +35,8 @@ public class dormitoryController {
     public JSONObject list() {
         System.out.println("进来了");
         //List list = this.service.selectDormitorylist(page, rows);
-        List list = service.selectDormitorylists("select * from studenthour ");
-        int count = service.SelcctDormitorycount("select count(*) from studenthour");
+        List list = service.selectDormitorylists("select * from studentHour ");
+        int count = service.SelcctDormitorycount("select count(*) from studentHour");
 
         /*Map map = new HashMap();
         map.put("total", count);

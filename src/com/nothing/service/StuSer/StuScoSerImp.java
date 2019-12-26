@@ -12,10 +12,11 @@ public class StuScoSerImp extends BaseDao implements StuScoSer{
 
     @Override
     public List toAll() {
-        return listBySQL("select ss.*,cl.classId as cId ,cl.className,s.stuName as sName,e.empName as eName ,c.courseName as cName , t.termName as tName from StudentScore as ss left join student as s using(studId) left join emp as e using(empId) left  join course as c using(courseId) left join term as t using(termId)  left join classVo as cl on s.classId = cl.classId");
+        return listBySQL("select ss.*,cl.classId as cId ,cl.className,s.stuName as sName,e.empName as eName ,c.courseName" +
+                " as cName , t.termName as tName from studentScore as ss left join student as s using(studId) left join emp as e using(empId) left  join course as c using(courseId) left join term as t using(termId)  left join classVo as cl on s.classId = cl.classId");
     }
     public int toTitle(Object o){
-        return selTotalRow("select count(*) from "+o.getClass().getSimpleName());
+        return selTotalRow("select count(*) from stuReplyScore");
     }
 
     @Override
@@ -54,7 +55,7 @@ public class StuScoSerImp extends BaseDao implements StuScoSer{
     @Override
     public List replyScore() {
         return listBySQL("\t\t\t\t \n" +
-                "\tselect ss.*,e.empName , c.classId as cid ,c.className,s.stuName,proName from stuReplyScore ss left join studentProject p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classvo c using(classId)");
+                "\tselect ss.*,e.empName , c.classId as cid ,c.className,s.stuName,proName from stuReplyScore ss left join studentProject p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classVo c using(classId)");
     }
 
     @Override

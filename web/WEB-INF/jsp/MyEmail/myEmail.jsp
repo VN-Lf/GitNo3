@@ -100,7 +100,8 @@
             //第二个实例
             table.render({ //我收 到的邮件
                 elem: '#Senddemo'
-                ,height: 312
+                ,height:'full-200'
+                ,cellMinWidth: 80
                 ,toolbar: '#toolbarDemo'
                 ,url: '${pageContext.request.contextPath}/email/SendEmail' //数据接口
                 ,page: true //开启分页
