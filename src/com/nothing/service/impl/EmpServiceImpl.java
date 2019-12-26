@@ -4,12 +4,14 @@ import com.nothing.dao.BaseDao;
 import com.nothing.service.EmpService;
 import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.charge.Notice;
+import com.nothing.vo.charge.charModule;
 import com.nothing.vo.emp.*;
 import com.nothing.vo.wintable.chatRecord;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 //学生服
@@ -40,8 +42,13 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
-    public List selNoticeAll(String type) {
-        List list = listBySQL("select * from notice GROUP BY noticeTime "+type+",noticeId "+type);
+    public List selNoticeAll(String type,String ntp) {
+        List list;
+        if("".equals(ntp)){
+            list = listBySQL("select * from notice GROUP BY noticeTime "+type+",noticeId "+type);
+        }else {
+            list = listBySQL("select * from notice where noticeType <> "+ntp+" GROUP BY noticeTime "+type+",noticeId "+type);
+        }
         return list;
     }
 
@@ -55,8 +62,8 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     public void addEmp(Emp emp, EmpEducation empEducation, Post post) {
         emp.setEmpLoginStatus(1);//设置登录状态默认 1
         addObject(emp);
-        List list = listBySQL2("select empId from emp order by empId desc limit 1");
-        int eid = (int)list.get(0);
+        List<Map> list = listBySQL("select * from emp order by empId desc limit 1");
+        int eid = (int)list.get(0).get("empId");
         System.out.println("新增员工id:"+eid);
         empEducation.setEmpId(eid);
         addObject(empEducation);
@@ -64,6 +71,28 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         post.setDeptId(emp.getEmpDeptId());
         post.setEmpId(eid);
         addObject(post);
+        charModule cha = new charModule();
+        cha.setEmpId(eid+"");
+        cha.setEmpName(emp.getEmpName());
+        cha.setDeptId(emp.getEmpDeptId()+"");
+        cha.setBoss(3);
+        cha.setUpdateEmp(0);
+        cha.setUpdateStu(0);
+        cha.setActEmp(0);
+        cha.setWeekEmp(0);
+        cha.setAttkEmp(0);
+
+        cha.setKaoheEmp(0);
+        cha.setWeixiu(0);
+        cha.setStuBze(0);
+        cha.setStuJs(0);
+        cha.setStuMoney(0);
+
+        cha.setKecheng(0);
+        cha.setZhiban(0);
+        cha.setFanKui(0);
+        cha.setZhaosheng(0);
+        addObject(cha);
     }
 
     @Override
@@ -110,10 +139,6 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
 
     @Override
     public Post sqlPostVo(String eid) {
-        /*Post emp = new Post();
-        List list = listBySQL2("select postId from post where empId ="+eid);
-        int pid = (int)list.get(0);
-        return (Post) getObject(emp.getClass(),pid);*/
         List list = listBySQL(" select * from post where empId = "+eid);
         Map map = (Map) list.get(0);
         Post post = new Post();
@@ -123,6 +148,35 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         post.setPostName((String) map.get("postName"));
         post.setRemark((String)map.get("remark"));
         return post;
+    }
+
+    public charModule getModule(String id){
+        List list = listBySQL(" select * from charModule where empId = "+id);
+        Map map = (Map) list.get(0);
+        charModule cha = new charModule();
+        cha.setEmpId(id);
+        cha.setEmpName(""+map.get("empName"));
+        cha.setDeptId(""+map.get("deptId"));
+        cha.setBoss((int)map.get("boss"));
+
+        cha.setUpdateEmp((int)map.get("updateEmp"));
+        cha.setUpdateStu((int)map.get("updateStu"));
+        cha.setActEmp((int)map.get("actEmp"));
+        cha.setWeekEmp((int)map.get("weekEmp"));
+        cha.setAttkEmp((int)map.get("attkEmp"));
+
+        cha.setKaoheEmp((int)map.get("kaoheEmp"));
+        cha.setWeixiu((int)map.get("weixiu"));
+        cha.setStuBze((int)map.get("stuBze"));
+        cha.setStuJs((int)map.get("stuJs"));
+        cha.setStuMoney((int)map.get("stuMoney"));
+
+        cha.setKecheng((int)map.get("kecheng"));
+        cha.setZhiban((int)map.get("zhiban"));
+        cha.setFanKui((int)map.get("fanKui"));
+        cha.setZhaosheng((int)map.get("zhaosheng"));
+
+        return cha;
     }
 
     @Override

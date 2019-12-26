@@ -72,9 +72,22 @@ public class WeeklyController {
     //获取全部周报
     @ResponseBody
     @RequestMapping("listcollect")
-    public JSONObject listcollect() {
-        List list = service.selectWeeklylist("select *,e.empName as empNames from empweekpaper w left join emp e  using(empId)");
-        int count = service.SelcctWeeklycount("select count(*) from empweekpaper");
+    public JSONObject listcollect(HttpSession session) {
+        Emp emp = (Emp)session.getAttribute("empId");
+        String empid = ""+emp.getEmpId();
+        int deptid = emp.getEmpDeptId();
+        int count=0;
+        List boss = service.selectWeeklylist("select boss from charmodule where empId ="+empid);
+        Map map = (Map) boss.get(0);
+        List list = new ArrayList();
+        if("1".equals(""+map.get("boss"))){//当前身份为部门领导
+            list = service.selectWeeklylist("select * from empweekpaper w left join charmodule cha using(empId) where cha.deptId ="+deptid);
+            count = service.SelcctWeeklycount("select count(*) from empweekpaper w left join charmodule cha using(empId) where cha.deptId ="+deptid);
+        }else if("0".equals(""+map.get("boss"))){
+            list = service.selectWeeklylist("select * from empweekpaper w left join charmodule cha using(empId) where cha.boss=1");
+            count = service.SelcctWeeklycount("select count(*) from empweekpaper w left join charmodule cha using(empId) where cha.boss=1");
+        }
+
 
         JSONObject json = new JSONObject();
         json.put("code",0);

@@ -11,6 +11,8 @@
     <title>添加员工</title>
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
+    <script src="${pageContext.request.contextPath}/layui/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
     <%String yangshi = (String) session.getAttribute("color");%>
     <style>
         div{
@@ -70,7 +72,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">入职时间*</label>
                 <div class="layui-input-block">
-                    <input type="text" name="ruzhitime" required  lay-verify="required" placeholder="单击此处选择日期" id="rutime" autocomplete="off" class="layui-input">
+                    <input type="text" name="ruzhitime" id="ruzhitime" required  lay-verify="required" placeholder="单击此处选择日期" id="rutime" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -211,7 +213,7 @@
         document.getElementById("yjdz").value="222908562@qq.com";
         document.getElementById("zfb").value="186461651156";
     }
-    layui.use(['form', 'upload', 'layer'], function () {
+    layui.use(['form', 'upload', 'laydate', 'layer'], function () {
         var form = layui.form;
         $.ajax({
             url: '${pageContext.request.contextPath}/to/deptlist',
@@ -224,7 +226,15 @@
                 });
                 form.render("select");
             }
-        })
+        });
+
+        //日期
+        laydate.render({
+            elem: '#srtime'
+        });
+        laydate.render({
+            elem: '#ruzhitime'
+        });
 
     });
     function phoneFuzhi() {

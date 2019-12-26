@@ -126,15 +126,11 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/courseManage/toCourse" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>我的课程</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
-                </li>
-            </ul>
-        </div>
-        <div title="通知面板" style="overflow:auto;padding:0;">
-            <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toMyNotice" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>查看公告</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
                 </li>
             </ul>
         </div>
@@ -153,11 +149,8 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/repAddPage" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>报修申请</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/toRepairListPage" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>维修管理</a>
-                </li>
                 <li href="javascript:void(0);" src="" class="cs-navi-tab">
-                    <a style="color: green">查看学费</a>
+                    <a>查看学费</a>
                 </li>
                 <li href="javascript:void(0);" src="" class="cs-navi-tab">
                     <a style="color: green">问题反馈</a>

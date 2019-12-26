@@ -185,7 +185,7 @@
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
                 ,{field: 'attId', title: '编号', width:73, sort: true}
-                ,{field: 'punckClockTime', title: '未打卡时间  ', width:150,templet:function (row){
+                ,{field: 'punckClockTime', title: '未打卡时间  ', width:200,templet:function (row){
                         return createTime(row.punckClockTime);
                     }}
                 ,{field: 'empname', title: '员工姓名 ', width:120}

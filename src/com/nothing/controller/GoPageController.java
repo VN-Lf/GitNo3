@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.EmpService;
 import com.nothing.service.GoPageService;
 import com.nothing.vo.Sdudent.Student;
+import com.nothing.vo.charge.charModule;
 import com.nothing.vo.emp.Emp;
 import com.nothing.vo.emp.Post;
 import org.springframework.stereotype.Controller;
@@ -89,9 +90,9 @@ public class GoPageController {
                 request.getSession().setAttribute("mes",s);
                 return "redirect:tologin";
             }else {
-                Post post = empService.sqlPostVo(""+emp.getEmpId());
+                charModule post = empService.getModule(""+emp.getEmpId());
                 session.setAttribute("empId",emp);
-                session.setAttribute("post",post);
+                session.setAttribute("mod",post);
                 return "redirect:home";
             }
         }else if("stu".equals(type)){
@@ -122,6 +123,11 @@ public class GoPageController {
     public void End(HttpSession session){
         System.out.println(session.getAttribute("studId"));
         session.invalidate();
+    }
+    //无权限
+    @RequestMapping("/notquan")
+    public String notquan(){
+        return "actStu/wuQuan";
     }
     //前往员工资料
     @RequestMapping("/toempzl")

@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<form class="layui-form" method="post" action="${pageContext.request.contextPath}/finance/tuitionAdd" lay-filter="gg">
+<form style="margin-top: 30px" class="layui-form" method="post" action="${pageContext.request.contextPath}/finance/tuitionAdd" lay-filter="gg">
     <input type="hidden" name="financeId">
     <input type="hidden" name="financedate">
     <input type="hidden" name="empid">

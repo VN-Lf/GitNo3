@@ -22,6 +22,6 @@ public interface ActivitiService {
     void xiuGaiTask(int jobId, String taskId, String flow, String comment, String userId);//修改任务
     void xiuGaiTaskStu(int jobId, String taskId, String flow, String comment, String userId);//修改任务
     List lookMyBeiZhu(int id) throws ParseException;             //查看备注
-    int sqlZhixin(String deptid);                 //传入部门id查主任
+    String sqlZhixin(String deptid);                 //传入部门id查主任
     List chuliComm(List<Comment> commentList, List empList);//处理list集合 empid转换姓名 时间转换
 }
