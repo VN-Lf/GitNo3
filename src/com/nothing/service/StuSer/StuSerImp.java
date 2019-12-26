@@ -211,4 +211,45 @@ public class StuSerImp extends BaseDao implements StuSer{
         return selTotalRow("select count(*) from studentscore sc left join student s using(studId) left join term t using (termId) left join "+
                 "course c using(courseId) left join emp e using(empId) where studId = "+studId);
     }
+
+
+
+    @Override
+    public List allotStu() {
+        return listBySQL("\t\n" +
+                "SElECT\n" +
+                "\ten.*,\n" +
+                "\tclassTypeName,\n" +
+                "\tMajorName\n" +
+                "FROM\n" +
+                "\tEnrollment en\n" +
+                "\tLEFT JOIN classType c USING ( classType )\n" +
+                "\tLEFT JOIN EduMajor ma USING ( MajorId )\n" +
+                "where  status in (1,2,3)\n" +
+                "\t");
+    }
+
+    @Override
+    public List allotCon(String stuSelectName, String stuSelectPhone, String claSelectType) {
+        return listBySQL("SElECT\n" +
+                "\ten.*,\n" +
+                "\tempName,\n" +
+                "\tclassTypeName,\n" +
+                "\tMajorName,\n" +
+                "\tclassName,\n" +
+                "\tentryTime,\n" +
+                "\treviewer\n" +
+                "FROM\n" +
+                "\tEnrollment en\n" +
+                "\tLEFT JOIN emp e USING ( empId )\n" +
+                "\tLEFT JOIN classType c USING ( classType )\n" +
+                "\tLEFT JOIN EduMajor ma USING ( MajorId )\n" +
+                "\tLEFT JOIN classvo USING ( classId )\n" +
+                "\tleft join EntryFinance\t  enf using(enrollmentId)\n" +
+                "\twhere \n" +
+                "\tstuName like '%"+stuSelectName+"%'\n" +
+                "\tand classTypeName like '%"+claSelectType+"%'\n" +
+                "\tand stuPhone like '%"+stuSelectPhone+"%'\n");
+    }
+
 }

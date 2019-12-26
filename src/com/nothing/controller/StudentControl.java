@@ -2,6 +2,7 @@ package com.nothing.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.nothing.service.StuSer.EnrSer;
 import com.nothing.service.StuSer.StuSer;
 import com.nothing.vo.Edu.*;
 import com.nothing.vo.Sdudent.*;
@@ -32,6 +33,8 @@ import java.util.jar.JarEntry;
 public class StudentControl{
     @Resource
     StuSer stuSer;
+    @Resource
+    EnrSer enrSer;
 
     @RequestMapping("{ac}")
     public String toStuMain(@PathVariable("ac")String ac ,HttpServletRequest request){
@@ -60,6 +63,7 @@ public class StudentControl{
             request.setAttribute("majorList",majorList);
             return "student/stuClass";
         }else if("allotStu".equals(ac)){
+            request.setAttribute("classType",classTypeList);
             return "student/stuAllotClass";
         }
         return "";
@@ -77,8 +81,8 @@ public class StudentControl{
             list = stuSer.classList();
             title = stuSer.allTitle(new ClassVo());
         }else if("allotStu".equals(ac)){
-            list = stuSer.stuByClaId("0");
-            title = stuSer.stuByClaIdCount("0");
+            list = stuSer.allotStu();
+            title =list.size();
         }else if("course".equals(ac)){
             list = stuSer.listO(new Course());
             title = stuSer.allTitle(new Course());
@@ -324,18 +328,60 @@ public class StudentControl{
         return jsonArray;
     }
 
-
-
     //给学生分配班级
     @RequestMapping("toClassAddStu")
     @ResponseBody
-    public String toClassAddStu(String studIds,String cid){
-        try{
-            stuSer.classAddStu(cid,studIds);
-        }catch (IndexOutOfBoundsException e){
+    public String toClassAddStu(String all,String cid){
+        JSONArray jsonArray = JSONArray.parseArray(all);
+        try {
+            for(int i = 0;i<jsonArray.size();i++){
+                try {
+                    Student s = new Student();
+                    Map o = (Map) jsonArray.get(i);
+                    s.setStuName(o.get("stuName").toString());
+                    s.setCardId(o.get("cardId").toString());
+                    s.setStuStu((Integer) o.get("status"));
+                    s.setStuPhone(o.get("stuPhone").toString());
+                    s.setStuHisSchool(o.get("school").toString());
+                    s.setStuSex(o.get("stuSex").toString());
+                    s.setInterTecher(o.get("enterEmp").toString());
+                    s.setScore(Double.valueOf( o.get("score").toString()));
+                    s.setIsComputer(o.get("computer").toString());
+                    s.setClassId(Integer.parseInt(cid));
+                    stuSer.addStu(s);
+                    enrSer.updateStatus(o.get("enrollmentid").toString());
+                }  catch (IndexOutOfBoundsException e){
+
+                }
+            }
+
+        }catch (NullPointerException ee){
 
         }
+
         return "";
+    }
+
+
+    @RequestMapping("allotCon")
+    @ResponseBody
+    public JSONObject allotCon(String stuSelectName , String stuSelectPhone, String claSelectType){
+        if("".equals(stuSelectName)||stuSelectName==null){
+            stuSelectName="";
+        }
+        if("".equals(stuSelectPhone)||stuSelectPhone==null){
+            stuSelectPhone="";
+        }
+        if("".equals(claSelectType)||claSelectType==null){
+            claSelectType="";
+        }
+        List list = stuSer.allotCon(stuSelectName,stuSelectPhone,claSelectType);
+        JSONObject jsonObject =  new JSONObject();
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        jsonObject.put("count",list.size());
+        return jsonObject;
     }
 
 }

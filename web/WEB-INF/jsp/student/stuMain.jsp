@@ -53,7 +53,7 @@
         </div>
     </div>
 </div>
-<!--附表表单-->
+
 <!--附表家庭-->
 <form  class="layui-form" id="addFalForm" style="display:none;height: auto;width: 600px" method="post">
     <input id="stuFamilyid" type="hidden" name="stuFamilyid">
@@ -172,7 +172,7 @@
                 ,{field: 'xiuxue', title: '是否休学', width:80}
                 ,{field: 'isComputer', title: '是否发放电脑', width:80}
                 ,{field: 'collar', title: '是否领走电脑', width:80}
-                ,{width:150, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo'}
+                    ,{width:150, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo'}
             ]]
         });
 
@@ -572,7 +572,7 @@
         <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
     </div>
     <!--4表的toolbar-->
-    <div style="float: left;height: 20px;margin-top:-5px">
+    <div style="float: left;height:100px;margin-top:-50px;margin-left: 100px">
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">学生姓名</label>
             <div class="layui-input-block">
@@ -613,7 +613,6 @@
 
         <button class="layui-btn layui-btn-sm" lay-event="isSelect">条件筛选</button>
     </div>
-
 </script>
 
 <script type="text/html" id="toolbarDemo2">
