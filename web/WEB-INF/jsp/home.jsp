@@ -375,6 +375,7 @@
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',split:true" class="hometop">
+
     <h1 style="margin: 1% 0">管理员界面</h1>
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
