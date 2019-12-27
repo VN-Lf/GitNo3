@@ -42,8 +42,8 @@
             ,url: '${pageContext.request.contextPath}/Building/quanlist' //数据接口
             ,page: true //开启分页
             ,cols: [[
-                {field: 'charId', title: 'id', width:60, sort: true}
-                ,{field: 'empName', title: '姓名', width:100}
+                {field: 'charId', title: '编号', width:80, sort: true}
+                ,{field: 'empName', title: '姓名'}
                 ,{field: 'deptId', title: '部门', width:100}
                 ,{field: 'boss', title: '身份',event: 'setSign', width:70,templet:function (row){return postZhi(row.boss);}}
                 ,{field: 'updateEmp', title: '员工管理',event: 'updateEmp', width:90,templet:function (row){return onclikId(row.updateEmp);}
@@ -61,6 +61,17 @@
                 },{field: 'zhiban', title: '值班管理',event: 'zhiban', width:90,templet:function (row){return onclikId(row.zhiban);}
                 },{field: 'zhaosheng', title: '招生权限',event: 'zhaosheng', width:90,templet:function (row){return onclikId(row.zhaosheng);}}
             ]]
+        });
+        $('#shaixuan').click(function () {
+            var dept = $('#sxdept').val();
+            table.reload('demo',{
+                url:'${pageContext.request.contextPath}/Building/quanlists',
+                where:{
+                    dept:dept
+                },page:{
+                    curr:1
+                }
+            });
         });
         //监听单元格事件
         table.on('tool(test)', function(obj){
@@ -326,7 +337,7 @@
                 });
                 form.render("select");
             }
-        })
+        });
     });
     function onclikId(v) {
         if(v == 0){
@@ -340,7 +351,6 @@
         }
         return html;
     }
-
     function postZhi(v) {
         if(v == 0){
             return "校长";
