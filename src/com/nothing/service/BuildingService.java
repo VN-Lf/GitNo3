@@ -16,4 +16,6 @@ public interface BuildingService {
     void delBuilding(Object id);
     //判断信息是否重复
     boolean boolBuilding(studentFloor studentFloor);
+
+    void upDateObj(String sql);
 }

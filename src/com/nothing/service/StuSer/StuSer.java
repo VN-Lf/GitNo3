@@ -47,5 +47,7 @@ public interface StuSer{
     void classAddStu(String cid,String studIds);
     //根据学生id查授课教师和班主任
     List selectTeacherByStuId(String studId);
+    List allotStu();
 
+    List allotCon(String stuSelectName , String stuSelectPhone, String claSelectType);
 }

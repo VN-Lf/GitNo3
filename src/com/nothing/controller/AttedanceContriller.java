@@ -87,13 +87,13 @@ public class AttedanceContriller {
         Emp emp = (Emp) session.getAttribute("empId");
         int i = emp.getEmpId();
         attendanceVo.setEmpId(i);
-        List<Map> namelist  = service.selectAttendanlist("select deptId from post where empId ="+i+" and postName not like '%部长%'");
+        List<Map> namelist  = service.selectAttendanlist("select deptId from charmodule where empId ="+i+" and boss <> 1");
         if(namelist.size() == 0){
-            List<Map> maxid = service.selectAttendanlist("select empId from post where postName like '%校长%'");
+            List<Map> maxid = service.selectAttendanlist("select deptId from charmodule boss=0");
             attendanceVo.setAuditor(""+maxid.get(0).get("empId"));
         }else {
             String deptid = ""+namelist.get(0).get("deptId");
-            List<Map> deptlist = service.selectAttendanlist("select empId from post where postName like '%部长%' and deptId ="+deptid);
+            List<Map> deptlist = service.selectAttendanlist("select empId from charmodule where boss=1 and deptId ="+deptid);
             attendanceVo.setAuditor(""+deptlist.get(0).get("empId"));
         }
 

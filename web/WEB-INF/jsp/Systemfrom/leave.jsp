@@ -30,10 +30,19 @@
                     textAlign:'left'
                 },
                 tooltip:{
-                    text:'sales'
+                    text:'count'
                 },
                 legend: {
-                    data: ['销量','库存']
+                    x:'left',
+                    y:' center',
+                    itemWidth: 50,
+                    itemHeight: 20,
+                    width:'100',
+                    padding:[0, 30,0,150],
+                    textStyle: {
+                        fontSize: 20,
+                    },
+                    data: ['请假天数','请假次数']
                 },
                 xAxis:{
                     data:d.name,
@@ -48,7 +57,7 @@
                 },
                 series:[{
 
-                    name:'天数',
+                    name:'请假天数',
                     type:'bar',
                     data:d.day
                 },{

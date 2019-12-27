@@ -34,7 +34,7 @@
                 ,{field: 'time', title: '小时(包含4小时带薪假)', sort: true}
                 ,{field: 'starttime', title: '开始时间'}
                 ,{field: 'endtime', title: '结束时间'}
-                ,{field: 'Remark', title: '说明'}
+                ,{field: 'remark', title: '说明'}
                 ,{field: 'processFlag', title: '状态',templet:function (data) {
                         if(data.processFlag == 1){
                             return '审批中'

@@ -34,4 +34,9 @@ public class BuildingServiceimpl extends BaseDao implements BuildingService {
     public boolean boolBuilding(studentFloor studentFloor) {
         return false;
     }
+
+    @Override
+    public void upDateObj(String sql) {
+        executeSQL(sql);
+    }
 }

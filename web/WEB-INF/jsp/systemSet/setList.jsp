@@ -13,7 +13,7 @@
     <style>
         .td{
             text-align: center;
-            padding: 50px;
+            padding: 40px;
         }
     </style>
 </head>
@@ -27,7 +27,7 @@
             </a>
         </td>
         <td class="td">
-            <a href="">
+            <a href="javascript:void(0)" onclick="toFallList('班级类型','${pageContext.request.contextPath}/sys/toCTList')">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
                 班级类型
             </a>
@@ -35,13 +35,13 @@
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                🎭
             </a>
         </td>
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                ⚓
             </a>
         </td>
     </tr>
@@ -49,25 +49,25 @@
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                届别设置
+                ❄
             </a>
         </td>
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                🍤
             </a>
         </td>
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                🙄
             </a>
         </td>
         <td class="td">
             <a href="">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                班级类型
+                🙃
             </a>
         </td>
     </tr>
@@ -101,9 +101,7 @@
         return s;
     }
     function toFallList(title,url){
-        if(self.parent.tab){
-            alert('冲突了')
-        }
+
         self.parent.addTab(title,url);
         // $('#tabs').tabs('add', {
         //     title: title, //标题

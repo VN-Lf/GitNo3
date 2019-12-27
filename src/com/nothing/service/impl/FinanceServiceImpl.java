@@ -29,7 +29,6 @@ public class FinanceServiceImpl extends BaseDao implements FinanceService {
     @Override
     public void tiotionAdd(financeshouldTuitionRecord ft) {
         this.addObject(ft);
-
     }
 
     @Override

@@ -46,7 +46,11 @@ public class feedbackController {
         Emp emp = (Emp) session.getAttribute("empId");
         int i = emp.getEmpId();
         List<Map> lists = service.selectfeedbacklist("select userId from feedback where empid = "+i+" and feedBackType = 1");
-        String userid = (String) lists.get(0).get("userId");
+        String userid="1";
+        for(int r = 0;r<lists.size();r++){
+           userid = (String) lists.get(i).get("userId");
+        }
+
 
         List<Map> list = service.selectfeedbacklist("select fe.* ,e.empName as empName ,d.deptName as deptName,(select empname from emp where empId = "+userid+") as username from feedback fe \n" +
                 "left join emp e using(empId)\n" +

@@ -3,6 +3,7 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.BuildingService;
 import com.nothing.service.DormitoryService;
+import com.nothing.vo.charge.charModule;
 import com.nothing.vo.sushe.studentFloor;
 import com.nothing.vo.sushe.studentHour;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,11 @@ public class BuildingController {
     @RequestMapping("toys")
     public String todormitorys() {
         return "BuildingManagement/Building";
+    }
+
+    @RequestMapping("toQuan")
+    public String toQuan() {
+        return "actStu/quan";
     }
 
     //查看方法
@@ -74,5 +80,40 @@ public class BuildingController {
         id = id.substring(0,id.length()-1);
         service.delBuilding(id);
         return "redirect:toys";
+    }
+
+    @RequestMapping("/quanlist")
+    @ResponseBody
+    public JSONObject EmpList() {
+        List examlist = service.selectBuildinglists("select * from charmodule");
+        int con = service.SelcctBuildingcount("select count(empId) from charmodule");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("data", examlist);
+        jsonObject.put("count", con);
+        return jsonObject;
+    }
+
+    @RequestMapping("/updateboss")
+    public String upDateBoss(String boss,String id){
+        if("校长".equals(boss)){
+            service.upDateObj("UPDATE charmodule SET boss=0 where charId ="+id);
+        }else if("上级".equals(boss)){
+            service.upDateObj("UPDATE charmodule SET boss=1 where charId ="+id);
+        }else {
+            service.upDateObj("UPDATE charmodule SET boss=3 where charId ="+id);
+        }
+        return "";
+    }
+    @RequestMapping("/up")
+    public String banEmp(String cid,String lie,String zt) {
+        System.out.println(cid+"|"+lie+"|"+zt);
+        if("1".equals(zt)){
+            zt="0";
+        }else zt="1";
+        service.upDateObj("UPDATE charmodule SET "+lie+"="+zt+" where charId ="+cid);
+
+        return "actStu/quan";
     }
 }

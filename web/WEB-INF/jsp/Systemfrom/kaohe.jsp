@@ -33,7 +33,16 @@
                 text:'score'
             },
             legend:{
-                data:['score']
+                x:'left',
+                y:' center',
+                itemWidth: 50,
+                itemHeight: 20,
+                width:'100',
+                padding:[0, 30,0,150],
+                textStyle: {
+                    fontSize: 20,
+                },
+                data:['分数']
             },
             xAxis:{
                 data:d.name,

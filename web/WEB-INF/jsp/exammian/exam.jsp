@@ -27,7 +27,7 @@
     <table class="layui-table" id="demo" lay-data="{id: 'idTest'}" lay-filter="test"></table>
 </div>
 <%--弹出层--%>
-<div style="display: none" id="update">
+<div style="display: none"  class="easyui-layout" id="update">
     <form class="layui-form" method="post" action="${pageContext.request.contextPath}/exam/updateexam" lay-filter="dataf">
         <input type="hidden" name="aduitModelid"/>
         <div class="layui-form-item" style="width: 450px">
@@ -42,15 +42,11 @@
                 <input type="text" name="Scores" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item" style="width: 450px">
+        <div class="layui-form-item"  class="easyui-layout" style="width: 450px">
             <label class="layui-form-label">部门</label>
-            <div class="layui-input-block">
-                <select name="Depid" lay-verify="required" style="width: 250px">
-                    <option value="1">教研部</option>
-                    <option value="2">行政部</option>
-                    <option value="3">后勤部</option>
-                    <option value="4">学工部</option>
-                    <option value="5">招生部</option>
+            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元-->
+                <select name="Depid" id="sxdept">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -86,13 +82,9 @@
         </div>
         <div class="layui-form-item" style="width: 450px">
             <label class="layui-form-label">部门</label>
-            <div class="layui-input-block">
-                <select name="Depid" lay-verify="required" style="width: 250px">
-                    <option value="1">教研部</option>
-                    <option value="2">行政部</option>
-                    <option value="3">后勤部</option>
-                    <option value="4">学工部</option>
-                    <option value="5">招生部</option>
+            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元-->
+                <select id="sxdept2">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -200,13 +192,29 @@
             });
         }
 
+        layui.use(['form', 'upload', 'layer'], function () {
+            var form = layui.form;
+            $.ajax({
+                url: '${pageContext.request.contextPath}/to/deptlist',
+                dataType: 'json',
+                type: 'post',
+                success: function (data) {
+                    var json = data.data;
+                    $.each(json, function (index, item) {
+                        $('#sxdept').append(new Option(item.deptName,item.deptId));// 下拉菜单里添加元素
+                        $('#sxdept2').append(new Option(item.deptName,item.deptId));// 下拉菜单里添加元素
+                    });
+                    form.render("select");
+                }
+            })
+        });
 
         function openaddeexam(data) {
             index1=layer.open({
                 type: 1,
                 title:'修改内容',
                 area: ['500px', '300px'],
-                content:$('#add') ,
+                content:$('#add'),
             });
         }
     });
