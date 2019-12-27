@@ -33,19 +33,18 @@ public class ScoreController{
     StuSer stuSer;
     @Resource
     StuScoSer stuScoSer;
-
     @RequestMapping("{ac}")
     public String toMain(HttpServletRequest request,@PathVariable("ac")String ac){
             List classList = stuSer.listObj(new ClassVo());
             request.setAttribute("classList",classList);
             if("main".equals(ac)){
-                List termList = stuSer.listO(new Term());//学期
-                List courseList = stuSer.listO(new Course());
+                List termList = stuSer.listObj(new Term());//学期
+                List courseList = stuSer.listObj(new Course());
                 request.setAttribute("termList",termList);
                 request.setAttribute("courseList",courseList);
                 return "student/score";
             }else if("reply".equals(ac)){
-                List projectList = stuSer.listO(new StudentProject());
+                List projectList = stuSer.listObj(new StudentProject());
                 request.setAttribute("projectList",projectList);
                 return "student/replyScore";
             }
@@ -88,6 +87,7 @@ public class ScoreController{
 
     @RequestMapping("toClassScoByCid")
     public String toClassScoByCid( String testDH, String classId,StudentScore studentScore,HttpServletRequest request) throws ParseException{
+        System.out.println("aaaaaaaaaaa"+studentScore.toString());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date testD = formatter.parse(testDH);
         studentScore.setScoreTime(testD);

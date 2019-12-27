@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
 </head>
 <body>
+<button type="button" class="layui-btn layui-btn-primary" onclick="openMain()">返回</button>
 <form class="layui-form" action="${pageContext.request.contextPath}/stu/update/add" method="post" target="_self">
     <div style="width: 100%;height: 69%;margin-top: 1%">
         <div style="width:33%;height:100%;float: left">
@@ -356,6 +357,9 @@
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+    function openMain(){
+        window.open("<%=request.getContextPath()%>/stu/home","_self");
+    }
     layui.use(['form','laydate'], function(){
         var form = layui.form;
 

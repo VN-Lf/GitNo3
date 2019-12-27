@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
 </head>
-<body><!----><!----->
+<body>
 <table id="demo" lay-filter="test">
 
 </table>
@@ -72,6 +72,9 @@
                             });
                         });
                      break;
+                    case 'return':
+                        window.open("${pageContext.request.contextPath}/sco/main","_self");
+                        break;
                 };
             });
 
@@ -125,5 +128,6 @@
     </div>
 
     <button class="layui-btn layui-btn-sm" lay-event="yes">保存</button>
+    <button class="layui-btn layui-btn-sm" lay-event="return">返回</button>
 </script>
 </html>

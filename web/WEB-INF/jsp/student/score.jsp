@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>考试成绩/</title>
+    <title>考试成绩</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     <script src="${pageContext.request.contextPath}/layui/laydate/laydate.js"></script> <!-- 改成你的路径 -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
@@ -65,7 +65,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">学期</label>
         <div class="layui-input-block">
-            <select name="termId" lay-verify="required" placeholder=" " id="termId">
+            <select name="termId" lay-verify="required" placeholder= " " id="termId">
                 <option> </option>
                 <c:forEach items="${termList}" var="term">
                     <option value="${term.termId}">${term.termName}</option>
@@ -197,7 +197,8 @@
                 dataType:'text',
                 success:function (da){
                    var d = da
-                    if(''+d=='no'){
+                    alert(d);
+                    if(d=='no'){
                         alert("此班级已有此学期成绩存在");
                         return;
                     }else{
@@ -206,7 +207,7 @@
                         var testType =$('#testType').val();
                         var termId  = $('#termId').val();
                         var testDH = $('#testDH').val();
-                        self.location= "${pageContext.request.contextPath}/sco/toClassScoByCid?classId="+classId+"&courseId="+courseId+"&testType="+testType+"&termId="+termId+"&testDH="+testDH;
+                        window.open( "${pageContext.request.contextPath}/sco/toClassScoByCid?classId="+classId+"&courseId="+courseId+"&testType="+testType+"&termId="+termId+"&testDH="+testDH,"_self");
                     }
                 }
             });
