@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
@@ -28,6 +29,9 @@
 
             <script type="text/html" id="barDemo">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            </script>
+            <script type="text/html" id="selbarDemo">
+                <a class="layui-btn layui-btn-xs" lay-event="seledit">查看宿舍学员</a>
             </script>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container" style="width: 800px;">
@@ -101,6 +105,35 @@
             </div>
         </div>
     </div>
+    <%--隐藏提交表单--%>
+    <div id="winadd" class="easyui-window"
+         data-options="title:'添加',iconCls:'icon-save',modal:true,closed:true"
+         style="width: 600px; height: 400px; padding: 5px; top: 20px;">
+        <div class="easyui-layout" data-options="fit:true">
+            <div data-options="region:'center',border:false"
+                 style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+                    <table width="80%" align="center" border="1" >
+                        <tr>
+                            <th>宿舍房号</th>
+                            <th>所在班级</th>
+                            <th>学生姓名</th>
+                            <th>学生号码</th>
+                        </tr>
+                       <tr id="stuhouns">
+
+                       </tr>
+                    </table>
+            </div>
+            <div data-options="region:'south',border:false"
+                 style="text-align: right; padding: 5px 0;">
+                <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
+                   href="javascript:void(0)" onclick="sub()">Ok</a>
+                <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+                   href="javascript:void(0)" onclick="close1()">Cancel</a>
+            </div>
+        </div>
+    </div>
+
 <%--隐藏提交表单--%>
     <div id="wins" class="easyui-window"
          data-options="title:'修改',iconCls:'icon-save',modal:true,closed:true"
@@ -199,7 +232,8 @@
                 ,{field: 'hourIddsc', title: '序号', width:80}
                 ,{field: 'hourName', title: '宿舍房号', width:120}
                 ,{field: 'numberBeds', title: '床位数', width: 80}
-                ,{width:215, title: '操作',align:'center', fixed: 'right', toolbar: '#barDemo'}
+                ,{width:155, title: '操作',align:'center', fixed: 'right', toolbar: '#barDemo,#selbarDemo'}
+                ,{width:155, title: '宿舍管理',align:'center', fixed: 'right', toolbar: '#selbarDemo'}
             ]]
         });
 
@@ -247,6 +281,8 @@
                $("#addr").val(data.addr);
                $("#floorId").val(data.floorId);
 
+            }if(obj.event === 'seledit'){
+                window.location.href="<%=request.getContextPath()%>/dormitory/toDomSelStu/"+data.stuHours;
             }
         });
 

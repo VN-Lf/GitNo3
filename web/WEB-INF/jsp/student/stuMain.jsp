@@ -572,7 +572,7 @@
         <button class="layui-btn layui-btn-sm" lay-event="isDele">批量删除</button>
     </div>
     <!--4表的toolbar-->
-    <div style="float: left;height:100px;margin-top:-50px;margin-left: 100px">
+    <div style="float: left;height:18px;margin-top:-5px;margin-left: 70px">
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label" style="width:100px">学生姓名</label>
             <div class="layui-input-block">

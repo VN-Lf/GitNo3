@@ -215,7 +215,7 @@
             "                <p class='biti' style='color: #f1f1f1'>"+ntime+"</p>\n" +
             "            </div>\n" +
             "            <div style=\"float: left;width: 15%;height: 100%\">\n" +
-            "                <p class=\"biti\" id='ti"+nid+"'>"+title+"</p>\n" +
+            "                <p class=\"biti\" style='margin: 0' id='ti"+nid+"'>"+title+"</p>\n" +
             "                <input type='text' id='ti"+nid+"b' value='"+title+"' style='display: none'/>"+
             "            </div>\n" +
             "            <div class=\"wenben\" onclick='zanKai(this)' style=\"float: left;width: 60%;height: 100%;margin: 0 2.5%;transition: 0.5s;\">\n" +

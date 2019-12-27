@@ -158,18 +158,18 @@
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
                 ,{field: 'feedbackId', title: '编号', width:73, sort: true}
-                ,{field: 'feedbackTime', title: '反馈时间', width:150,templet:function (row){
+                ,{field: 'feedbackTime', title: '反馈时间', width:200,templet:function (row){
                         return createTime(row.feedbackTime);
                     }}
-                ,{field: 'feedBackType', title: '职务', width:120,templet:function (row){
+                ,{field: 'feedBackType', title: '类型', width:120,templet:function (row){
                         if(row.feedBackType == 1){
                             return"员工"
                         }else if(row.feedBackType == 2){
                             return "学生"
                         }
                     }}
-                ,{field: 'empname', title: '姓名', width:100}
-                ,{field: 'remark', title: '建议', width:100}
+                ,{field: 'empname', title: '姓名', width:120}
+                ,{field: 'remark', title: '建议'}
                 ,{field: 'status', title: '状态', width:100,templet:function (row){
                         if(row.status == 1){
                             return"未处理"
@@ -177,33 +177,33 @@
                             return "已处理"
                         }
                     }}
-                ,{field: 'deptName', title: '部门'}
-                ,{field: 'opinion', title: '审批意见', width:100}
+                ,{field: 'deptName', title: '部门',width:150}
+                ,{field: 'opinion', title: '审批意见'}
             ]]
         });
 
         //第二个实例
         table.render({
             elem: '#Senddemo'
-            ,height: 312
+            ,height:'full-200'
             ,toolbar: '#toolbarDemo'
             ,url: '${pageContext.request.contextPath}/feedback/mylist' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox',width:100}//复选框
                 ,{field: 'feedbackId', title: '编号', width:73, sort: true}
-                ,{field: 'feedbackTime', title: '反馈时间', width:150,templet:function (row){
+                ,{field: 'feedbackTime', title: '反馈时间', width:200,templet:function (row){
                         return createTime(row.feedbackTime);
                     }}
-                ,{field: 'feedBackType', title: '职务', width:120,templet:function (row){
+                ,{field: 'feedBackType', title: '类型', width:120,templet:function (row){
                         if(row.feedBackType == 1){
                             return"员工"
                         }else if(row.feedBackType == 2){
                             return "学生"
                         }
                     }}
-                ,{field: 'empname', title: '姓名', width:100}
-                ,{field: 'remark', title: '建议', width:100}
+                ,{field: 'empname', title: '姓名', width:120}
+                ,{field: 'remark', title: '建议'}
                 ,{field: 'status', title: '状态', width:100,templet:function (row){
                         if(row.status == 1){
                             return"未处理"
@@ -211,8 +211,8 @@
                             return "已处理"
                         }
                     }}
-                ,{field: 'deptName', title: '部门'}
-                ,{field: 'opinion', title: '审批意见', width:100}
+                ,{field: 'deptName', title: '部门',width:150}
+                ,{field: 'opinion', title: '审批意见'}
                 ,{ title: '操作', width:75,
                     templet:function (row){
                         return chaozuoPand(row.feedbackId,row.status);
