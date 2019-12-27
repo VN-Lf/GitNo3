@@ -16,16 +16,16 @@ public class charModule {
     private Integer updateEmp;//针对员工增删查改
     private Integer updateStu; //1有权限 0无 学生增删查改
     private Integer actEmp;//审批请假单
-    private Integer weekEmp;//审批同部门周报 部门管理
+    private Integer weekEmp;//审批同部门周报
     private Integer attkEmp;//未打卡审批
     private Integer weixiu;//维修权限 公告
-    private Integer kaoheEmp;//巡查员
+    private Integer kaoheEmp;//巡查员 部门管理
     private Integer stuBze;//学生班主任 管理楼栋等
     private Integer stuJs;//学生老师 录入成绩等 谈心
     private Integer stuMoney;//学费
     private Integer kecheng;//教务类 课程管理
     private Integer zhiban;//值班管理
-    private Integer fanKui;//问题反馈处理
+    private Integer deptGuan;//部门管理
     private Integer zhaosheng;//招生权限
     private Integer boss;//上级 0校长 1部长
 
@@ -158,12 +158,12 @@ public class charModule {
         this.zhiban = zhiban;
     }
 
-    public Integer getFanKui() {
-        return fanKui;
+    public Integer getDeptGuan() {
+        return deptGuan;
     }
 
-    public void setFanKui(Integer fanKui) {
-        this.fanKui = fanKui;
+    public void setDeptGuan(Integer deptGuan) {
+        this.deptGuan = deptGuan;
     }
 
     public Integer getZhaosheng() {

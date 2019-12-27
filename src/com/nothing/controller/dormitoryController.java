@@ -6,6 +6,7 @@ import com.nothing.service.DormitoryService;
 import com.nothing.vo.sushe.studentHour;
 import org.activiti.engine.repository.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,18 +30,36 @@ public class dormitoryController {
         request.setAttribute("dlist",list);
         return "DormitoryManagement/Dormitiry";
     }
+    //去宿舍页面
+    @RequestMapping("toDomSelStu/{ac}")
+    public String toDomSelStu(HttpServletRequest request,@PathVariable("ac")String ac) {
+        if("".equals(ac)){
+
+        }
+        int name = Integer.parseInt(ac);
+        System.out.println("宿舍Id为"+name);
+        request.setAttribute("deptname",name);
+        return "DormitoryManagement/DomitirySelStu";
+    }
+    /*//查询要发送的人
+    @ResponseBody
+    @RequestMapping("selsenddormitory")
+    public JSONObject selsendfeedback(String deptname){
+        System.out.println("宿舍编号为："+deptname);
+        List list = service.selectDormitorylists("select sh.hourName as HourName,cl.className as ClassName, s.stuName as stuName, s.stuPhone as stuPhone from student s \n" +
+                "left join studenthour  sh using(stuHours)\n" +
+                "left join classvo  cl using(classId) where s.stuHours like '"+deptname+"')");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", list);
+        return jsonObject;
+    }*/
     //查看方法
     @ResponseBody
     @RequestMapping("list")
     public JSONObject list() {
-        System.out.println("进来了");
-        //List list = this.service.selectDormitorylist(page, rows);
         List list = service.selectDormitorylists("select * from studentHour ");
         int count = service.SelcctDormitorycount("select count(*) from studentHour");
 
-        /*Map map = new HashMap();
-        map.put("total", count);
-        map.put("rows", list);*/
 
         JSONObject json = new JSONObject();
         json.put("code",0);
@@ -51,6 +70,23 @@ public class dormitoryController {
         return json;
     }
 
+    //查看宿舍学生方法
+    @ResponseBody
+    @RequestMapping("stulist/{deptname}")
+    public JSONObject stulist(@PathVariable("deptname") String deptname) {
+        System.out.println("查看Id为"+deptname);
+        List list = service.selectDormitorylists("select sh.hourName as HourName, s.stuName as stuName, s.stuPhone as stuPhone from student s left join studenthour  sh using(stuHours) where sh.stuHours like '"+deptname+"'");
+        int count = service.SelcctDormitorycount("select count(*) from studentHour");
+
+
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","");
+        json.put("data",list);
+        json.put("count",count);
+
+        return json;
+    }
     //宿舍添加
     @RequestMapping("dormadd")
     public String dormadd(studentHour studentHour ,HttpServletRequest request) {

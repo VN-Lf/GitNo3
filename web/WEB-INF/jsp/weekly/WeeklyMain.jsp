@@ -79,6 +79,35 @@
             ]]
         });
 
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'isDele':
+                    var checkStatus = table.checkStatus('demo'),
+                        data = checkStatus.data,
+                        employeesId = " ";
+                    if(data.length > 0){
+                        for (var i in data){
+                            employeesId+=data[i].weekPaperId+",";
+                        }
+                        layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
+                            $.post('${pageContext.request.contextPath}/Weekly/WeeklyDelete',{
+                                id:employeesId
+                            },function(data){
+                                table.reload("demo");
+                                layer.close(index);
+                            });
+                        });
+                    }else{
+                        layer.msg('请选择需要删除的数据');
+                    }
+                    break;
+                case 'isAdd':
+                    window.open("${pageContext.request.contextPath}/stu/toAdd");
+                    break;
+            };
+        });
+
         $('#selectexam').click(function () {
             var empname=$('#empname').val();
            /* var Depid=$('#Depid').val();*/
