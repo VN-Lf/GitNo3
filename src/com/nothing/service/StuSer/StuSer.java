@@ -50,4 +50,6 @@ public interface StuSer{
     List allotStu();
 
     List allotCon(String stuSelectName , String stuSelectPhone, String claSelectType);
+
+    void delJobByStuId(String id);
 }

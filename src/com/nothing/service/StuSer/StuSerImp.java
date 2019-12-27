@@ -252,4 +252,9 @@ public class StuSerImp extends BaseDao implements StuSer{
                 "\tand stuPhone like '%"+stuSelectPhone+"%'\n");
     }
 
+    @Override
+    public void delJobByStuId(String id) {
+        executeSQL("delete from jobs where jobType = 'stuLeave' and userId in ("+id+")");
+    }
+
 }

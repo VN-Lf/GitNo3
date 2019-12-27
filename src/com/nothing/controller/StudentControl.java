@@ -162,6 +162,9 @@ public class StudentControl{
             stuSer.deleteStu(id,new Student());
             stuSer.deleteStu(id,new StuEdu());
             stuSer.deleteStu(id,new StuFimaly());
+            stuSer.deleteStu(id,new StudentScore());
+            stuSer.deleteStu(id,new StuReplyScore());
+            stuSer.delJobByStuId(id);
         }else if("fal".equals(ac)){
             stuSer.delFal(id);
         }else if("edu".equals(ac)){

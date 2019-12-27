@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
 </head>
 <body>
-
+<button type="button" class="layui-btn layui-btn-primary" onclick="openMain()">返回</button>
 <form class="layui-form" action="${pageContext.request.contextPath}/stu/update/up" method="post" lay-filter="gg" target="_self">
     <input id="stuId" type="hidden" name="studId" lay-verify="required" autocomplete="off" class="layui-input" value="${stu.studId}">
     <div style="width: 100%;height: 69%;margin-top: 1%">
@@ -356,7 +356,9 @@
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
-
+    function openMain() {
+        window.open("<%=request.getContextPath()%>/stu/home","_self");
+    }
     function createTime(v){
         var date = new Date(v);
         var y = date.getFullYear();
