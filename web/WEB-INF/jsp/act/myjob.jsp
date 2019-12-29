@@ -1,4 +1,5 @@
 <%@ page import="com.nothing.vo.emp.Emp" %>
+<%@ page import="com.nothing.vo.charge.charModule" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
@@ -107,7 +108,12 @@
 </head>
 <body>
 <div id="sqd" style="width: 80%;margin: 0 auto;transition: 0.5s;text-align: center;">
-    <table id="tab1" cellspacing="1">
+    <% charModule mod = (charModule) session.getAttribute("mod");%>
+    <%if(mod.getBoss() == 0){%>
+    <h1 align="left" style="width: 80%;margin: 50px auto">您无需主动申请假期</h1>
+    <h2 align="right" style="width: 80%;margin: 0 auto">但是可以在权限管理中把权限转给他人呢</h2>
+    <%}else {%>
+        <table id="tab1" cellspacing="1">
         <tr>
             <th colspan="9">
                 <h2 style="margin: 10px">我的申请单</h2>
@@ -175,6 +181,7 @@
             </td>
         </tr>
     </table>
+    <%}%>
 </div>
 <div id="qinjia">
     <% Emp use = (Emp) session.getAttribute("empId");%>

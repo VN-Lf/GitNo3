@@ -115,10 +115,10 @@
                     <a>我的邮件</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/actStu/toApply" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我要请假（待完善）</a>
+                    <a>我要请假</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/actStu/toMyJob" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我的请假单（待完善）</a>
+                    <a>我的请假单</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/home" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>学生资料</a>
