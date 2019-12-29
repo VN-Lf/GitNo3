@@ -75,6 +75,7 @@ public class GoPageController {
             if(list.size()==0 ){
                 String s = "账号或密码错误";
                 request.getSession().setAttribute("mes",s);
+                session.setAttribute("zangh",zhanghao);
                 return "redirect:tologin";
             }
             Integer i = 0;

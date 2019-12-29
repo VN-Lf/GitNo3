@@ -36,14 +36,15 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,url: '${pageContext.request.contextPath}/Stureply/list' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
-                {type:'checkbox',width:100}//复选框
+                {type:'checkbox',width:0}//复选框
                 ,{field: 'stuReplyId', title: '编号', width:50, }
-                ,{field: 'stuName', title: '姓名  ', width:100}
-                ,{field: 'projectName', title: '答辩项目 ', width:100}
+                ,{field: 'stuName', title: '姓名  ', width:150}
+                ,{field: 'projectName', title: '答辩项目 '}
                 ,{field: 'empName', title: '打分老师', width:100}
                 ,{field: 'score1', title: '功能完善', width:100}
                 ,{field: 'Score2', title: '技术难度',width:100}
