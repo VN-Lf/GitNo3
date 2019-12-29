@@ -15,11 +15,11 @@
 <body>
 <%--表格数据--%>
 <div>
-    <form style="width: 1205px;margin: 20px 0px 0px 150px">
+    <form class="layui-form" style="width: 1205px;margin: 20px 0px 0px 150px">
         员工姓名:<input type="text" name="empname" id="empname" required lay-verify="required" placeholder="请输人姓名"  class="layui-input" style="width:180px;display:inline-block" />
-        <div class="layui-form-item" style="width:324px;display:inline-block;margin-left: -30px;margin-right: 20px">
-            <label class="layui-form-label" style="width: 97px;margin-left: 10px;"> 部门名称:</label>
-            <div class="layui-input-block">
+        <div class="layui-form-item" style="width:324px;display:inline-block;margin-left: 30px;margin-right: 20px">
+            所在部门:
+            <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元-->
                 <select name="Depid" id="Depid" lay-filter="aihao" style="width: 180px;height: 38px;border: 1px solid rgba(216,216,216,0.5)">
                     <option value="">请选择部门</option>
                     <c:forEach items="${dept}" var="deptname">

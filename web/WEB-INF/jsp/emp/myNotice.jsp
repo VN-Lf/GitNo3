@@ -10,6 +10,12 @@
 <head>
     <title>公告列表</title>
     <%String yangshi = (String) session.getAttribute("color");%>
+    <% String ntp = "";
+        if(session.getAttribute("stuId")==null){
+        ntp = "3";
+    }else{
+        ntp = "2";
+    };%>
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
     <style>
         body{
@@ -59,8 +65,12 @@
     <script language="JavaScript">
         function czNotice(type) {
             $.ajax({
-                url:'${pageContext.request.contextPath}/emp/notlist?type='+type,
+                url:'${pageContext.request.contextPath}/emp/notlist',
                 type:'post',
+                data: {
+                    type:type,
+                    ntp:"<%=ntp%>",
+                },
                 dataType:'json',
                 success:function (data){
                     var json = data.data;
@@ -173,7 +183,11 @@
             var nnnnid = $(id).parent().children('div').find(".id").html().slice(3);
             document.getElementById(nnnnid).innerHTML="已读";
             $(id).children().siblings(".tishi2").css("color","#9f9f9f");
-            $.post('${pageContext.request.contextPath}/emp/martNotice',{eid:${empId.empId},nid:nnnnid},function (data) {},"json");
+            var use = '${empId.empId}';
+            if(use === ''){
+                use = '${stuId.studId}';
+            }
+            $.post('${pageContext.request.contextPath}/emp/martNotice',{eid:use,nid:nnnnid},function (data) {},"json");
         }else {
             $(id).children().siblings(".tishi2").css("color","#f1f1f1");
             jinzhi = 1;
@@ -185,7 +199,10 @@
             emp = emps.split(",");
         }
         var a = "<p id='"+nid+"' class=\"biti\">未读</p>";
-        var empId = ${empId.empId};
+        var empId = '${empId.empId}';
+        if(empId === ''){
+            empId = '${stuId.studId}';
+        }
         for(var i=0;i<emp.length;i++){
             if(empId==emp[i]){
                 a="<p id='"+nid+"' class=\"biti2\">已读</p>";
@@ -198,7 +215,7 @@
             "                <p class='biti' style='color: #f1f1f1'>"+ntime+"</p>\n" +
             "            </div>\n" +
             "            <div style=\"float: left;width: 15%;height: 100%\">\n" +
-            "                <p class=\"biti\" id='ti"+nid+"'>"+title+"</p>\n" +
+            "                <p class=\"biti\" style='margin: 0' id='ti"+nid+"'>"+title+"</p>\n" +
             "                <input type='text' id='ti"+nid+"b' value='"+title+"' style='display: none'/>"+
             "            </div>\n" +
             "            <div class=\"wenben\" onclick='zanKai(this)' style=\"float: left;width: 60%;height: 100%;margin: 0 2.5%;transition: 0.5s;\">\n" +

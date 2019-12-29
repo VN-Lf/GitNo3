@@ -27,10 +27,13 @@
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/sys/CTList' //数据接口
             ,page: true //开启分页
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[ //表头
-                {field: 'classType', title: '编号', width:110}
-                ,{field: 'classTypeName', title: '类型', width:110}
-                ,{field: 'fallId', title: '操作', width: 200,toolbar: '#barOption'}
+                {field: 'classType', title: '编号'}
+                ,{field: 'classTypeName', title: '类型'}
+                ,{field: 'fallId', title: '操作',toolbar: '#barOption'}
             ]]
         });
         //监听顶部按钮

@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class EduMajor {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name = "tableGenerator",initialValue =400, allocationSize = 1)
+    @TableGenerator(name = "tableGenerator",initialValue = 400, allocationSize = 1)
     private Integer MajorId;//主键
     private String MajorName;
     private Integer deptId;

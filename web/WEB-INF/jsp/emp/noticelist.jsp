@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.nothing.vo.emp.Emp" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/9
@@ -143,7 +143,6 @@
     </div>
     <div id="nei" style="width: 75%;height: 500px;padding-top: 30px;margin-top:30px;display: none;background-color:#f1f1f1;float: left">
         <form action="${pageContext.request.contextPath}/emp/notadd" method="post">
-            <input type="hidden" name="empName" value="<%=session.getAttribute("empId")%>">
             <div style="width: 50%;margin: 0 25%">
                 <div style="width: 100%;height: 50px">
                     <div>

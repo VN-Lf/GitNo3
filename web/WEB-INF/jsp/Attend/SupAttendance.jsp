@@ -145,7 +145,6 @@
                 ,{field: 'status', title: '状态  ', width:100,templet:function (data) {
                         if( data.status ==1 ){
                             return '审核通过'
-
                         }else if(data.status == 2){
                             return '待审'
                         }else if(data.status == 3){

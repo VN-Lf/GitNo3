@@ -138,7 +138,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService{
             String  zxempid = ""+sqlZhixin(dept);
             System.out.println("zxempid:"+zxempid);
             if(zxempid.equals(job.getUserId())){ //这个员工是主任
-                List list = listBySQL2("select empId from post where postName like '%校长%'");
+                List list = listBySQL2("select empId from charmodule where boss=0");
                 System.out.println("下一个办理人id："+list.get(0));
                 variables.put("x","zr");//单据ID
                 variables.put("assignee",""+list.get(0));
@@ -301,7 +301,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService{
         Map variable = new HashMap();
         variable.put("flow",flow);
         //设置办理人
-        List list = listBySQL2("select empId from post where postName like '%校长%' and deptId = 0");
+        List list = listBySQL2("select empId from charmodule where boss=0");
         System.out.println("办理人id："+list.get(0));
         variable.put("assignee",""+list.get(0));
         //完成当前任务
@@ -345,7 +345,7 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService{
             System.out.println("班主任id："+list.get(0));
             variable.put("assignee",""+list.get(0));
         }else if("班主任".equals(task.getName())){
-            List list = listBySQL2("select empId from post where postName like '%校长%' and deptId = 0");
+            List list = listBySQL2("SELECT empId FROM charmodule where boss=0");
             System.out.println("校长id："+list.get(0));
             variable.put("assignee",""+list.get(0));
         }
@@ -380,12 +380,12 @@ public class ActivitiServiceImpl extends BaseDao implements ActivitiService{
     }
 
     @Override
-    public int sqlZhixin(String deptid){
-        List list = listBySQL2("select empId from post where postName like '%部长%' and deptId ="+deptid);
+    public String sqlZhixin(String deptid){
+        List list = listBySQL2("SELECT empId FROM charmodule where actEmp =1 and deptId ="+deptid);
         if(list.size() == 0){
-            return 1; //无主任则给总经理审批
+            return "0"; //无主任则给总经理审批
         }else {
-            return (int)list.get(0);
+            return ""+list.get(0);
         }
     }
 

@@ -75,6 +75,9 @@
                         window.open("${pageContext.request.contextPath}/sco/reply","_self");
                     });
                     break;
+                case 'return':
+                    window.open("${pageContext.request.contextPath}/sco/reply","_self");
+                    break;
             };
         });
 
@@ -101,6 +104,8 @@
         </div>
     </div>
     <button class="layui-btn layui-btn-sm" lay-event="yes">保存</button>
+    <button class="layui-btn layui-btn-sm" lay-event="return">返回</button>
+
 </script>
 
 </html>

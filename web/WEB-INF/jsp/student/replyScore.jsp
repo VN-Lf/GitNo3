@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>答辩成绩/</title>
+    <title>答辩成绩</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
     <script src="${pageContext.request.contextPath}/layui/laydate/laydate.js"></script> <!-- 改成你的路径 -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
@@ -144,7 +144,7 @@
                     break;
             };
         });
-
+        var form = layui.form;
         form.on('submit(formSub)', function(data){
             $.ajax({
                 url:'${pageContext.request.contextPath}/sco/toReplyMa',
@@ -159,7 +159,7 @@
                     }else{
                         var classId =$('#classId').val();
                         var projectId = $('#projectId').val();
-                        self.location= "${pageContext.request.contextPath}/sco/toClassRepScoByCid?classId="+classId+"&projectId="+projectId;
+                        window.open("${pageContext.request.contextPath}/sco/toClassRepScoByCid?classId="+classId+"&projectId="+projectId,"_self")
                     }
                 }
             });

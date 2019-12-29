@@ -66,7 +66,7 @@
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
                 ,{field: 'weekPaperId', title: '编号', sort: true}
-                ,{field: 'empNames', title: '员工', sort: true}
+                ,{field: 'empName', title: '员工姓名'}
                 ,{field: 'weekCycle', title: '填写日期', templet:function (row){
                         return createTime(row.weekCycle);
                     }, sort: true}
@@ -77,6 +77,35 @@
                 ,{field: 'weekTerm', title: '工作学期'}
                 ,{width:215, title: '操作',align:'center', fixed: 'right', toolbar: '#barDemo'}
             ]]
+        });
+
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'isDele':
+                    var checkStatus = table.checkStatus('demo'),
+                        data = checkStatus.data,
+                        employeesId = " ";
+                    if(data.length > 0){
+                        for (var i in data){
+                            employeesId+=data[i].weekPaperId+",";
+                        }
+                        layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index){
+                            $.post('${pageContext.request.contextPath}/Weekly/WeeklyDelete',{
+                                id:employeesId
+                            },function(data){
+                                table.reload("demo");
+                                layer.close(index);
+                            });
+                        });
+                    }else{
+                        layer.msg('请选择需要删除的数据');
+                    }
+                    break;
+                case 'isAdd':
+                    window.open("${pageContext.request.contextPath}/stu/toAdd");
+                    break;
+            };
         });
 
         $('#selectexam').click(function () {

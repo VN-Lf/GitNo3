@@ -111,75 +111,49 @@
     <div title="Base" id="caidan" fit="true" style="height: 16px;font-size: 16px" class="easyui-accordion">
         <div title="个人中心" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stuemail/toemail" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">我的邮件</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/email/toemail" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>我的邮件</a>
                 </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">我要请假</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/actStu/toApply" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我要请假</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/actStu/toMyJob" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的请假单</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/home" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>学生资料</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/courseManage/toCourse" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的课程</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toMyNotice" onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>查看公告</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
                 </li>
             </ul>
         </div>
-        <div title="通知面板" style="overflow:auto;padding:0;">
+        <div title="成绩相关" style="list-style-type:none;padding: 0">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toMyNotice" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a>查看公告</a>
+                <li href="javascript:void(0);"src="${pageContext.request.contextPath}/scourse/toScourse" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的考试成绩</a>
+                </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/Stureply/toStureply" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a>我的答辩成绩</a>
                 </li>
             </ul>
         </div>
-        <div title="学员管理" style="list-style-type:none;padding: 0">
-            <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/home" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a>学生资料</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">我的考试成绩</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">我的答辩成绩</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">班级分配</a>
-                </li>
-            </ul>
-        </div>
-        <div title="教务管理" style="overflow:auto;padding:0;">
-            <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/courseManage/toCourse" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我的课程</a>
-                </li>
-            </ul>
-        </div>
-        <div title="后勤管理" style="overflow:auto;padding:0;">
+        <div title="后勤相关" style="overflow:auto;padding:0;">
             <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/repAddPage" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>报修申请</a>
                 </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/toRepairListPage" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>维修管理</a>
-                </li>
-            </ul>
-        </div>
-        <div title="考核管理" style="list-style-type:none;padding: 0">
-            <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>教师考评</a>
-                </li>
-            </ul>
-        </div>
-        <div title="财务管理" style="list-style-type:none;padding: 0">
-            <ul style="list-style-type:none;padding: 0">
                 <li href="javascript:void(0);" src="" class="cs-navi-tab">
-                    <a style="color: green">查看学费</a>
+                    <a>查看学费</a>
                 </li>
-            </ul>
-        </div>
-        <div title="问题反馈" style="list-style-type:none;padding: 0">
-            <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="" class="cs-navi-tab">
-                    <a style="color: green">问题反馈</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/feedback/toStufeedback" class="cs-navi-tab">
+                    <a>问题反馈</a>
                 </li>
             </ul>
         </div>
@@ -198,12 +172,6 @@
                     <option value="dark-hive" <%if("dark-hive".equals(yangshi)){%>selected<%}%>>夜间模式</option>
                     <option value="pepper-grinder" <%if("pepper-grinder".equals(yangshi)){%>selected<%}%>>咖啡主题</option>
                 </select>
-                <fieldset id="hometask" class="layui-elem-field">
-                    <legend><h3>事件<button>刷新列表</button></h3></legend>
-                    <div class="layui-field-box">
-                        待参与教师考评()<br>
-                    </div>
-                </fieldset>
             </div>
         </div>
 

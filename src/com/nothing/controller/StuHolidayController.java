@@ -24,7 +24,6 @@ import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-///
 @Controller
 @RequestMapping("actStu")
 public class StuHolidayController{
@@ -60,7 +59,7 @@ public class StuHolidayController{
         return "actStu/stuActMyJob";
     }
 
-        @RequestMapping("toMyJob")
+    @RequestMapping("toMyJob")
     public String toMyJobPage(){
         return "actStu/stuActMyJob";
     }
