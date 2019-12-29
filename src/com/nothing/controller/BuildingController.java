@@ -107,6 +107,19 @@ public class BuildingController {
     @ResponseBody
     public JSONObject quanLists(String dept) {
         List examlist = service.selectBuildinglists("select * from charmodule where deptId ="+dept);
+        List wlist = gservice.deptList();
+        for(int i = 0;i < examlist.size();i++){
+            Map map = (Map)examlist.get(i);
+            for(int j = 0;j < wlist.size(); j++){
+                Map maps = (Map)wlist.get(j);
+                String q1 = ""+map.get("deptId");
+                if(q1.equals(""+maps.get("deptId"))){
+                    map.put("deptId",maps.get("deptName"));
+                    break;
+                }
+            }
+            examlist.set(i,map);
+        }
         int con = service.SelcctBuildingcount("select count(empId) from charmodule where deptId ="+dept);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
@@ -117,15 +130,32 @@ public class BuildingController {
     }
 
     @RequestMapping("/updateboss")
-    public String upDateBoss(String boss,String id){
-        if("校长".equals(boss)){
+    public String upDateBoss(String boss,String deptId,String id){
+        if("0".equals(boss)){
+            //更改原来的校长
+            service.upDateObj("UPDATE charmodule AS ca INNER JOIN (SELECT charId FROM charmodule WHERE boss=0) AS c SET boss=3 WHERE ca.charId=c.charId");
             service.upDateObj("UPDATE charmodule SET boss=0 where charId ="+id);
-        }else if("上级".equals(boss)){
-            service.upDateObj("UPDATE charmodule SET boss=1 where charId ="+id);
+        }else if("1".equals(boss)){
+            List wlist = gservice.deptList();
+            for(int j = 0;j < wlist.size(); j++){
+                Map maps = (Map)wlist.get(j);
+                if(deptId.equals(""+maps.get("deptName"))){
+                    deptId = ""+maps.get("deptId");
+                    break;
+                }
+            }
+            //判断同部门是否还有其他人是上级
+            List<Map> list = service.selectBuildinglists("select charId from charmodule where boss=1 and deptId ="+deptId);
+            if(list.size() != 0){
+                service.upDateObj("UPDATE charmodule SET boss=3 where charId ="+list.get(0).get("charId"));
+                service.upDateObj("UPDATE charmodule SET boss=1 where charId ="+id);
+            }else {
+                service.upDateObj("UPDATE charmodule SET boss=1 where charId ="+id);
+            }
         }else {
             service.upDateObj("UPDATE charmodule SET boss=3 where charId ="+id);
         }
-        return "";
+        return "actStu/quan";
     }
     @RequestMapping("/up")
     public String banEmp(String cid,String lie,String zt) {

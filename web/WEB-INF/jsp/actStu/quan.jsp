@@ -1,4 +1,4 @@
-<%@ page import="com.nothing.vo.emp.Post" %><%--
+<%@ page import="com.nothing.vo.emp.Emp" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/4
@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>权限设置</title>
-    <% Post post = (Post) session.getAttribute("post");%>
+    <% Emp emp = (Emp) session.getAttribute("empId");%>
     <style type="text/css">
         .layui-table-tool {
             z-index: 0;
@@ -305,14 +305,13 @@
 
             if(obj.event === 'setSign'){
                 layer.prompt({title: '输入密码以验证', formType: 1}, function(pass, index){
-                    if(pass === "123456"){
-                        layer.prompt({title: '填写新身份，只能是上级/校长', formType: 3}, function(text, index){
+                    if(pass === "<%=emp.getEmpLogPsw()%>"){
+                        layer.prompt({title: '填写数字，只能是上级 1/校长 0', formType: 3}, function(text, index){
                             $.post('${pageContext.request.contextPath}/Building/updateboss',{
                                 id:data.charId,
+                                deptId:data.deptId,
                                 boss:text
                             },function(data){
-                                alert("");
-                                layer.msg('<div style="padding: 20px 100px;">'+"操作成功"+'</div>');
                                 location.reload();
                             });
                         });

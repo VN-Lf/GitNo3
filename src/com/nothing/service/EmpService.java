@@ -83,4 +83,10 @@ public interface EmpService {
     void delWeek(String id);
     void updateWeek(WeekArrange week);
     void delWeekAll(String id);
+
+    //查看个人资料
+    List personimf(String sql);
+    //修改密码
+    void updatepwd(String sql);
+
 }

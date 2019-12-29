@@ -60,7 +60,9 @@
                 ,{field:'jobName', title: '单据名称'}
                 ,{field:'day', title: '请假天数'}
                 ,{field:'stuName',  title: '申请人'}
-                ,{field:'jobDate ', title: '申请时间'}
+                ,{field:'jobDate ', title: '申请时间',templet:function (row){
+                        return createTime(row.jobDate);
+                    }}
                 ,{field:'processFlag', title: '审批状态',templet:function (row){
                         return process(row.processFlag);
                         }
@@ -164,7 +166,18 @@
         m = m<10?'0'+m:m;
         var d = date.getDate();
         d = d<10?("0"+d):d;
-        var str = y+"-"+m+"-"+d;
+        var endtime;
+        if(date.getHours() < 10){
+            endtime = "0"+date.getHours();
+        }else {
+            endtime = date.getHours();
+        }
+        if(date.getMinutes() == 0){
+            endtime = endtime+':'+"00";
+        }else {
+            endtime = endtime+':'+date.getMinutes();
+        }
+        var str = y+"-"+m+"-"+d+" "+endtime+":00";
         return str;
     }
 

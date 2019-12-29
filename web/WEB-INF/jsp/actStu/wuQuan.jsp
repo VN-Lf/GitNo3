@@ -11,7 +11,7 @@
     <title>无权限页面</title>
 </head>
 <body>
-<h1 align="left" style="width: 80%;margin: 50px auto">啊哦 你好像还没有该权限呢</h1>
+<h1 align="left" style="width: 80%;margin: 50px auto">啊哦 您好像还没有该权限呢</h1>
 <h2 align="right" style="width: 80%;margin: 0 auto">请联系你的上级叫ta为您开放吧</h2>
 </body>
 </html>

@@ -32,7 +32,7 @@ public class GoPageController {
     EmpService empService;
     //前往主界面
     @RequestMapping("/home")
-    public String toHome(HttpSession session,String color) {
+    public String toHome(HttpSession session,String color,HttpServletRequest request) {
         if(session.getAttribute("empId") != null){
             if(color == null || "null".equals(color)){
                 SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
@@ -45,6 +45,8 @@ public class GoPageController {
             }else {
                 session.setAttribute("color",color);
             }
+            List emailcount = service.emailcount("select * from myemail where empId=2 and isRead=2");
+            session.setAttribute("emailcount",emailcount.size());
             return "home";
         }else if(session.getAttribute("stuId") != null) {
             if(color == null || "null".equals(color)){
