@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.SysSetService;
 import com.nothing.vo.Edu.ClassType;
 import com.nothing.vo.Edu.StuFall;
+import com.nothing.vo.charge.tuitionType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,10 @@ public class SystemSetController {
     @RequestMapping("/toCTList")
     public String toClaTypeList(){
         return "systemSet/class/claTypeList";
+    }
+    @RequestMapping("/toTTTList")
+    public String toTtType(){
+        return "systemSet/tuitionType/tttList";
     }
 
     @RequestMapping("/fallList")
@@ -56,6 +61,19 @@ public class SystemSetController {
         System.out.println(jsonObject.toJSONString());
         return jsonObject;
     }
+    @RequestMapping("/tttList")
+    @ResponseBody
+    public JSONObject tttList(){
+        List ttt = sss.getTTTList();
+        int con = sss.getTTTCount();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count",con);
+        jsonObject.put("data", ttt);
+        System.out.println(jsonObject.toJSONString());
+        return jsonObject;
+    }
 
     @RequestMapping("/toFallAdd")
     public String toFallAdd(){
@@ -65,6 +83,11 @@ public class SystemSetController {
     public String toCTAdd(){
         return "systemSet/class/claTypeAdd";
     }
+    @RequestMapping("/toTTTAdd")
+    public String toTTTAdd(){
+        return "systemSet/tuitionType/tttAdd";
+    }
+
     @RequestMapping("/fallAdd")
     @ResponseBody
     public void fallAdd(StuFall sf){
@@ -75,6 +98,11 @@ public class SystemSetController {
     @ResponseBody
     public void CTAdd(ClassType ct){
         sss.CTAdd(ct);
+    }
+    @RequestMapping("/tttAdd")
+    @ResponseBody
+    public void tttAdd(tuitionType tt){
+        sss.TTTAdd(tt);
     }
 
     @RequestMapping("/toFallUp")
@@ -89,6 +117,12 @@ public class SystemSetController {
         req.setAttribute("ct",ct);
         return "systemSet/class/claTypeUp";
     }
+    @RequestMapping("/toTTTUp")
+    public String toTTTUp(int id, HttpServletRequest req){
+        tuitionType ttt = sss.getTTT(id);
+        req.setAttribute("ttt",ttt);
+        return "systemSet/tuitionType/tttUp";
+    }
 
     @RequestMapping("/fallUp")
     @ResponseBody
@@ -100,6 +134,11 @@ public class SystemSetController {
     public void CTUp(ClassType CT){
         sss.CTUp(CT);
     }
+    @RequestMapping("/tttUp")
+    @ResponseBody
+    public void tttUp(tuitionType ttt){
+        sss.TTTUp(ttt);
+    }
 
     @RequestMapping("/fallDel")
     @ResponseBody
@@ -110,5 +149,10 @@ public class SystemSetController {
     @ResponseBody
     public void CTDel(String id){
         sss.CTDel(id);
+    }
+    @RequestMapping("/tttDel")
+    @ResponseBody
+    public void tttDel(String id){
+        sss.TTTDel(id);
     }
 }
