@@ -55,7 +55,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">出生日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="birthday" required  lay-verify="required" placeholder="单击此处选择日期" id="birthday" autocomplete="off" class="layui-input">
+                    <input type="text" name="birthday" required  lay-verify="" placeholder="单击此处选择日期" id="birthday" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
@@ -82,15 +82,15 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">入学时间</label>
                 <div class="layui-input-block">
-                    <input type="text" id="enterDate" name="enterDate" required  lay-verify="required" placeholder="单击此处选择日期" id="rutime" autocomplete="off" class="layui-input">
+                    <input type="text" id="enterDate" name="enterDate" required  lay-verify="" placeholder="单击此处选择日期" id="rutime" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">学生状态</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="stuStu" value="1" title="状态1">
-                    <input type="radio" name="stuStu" value="2" title="状态2" checked>
+                    <input type="radio" name="stuStu" value="4" title="在读">
+                    <input type="radio" name="stuStu" value="5" title="毕业">
                 </div>
             </div>
 
@@ -152,7 +152,7 @@
 
 
             <div class="layui-form-item">
-                <label class="layui-form-label">所在楼栋</label>
+                <label class="layui-form-label">所在寝室</label>
                 <div class="layui-input-block">
                     <select name="stuHours"  placeholder="  ">
                         <option value=" "> </option>
@@ -176,27 +176,7 @@
                 </div>
             </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">专业</label>
-                <div class="layui-input-block">
-                    <input id="stuProfessional" type="text" name="stuProfessional"   placeholder="所学专业"  autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">专业类别</label>
-                <div class="layui-input-block">
-                    <input id="stuProLevel" type="text" name="stuProLevel"   placeholder="专业所属" autocomplete="off" class="layui-input">
-                </div>
-            </div>
 
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">学业状态</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="studyType" value="毕业" title="毕业">
-                    <input type="radio" name="studyType" value="在校" title="在校" checked>
-                </div>
-            </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">中专</label>
@@ -345,7 +325,7 @@
         </div>
     </div>
 
-    <div style="width: 100%;height: 20%;margin-top:3%;float: left">
+    <div style="width: 100%;height: 20%;margin-top:5%;float: left">
         <div class="layui-form-item">
             <div class="layui-input-block" style="top: 85px;left: 800px">
                 <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -368,7 +348,6 @@
             layer.msg(JSON.stringify(data.field));
             return true;
         });
-
 
         laydate.render({
             elem: '#birthday' //指定元素

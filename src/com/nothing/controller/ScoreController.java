@@ -151,7 +151,7 @@ public class ScoreController{
     @RequestMapping("toAddScore")
     @ResponseBody
     public String toAddScore(String tableList, StudentScore studentScore, String testDH, HttpSession session) throws ParseException{
-        Emp e = (Emp)session.getAttribute("empId");
+        //Emp e = (Emp)session.getAttribute("empId");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date testD = formatter.parse(testDH);
         studentScore.setScoreTime(testD);
@@ -172,7 +172,7 @@ public class ScoreController{
             s.setTermId( studentScore.getTermId());
             s.setTestType(studentScore.getTestType());
             s.setScoreTime(testD);
-            s.setEmpId(e.getEmpId());
+            //s.setEmpId(e.getEmpId());
             System.out.println("循环内的考试对象"+s.toString());
             stuSer.addStu(s);
         }
@@ -181,7 +181,7 @@ public class ScoreController{
 
     @RequestMapping("toAddReplyScore")
     public String toAddReplyScore(String tableList,String projectId,HttpSession session){
-        Emp e = (Emp)session.getAttribute("empId");
+        //Emp e = (Emp)session.getAttribute("empId");
         JSONArray jsonArray = JSONArray.parseArray(tableList);
         for(int i = 0;i<jsonArray.size();i++){
             StuReplyScore s = new StuReplyScore();
@@ -196,7 +196,7 @@ public class ScoreController{
             s.setStudId(Integer.parseInt(o.get("sid").toString()));
             s.setProjectId(Integer.parseInt(projectId));
             s.setReplyScoreRemark(o.get("rs").toString());
-            s.setEmpId(e.getEmpId());
+            //s.setEmpId(e.getEmpId());
             System.out.println("循环内的考试对象"+s.toString());
             stuSer.addStu(s);
         }

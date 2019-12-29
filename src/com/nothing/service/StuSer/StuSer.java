@@ -27,8 +27,8 @@ public interface StuSer{
     int stuRepCount(String studId);
     int stuScoreCount(String studId);
 
+List ooo(Object o);
 
-    List listO (Object o);
     List classList();
     void delCla(String ids);
 
