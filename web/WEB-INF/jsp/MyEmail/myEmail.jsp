@@ -69,7 +69,8 @@
             //第一个实例
             table.render({
                 elem: '#demo'
-                ,height: 312
+                ,height:'full-200'
+                ,cellMinWidth: 80
                 ,toolbar: '#toolbarDemo'
                 ,url: '${pageContext.request.contextPath}/email/obtainEmail' //数据接口
                 ,page: true //开启分页
@@ -190,7 +191,11 @@
                 if(obj.event === 'selectedit'){
                     var emailId = data.emailId;
                     var kaohuid = data.image;
-                    window.location.href="<%=request.getContextPath()%>/email/toemailServlet?emailId="+emailId+"&empkaohuid="+kaohuid;
+                    if((typeof kaohuid)!=="number"){
+                        window.location.href="<%=request.getContextPath()%>/email/toemailServlet?emailId="+emailId;
+                    }else {
+                        window.location.href="<%=request.getContextPath()%>/email/toemailServlet?emailId="+emailId+"&empkaohuid="+kaohuid;
+                    }
                 }else if(obj.event === 'edit'){
                     var emailId = data.emailId;
                     window.location.href="<%=request.getContextPath()%>/email/againEmail?emailId="+emailId;

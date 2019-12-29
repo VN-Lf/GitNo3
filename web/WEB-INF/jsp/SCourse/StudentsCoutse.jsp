@@ -37,13 +37,14 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height:'full-200'
+            ,cellMinWidth: 80
             ,url: '${pageContext.request.contextPath}/scourse/list' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
-                {type:'checkbox',width:100}//复选框
-                ,{field: 'scoreId', title: '编号', width:50, }
-                ,{field: 'scoreTime', title: '考试时间  ', width:100,templet:function (row){
+                {type:'checkbox',width:0}//复选框
+                ,{field: 'scoreId', title: '编号', width:70 }
+                ,{field: 'scoreTime', title: '考试时间  ', width:150,templet:function (row){
                         return createTimes(row.scoreTime);
                     }}
                 ,{field: 'score', title: '学生成绩 ', width:100}
@@ -61,7 +62,7 @@
                 ,{field: 'termName', title: '学期  ', width:100}
                 ,{field: 'stuName', title: '学生姓名  ', width:100}
                 ,{field: 'empName', title: '录入人员  ', width:100}
-                ,{field: 'remark', title: '备注  ', width:100}
+                ,{field: 'remark', title: '备注  '}
             ]]
         });
     });

@@ -9,4 +9,5 @@ public interface GoPageService {
     Object selectEmpGoPage(Object obj, int id);
     List deptList();
     List empList();
+    List emailcount(String sql);
 }

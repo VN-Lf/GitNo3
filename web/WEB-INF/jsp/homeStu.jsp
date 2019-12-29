@@ -115,10 +115,10 @@
                     <a>我的邮件</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/actStu/toApply" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我要请假（待完善）</a>
+                    <a>我要请假</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/actStu/toMyJob" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a>我的请假单（待完善）</a>
+                    <a>我的请假单</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/stu/home" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>学生资料</a>
@@ -149,7 +149,7 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/repAddPage" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>报修申请</a>
                 </li>
-                <li href="javascript:void(0);" src="" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/finance/sxf?id=${stuId.studId}" class="cs-navi-tab">
                     <a>查看学费</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/feedback/toStufeedback" class="cs-navi-tab">

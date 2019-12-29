@@ -30,4 +30,9 @@ public class GoPageServiceImpl extends BaseDao implements GoPageService {
         return listBySQL("select empId,empName from emp");
     }
 
+    @Override
+    public List emailcount(String sql) {
+        return listBySQL(sql);
+    }
+
 }
