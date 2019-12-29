@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.nothing.vo.emp.Emp" %>
 <%@ page import="com.nothing.vo.emp.Post" %><%--
   Created by IntelliJ IDEA.
@@ -56,8 +57,8 @@
             background-color:black;
             color: white;
         <%}else {%>
-            background-color: white;
-            color: black;
+            background-color: rgba(64, 156, 148, 0.72);
+            color: white;
         <%}%>
         }
         .emptask{
@@ -260,7 +261,37 @@
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',split:true" class="hometop">
-    <h1 style="margin: 1% 0">管理员界面</h1>
+    <img src="${pageContext.request.contextPath}/upload/20191216/htTitele.png" style="width: 320px;height: 60px;line-height: 75px;float: left;margin:10px 0px 0px 50px">
+    <div style="height:70px;width: 500px;line-height: 70px;float: right;margin-left: 200px">
+        <li style="float: left;margin-right:40px" >
+            <a  href="javascript:void(0);" src="${pageContext.request.contextPath}/emp/personimf"  class="cs-navi-tab" style="color: white">
+                <img src="${pageContext.request.contextPath}/upload/20191216/peo.png" style="width: 25px;height: 20px">
+                ${empId.empName}
+            </a>
+        </li>
+        <li style="float: left;margin-right:40px">
+            <a style="color: white" href="javascript:void(0);" src="${pageContext.request.contextPath}/email/toemail" class="cs-navi-tab">
+                <img src="${pageContext.request.contextPath}/upload/20191216/email.png" style="width: 45px;height: 30px;margin-bottom: 5px">
+                <c:if test="${emailcount !='0'}">
+                    <img src="${pageContext.request.contextPath}/upload/20191216/emailimf.png" style="width: 22px;height: 20px;margin-bottom: 8px;position: absolute;top: 20px;left: 1330px;">
+                    <i style="position: absolute;left: 1336px;top:-4px">${emailcount}</i>
+                </c:if>
+                邮件
+            </a>
+        </li>
+        <li style="float: left;margin-right:40px">
+            <a href="javascript:void(0);" src="${pageContext.request.contextPath}/emp/toupdatepwd" class="cs-navi-tab" style="color: white">
+                <img src="${pageContext.request.contextPath}/upload/20191216/Set.png" style="width: 25px;height: 20px">
+                修改密码
+            </a>
+        </li>
+        <li style="float: left;margin-right:40px">
+            <a href="${pageContext.request.contextPath}/to/tologin" style="color: white">
+                <img src="${pageContext.request.contextPath}/upload/20191216/exit.png" style="width: 25px;height: 20px">
+                退出
+            </a>
+        </li>
+    </div>
 </div>
 <div data-options="iconCls:'icon-ok',region:'west',title:'菜单栏',split:true" style="width:250px;">
     <div title="Base" id="caidan" fit="true" style="height: 16px;font-size: 16px" class="easyui-accordion">
@@ -279,9 +310,6 @@
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>我的考勤</a>
-                </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
                 </li>
             </ul>
         </div>
@@ -401,20 +429,8 @@
         </div>
         <div title="系统报表" style="overflow:auto;padding:0;height: 50px;">
             <ul style="list-style-type:none;padding: 0">
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/toempzl" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">日常考核</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">员工请假</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">学生请假</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a style="color: green">未打卡说明</a>
-                </li>
-                <li href="javascript:void(0);" src="" onclick="qiehuan(this)"  class="cs-navi-tab">
-                    <a style="color: green">宿舍统计报表</a>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/System/toSystem" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a style="color: green">系统报表</a>
                 </li>
             </ul>
         </div>

@@ -263,6 +263,16 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     }
 
     @Override
+    public List personimf(String sql) {
+        return listBySQL(sql);
+    }
+
+    @Override
+    public void updatepwd(String sql) {
+        executeSQL(sql);
+    }
+
+    @Override
     public void chatAdd(chatRecord cr) {
         this.addObject(cr);
     }

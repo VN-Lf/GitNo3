@@ -50,8 +50,8 @@ public class EmailController {
         String topic = email.getTopic();
         String student = email.getReceId();
         String examtype="";
-        String kaohuid = request.getParameter("empkaohuid");
         if(topic.equals("考核")){
+            String kaohuid = request.getParameter("empkaohuid");
             //考核类邮件
             List kaohuscore1 =service.selectEmaillist("select scores  from empAssessment where empAssessId="+kaohuid+"");
             List kaohuscore=new ArrayList();
@@ -76,7 +76,6 @@ public class EmailController {
             request.setAttribute("examtype",examtype);
 
         }
-
         request.setAttribute("emalilist",email);
         return "MyEmail/SelectEmail";
     }
@@ -108,8 +107,8 @@ public class EmailController {
             eid = emp.getEmpId()+"";
             ename = emp.getEmpName();
         }
-        List list = service.selectEmaillist("select * from myEmail where receId = '"+eid+"' and empName <> '"+ename+"'");
-        int count = service.SelcctEmailcount("select count(*) from myEmail where receId = '"+eid+"'and empName <> '"+ename+"'");
+        List list = service.selectEmaillist("select * from myEmail where receId = '"+eid+"' and empName like '"+ename+"'");
+        int count = service.SelcctEmailcount("select count(*) from myEmail where receId = '"+eid+"'and empName like '"+ename+"'");
 
         JSONObject json = new JSONObject();
         json.put("code",0);
