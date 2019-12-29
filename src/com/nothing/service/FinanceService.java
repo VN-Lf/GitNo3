@@ -7,6 +7,7 @@ import java.util.List;
 public interface FinanceService {
     //获取学费列表
     List tuitionList();
+    List stList(int sid);
     int getTuitionCount();
     financeshouldTuitionRecord getf(int id);
     void tiotionAdd(financeshouldTuitionRecord ft);

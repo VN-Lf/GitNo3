@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.SysSetService;
 import com.nothing.vo.Edu.ClassType;
 import com.nothing.vo.Edu.StuFall;
+import com.nothing.vo.Edu.Term;
 import com.nothing.vo.charge.tuitionType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +31,13 @@ public class SystemSetController {
     public String toClaTypeList(){
         return "systemSet/class/claTypeList";
     }
-    @RequestMapping("/toTTTList")
+    @RequestMapping("/toTTType")
     public String toTtType(){
         return "systemSet/tuitionType/tttList";
+    }
+    @RequestMapping("/toTerm")
+    public String toTerm(){
+        return "systemSet/term/termList";
     }
 
     @RequestMapping("/fallList")
@@ -74,6 +79,19 @@ public class SystemSetController {
         System.out.println(jsonObject.toJSONString());
         return jsonObject;
     }
+    @RequestMapping("/termList")
+    @ResponseBody
+    public JSONObject termList(){
+        List t = sss.getTermList();
+        int con = sss.getTermCount();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count",con);
+        jsonObject.put("data", t);
+        System.out.println(jsonObject.toJSONString());
+        return jsonObject;
+    }
 
     @RequestMapping("/toFallAdd")
     public String toFallAdd(){
@@ -86,6 +104,10 @@ public class SystemSetController {
     @RequestMapping("/toTTTAdd")
     public String toTTTAdd(){
         return "systemSet/tuitionType/tttAdd";
+    }
+    @RequestMapping("/toTermAdd")
+    public String toTermAdd(){
+        return "systemSet/term/termAdd";
     }
 
     @RequestMapping("/fallAdd")
@@ -103,6 +125,11 @@ public class SystemSetController {
     @ResponseBody
     public void tttAdd(tuitionType tt){
         sss.TTTAdd(tt);
+    }
+    @RequestMapping("/termAdd")
+    @ResponseBody
+    public void termAdd(Term tt){
+        sss.termAdd(tt);
     }
 
     @RequestMapping("/toFallUp")
@@ -123,6 +150,12 @@ public class SystemSetController {
         req.setAttribute("ttt",ttt);
         return "systemSet/tuitionType/tttUp";
     }
+    @RequestMapping("/toTermUp")
+    public String toTermUp(int id, HttpServletRequest req){
+        Term t = sss.getTerm(id);
+        req.setAttribute("t",t);
+        return "systemSet/term/termUp";
+    }
 
     @RequestMapping("/fallUp")
     @ResponseBody
@@ -139,6 +172,11 @@ public class SystemSetController {
     public void tttUp(tuitionType ttt){
         sss.TTTUp(ttt);
     }
+    @RequestMapping("/termUp")
+    @ResponseBody
+    public void termUp(Term t){
+        sss.termUp(t);
+    }
 
     @RequestMapping("/fallDel")
     @ResponseBody
@@ -154,5 +192,10 @@ public class SystemSetController {
     @ResponseBody
     public void tttDel(String id){
         sss.TTTDel(id);
+    }
+    @RequestMapping("/termDel")
+    @ResponseBody
+    public void termDel(String id){
+        sss.termDel(id);
     }
 }

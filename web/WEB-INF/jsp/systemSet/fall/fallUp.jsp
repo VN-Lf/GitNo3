@@ -15,7 +15,7 @@
 <form class="layui-form" method="post" action="/sys/fallUp" lay-filter="gg">
     <input type="hidden" name="fallId">
     <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">学期</label>
+        <label class="layui-form-label">届别</label>
         <div class="layui-input-block">
             <input id="name"type="text" name="fallLevel" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
         </div>

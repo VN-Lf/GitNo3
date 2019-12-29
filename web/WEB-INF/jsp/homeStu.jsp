@@ -149,7 +149,7 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/houqin/repAddPage" onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>报修申请</a>
                 </li>
-                <li href="javascript:void(0);" src="" class="cs-navi-tab">
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/finance/sxf?id=${stuId.studId}" class="cs-navi-tab">
                     <a>查看学费</a>
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/feedback/toStufeedback" class="cs-navi-tab">

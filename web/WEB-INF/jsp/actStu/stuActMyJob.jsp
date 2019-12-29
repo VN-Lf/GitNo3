@@ -25,12 +25,7 @@
 </div>
 
 <div class="layui-row" style="height:45%">
-    下面部分的
     <div class="layui-tab">
-        <ul class="layui-tab-title">
-            <li>批注</li>
-            <li>进度</li>
-        </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <table id="commentT" lay-filter="test"></table>
@@ -57,8 +52,11 @@
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/actStu/myJobList' //数据接口
             ,title: '我的请假单'
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[
-                ,{field:'jobId',  title: '单据编号'}
+                {field:'jobId',  title: '单据编号'}
                 ,{field:'jobName', title: '单据名称'}
                 ,{field:'day', title: '请假天数'}
                 ,{field:'stuName',  title: '申请人'}
