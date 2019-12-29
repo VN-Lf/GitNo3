@@ -4,6 +4,8 @@ import com.nothing.dao.BaseDao;
 import com.nothing.service.SysSetService;
 import com.nothing.vo.Edu.ClassType;
 import com.nothing.vo.Edu.StuFall;
+import com.nothing.vo.Edu.Term;
+import com.nothing.vo.charge.tuitionType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,16 @@ public class SysSetServiceImpl extends BaseDao implements SysSetService {
     }
 
     @Override
+    public List getTTTList() {
+        return this.listBySQL("select * from tuitionType");
+    }
+
+    @Override
+    public List getTermList() {
+        return this.listBySQL("select * from term");
+    }
+
+    @Override
     public StuFall getFall(int id) {
         return (StuFall) this.getObject(StuFall.class,id);
     }
@@ -27,6 +39,16 @@ public class SysSetServiceImpl extends BaseDao implements SysSetService {
     @Override
     public ClassType getCT(int id) {
         return (ClassType) this.getObject(ClassType.class,id);
+    }
+
+    @Override
+    public tuitionType getTTT(int id) {
+        return (tuitionType) this.getObject(tuitionType.class,id);
+    }
+
+    @Override
+    public Term getTerm(int id) {
+        return (Term) this.getObject(Term.class,id);
     }
 
     @Override
@@ -40,6 +62,16 @@ public class SysSetServiceImpl extends BaseDao implements SysSetService {
     }
 
     @Override
+    public void TTTAdd(tuitionType ttt) {
+        this.addObject(ttt);
+    }
+
+    @Override
+    public void termAdd(Term t) {
+        this.addObject(t);
+    }
+
+    @Override
     public void fallUp(StuFall sf) {
         this.updObject(sf);
     }
@@ -47,6 +79,16 @@ public class SysSetServiceImpl extends BaseDao implements SysSetService {
     @Override
     public void CTUp(ClassType ct) {
         this.updObject(ct);
+    }
+
+    @Override
+    public void TTTUp(tuitionType ttt) {
+        this.updObject(ttt);
+    }
+
+    @Override
+    public void termUp(Term t) {
+        this.updObject(t);
     }
 
     @Override
@@ -60,6 +102,17 @@ public class SysSetServiceImpl extends BaseDao implements SysSetService {
     }
 
     @Override
+    public void TTTDel(String id) {
+        this.executeSQL("delete from tuitionType where tuitionTypeId in("+id+")");
+
+    }
+
+    @Override
+    public void termDel(String id) {
+        this.executeSQL("delete from term where termId in("+id+")");
+    }
+
+    @Override
     public int getFallCount() {
         return this.selTotalRow("select count(*) from StuFall");
     }
@@ -67,5 +120,15 @@ public class SysSetServiceImpl extends BaseDao implements SysSetService {
     @Override
     public int getCTCount() {
         return this.selTotalRow("select count(*) from classtype");
+    }
+
+    @Override
+    public int getTTTCount() {
+        return this.selTotalRow("select count(*) from tuitionType");
+    }
+
+    @Override
+    public int getTermCount() {
+        return this.selTotalRow("select count(*) from term");
     }
 }

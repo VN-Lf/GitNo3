@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -251,6 +252,49 @@ public class EmpController {
             jsonObject.put("result","查无此人！");
         }
         return jsonObject;
+
+    }
+
+
+    //前往工作经历修改页面
+    @RequestMapping("/personimf")
+    public String empimf(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        Emp emp =(Emp)session.getAttribute("empId");
+        List personimf = empService.personimf("select e.empName,p.postName,d.deptName,e.empBirthday,e.empCardno,e.empNation,e.empPhone from emp as e left join post as p on e.empId=p.empId left join dept as d on d.deptId=p.deptId where e.empId="+emp.getEmpId()+"");
+        List personim = empService.personimf("select * from empeducation where empId="+emp.getEmpId()+"");
+        List personi= empService.personimf(" select * from emphistory where empId="+emp.getEmpId()+"");
+
+        List person= empService.personimf(" select * from empfamilyimf where empId="+emp.getEmpId()+"");
+
+
+        System.out.println(personimf.get(0));
+        req.setAttribute("personimf",personimf.get(0));
+        req.setAttribute("personim",personim);
+        req.setAttribute("personi",personi);
+        req.setAttribute("person",person);
+        return "personimf";
+    }
+
+
+    //前往教育经历修改页面
+    @RequestMapping({"/toupdatepwd"})
+    public String toupdatepwd() {
+        return "updatepwd";
+    }
+
+    @RequestMapping("/updatepwd")
+    @ResponseBody
+    public String updatepwd(String oldpwd,String newpwd,HttpSession session){
+        Emp emp =(Emp) session.getAttribute("empId");
+        List personimf = empService.personimf("select empLogPsw from emp where empId=2 and empLogPsw=" + oldpwd + "");
+
+        if(personimf.size()==0){
+            return "原先密码错误";
+        }else {
+           empService.updatepwd("update emp set empLogPsw="+newpwd+"  where empId="+emp.getEmpId()+"");
+            return "修改成功";
+        }
 
     }
 }

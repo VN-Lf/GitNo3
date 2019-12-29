@@ -61,12 +61,13 @@
 </head>
 
 <body>
-<div id="left" style="width: 30%;height: 100%;float: left;;background-color: rgb(136, 136, 221);">
-    <h1>左边 推送内容  </h1>
-    <img id="obj1" class="img1" alt="" src="${pageContext.request.contextPath }/photos/l.jpeg" width="340" height="363" border="0">
+<div id="left" style="width: 30%;height: 100%;float: left;;background-color: rgb(136, 136, 221) ">
+    <img id="obj1" class="img1" alt="" src="${pageContext.request.contextPath }/photos/l.jpg" width="100%" height="100%" border="0">
 </div>
-<div id="conter" style="width:40%;height: 100%;float: left;">
-    <div style="width: 100%;height: 30%;">校园管理系统</div>
+<div id="conter" style="width:40%;height: 100%;float: left;background-color:#f1f1f1;">
+    <div align="center" style="width: 100%;height: 30%;">
+        <h1 style="padding-top: 60px;">校园管理系统</h1>
+    </div>
     <div style="width: 100%;height: 40%;">
         <div style="width: 350px;height: 100%;margin: 0 auto;">
             <form action="<%=request.getContextPath()%>/to/login" method="post" style="position: relative;">
@@ -92,11 +93,10 @@
             </form>
         </div>
     </div>
-    <div style="width: 100%;height: 30%;">下 友情链接或其它</div>
+    <div style="width: 100%;height: 25%;"></div>
 </div>
 <div id="right" style="width: 30%;height: 100%;float:left;background-color: rgb(136, 136, 221);">
-    <h1>右边</h1>
-    <img id="obj2" class="img1" alt="" src="${pageContext.request.contextPath }/photos/x.jpeg" width="340" height="363" border="0">
+    <img id="obj2" class="img1" alt="" src="${pageContext.request.contextPath }/photos/x.jpg" width="100%" height="100%" border="0">
 </div>
 </body>
 <script language="JavaScript">
@@ -107,10 +107,12 @@
             $("#stu").css("width","68%");
             $("#emp").css("width","18%");
             $("#login").css("background-color","#00FA9A");
+            $("#biaoti").css("color","#00FA9A");
         }else if(id == "emp"){
             $("#emp").css("width","68%");
             $("#stu").css("width","18%");
             $("#login").css("background-color","yellow");
+            $("#biaoti").css("color","yellow");
         }
     }
     function donTai() {
@@ -194,13 +196,13 @@
     var leftIndex=0;
     var rightIndex=1;
     //时间间隔(单位毫秒)，每秒钟显示一张，数组共有5张图片放在Photos文件夹下。
-    var timeInterval=2000;
+    var timeInterval=3000;
     var arr=new Array();
-    arr[0]="${pageContext.request.contextPath }/photos/x.jpeg";
-    arr[1]="${pageContext.request.contextPath }/photos/l.jpeg";
-    arr[2]="${pageContext.request.contextPath }/photos/m.jpeg";
-    arr[3]="${pageContext.request.contextPath }/photos/f.jpeg";
-    arr[4]="${pageContext.request.contextPath }/photos/n.jpeg";
+    arr[0]="${pageContext.request.contextPath }/photos/x.jpg";
+    arr[1]="${pageContext.request.contextPath }/photos/l.jpg";
+    arr[2]="${pageContext.request.contextPath }/photos/m.jpg";
+    arr[3]="${pageContext.request.contextPath }/photos/f.jpg";
+    arr[4]="${pageContext.request.contextPath }/photos/n.jpg";
     setInterval(changeImg,timeInterval);
     function changeImg()
     {

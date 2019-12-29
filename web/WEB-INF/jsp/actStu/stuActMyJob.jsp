@@ -25,12 +25,7 @@
 </div>
 
 <div class="layui-row" style="height:45%">
-    下面部分的
     <div class="layui-tab">
-        <ul class="layui-tab-title">
-            <li>批注</li>
-            <li>进度</li>
-        </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <table id="commentT" lay-filter="test"></table>
@@ -57,12 +52,17 @@
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/actStu/myJobList' //数据接口
             ,title: '我的请假单'
+            ,done: function (res, curr, count) {
+                $("table").css("width", "100%");
+            }
             ,cols: [[
-                ,{field:'jobId',  title: '单据编号'}
+                {field:'jobId',  title: '单据编号'}
                 ,{field:'jobName', title: '单据名称'}
                 ,{field:'day', title: '请假天数'}
                 ,{field:'stuName',  title: '申请人'}
-                ,{field:'jobDate ', title: '申请时间'}
+                ,{field:'jobDate ', title: '申请时间',templet:function (row){
+                        return createTime(row.jobDate);
+                    }}
                 ,{field:'processFlag', title: '审批状态',templet:function (row){
                         return process(row.processFlag);
                         }
@@ -166,7 +166,18 @@
         m = m<10?'0'+m:m;
         var d = date.getDate();
         d = d<10?("0"+d):d;
-        var str = y+"-"+m+"-"+d;
+        var endtime;
+        if(date.getHours() < 10){
+            endtime = "0"+date.getHours();
+        }else {
+            endtime = date.getHours();
+        }
+        if(date.getMinutes() == 0){
+            endtime = endtime+':'+"00";
+        }else {
+            endtime = endtime+':'+date.getMinutes();
+        }
+        var str = y+"-"+m+"-"+d+" "+endtime+":00";
         return str;
     }
 

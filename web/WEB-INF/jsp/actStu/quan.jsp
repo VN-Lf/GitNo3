@@ -1,4 +1,4 @@
-<%@ page import="com.nothing.vo.emp.Post" %><%--
+<%@ page import="com.nothing.vo.emp.Emp" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/4
@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>权限设置</title>
-    <% Post post = (Post) session.getAttribute("post");%>
+    <% Emp emp = (Emp) session.getAttribute("empId");%>
     <style type="text/css">
         .layui-table-tool {
             z-index: 0;
@@ -42,8 +42,8 @@
             ,url: '${pageContext.request.contextPath}/Building/quanlist' //数据接口
             ,page: true //开启分页
             ,cols: [[
-                {field: 'charId', title: 'id', width:60, sort: true}
-                ,{field: 'empName', title: '姓名', width:100}
+                {field: 'charId', title: '编号', width:80, sort: true}
+                ,{field: 'empName', title: '姓名'}
                 ,{field: 'deptId', title: '部门', width:100}
                 ,{field: 'boss', title: '身份',event: 'setSign', width:70,templet:function (row){return postZhi(row.boss);}}
                 ,{field: 'updateEmp', title: '员工管理',event: 'updateEmp', width:90,templet:function (row){return onclikId(row.updateEmp);}
@@ -61,6 +61,17 @@
                 },{field: 'zhiban', title: '值班管理',event: 'zhiban', width:90,templet:function (row){return onclikId(row.zhiban);}
                 },{field: 'zhaosheng', title: '招生权限',event: 'zhaosheng', width:90,templet:function (row){return onclikId(row.zhaosheng);}}
             ]]
+        });
+        $('#shaixuan').click(function () {
+            var dept = $('#sxdept').val();
+            table.reload('demo',{
+                url:'${pageContext.request.contextPath}/Building/quanlists',
+                where:{
+                    dept:dept
+                },page:{
+                    curr:1
+                }
+            });
         });
         //监听单元格事件
         table.on('tool(test)', function(obj){
@@ -294,14 +305,13 @@
 
             if(obj.event === 'setSign'){
                 layer.prompt({title: '输入密码以验证', formType: 1}, function(pass, index){
-                    if(pass === "123456"){
-                        layer.prompt({title: '填写新身份，只能是上级/校长', formType: 3}, function(text, index){
+                    if(pass === "<%=emp.getEmpLogPsw()%>"){
+                        layer.prompt({title: '填写数字，只能是上级 1/校长 0', formType: 3}, function(text, index){
                             $.post('${pageContext.request.contextPath}/Building/updateboss',{
                                 id:data.charId,
+                                deptId:data.deptId,
                                 boss:text
                             },function(data){
-                                alert("");
-                                layer.msg('<div style="padding: 20px 100px;">'+"操作成功"+'</div>');
                                 location.reload();
                             });
                         });
@@ -326,7 +336,7 @@
                 });
                 form.render("select");
             }
-        })
+        });
     });
     function onclikId(v) {
         if(v == 0){
@@ -340,7 +350,6 @@
         }
         return html;
     }
-
     function postZhi(v) {
         if(v == 0){
             return "校长";

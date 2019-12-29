@@ -13,7 +13,7 @@
 </head>
 <body>
 <div>
-    <table id="sf" lay-filter="sf" style="text-align: center;"></table>
+    <table id="term" lay-filter="term" style="text-align: center;"></table>
 </div>
 </body>
 <script>
@@ -21,24 +21,24 @@
         var table = layui.table,
             laypage = layui.laypage;
         table.render({
-            elem: '#sf'
+            elem: '#term'
             ,height:'full-200'
             ,cellMinWidth: 80
             ,toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
-            ,url: '${pageContext.request.contextPath}/sys/fallList' //数据接口
+            ,url: '${pageContext.request.contextPath}/sys/termList' //数据接口
             ,page: true //开启分页
             ,done: function (res, curr, count) {
                 $("table").css("width", "100%");
             }
             ,cols: [[ //表头
-                {field: 'fallId', title: '编号'}
-                ,{field: 'fallLevel', title: '届别'}
-                ,{field: 'fallRemark', title: '说明'}
+                {field: 'termId', title: '编号'}
+                ,{field: 'termName', title: '学期'}
+                ,{field: 'termRemark', title: '说明'}
                 ,{field: 'fallId', title: '操作',toolbar: '#barOption'}
             ]]
         });
         //监听顶部按钮
-        table.on('toolbar(sf)', function(obj){
+        table.on('toolbar(term)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'isDele':
@@ -63,25 +63,25 @@
                     }
                     break;
                 case 'isAdd':
-                    open('新增届别','${pageContext.request.contextPath}/sys/toFallAdd');
+                    open('新增学期','${pageContext.request.contextPath}/sys/toTermAdd');
                     break;
             };
 
         });
         //监听工具条
-        table.on('tool(sf)', function (obj) {
+        table.on('tool(term)', function (obj) {
             var data = obj.data;
             if (obj.event === 'del') {
                 layer.confirm('确定删除记录吗？', function (index) {
-                    $.post('${pageContext.request.contextPath}/sys/fallDel',{id:data.fallId},function (data) {
+                    $.post('${pageContext.request.contextPath}/sys/termDel',{id:data.termId},function (data) {
                         //显示提示框
                         layer.msg("操作成功", {icon: 6});
-                        table.reload("sf");
+                        table.reload("term");
                     });
                     return false;
                 });
             }else if (obj.event === 'up'){
-                open("届别编辑",'${pageContext.request.contextPath}/sys/toFallUp?id='+data.fallId)
+                open("学期编辑",'${pageContext.request.contextPath}/sys/toTermUp?id='+data.termId)
             }
         });
     });

@@ -25,6 +25,13 @@ public class FinanceController {
     public String toTuitionList(){
         return "TuitionManagement/tuitionList";
     }
+    //学生查看学费
+    @RequestMapping("/sxf")
+    public String sxf(int id,HttpServletRequest req){
+        List list = fs.stList(id);
+        req.setAttribute("fl",list);
+        return "actStu/xuefei";
+    }
     @RequestMapping("/toTuitionAdd")
     public String toTuitionAdd(HttpServletRequest req){
         List<ClassVo> list = fs.getC();

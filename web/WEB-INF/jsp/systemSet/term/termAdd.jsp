@@ -12,18 +12,18 @@
     <title>Title</title>
 </head>
 <body>
-<form class="layui-form" method="post" action="/sys/fallAdd" lay-filter="gg">
-    <input type="hidden" name="fallId">
+<form class="layui-form" method="post" action="/sys/termAdd" lay-filter="gg">
+    <input type="hidden" name="termId">
     <div class="layui-form-item" style="width: 450px">
-        <label class="layui-form-label">届别</label>
+        <label class="layui-form-label">学期</label>
         <div class="layui-input-block">
-            <input id="name"type="text" name="fallLevel" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
+            <input id="name"type="text" name="termName" required  lay-verify="required" placeholder="请输入.." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="width: 450px">
         <label class="layui-form-label">说明</label>
         <div class="layui-input-block">
-            <input type="text" name="fallRemark"required  lay-verify="required"  placeholder="请输入.." autocomplete="off" class="layui-input">
+            <input type="text" name="termRemark"required  lay-verify="required"  placeholder="请输入.." autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">

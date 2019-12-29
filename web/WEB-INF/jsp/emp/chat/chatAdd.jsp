@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<form class="layui-form" method="post" action="/emp/chatAdd" lay-filter="gg">
+<form style="padding-top: 20px;" class="layui-form" method="post" action="/emp/chatAdd" lay-filter="gg">
     <input type="hidden" name="Chatid">
     <input type="hidden" name="teacher">
     <div class="layui-form-item" style="width: 450px">
