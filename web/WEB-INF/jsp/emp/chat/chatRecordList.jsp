@@ -35,7 +35,7 @@
                 ,{field: 'addr', title: '地点'}
                 ,{field: 'sayscon', title: '内容'}
                 ,{field: 'chatDate', title: '时间',sort: true}
-                ,{field: 'chatDate', title: '操作',toolbar:"#barOption"}
+                ,{field: 'chatDate', title: '操作',width:200,toolbar:"#barOption"}
             ]]
         });
         //监听顶部按钮

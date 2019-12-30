@@ -39,7 +39,7 @@
             </a>
         </td>
         <td class="td">
-            <a href="javascript:void(0)" onclick="toFallList('收费类别','${pageContext.request.contextPath}/sys/toTTTList')">
+            <a href="javascript:void(0)" onclick="toFallList('收费类别','${pageContext.request.contextPath}/sys/toTTType')">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
                 收费类别
             </a>
