@@ -34,12 +34,25 @@ public class dormitoryController {
     @RequestMapping("toDomSelStu/{ac}")
     public String toDomSelStu(HttpServletRequest request,@PathVariable("ac")String ac) {
         if("".equals(ac)){
-
         }
         int name = Integer.parseInt(ac);
         System.out.println("宿舍Id为"+name);
         request.setAttribute("deptname",name);
+        //查询出所有的班级
+        List list = service.selectDormitorylists("select * from classvo ");
+        request.setAttribute("Edeptlist",list);
         return "DormitoryManagement/DomitirySelStu";
+    }
+
+    //查询要发送的人
+    @ResponseBody
+    @RequestMapping("domselsen")
+    public JSONObject selsendEmail(String deptname){
+        System.out.println(deptname);
+        List list = service.selectDormitorylists("select * from student where classId = '"+deptname+"')");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", list);
+        return jsonObject;
     }
     /*//查询要发送的人
     @ResponseBody
@@ -60,7 +73,6 @@ public class dormitoryController {
         List list = service.selectDormitorylists("select * from studentHour ");
         int count = service.SelcctDormitorycount("select count(*) from studentHour");
 
-
         JSONObject json = new JSONObject();
         json.put("code",0);
         json.put("msg","");
@@ -78,7 +90,6 @@ public class dormitoryController {
         List list = service.selectDormitorylists("select sh.hourName as HourName, s.stuName as stuName, s.stuPhone as stuPhone from student s left join studenthour  sh using(stuHours) where sh.stuHours like '"+deptname+"'");
         int count = service.SelcctDormitorycount("select count(*) from studentHour");
 
-
         JSONObject json = new JSONObject();
         json.put("code",0);
         json.put("msg","");
@@ -92,6 +103,9 @@ public class dormitoryController {
     public String dormadd(studentHour studentHour ,HttpServletRequest request) {
         System.out.println("进来了新增"+studentHour.getNumberBeds());
         System.out.println(studentHour.getCount());
+        List<Map> list = service.selectDormitorylists("select floorId from studentfloor where floorName like "+studentHour.getAddr());
+        int id = (int) list.get(0).get("floorId");
+        studentHour.setFloorId(id);
         System.out.println(studentHour.getFloorId());
         System.out.println(studentHour.getStuHours());
         System.out.println(studentHour.getHourIddsc());
@@ -106,9 +120,6 @@ public class dormitoryController {
         System.out.println("fajfajflkaj"+studentHour.getNumberBeds());
         System.out.println(studentHour.getCount());
         System.out.println(studentHour.getFloorId());
-        System.out.println(studentHour.getStuHours());
-        System.out.println(studentHour.getHourIddsc());
-        System.out.println(studentHour.getHourName());
         service.updateDormitory(studentHour);
 
         return "redirect:todormitory";
