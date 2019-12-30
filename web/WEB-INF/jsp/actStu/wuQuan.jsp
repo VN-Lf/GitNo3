@@ -9,6 +9,16 @@
 <html>
 <head>
     <title>无权限页面</title>
+    <%String yangshi = (String) session.getAttribute("color");%>
+    <style>
+        body{
+        <%if("dark-hive".equals(yangshi)){%>
+            color: white;
+        <%}else {%>
+            color: black;
+        <%}%>
+        }
+    </style>
 </head>
 <body>
 <h1 align="left" style="width: 80%;margin: 50px auto">啊哦 您好像还没有该权限呢</h1>
