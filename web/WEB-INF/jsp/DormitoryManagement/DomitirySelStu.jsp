@@ -25,8 +25,7 @@
 <div class="easyui-layout" data-options="fit:true" >
     <div data-options="region:'center',title:'信息管理'" style="background:#eee;">
         <button type="button"  onclick="close1()" style="width: 80px; height: 40px">返回</button>
-        <button type="button"  onclick="close2()" style="left:300px;width: 80px; height: 40px">添加学生</button>
-
+        <button type="button"  onclick="close2()" style="width: 80px; height: 40px">添加学生</button>
         <table id="demo" lay-filter="test"  ></table>
     </div>
 </div>
@@ -37,7 +36,7 @@
     <div class="easyui-layout" data-options="fit:true">
         <div data-options="region:'center',border:false"
              style="padding: 10px; background: #fff; border: 1px solid #ccc;">
-            <form action="<%=request.getContextPath()%>/Weekly/Weeklyupdate" enctype="multipart/form-data" method="post" id="addform">
+            <form action="<%=request.getContextPath()%>/dormitory/dormStu/${deptname}" enctype="multipart/form-data" method="post" id="addform">
                 <input type="hidden" name="weekPaperId" id="weekPaperId" />
                 <input type="hidden" name="empId" id="empId" />
                 <table width="80%" align="center" border="0">
@@ -50,31 +49,24 @@
                     <tr><td> &nbsp;&nbsp;</td></tr>
                     <div style="margin: 10px 48px">
                         <a style="font-size: 16px;cursor: pointer;" id="adddept" name="adddept">添加</a>
-                        <a style="font-size: 16px;margin-left: 102px;color: red;cursor: pointer;" id="deldept"
-                           name="deldept" style="left: 225px">重 置</a>
+                        <a style="font-size: 16px;margin-left: 102px;color: red;cursor: pointer;" id="deldept" name="deldept" style="left: 225px">重 置</a>
                     </div>
                     <div style="margin-top: 15px">
                         接收人：
+                        <input type="hidden" name="receId" id="receId">
+                        <input type="hidden" name="receName" id="receName2">
                         <input type="text" id="receName" autocomplete="off" disabled required style="width:228px;height:30px;
                     display:inline-block;padding-left:10px;background-Color: transparent;border: none;border-bottom: 1px solid #000;" />
                     </div>
-
-                    <tr>
-                        <td>工作学期:</td>
-                        <td>
-                            <textarea name="weekTerm" id="weekTerm" style="width: 400px; height: 80px"></textarea>
-                            <%--<input type="text" name="weekTerm" id="weekTerm"/>--%>
-                        </td>
-                    </tr>
                 </table>
             </form>
         </div>
         <div data-options="region:'south',border:false"
              style="text-align: right; padding: 5px 0;">
             <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
-               href="javascript:void(0)" onclick="sub()">Ok</a>
+               href="javascript:void(0)" onclick="updsub()">Ok</a>
             <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-               href="javascript:void(0)" onclick="close()">Cancel</a>
+               href="javascript:void(0)" onclick="close3()">Cancel</a>
         </div>
     </div>
 </div>
@@ -97,6 +89,7 @@
                 {type:'checkbox'}//复选框
                 ,{field: 'HourName', title: '宿舍房号', width:80, sort: true}
                 ,{field: 'stuName', title: '学生姓名', width:120, sort: true}
+                ,{field: 'className', title: '所在班级', width:120, sort: true}
                 ,{field: 'stuPhone', title: '学生号码', width:200}
             ]]
         });
@@ -108,6 +101,21 @@
     function close2 () {
         $("#wins").window("open");
     }
+    function updsub() {
+        $("#addform").form("submit",{
+            success : function () {
+                $("#addform").form("clear");
+                window.location.href="<%=request.getContextPath()%>/dormitory/todormitory";
+            }
+        })
+    }
+    function close3 () {
+        $("#wins").window("close");
+    }
+
+</script>
+</body>
+<script type="text/javascript">
     $(function () {
         var data2;
         $("#deptId").change(function () {
@@ -115,26 +123,25 @@
             var options = $("#deptId option:selected");　　　　//获取选中项
             var deptId = options.val();　　　　　　　　　　　　　　//获取选中项的值
             $.ajax({
-                url : "<%=request.getContextPath()%>/dormitory/domselsen",
+                url: "<%=request.getContextPath()%>/dormitory/domselsen",
                 type: "post",
-                data :{
-                    deptname :deptId
+                data: {
+                    deptname: deptId
                 },
-                dataType : "json",
-                success : function (data) {
+                dataType: "json",
+                success: function (data) {
                     var List = data.data;
 
-                    $.each(List,function(index,obj){
-                        var html = "<option value=\"" +this.studId + "\"> " + this.stuName + "</option>";
+                    $.each(List, function (index, obj) {
+                        var html = "<option value=\"" + this.studId + "\"> " + this.stuName + "</option>";
                         //给省下拉框加上拼接的option
-                        sesslist =this.empName;
+                        sesslist = this.empName;
                         $("#empnames").append(html);
                     });
                 }
             })
-        })
-</script>
-<script>
+        });
+    });
     var seleVal='';
     var NameVal='';
     $("#adddept").on("click",function(){
@@ -158,5 +165,4 @@
         $("#receId").val(" ");
     })
 </script>
-</body>
 </html>

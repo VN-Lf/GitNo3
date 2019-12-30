@@ -59,21 +59,6 @@
                                     </select>
                                 </td>
                             </tr>
-                            <%--<tr><td> &nbsp;&nbsp;</td></tr>
-                            <tr>
-                                <td>所属楼栋:</td>
-                                <td>
-                                    <select name="floorId" id="floorIdss">
-                                        <%
-                                            for(int i = 0;i<list.size();i++){
-                                        %>
-                                        <option value="<%=list.get(i).get("floorId")%>"><%=list.get(i).get("floorId")%></option>
-                                        <%
-                                            }
-                                        %>
-                                    </select>
-                                </td>
-                            </tr>--%>
                             <tr><td> &nbsp;&nbsp;</td></tr>
                             <tr>
                                 <td>宿舍人数:</td>
@@ -142,7 +127,7 @@
             <div data-options="region:'center',border:false"
                  style="padding: 10px; background: #fff; border: 1px solid #ccc;">
                 <form action="<%=request.getContextPath()%>/dormitory/dormupdate" enctype="multipart/form-data" method="post" id="addform">
-                    <input type="hidden" name="HourId" id="HourId" />
+                    <input type="hidden" name="stuHours" id="HourId" />
                     <input type="hidden" name="floorId" id="floorId" />
                     <table width="80%" align="center" border="0">
                         <tr>
@@ -159,20 +144,6 @@
                                 </select>
                             </td>
                         </tr>
-                        <%--<tr>
-                            <td>所属楼栋</td>
-                            <td>
-                                <select name="floorId" id="floorId">
-                                    <%
-                                        for(int i = 0;i<list.size();i++){
-                                    %>
-                                    <option value="<%=list.get(i).get("floorId")%>"><%=list.get(i).get("floorId")%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
-                            </td>
-                        </tr>--%>
                         <tr>
                             <td>宿舍人数</td>
                             <td><input id="count" class="easyui-validatebox" type="text" name="count"></td>
@@ -274,7 +245,7 @@
 
                $("#wins").window("open");
                $("#count").val(data.count);
-               $("#HourId").val(data.HourId);
+               $("#HourId").val(data.stuHours);
                $("#hourIddsc").val(data.hourIddsc);
                $("#hourName").val(data.hourName);
                $("#numberBeds").val(data.numberBeds);
