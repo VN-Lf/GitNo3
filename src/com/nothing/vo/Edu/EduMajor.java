@@ -10,25 +10,25 @@ public class EduMajor {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name = "tableGenerator",initialValue = 400, allocationSize = 1)
-    private Integer MajorId;//主键
-    private String MajorName;
+    private Integer majorId;//主键
+    private String majorName;
     private Integer deptId;
-    private String MajorRemark;
+    private String majorRemark;
 
     public Integer getMajorId() {
-        return MajorId;
+        return majorId;
     }
 
     public void setMajorId(Integer majorId) {
-        MajorId = majorId;
+        this.majorId = majorId;
     }
 
     public String getMajorName() {
-        return MajorName;
+        return majorName;
     }
 
     public void setMajorName(String majorName) {
-        MajorName = majorName;
+        this.majorName = majorName;
     }
 
     public Integer getDeptId() {
@@ -40,10 +40,10 @@ public class EduMajor {
     }
 
     public String getMajorRemark() {
-        return MajorRemark;
+        return majorRemark;
     }
 
     public void setMajorRemark(String majorRemark) {
-        MajorRemark = majorRemark;
+        this.majorRemark = majorRemark;
     }
 }

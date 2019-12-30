@@ -197,7 +197,7 @@ public class Emp2Controller {
         return "删除成功";
     }
 
-    @RequestMapping("/update")
+    @RequestMapping("/upd                                                                     ate")
     public void EmpUpdate(Emp emp, EmpEducation Edu, Post post, String ruzhitime, String birthday) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if(!"".equals(birthday)){

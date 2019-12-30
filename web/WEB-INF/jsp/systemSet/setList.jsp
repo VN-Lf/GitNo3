@@ -47,15 +47,15 @@
     </tr>
     <tr>
         <td class="td">
-            <a href="">
+            <a href="javascript:void(0)" onclick="toFallList('专业管理','${pageContext.request.contextPath}/sys/toMajor')">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                🎭
+                专业管理
             </a>
         </td>
         <td class="td">
-            <a href="">
+            <a href="javascript:void(0)" onclick="toFallList('院系管理','${pageContext.request.contextPath}/sys/toDept')">
                 <i class="layui-icon" style="font-size: 50px;">&#xe716;</i><br>
-                🍤
+                院系管理
             </a>
         </td>
         <td class="td">

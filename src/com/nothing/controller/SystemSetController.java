@@ -3,9 +3,11 @@ package com.nothing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.SysSetService;
 import com.nothing.vo.Edu.ClassType;
+import com.nothing.vo.Edu.EduMajor;
 import com.nothing.vo.Edu.StuFall;
 import com.nothing.vo.Edu.Term;
 import com.nothing.vo.charge.tuitionType;
+import com.nothing.vo.dep.dep;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +40,14 @@ public class SystemSetController {
     @RequestMapping("/toTerm")
     public String toTerm(){
         return "systemSet/term/termList";
+    }
+    @RequestMapping("/toMajor")
+    public String toEduMajor(){
+        return "systemSet/major/majorList";
+    }
+    @RequestMapping("/toDept")
+    public String toDept(){
+        return "systemSet/dept/deptList";
     }
 
     @RequestMapping("/fallList")
@@ -92,6 +102,32 @@ public class SystemSetController {
         System.out.println(jsonObject.toJSONString());
         return jsonObject;
     }
+    @RequestMapping("/majorList")
+    @ResponseBody
+    public JSONObject majorList(){
+        List t = sss.getEduMajorList();
+        int con = sss.getEduMajorCount();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count",con);
+        jsonObject.put("data", t);
+        System.out.println(jsonObject.toJSONString());
+        return jsonObject;
+    }
+    @RequestMapping("/deptList")
+    @ResponseBody
+    public JSONObject deptList(){
+        List t = sss.getDeptList();
+        int con = sss.getDeptCount();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count",con);
+        jsonObject.put("data", t);
+        System.out.println(jsonObject.toJSONString());
+        return jsonObject;
+    }
 
     @RequestMapping("/toFallAdd")
     public String toFallAdd(){
@@ -108,6 +144,16 @@ public class SystemSetController {
     @RequestMapping("/toTermAdd")
     public String toTermAdd(){
         return "systemSet/term/termAdd";
+    }
+    @RequestMapping("/toMajorAdd")
+    public String toMajorAdd(HttpServletRequest request){
+        List dept = sss.getDeptList();
+        request.setAttribute("deptName",dept);
+        return "systemSet/major/majorAdd";
+    }
+    @RequestMapping("/toDeptAdd")
+    public String toDeptAdd(){
+        return "systemSet/dept/deptAdd";
     }
 
     @RequestMapping("/fallAdd")
@@ -130,6 +176,16 @@ public class SystemSetController {
     @ResponseBody
     public void termAdd(Term tt){
         sss.termAdd(tt);
+    }
+    @RequestMapping("/majorAdd")
+    @ResponseBody
+    public void majorAdd(EduMajor em){
+        sss.EduMajorAdd(em);
+    }
+    @RequestMapping("/deptAdd")
+    @ResponseBody
+    public void deptAdd(dep dep){
+        sss.deptAdd(dep);
     }
 
     @RequestMapping("/toFallUp")
@@ -156,6 +212,20 @@ public class SystemSetController {
         req.setAttribute("t",t);
         return "systemSet/term/termUp";
     }
+    @RequestMapping("/toMajorUp")
+    public String toMajorUp(int id, HttpServletRequest req){
+        EduMajor em = sss.getEduMajor(id);
+        req.setAttribute("em",em);
+        List dept = sss.getDeptList();
+        req.setAttribute("deptName",dept);
+        return "systemSet/major/majorUp";
+    }
+    @RequestMapping("/toDeptUp")
+    public String toDeptUp(int id, HttpServletRequest req){
+        dep em = sss.getDept(id);
+        req.setAttribute("dept",em);
+        return "systemSet/dept/deptUp";
+    }
 
     @RequestMapping("/fallUp")
     @ResponseBody
@@ -177,6 +247,15 @@ public class SystemSetController {
     public void termUp(Term t){
         sss.termUp(t);
     }
+    @RequestMapping("/majorUp")
+    @ResponseBody
+    public void majorUp(EduMajor em){
+        sss.EduMajorUp(em);
+    }
+    @ResponseBody
+    public void deptUp(dep em){
+        sss.deptUp(em);
+    }
 
     @RequestMapping("/fallDel")
     @ResponseBody
@@ -197,5 +276,15 @@ public class SystemSetController {
     @ResponseBody
     public void termDel(String id){
         sss.termDel(id);
+    }
+    @RequestMapping("/majorDel")
+    @ResponseBody
+    public void majorDel(String id){
+        sss.EduMajorDel(id);
+    }
+    @RequestMapping("/deptDel")
+    @ResponseBody
+    public void deptDel(String id){
+        sss.deptDel(id);
     }
 }
