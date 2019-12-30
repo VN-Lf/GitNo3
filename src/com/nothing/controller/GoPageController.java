@@ -45,7 +45,8 @@ public class GoPageController {
             }else {
                 session.setAttribute("color",color);
             }
-            List emailcount = service.emailcount("select * from myemail where empId=2 and isRead=2");
+            Emp emp = (Emp)session.getAttribute("empId");
+            List emailcount = service.emailcount("select * from myemail where empId="+emp.getEmpId()+" and isRead=2");
             session.setAttribute("emailcount",emailcount.size());
             return "home";
         }else if(session.getAttribute("stuId") != null) {

@@ -92,10 +92,7 @@ public class StuSerImp extends BaseDao implements StuSer{
                 "course c using(courseId) left join emp e using(empId) where studId = "+studId);
     }
 
-    @Override
-    public List listO(Object o) {
-        return listBySQL("select * from dept");
-    }
+
 
     @Override
     public List classList(){
@@ -212,7 +209,10 @@ public class StuSerImp extends BaseDao implements StuSer{
                 "course c using(courseId) left join emp e using(empId) where studId = "+studId);
     }
 
-
+    @Override
+    public List ooo(Object o) {
+        return listBySQL("select * from "+o.getClass().getSimpleName());
+    }
 
     @Override
     public List allotStu() {

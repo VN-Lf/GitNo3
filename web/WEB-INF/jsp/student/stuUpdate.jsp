@@ -10,10 +10,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>新增员工</title>
+    <title>修改学生资料</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css" media="all">
-    <script src="${pageContext.request.contextPath}/layui/layd  ate/laydate.js"></script> <!-- 改成你的路径 -->
+    <script src="${pageContext.request.contextPath}/layui/laydate/laydate.js"></script> <!-- 改成你的路径 -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/laydate/theme/default/laydate.css">
+    <script src="${pageContext.request.contextPath}/jquery.js"></script>
 </head>
 <body>
 <button type="button" class="layui-btn layui-btn-primary" onclick="openMain()">返回</button>
@@ -56,7 +57,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">出生日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="birthday" required  lay-verify="required" placeholder="单击此处选择日期" id="birthday" autocomplete="off" class="layui-input">
+                    <input type="text" name="birthday" required  lay-verify="" placeholder="单击此处选择日期" id="birthday" autocomplete="off" class="layui-input" value=${requestScope.stu.stuBirthday}>
                 </div>
             </div>
 
@@ -83,15 +84,15 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">入学时间</label>
                 <div class="layui-input-block">
-                    <input type="text" id="enterDate" name="enterDate" required  lay-verify="required" placeholder="单击此处选择日期" autocomplete="off" class="layui-input">
+                    <input type="text" id="enterDate" name="enterDate" required  lay-verify="" placeholder="单击此处选择日期" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">学生状态</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="stuStu" value="1" title="状态1">
-                    <input type="radio" name="stuStu" value="2" title="状态2">
+                    <input type="radio" name="stuStu" value="4" title="在读">
+                    <input type="radio" name="stuStu" value="5" title="毕业">
                 </div>
             </div>
 
@@ -150,7 +151,7 @@
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">所在楼栋</label>
+                <label class="layui-form-label">所在寝室</label>
                 <div class="layui-input-block">
                     <select name="stuHours"   placeholder="  ">
                         <option value=" "> </option>
@@ -174,28 +175,8 @@
                 </div>
             </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">专业</label>
-                <div class="layui-input-block">
-                    <input id="stuProfessional" type="text" name="stuProfessional"   placeholder="所学专业" autocomplete="off" class="layui-input" value="${stu.stuProfessional}">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">专业类别</label>
-                <div class="layui-input-block">
-                    <input id="stuProLevel" type="text" name="stuProLevel"  placeholder="专业所属" autocomplete="off" class="layui-input" value="${stu.stuProLevel}">
-                </div>
-            </div>
 
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">学业状态</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="studyType" value="毕业" title="毕业">
-                    <input type="radio" name="studyType" value="在校" title="在校" checked>
-                </div>
-            </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">中专</label>
@@ -246,14 +227,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">欠款金额</label>
                 <div class="layui-input-block">
-                    <input type="text" id="qkMoney" name="qkMoney"  lay-verify="number" autocomplete="off" class="layui-input" value="${stu.qkMoney}}">
+                    <input type="text" id="qkMoney" name="qkMoney"  lay-verify="" autocomplete="off" class="layui-input" value="${stu.qkMoney}">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">入学成绩</label>
                 <div class="layui-input-block">
-                    <input type="text" id="score" name="score"  lay-verify="number" autocomplete="off" class="layui-input" value="${stu.score}">
+                    <input type="text" id="score" name="score"  lay-verify="" autocomplete="off" class="layui-input" value="${stu.score}">
                 </div>
             </div>
 
@@ -356,6 +337,11 @@
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+    var b = "${requestScope.stu.stuBirthday}";
+    var e = "${requestScope.stu.stuEnterTime}";
+    $("#birthday").val(createTime(b));
+    $("#enterDate").val(createTime(e));
+
     function openMain() {
         window.open("<%=request.getContextPath()%>/stu/home","_self");
     }
@@ -372,11 +358,19 @@
 
 
     layui.use(['form','laydate'], function(){
+
+        laydate.render({
+            elem: '#birthday'
+
+        });
+
+        laydate.render({
+            elem: '#enterDate'
+        });
+
         var form = layui.form;
         form.val("gg",{
             "stuSex":"${requestScope.stu.stuSex}"
-            ,"birthday":"${requestScope.stu.stuBirthday}"
-            ,"enterDate":"${requestScope.stu.stuEnterTime}"
              ,"stuHours":"${requestScope.stu.stuHours}"
             ,"classId" :${requestScope.stu.classId}
             ,"floorId":${requestScope.stu.floorId}
@@ -394,19 +388,11 @@
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            alert(data.field.stuCla);
-            layer.msg(JSON.stringify(data.field));
             return true;
         });
 
 
-        laydate.render({
-            elem: '#birthday' //指定元素
-        });
 
-        laydate.render({
-            elem: '#enterDate' //指定元素o
-        });
     });
     //Demo
 

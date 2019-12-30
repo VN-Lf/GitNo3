@@ -44,7 +44,7 @@
                 ,{field: 'userType', title: '报修身份',templet:function (d) {if (d.userType==1){return'学生';}else{return'员工';}}}
                 ,{field: 'startTime', title: '保修时间',sort:true,templet: function(d){return dateFormat(d.startTime)}}
                 ,{field: 'eedTime', title: '完成时间',sort:true,templet: function(d){if (d.eedTime==null){return "";}else {return dateFormat(d.eedTime)}}}
-                ,{field: 'eedTime', title: '操作', width: 150,toolbar:"#barOption"}
+                ,{field: 'eedTime', title: '操作', width: 200,toolbar:"#barOption"}
             ]]
         });
         //监听工具条

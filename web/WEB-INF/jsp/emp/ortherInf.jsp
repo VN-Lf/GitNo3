@@ -44,7 +44,7 @@
                 ,{field: 'empEucStartDay', title: '入校时间', width:110}
                 ,{field: 'empEucEndDay', title: '毕业时间', width:110}
                 ,{field: 'empEucRemark', title: '说明', width:100}
-                ,{field: 'empId', title: '操作', width: 150, toolbar: '#barOption'}
+                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
             ]]
         });
         table.render({
@@ -65,7 +65,7 @@
                 ,{field: 'empHisEndDay', title: '离职时间', width:110}
                 ,{field: 'empLiftReason', title: '离职原因', width:100}
                 ,{field: 'empHisRemark', title: '说明', width:100}
-                ,{field: 'empId', title: '操作', width: 150, toolbar: '#barOption'}
+                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
             ]]
         });
         table.render({
@@ -81,7 +81,7 @@
                 ,{field: 'empRelation', title: '关系', width:110}
                 ,{field: 'empContactphone', title: '联系电话', width:100}
                 ,{field: 'empFamImfRemark', title: '说明', width:100}
-                ,{field: 'empId', title: '操作', width: 150, toolbar: '#barOption'}
+                ,{field: 'empId', title: '操作', width: 200, toolbar: '#barOption'}
             ]]
         });
         //监听顶部按钮

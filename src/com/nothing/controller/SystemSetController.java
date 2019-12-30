@@ -32,7 +32,7 @@ public class SystemSetController {
         return "systemSet/class/claTypeList";
     }
     @RequestMapping("/toTTType")
-    public String toTtType(){
+    public String toTTType(){
         return "systemSet/tuitionType/tttList";
     }
     @RequestMapping("/toTerm")

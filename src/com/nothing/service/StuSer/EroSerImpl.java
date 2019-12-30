@@ -65,4 +65,9 @@ public class EroSerImpl extends BaseDao implements EnrSer{
     public void updateStatus(String id) {
         executeSQL("update Enrollment set status = 4 where enrollmentId = "+id);
     }
+
+    @Override
+    public void updateMoney(String id, String money,String time) {
+        executeSQL("update enrollment set enrollMoney = "+id+" ,enrollMoneyTime = '"+time+"' where enrollmentid = "+id);
+    }
 }
