@@ -29,10 +29,10 @@
 <body>
 <table id="demo" lay-filter="test"></table>
 
-<form  class="layui-form" id="addClaForm" style="display:none;height: 1000px;width: 800px" method="post">
+<form  class="layui-form" id="addClaForm" style="display:none;height: 600px;width: 750px" method="post">
     <input id="classId" type="hidden" name="classId">
 
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="margin-top: 30px">
         <label class="layui-form-label">班级名</label>
         <div class="layui-input-block">
             <input id="className" type="text" name="className" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
@@ -55,7 +55,9 @@
     </div>
 
 
-    <label class="layui-form-label" style="width:100px">班主任</label>
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">班主任</label>
     <div class="layui-input-block">
         <select name="classAdviser" lay-verify="required" placeholder=" " id="classAdviser">
             <c:forEach items="${bzrList}" var="bzr">
@@ -63,8 +65,10 @@
             </c:forEach>
         </select>
     </div>
+    </div>
 
-    <label class="layui-form-label" style="width:100px">授课教师</label>
+    <div class="layui-form-item">
+    <label class="layui-form-label" >授课教师</label>
     <div class="layui-input-block">
         <select name="classTeacher" lay-verify="required" placeholder=" " id="classTeacher">
             <c:forEach items="${jsList}" var="js">
@@ -72,9 +76,10 @@
             </c:forEach>
         </select>
     </div>
+    </div>
 
-
-    <label class="layui-form-label" style="width:100px">学期</label>
+    <div class="layui-form-item">
+    <label class="layui-form-label">学期</label>
     <div class="layui-input-block">
         <select name="classTerm" lay-verify="required" placeholder=" " id="classTerm">
             <c:forEach items="${term}" var="te">
@@ -82,9 +87,10 @@
             </c:forEach>
         </select>
     </div>
+    </div>
 
-
-    <label class="layui-form-label" style="width:100px">学年</label>
+    <div class="layui-form-item">
+    <label class="layui-form-label">学年</label>
     <div class="layui-input-block">
         <select name="classFall" lay-verify="required" placeholder=" " id="classFall">
             <c:forEach items="${fall}" var="fa">
@@ -92,9 +98,11 @@
             </c:forEach>
         </select>
     </div>
+    </div>
 
 
-    <label class="layui-form-label" style="width:100px">系别</label>
+    <div class="layui-form-item">
+    <label class="layui-form-label">系别</label>
     <div class="layui-input-block">
         <select name="deptId" lay-verify="required" placeholder=" " id="deptId">
             <c:forEach items="${dept}" var="de">
@@ -102,8 +110,10 @@
             </c:forEach>
         </select>
     </div>
+    </div>
 
-    <label class="layui-form-label" style="width:100px">班级类型</label>
+    <div class="layui-form-item">
+    <label class="layui-form-label" >班级类型</label>
     <div class="layui-input-block">
         <select name="classType" lay-verify="required" placeholder=" " id="classType">
             <c:forEach items="${classType}" var="ct">
@@ -111,24 +121,26 @@
             </c:forEach>
         </select>
     </div>
+    </div>
 
-
-    <label class="layui-form-label" style="width:100px">专业</label>
+    <div class="layui-form-item">
+    <label class="layui-form-label">专业</label>
     <div class="layui-input-block">
         <select name="MajorId" lay-verify="required" placeholder=" " id="MajorId">
             <c:forEach items="${majorList}" var="ma">
-                <option value="${ma.MajorId}">${ma.MajorName}</option>
+                <option value="${ma.majorId}">${ma.majorName}</option>
             </c:forEach>
         </select>
     </div>
-
+    </div>
 
     <div class="layui-form-item">
+    <div class="layui-form-item" style="margin-top: 60px;margin-left: 35%">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemoCla">确定</button>
         </div>
     </div>
-
+    </div>
 </form>
 
 </body>
@@ -153,12 +165,11 @@
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
                 ,{field: 'classId', title: 'ID', width:100}
-                ,{field: 'classNo', title: '班级编号', width:100}
                 ,{field: 'bzr', title:'班主任', width:80}
                 ,{field: 'js', title: '授课教师', width:80}
                 ,{field: 'classCount', title: '班级人数', width:80}
                 ,{field: 'className', title:'班级名字', width:150}
-                ,{field: 'stuAddr', title: '地址', width: 177}
+                ,{field: 'classRemark', title: '备注', width: 177}
                 ,{field: 'className', title:'班级名', width:80}
                 ,{field: 'tnames', title: '学期', width:80,}
                 ,{field: 'deptName', title: '系别', width:80}
@@ -196,8 +207,8 @@
                 case 'isAdd':
                     openStuAc =layer.open({
                         type: 1,
-                        title:"新增",
-                        area:['1000px','800px'],
+                        title:"新增班级",
+                        area:['850px','800px'],
                         content: $("#addClaForm"),
                         closeBtn :1,
                         success: function(layero, index){
@@ -238,10 +249,10 @@
                     var classId = data.classId;
                     openStuAc = layer.open({
                         type: 1,
-                        title:'班级管理修改',
+                        title:'修改班级信息',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
-                        area: ['1000px', '800px'],
+                        area: ['850px', '800px'],
                         fixed: false, //不固定
                         maxmin: true,
                         shadeClose: true, //开启遮罩关闭

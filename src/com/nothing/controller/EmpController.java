@@ -287,7 +287,7 @@ public class EmpController {
     @ResponseBody
     public String updatepwd(String oldpwd,String newpwd,HttpSession session){
         Emp emp =(Emp) session.getAttribute("empId");
-        List personimf = empService.personimf("select empLogPsw from emp where empId=2 and empLogPsw=" + oldpwd + "");
+        List personimf = empService.personimf("select empLogPsw from emp where empId="+emp.getEmpId()+" and empLogPsw=" + oldpwd + "");
 
         if(personimf.size()==0){
             return "原先密码错误";

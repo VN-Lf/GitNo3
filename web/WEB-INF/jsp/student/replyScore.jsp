@@ -21,11 +21,11 @@
 
 </table>
 
-!--考试成绩表单-->
 <form  class="layui-form" id="addTextForm" style="display:none;height: auto;width: 600px" method="post"  target="_self">
 
+    <div style="margin-left: 30px;margin-top: 60px">
     <div class="layui-form-item">
-        <label class="layui-form-label" style="width:100px">班级</label>
+        <label class="layui-form-label" style="width:50px">班级</label>
         <div class="layui-input-block">
             <select name="classId" lay-verify="required" placeholder=" " id="classId">
                 <option></option>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label" style="width:100px">项目</label>
+        <label class="layui-form-label" style="width:50px">项目</label>
         <div class="layui-input-block">
             <select name="projectId" lay-verify="required" placeholder=" " id="projectId">
                 <option> </option>
@@ -47,8 +47,9 @@
             </select>
         </div>
     </div>
+    </div>
 
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="margin-left: 35%;margin-top: 50px">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formSub">确定</button>
         </div>
@@ -159,7 +160,7 @@
                     }else{
                         var classId =$('#classId').val();
                         var projectId = $('#projectId').val();
-                        window.open("${pageContext.request.contextPath}/sco/toClassRepScoByCid?classId="+classId+"&projectId="+projectId,"_self")
+                            window.open("${pageContext.request.contextPath}/sco/toClassRepScoByCid?classId="+classId+"&projectId="+projectId,"_self")
                     }
                 }
             });

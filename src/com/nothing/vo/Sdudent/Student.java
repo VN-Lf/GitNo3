@@ -41,7 +41,7 @@ public class Student{
     private String vocationalflag;//中专学籍
     private String enrollno;//省录取号
     private Integer qkMoney;   //欠款金额
-    private Double score;//入学成绩
+    private Integer score;//入学成绩
     private String dibao;//低保
     private String sourceType;//生源类型
     private String danbaoren;//担保人
@@ -280,11 +280,11 @@ public class Student{
         this.qkMoney = qkMoney;
     }
 
-    public Double getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 

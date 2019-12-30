@@ -37,7 +37,7 @@ public class EnrollmentController{
         if("main".equals(ac)){
             List majorList = stuSer.listObj(new EduMajor());
             List classTypeList = stuSer.listObj(new ClassType());
-            List classList = stuSer.listO(new ClassVo());
+            List classList = stuSer.listObj(new ClassVo());
             request.setAttribute("majorList",majorList);
             request.setAttribute("classTypeList",classTypeList);
             request.setAttribute("classList",classList);
@@ -65,19 +65,32 @@ public class EnrollmentController{
 
     @RequestMapping("up")
     @ResponseBody
-    public String update( Enrollment e, String paymentDH, String testDH, String startDH, HttpSession session) throws ParseException {
-        System.out.println("ododododododododododoood"+e.getEnrollmentid());
+    public String update( Enrollment e, String paymentDH, String testDH, String startDH, HttpSession session) throws ParseException,NullPointerException{
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date pTime = formatter.parse(paymentDH);
-            Date tTime = formatter.parse(testDH);
-            Date sTime = formatter.parse(startDH);
-            e.setTestTime(tTime);
-            e.setStartTime(sTime);
-            e.setPaymentTime(pTime);
-            e.setSigndate(new Date());
+            System.out.println("ododododododododododoood"+e.getEnrollmentid());
+            if(paymentDH==""||paymentDH==null){
 
-            Emp emp = (Emp) session.getAttribute("empId");
-            e.setEmpId(e.getEmpId());
+            }else{
+                Date pTime = formatter.parse(paymentDH);
+                e.setPaymentTime(pTime);
+            }
+            if(testDH==""||paymentDH==null){
+
+            }else{
+                Date tTime = formatter.parse(testDH);
+                e.setTestTime(tTime);
+            }
+            if(startDH==""||startDH==null){
+
+            }else{
+                Date sTime = formatter.parse(startDH);
+                e.setStartTime(sTime);
+            }
+
+
+            e.setSigndate(new Date());
+            //Emp emp = (Emp) session.getAttribute("empId");
+            //e.setEmpId(e.getEmpId());
             System.out.println(e.toString());
             if(e.getEnrollmentid()==0||e.getEnrollmentid()==null||"".equals(e.getEnrollmentid())){
                 try{
@@ -90,6 +103,7 @@ public class EnrollmentController{
                 System.out.println("xiugaixiugaixiugaixiugaixiugai");
                 stuSer.updateStu(e);
             }
+
 
         return "";
     }
@@ -125,6 +139,15 @@ public class EnrollmentController{
         return "";
     }
 
+    @ResponseBody
+    @RequestMapping("addMoney")
+    public String addMoney(String eeeId,String enrollMoney){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String time = formatter.format(new Date());
+        enrSer.updateMoney(eeeId,enrollMoney,time);
+        return "";
+    }
+
     @RequestMapping("con")
     @ResponseBody
     public JSONObject con(String  stuSelectName, String  selectClassType, String  stuSelectTeacher, String stuSelecStuat){
@@ -148,4 +171,6 @@ public class EnrollmentController{
         jsonObject.put("count",list.size());
         return jsonObject;
     }
+
+
 }

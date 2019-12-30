@@ -38,16 +38,16 @@ public class StudentControl{
 
     @RequestMapping("{ac}")
     public String toStuMain(@PathVariable("ac")String ac ,HttpServletRequest request){
-        List hoursList = stuSer.listO(new studentHour());
+        List hoursList = stuSer.listObj(new studentHour());
         List classList = stuSer.listObj(new ClassVo());
         List floorList = stuSer.listObj(new studentFloor());
         List bzrList= stuSer.classTeacher("班主任");
         List  jsList= stuSer.classTeacher("授课教师");
-        List deptList  = stuSer.listO(new Dept());
-        List termList = stuSer.listO(new Term());//学期
-        List  fallList  = stuSer.listO(new StuFall());//学年
-        List  classTypeList = stuSer.listO(new ClassType());
-        List  majorList = stuSer.listO(new EduMajor());//专业
+        List deptList  = stuSer.listObj(new Dept());
+        List termList = stuSer.listObj(new Term());//学期
+        List  fallList  = stuSer.listObj(new StuFall());//学年
+        List  classTypeList = stuSer.listObj(new ClassType());
+        List  majorList = stuSer.listObj(new EduMajor());//专业
         if("home".equals(ac)){
             request.setAttribute("classList",classList);
             request.setAttribute("foolList",floorList);
@@ -84,7 +84,7 @@ public class StudentControl{
             list = stuSer.allotStu();
             title =list.size();
         }else if("course".equals(ac)){
-            list = stuSer.listO(new Course());
+            list = stuSer.listObj(new Course());
             title = stuSer.allTitle(new Course());
         }
         JSONObject jsonObject = new JSONObject();
@@ -177,12 +177,13 @@ public class StudentControl{
     }
     @RequestMapping("toAdd")
     public String toAdd(HttpServletRequest request,String stuId){
-        List hoursList = stuSer.listO(new studentHour());
+        List hoursList = stuSer.listObj(new studentHour());
         List classList = stuSer.listObj(new ClassVo());
         List floorList = stuSer.listObj(new studentFloor());
         request.setAttribute("foolList",floorList);
         request.setAttribute("classList",classList);
         request.setAttribute("hoursList",hoursList);
+
         System.out.println("zhlililili"+stuId);
         if(stuId.equals("0")){
             return "student/stuAdd";
@@ -310,7 +311,7 @@ public class StudentControl{
     @ResponseBody
     public JSONArray toClaTree(){
         JSONArray jsonArray =  new JSONArray();
-        List<Map> fallList2  = stuSer.listO(new StuFall());
+        List<Map> fallList2  = stuSer.ooo(new StuFall());
         for (Map f: fallList2){
             JSONObject fall = new JSONObject();
             fall.put("id",f.get("fallId"));
@@ -348,7 +349,7 @@ public class StudentControl{
                     s.setStuHisSchool(o.get("school").toString());
                     s.setStuSex(o.get("stuSex").toString());
                     s.setInterTecher(o.get("enterEmp").toString());
-                    s.setScore(Double.valueOf( o.get("score").toString()));
+                    s.setScore((Integer)o.get("score"));
                     s.setIsComputer(o.get("computer").toString());
                     s.setClassId(Integer.parseInt(cid));
                     stuSer.addStu(s);

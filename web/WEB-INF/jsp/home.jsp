@@ -322,6 +322,9 @@
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>我的考勤</a>
                 </li>
+                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
+                    <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
+                </li>
             </ul>
         </div>
         <div title="通知面板" style="overflow:auto;padding:0;">
