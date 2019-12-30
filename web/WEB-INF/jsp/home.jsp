@@ -27,19 +27,19 @@
         #caidan a{
             text-decoration: none;
             font-size: 16px;
-            <%if("dark-hive".equals(yangshi)){%>
-                color: white;
-            <%}else {%>
+        <%if("dark-hive".equals(yangshi)){%>
+            color: white;
+        <%}else {%>
             color: black;
-            <%}%>
+        <%}%>
         }
 
         #caidan li:hover {
-            <%if("dark-hive".equals(yangshi)){%>
-                background-color: #0972a5;
-            <%}else {%>
-                background-color: #D0E5F5;
-            <%}%>
+        <%if("dark-hive".equals(yangshi)){%>
+            background-color: #0972a5;
+        <%}else {%>
+            background-color: #D0E5F5;
+        <%}%>
             color: #D0E5F5;
         }
 
@@ -857,8 +857,8 @@
                     " onmouseleave=\"baoyichu(this)\" class=\"emptask\" onclick=\"zhankaiAct(this,"+size+",'chat')\">\n" +
                     "<p align=\"left\" style=\"font-size: 24px;padding-right: 30px;float:left;width:45%;\">本月谈心任务已完成 "+size+" 条 还有 "+js+" 条待完成</p>\n"+
                     "<p align=\"left\" id='sysj2' style=\"padding-right: 9px;float:right;width:18%;font-size: 16px\"></p>\n"+
-                "       <p align=\"right\" id='tishi3' style='margin-top: 40px;'  class='tishi'>点击展开</p>\n" +
-                "   </div>";
+                    "       <p align=\"right\" id='tishi3' style='margin-top: 40px;'  class='tishi'>点击展开</p>\n" +
+                    "   </div>";
                 $("#hometask").append(html);
                 setInterval("gettime('chat')","1000");
             }

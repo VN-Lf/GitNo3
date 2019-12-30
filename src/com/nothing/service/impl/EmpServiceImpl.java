@@ -98,13 +98,16 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
     @Override
     public void delete(String ids){
         String sql = "delete from emp where empId in ("+ids+");";
-        String sql2 = "delete from empEducation where empId in ("+ids+");";
-        String sql3 = "delete from post where empId in ("+ids+");";
+        String sql2 = "delete from post where empId in ("+ids+");";
+        String sql3 = "delete from empEducation where empId in ("+ids+");";
         String sql4 = "delete from empFamilyImf where empId in ("+ids+");";
         String sql5 = "delete from empHistory where empId in ("+ids+");";
-        String sql6 = "delete from empFamilyImf where empId in ("+ids+");";
-        String sql7 = "delete from aduitLog where empid in ("+ids+");";
+        String sql6 = "delete from aduitLog where empId in ("+ids+");";//考核
+        String sql7 = "delete from attendance where empid in ("+ids+");";//打卡
         String sql8 = "delete from jobs where empid in ("+ids+");";
+        String sql9 = "delete from empweekpaper where empid in ("+ids+");";
+        String sql10 = "delete from weekArrange where empid in ("+ids+");";
+        String sql11 = "delete from chatrecord where empid in ("+ids+");";
         executeSQL(sql);
         executeSQL(sql2);
         executeSQL(sql3);
@@ -113,6 +116,9 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         executeSQL(sql6);
         executeSQL(sql7);
         executeSQL(sql8);
+        executeSQL(sql9);
+        executeSQL(sql10);
+        executeSQL(sql11);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.nothing.service;
 
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.sushe.studentHour;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface DormitoryService {
     void addDormitory(studentHour studentHour);
     //修改宿舍的方法
     void updateDormitory(studentHour studentHour);
+    //修改学生宿舍
+    void updateStudentwtf(String id,int sushe);
     //删除宿舍的方法
     void delDormitory(Object id);
 }

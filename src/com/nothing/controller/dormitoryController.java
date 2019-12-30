@@ -3,6 +3,7 @@ package com.nothing.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nothing.service.DormitoryService;
+import com.nothing.vo.Sdudent.Student;
 import com.nothing.vo.sushe.studentHour;
 import org.activiti.engine.repository.Model;
 import org.springframework.stereotype.Controller;
@@ -34,32 +35,32 @@ public class dormitoryController {
     @RequestMapping("toDomSelStu/{ac}")
     public String toDomSelStu(HttpServletRequest request,@PathVariable("ac")String ac) {
         if("".equals(ac)){
-
         }
         int name = Integer.parseInt(ac);
         System.out.println("宿舍Id为"+name);
         request.setAttribute("deptname",name);
+        //查询出所有的班级
+        List list = service.selectDormitorylists("select * from classvo ");
+        request.setAttribute("Edeptlist",list);
         return "DormitoryManagement/DomitirySelStu";
     }
-    /*//查询要发送的人
+
+    //查询要发送的人
     @ResponseBody
-    @RequestMapping("selsenddormitory")
-    public JSONObject selsendfeedback(String deptname){
-        System.out.println("宿舍编号为："+deptname);
-        List list = service.selectDormitorylists("select sh.hourName as HourName,cl.className as ClassName, s.stuName as stuName, s.stuPhone as stuPhone from student s \n" +
-                "left join studenthour  sh using(stuHours)\n" +
-                "left join classvo  cl using(classId) where s.stuHours like '"+deptname+"')");
+    @RequestMapping("domselsen")
+    public JSONObject selsendEmail(String deptname){
+        System.out.println(deptname);
+        List list = service.selectDormitorylists("select * from student where classId in( '"+deptname+"')");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("data", list);
         return jsonObject;
-    }*/
+    }
     //查看方法
     @ResponseBody
     @RequestMapping("list")
     public JSONObject list() {
         List list = service.selectDormitorylists("select * from studentHour ");
         int count = service.SelcctDormitorycount("select count(*) from studentHour");
-
 
         JSONObject json = new JSONObject();
         json.put("code",0);
@@ -75,9 +76,9 @@ public class dormitoryController {
     @RequestMapping("stulist/{deptname}")
     public JSONObject stulist(@PathVariable("deptname") String deptname) {
         System.out.println("查看Id为"+deptname);
-        List list = service.selectDormitorylists("select sh.hourName as HourName, s.stuName as stuName, s.stuPhone as stuPhone from student s left join studenthour  sh using(stuHours) where sh.stuHours like '"+deptname+"'");
+        /*List list = service.selectDormitorylists("select  s.* ,sh.hourName as HourName from student s left join studenthour  sh using(stuHours) where sh.stuHours like '"+deptname+"'");*/
+        List list = service.selectDormitorylists("select  s.* ,sh.hourName as HourName,cl.className as className from student s left join studenthour  sh using(stuHours) left join classvo cl using(classId) where sh.stuHours like '"+deptname+"'");
         int count = service.SelcctDormitorycount("select count(*) from studentHour");
-
 
         JSONObject json = new JSONObject();
         json.put("code",0);
@@ -92,6 +93,15 @@ public class dormitoryController {
     public String dormadd(studentHour studentHour ,HttpServletRequest request) {
         System.out.println("进来了新增"+studentHour.getNumberBeds());
         System.out.println(studentHour.getCount());
+        List<Map> list = service.selectDormitorylists("select floorId from studentfloor where floorName like '"+studentHour.getAddr()+"'");
+        int id = (int) list.get(0).get("floorId");
+        studentHour.setFloorId(id);
+
+        String addr = studentHour.getAddr();
+        String hname = addr+studentHour.getHourName();
+        System.out.println("宿舍"+hname);
+
+        studentHour.setHourName(hname);
         System.out.println(studentHour.getFloorId());
         System.out.println(studentHour.getStuHours());
         System.out.println(studentHour.getHourIddsc());
@@ -107,16 +117,26 @@ public class dormitoryController {
     @RequestMapping("dormupdate")
     public String dormupdate(studentHour studentHour ,HttpServletRequest request) {
         System.out.println("fajfajflkaj"+studentHour.getNumberBeds());
-        System.out.println(studentHour.getCount());
-        System.out.println(studentHour.getFloorId());
-        System.out.println(studentHour.getStuHours());
-        System.out.println(studentHour.getHourIddsc());
-        System.out.println(studentHour.getHourName());
         service.updateDormitory(studentHour);
-
         return "redirect:todormitory";
     }
 
+    //学生信息修改
+    @RequestMapping("dormStu/{ac}")
+    public String dormStu(Student student , String receId, String receName ,HttpServletRequest request,@PathVariable("ac") String deptname) {
+        System.out.println("学生Id为"+receId);
+        System.out.println(receName);
+        System.out.println("他的宿舍为："+deptname);
+        String id = receId.substring(0,receId.length()-1);
+        String param[] = id.split("[,]");
+        for(int i=0;i<param.length;i++){
+            int s = Integer.parseInt(param[i]);
+            service.updateStudentwtf(String.valueOf(s),Integer.parseInt(deptname));
+        }
+       /* service.updateStudentwtf(id,Integer.parseInt(deptname));*/
+       /* service.updateStudent(student);*/
+        return "redirect:todormitory";
+    }
     //删除的方法
     @RequestMapping("dormitorydelete")
     public String dormitorydelete(String id ){
