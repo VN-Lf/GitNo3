@@ -193,7 +193,7 @@ public class Emp2Controller {
     public String notDel(String id){
         Notice notice = empService.chaNotice(id);
         notice.setNoticeId(Integer.parseInt(id));
-        empService.addNotice(notice,3);//3为删除
+        empService.addNotice(notice,3);
         return "删除成功";
     }
 
