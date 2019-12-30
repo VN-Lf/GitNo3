@@ -284,47 +284,53 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 400
+            ,height:'full-200'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,url: '${pageContext.request.contextPath}/enrStu/main/toList' //数据接口
             ,page: true //开启分页
             ,cols: [[ //表头
-                {field: 'enrollmentid', title: 'ID', width:100}
+                {field: 'enrollmentid', title: 'ID', width:50,sort: true}
                 ,{field: 'stuName', title: '名字', width:100}
-                ,{field: 'stuSex', title: '性别', width:80}
-                ,{field: 'stuQQ', title: 'QQ', width:200}
-                ,{field: 'testTime', title: '试学时间', width: 180, templet:function (row){
+                ,{field: 'stuSex', title: '性别', width:60}
+                ,{field: 'stuQQ', title: 'QQ', width:150}
+                ,{field: 'testTime', title: '试学时间', width: 150, templet:function (row){
                     if(row.testTime==undefined){
                         return"";
                     }
                         return createTime(row.testTime);
                     }
                 }
-                ,{field: 'startTime', title: '入学时间', width: 180, templet:function (row){
+                ,{field: 'startTime', title: '入学时间', width: 150, templet:function (row){
                     if(row.startTime==undefined){
                         return"";
                     }
                         return createTime(row.testTime);
                     }
                 }
-                ,{field: 'signdate', title: '录入时间', width: 180, templet:function (row){
+                ,{field: 'signdate', title: '录入时间', width: 150, templet:function (row){
                     if(row.signdate==undefined){
                         return"";
                     }
                         return createTime(row.signdate);
                     }
                 }
-                ,{field: 'stuPhone', title:'电话', width:270}
+                ,{field: 'stuPhone', title:'电话', width:150}
                 ,{field: 'school', title: '毕业院校', width:120}
-                ,{field: 'className', title: '班级', width: 180}
-                ,{field: 'amount', title: '预定报名费金额', width:200}
-                ,{field: 'entryTime', title: '报名费审核', width:200,
+                ,{field: 'className', title: '班级', width: 150}
+                ,{field: 'amount', title: '预定报名费金额', width:180}
+                ,{field: 'entryTime', title: '报名费审核', width:120,
                     templet:function (row){
                         return isEx(row.entryTime);
                     }
                 }
-                ,{field: 'entryTime', title: '报名费审核时间', width:200}
-                ,{field: 'reviewer', title: '报名费审核人', width:200}
+                ,{field: 'entryTime', title: '报名费审核时间', width:150,
+                    templet:function (row){
+                        if(row.entryTime==undefined){
+                            return"";
+                        }
+                        return createTime(row.entryTime);
+                    }}
+                ,{field: 'reviewer', title: '报名费审核人', width:150}
                 ,{field: 'computer', title: '是否电脑', width:100}
                 ,{field: 'cardId', title: '身份证', width: 177}
                 ,{field: 'empName', title:'录入教师', width:100}
@@ -333,14 +339,19 @@
                         return allStatus(row.status);
                     }
                 }
-                ,{field: 'remark', title: '备注', width:80}
-                ,{field: 'enterEmp', title: '招生老师', width: 177}
-                ,{field: 'classTypeName', title: '班级类别', width:80,}
-                ,{field: 'MajorName', title: '专业类别', width:80}
-                ,{field: 'score', title: '入学成绩', width: 177}
-                ,{field: 'paymentTime', title: '缴预定报名费时间', width:80,}
-                ,{field: 'enrollMoney', title: '发放金额', width:80}
-                ,{field: 'enrollMoneyTime', title: '发放时间', width: 177,
+                ,{field: 'enterEmp', title: '招生老师', width: 150}
+                ,{field: 'classTypeName', title: '班级类别', width:150,}
+                ,{field: 'MajorName', title: '专业类别', width:150}
+                ,{field: 'score', title: '入学成绩', width: 100}
+                ,{field: 'paymentTime', title: '缴预定报名费时间', width:150,
+                    templet:function (row){
+                        if(row.paymentTime==undefined){
+                            return"";
+                        }
+                        return createTime(row.paymentTime);
+                    }}
+                ,{field: 'enrollMoney', title: '发放金额', width:120}
+                ,{field: 'enrollMoneyTime', title: '发放时间', width: 120,
                     templet:function (row){
                     if(row.enrollMoneyTime==undefined){
                         return"";
@@ -348,8 +359,9 @@
                         return createTime(row.enrollMoneyTime);
                     }
                 }
-                ,{field: 'reviewStatus', title:'报名费审核通过', width:80}
-                ,{width:300, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo'}
+                ,{field: 'reviewStatus', title:'报名费审核通过', width:130}
+                ,{field: 'remark', title: '备注', width:180}
+                ,{width:320, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo'}
             ]]
         });
 
@@ -607,7 +619,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item" style="display: inline-block">
+        <div class="layui-form-item" style="display: inline-block;width: 250px">
             <label class="layui-form-label" style="width:100px">状态</label>
             <div class="layui-input-block">
                 <select name="stuSelecStuat"  placeholder=" " id="stuSelecStuat">

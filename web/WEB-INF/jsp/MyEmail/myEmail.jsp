@@ -159,7 +159,7 @@
                 var checkStatus = table.checkStatus(obj.config.id);
                 switch(obj.event){
                     case 'isDele':
-                        var checkStatus = table.checkStatus('demo'),
+                        var checkStatus = table.checkStatus('Senddemo'),
                             data = checkStatus.data,
                             employeesId = " ";
                         if(data.length > 0){
@@ -170,7 +170,7 @@
                                 $.post('${pageContext.request.contextPath}/email/deleteEmail',{
                                     id:employeesId
                                 },function(data){
-                                    table.reload("demo");
+                                    table.reload("Senddemo");
                                     layer.close(index);
                                 });
                             });

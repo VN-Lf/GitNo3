@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: freedom
@@ -83,8 +84,11 @@
         <div class="layui-form-item" style="width: 450px">
             <label class="layui-form-label">部门</label>
             <div class="layui-inline" style="width:180px;display:inline-block"> <!-- 注意：这一层元-->
-                <select id="sxdept2">
-                    <option value=""></option>
+                <select name="Depid" id="sxdept2">
+                    <option value="">请选择部门</option>
+                    <c:forEach items="${dept}" var="deptname">
+                        <option value="${deptname.deptId}">${deptname.deptName}</option>
+                    </c:forEach>
                 </select>
             </div>
         </div>

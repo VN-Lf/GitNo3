@@ -198,7 +198,7 @@ public class Emp2Controller {
     }
 
     @RequestMapping("/update")
-    public void EmpUpdate(Emp emp, EmpEducation Edu, Post post, String ruzhitime, String birthday) throws ParseException {
+    public String EmpUpdate(Emp emp, EmpEducation Edu, Post post, String ruzhitime, String birthday) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if(!"".equals(birthday)){
             emp.setEmpBirthday(simpleDateFormat.parse(birthday));
@@ -207,7 +207,9 @@ public class Emp2Controller {
             emp.setEmpFireday(simpleDateFormat.parse(ruzhitime));
         }
         System.out.println("empid：" + emp.getEmpId()+"eduid:"+Edu.getEmpEduId()+"postid:"+post.getPostId());
+        post.setDeptId(emp.getEmpDeptId());
         empService.empUpdate(emp, Edu, post);
+        return "emp/emplist";
     }
     //值班部分
     @RequestMapping("/weeklist")

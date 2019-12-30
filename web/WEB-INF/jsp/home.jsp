@@ -566,7 +566,7 @@
                     <option value="dark-hive" <%if("dark-hive".equals(yangshi)){%>selected<%}%>>夜间模式</option>
                     <option value="pepper-grinder" <%if("pepper-grinder".equals(yangshi)){%>selected<%}%>>咖啡主题</option>
                 </select>
-                <fieldset id="hometask" class="layui-elem-field">
+                <fieldset id="hometask" style="margin-top: 30px" class="layui-elem-field">
                     <legend><h3 onclick="shuaF5(1)" style="cursor: pointer;" title="点我可刷新哦">任务</h3></legend>
                 </fieldset>
             </div>

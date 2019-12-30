@@ -157,7 +157,7 @@
                 var checkStatus = table.checkStatus(obj.config.id);
                 switch(obj.event){
                     case 'isDele':
-                        var checkStatus = table.checkStatus('demo'),
+                        var checkStatus = table.checkStatus('Senddemo'),
                             data = checkStatus.data,
                             employeesId = " ";
                         if(data.length > 0){
@@ -168,7 +168,7 @@
                                 $.post('${pageContext.request.contextPath}/stuemail/deleteEmail',{
                                     id:employeesId
                                 },function(data){
-                                    table.reload("demo");
+                                    table.reload("Senddemo");
                                     layer.close(index);
                                 });
                             });
@@ -189,7 +189,6 @@
                 if(obj.event === 'selectedit'){
                     var emailId = data.emailId;
                     var kaohuid = data.image;
-                    alert(kaohuid);
                     window.location.href="<%=request.getContextPath()%>/stuemail/toemailServlet?emailId="+emailId+"&empkaohuid="+kaohuid;
                 }else if(obj.event === 'edit'){
                     var emailId = data.emailId;

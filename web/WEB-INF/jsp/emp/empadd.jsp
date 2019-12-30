@@ -27,7 +27,6 @@
 <body>
 <div style="height: 20px;margin-top: 10px;margin-left: 15px">
     <a href="${pageContext.request.contextPath}/to/toempzl">◀ 返回 </a>
-    <input type="button" value="赋值" onclick="fuzhi()">
 </div>
 <div style="width: 56%;height: auto;margin-top: 1%">
     <form class="layui-form" action="${pageContext.request.contextPath}/emp/empadd" method="post">
@@ -132,7 +131,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">身份证号*</label>
                 <div class="layui-input-block">
-                    <input id="sfzh" type="text" name="empCardno" lay-verify="identity" placeholder="请输入11位完整的号码" autocomplete="off" class="layui-input">
+                    <input id="sfzh" type="text" name="empCardno" lay-verify="identity" placeholder="请输入18位完整的号码" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -201,18 +200,6 @@
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
-    //带*为必填
-    function fuzhi() {
-        document.getElementById("xm").value="姓名";
-        document.getElementById("zw").value="副主任";
-        document.getElementById("sjhm").value="186461651156";
-        document.getElementById("khyh").value="农业银行";
-        document.getElementById("jtdz").value="家庭地址";
-        document.getElementById("sfzh").value="36073215112312";
-        document.getElementById("jg").value="江西省赣州市";
-        document.getElementById("yjdz").value="222908562@qq.com";
-        document.getElementById("zfb").value="186461651156";
-    }
     layui.use(['form', 'upload', 'laydate', 'layer'], function () {
         var form = layui.form;
         $.ajax({

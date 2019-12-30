@@ -16,7 +16,7 @@ public class DormitoryServiceImpl extends BaseDao implements DormitoryService {
     static String driver = "com.mysql.jdbc.Driver";
     static String url = "jdbc:mysql://localhost:3306/gitxm?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
     static String username = "root";
-    static String password = "hzg3691";
+    static String password = "123456";
 
     //查询出宿舍信息
     @Override

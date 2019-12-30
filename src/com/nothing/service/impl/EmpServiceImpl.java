@@ -104,10 +104,11 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         String sql5 = "delete from empHistory where empId in ("+ids+");";
         String sql6 = "delete from aduitLog where empId in ("+ids+");";//考核
         String sql7 = "delete from attendance where empid in ("+ids+");";//打卡
-        String sql8 = "delete from jobs where empid in ("+ids+");";
-        String sql9 = "delete from empweekpaper where empid in ("+ids+");";
-        String sql10 = "delete from weekArrange where empid in ("+ids+");";
-        String sql11 = "delete from chatrecord where empid in ("+ids+");";
+        String sql8 = "delete from jobs where userId in ("+ids+");";
+        String sql9 = "delete from empweekpaper where empId in ("+ids+");";
+        String sql11 = "delete from chatrecord where teacher in ("+ids+");";
+        String sql12 = "delete from charmodule where empId in ("+ids+");";
+        executeSQL(sql);
         executeSQL(sql);
         executeSQL(sql2);
         executeSQL(sql3);
@@ -117,8 +118,13 @@ public class EmpServiceImpl extends BaseDao implements EmpService{
         executeSQL(sql7);
         executeSQL(sql8);
         executeSQL(sql9);
-        executeSQL(sql10);
         executeSQL(sql11);
+        executeSQL(sql12);
+        List<Map> list = listBySQL("select w.empId from emp e,weekarrange w where e.empName = w.empId and e.empId in("+ids+")");
+        for(int i =0;i < list.size();i++){
+            String sql10 = "delete from weekArrange where empId in ('"+list.get(i).get("empId")+"');";
+            executeSQL(sql10);
+        }
     }
 
     @Override

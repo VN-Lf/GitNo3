@@ -1,6 +1,4 @@
-<%@ page import="com.nothing.vo.emp.Emp" %>
-<%@ page import="com.nothing.vo.emp.Post" %>
-<%@ page import="com.nothing.vo.emp.EmpEducation" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/5
@@ -116,13 +114,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在部门*</label>
                 <div class="layui-input-block">
-                    <select name="empDeptId" lay-verify="required">
-                        <option value="0" >宏图软件</option>
-                        <option value="1">教研部</option>
-                        <option value="2" >行政部</option>
-                        <option value="3" >后勤部</option>
-                        <option value="4" >学工部</option>
-                        <option value="5" >招生部</option>
+                    <select name="empDeptId" id="empDeptId" lay-verify="required">
+                        <option value=""></option>
                     </select>
                 </div>
             </div>
@@ -135,7 +128,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">身份证号*</label>
                 <div class="layui-input-block">
-                    <input id="sfzh" type="text" name="empCardno" required  lay-verify="required" placeholder="请输入11位完整的号码" autocomplete="off" class="layui-input">
+                    <input id="sfzh" type="text" name="empCardno" required  lay-verify="required" placeholder="请输入18位完整的号码" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -202,6 +195,22 @@
     </div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+    layui.use(['form', 'upload', 'laydate', 'layer'], function () {
+        var form = layui.form;
+        $.ajax({
+            url: '${pageContext.request.contextPath}/to/deptlist',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                var json = data.data;
+                $.each(json, function (index, item) {
+                    $('#empDeptId').append(new Option(item.deptName,item.deptId));// 下拉菜单里添加元素
+                });
+                form.render("select");
+            }
+        });
+    });
+
     layui.use(['form','layer'], function(){
         $ = layui.jquery;
         var form = layui.form

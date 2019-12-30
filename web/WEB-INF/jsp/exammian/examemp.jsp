@@ -15,7 +15,7 @@
 <body>
 <%--表格数据--%>
 <div>
-    <form class="layui-form" style="width: 1205px;margin: 20px 0px 0px 150px">
+    <form class="layui-form" style="width: 1205px;margin: 20px 0px 0px 30px">
         员工姓名:<input type="text" name="empname" id="empname" required lay-verify="required" placeholder="请输人姓名"  class="layui-input" style="width:180px;display:inline-block" />
         <div class="layui-form-item" style="width:324px;display:inline-block;margin-left: 30px;margin-right: 20px">
             所在部门:

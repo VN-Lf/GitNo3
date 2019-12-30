@@ -36,26 +36,25 @@
     <div class="easyui-layout" data-options="fit:true">
         <div data-options="region:'center',border:false"
              style="padding: 10px; background: #fff; border: 1px solid #ccc;">
-            <form action="<%=request.getContextPath()%>/dormitory/dormStu/${deptname}" enctype="multipart/form-data" method="post" id="addform">
+            <form style="width:65%;margin: 50px auto" action="<%=request.getContextPath()%>/dormitory/dormStu/${deptname}" enctype="multipart/form-data" method="post" id="addform">
                 <input type="hidden" name="weekPaperId" id="weekPaperId" />
                 <input type="hidden" name="empId" id="empId" />
                 <table width="80%" align="center" border="0">
-                    班级：<select id="deptId" style="width: 80px;height: 35px">
+                    班级：<select id="deptId" style="width: 80px;height: 35px;margin: 0 30px">
                     <c:forEach items="${Edeptlist}" var="li">
                         <option value=${li.get("classId")}>${li.get("className")}</option>
                     </c:forEach>
                         </select>
-                    学生：<select id="empnames" style="width: 80px;height: 35px"></select>
+                    学生：<select id="empnames" style="width: 80px;height: 35px;margin: 0 30px"></select>
                     <tr><td> &nbsp;&nbsp;</td></tr>
-                    <div style="margin: 10px 48px">
+                    <div style="margin: 30px 68px">
                         <a style="font-size: 16px;cursor: pointer;" id="adddept" name="adddept">添加</a>
-                        <a style="font-size: 16px;margin-left: 102px;color: red;cursor: pointer;" id="deldept" name="deldept" style="left: 225px">重 置</a>
+                        <a style="font-size: 16px;margin-left: 144px;color: red;cursor: pointer;" id="deldept" name="deldept" style="left: 225px">重 置</a>
                     </div>
                     <div style="margin-top: 15px">
-                        接收人：
                         <input type="hidden" name="receId" id="receId">
                         <input type="hidden" name="receName" id="receName2">
-                        <input type="text" id="receName" autocomplete="off" disabled required style="width:228px;height:30px;
+                        <input type="text" id="receName" autocomplete="off" disabled required style="width:100%;height:30px;
                     display:inline-block;padding-left:10px;background-Color: transparent;border: none;border-bottom: 1px solid #000;" />
                     </div>
                 </table>
@@ -87,10 +86,10 @@
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
-                ,{field: 'HourName', title: '宿舍房号', width:80, sort: true}
-                ,{field: 'stuName', title: '学生姓名', width:120, sort: true}
-                ,{field: 'className', title: '所在班级', width:120, sort: true}
-                ,{field: 'stuPhone', title: '学生号码', width:200}
+                ,{field: 'HourName', title: '宿舍房号', width:150}
+                ,{field: 'stuName', title: '学生姓名', width:150}
+                ,{field: 'className', title: '所在班级', width:150}
+                ,{field: 'stuPhone', title: '学生号码'}
             ]]
         });
 

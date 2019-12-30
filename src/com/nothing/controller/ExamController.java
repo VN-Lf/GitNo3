@@ -26,14 +26,18 @@ public class ExamController {
     @Resource
     Examservice examservice;
     @RequestMapping(value = "toexam")
-    public String toexam(){
+    public String toexam(HttpServletRequest request){
+        List deptname = examservice.examlist("select * from dept");
+        request.setAttribute("dept",deptname);
         return "exammian/exam";
+
     }
 
     @RequestMapping(value = "tokaohu")
     public String tokaohu(){
         return "exammian/kaohu";
     }
+
 
     @RequestMapping(value = "lookexam")
     public String lookexam(HttpServletRequest request){
