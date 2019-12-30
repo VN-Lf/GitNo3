@@ -55,21 +55,21 @@ public class StuScoSerImp extends BaseDao implements StuScoSer{
     @Override
     public List replyScore() {
         return listBySQL("\t\t\t\t \n" +
-                "\tselect ss.*,e.empName , c.classId as cid ,c.className,s.stuName,proName from stuReplyScore ss left join studentProject p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classVo c using(classId)");
+                "\tselect ss.*,e.empName , c.classId as cid ,c.className,s.stuName,projectName from stuReplyScore ss left join Project p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classVo c using(classId)");
     }
 
     @Override
     public List repCon(String stuSelectName, String stuSelectCla, String stuSelectPro) {
-        return listBySQL("\tselect ss.*,e.empName , c.classId as cid ,c.className,s.stuName,proName from stuReplyScore ss left join studentProject p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classvo c using(classId)\n" +
+        return listBySQL("\tselect ss.*,e.empName , c.classId as cid ,c.className,s.stuName,projectName from stuReplyScore ss left join Project p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classvo c using(classId)\n" +
                 "\t\n" +
-                "\twhere stuName like '%"+stuSelectName+"%' and className like '%"+stuSelectCla+"%' and proName like '%"+stuSelectPro+"%'");
+                "\twhere stuName like '%"+stuSelectName+"%' and className like '%"+stuSelectCla+"%' and projectName like '%"+stuSelectPro+"%'");
     }
 
     @Override
     public int repConCount(String stuSelectName, String stuSelectCla, String stuSelectPro) {
-        return selTotalRow("\tselect count(*) from stuReplyScore ss left join studentProject p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classvo c using(classId)\n" +
+        return selTotalRow("\tselect count(*) from stuReplyScore ss left join Project p using(projectId) left join student  s using (studId) left join emp e using(empId) left join classvo c using(classId)\n" +
                 "\t\n" +
-                "\twhere stuName like '%"+stuSelectName+"%' and className like '%"+stuSelectCla+"%' and proName like '%"+stuSelectPro+"%'");
+                "\twhere stuName like '%"+stuSelectName+"%' and className like '%"+stuSelectCla+"%' and projectName like '%"+stuSelectPro+"%'");
     }
 
     @Override
@@ -89,6 +89,6 @@ public class StuScoSerImp extends BaseDao implements StuScoSer{
 
     @Override
     public List isExistsTestReply(String classId, String projectId){
-        return listBySQL("select * from stureplyscore where exists(select *,classId from stureplyscore left join student s using(studId) left join studentproject using(projectId) where classId = "+classId+" and projectId = "+projectId+")");
+        return listBySQL("select * from stureplyscore where exists(select *,classId from stureplyscore left join student s using(studId) left join project using(projectId) where classId = "+classId+" and projectId = "+projectId+")");
     }
 }

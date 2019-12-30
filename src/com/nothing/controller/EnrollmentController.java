@@ -9,6 +9,7 @@ import com.nothing.vo.Edu.EduMajor;
 import com.nothing.vo.Sdudent.Enrollment;
 import com.nothing.vo.Sdudent.EntryFinance;
 import com.nothing.vo.emp.Emp;
+import com.nothing.vo.emp.Project;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -172,5 +173,10 @@ public class EnrollmentController{
         return jsonObject;
     }
 
-
+    @RequestMapping("addProject")
+    @ResponseBody
+    public String addProject(Project project){
+        stuSer.addStu(project);
+        return "";
+    }
 }

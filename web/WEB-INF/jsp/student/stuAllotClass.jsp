@@ -102,7 +102,7 @@
                             ,page: true //开启分页
                             ,cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                             ,cols: [[
-                                ,{field:'studId', title: '学生ID'}
+                                {field:'studId', title: '学生ID'}
                                 ,{field:'className', title: '班级'}
                                 ,{field:'stuName', title: '学生姓名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
                                 ,{field:'sourceType', title: '班级类别'}

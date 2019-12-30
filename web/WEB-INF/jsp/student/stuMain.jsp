@@ -145,7 +145,7 @@
                 ,{field: 'stuPhone', title:'电话', width:200}
                 ,{field: 'stuAddr', title: '地址', width: 240}
                 ,{field: 'classNames', title:'班级名', width:200}
-                ,{field: 'hourNames', title: '寝室名', width:100}
+                ,{field: 'hourName', title: '寝室名', width:100}
                 ,{field: 'interTecher', title: '介绍老师', width: 150}
                 ,{field: 'stuStu', title: '状态', width:120,
                     templet:function (row){
@@ -214,7 +214,7 @@
                         page: {
                             curr: 1 //重新从第 1 页开始
                         }
-                        , url: '${pageContext.request.contextPath}'
+                        , url: '${pageContext.request.contextPath}/stu/con'
                         , method:'POST'
                         ,where:{
                             stuSelectName:stuSelectName,
@@ -294,7 +294,16 @@
         }
         return""
     }
-
+    function process(v){
+        if(v==1){
+            return "审批中"
+        }else if(v==2){
+            return "审批通过"
+        }else if(v==3) {
+            return "审批否决";
+        }
+        return""
+    }
 
     //底部的
     function addTable(studId,stuName){
@@ -310,11 +319,11 @@
                 ,page: true //开启分页
                 ,cols: [[ //表头
                     {type:'checkbox'}//复选框
-                    ,{field: 'stuFamilyid', title: 'ID', width:100}
-                    ,{field: 'familyPhone', title: '电话', width:100}
-                    ,{field: 'relation', title:'与学生关系', width:80}
-                    ,{field: 'stuFamilyName', title: '姓名', width:80}
-                    ,{field: '', title: '学生名字', width:80 ,templet:function(){
+                    ,{field: 'stuFamilyid', title: 'ID', width:75}
+                    ,{field: 'familyPhone', title: '电话', width:200}
+                    ,{field: 'relation', title:'与学生关系', width:150}
+                    ,{field: 'stuFamilyName', title: '姓名', width:150}
+                    ,{field: '', title: '学生名字', width:150 ,templet:function(){
                             return stuName.toString();
                         }}
                     ,{width:150, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo2'}
@@ -327,15 +336,15 @@
                 ,url: '${pageContext.request.contextPath}/stu/stuHol/select?studId='+studId//数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
-                    ,{field: 'stuName', title: '学生名字', width:100}
-                    ,{field: 'day', title: '请假天数', width:100}
-                    ,{field: 'goDate', title:'开始日期', width:80}
-                   ,{field: 'endDate', title:'结束日期', width:80}
-                    ,{field: 'remark', title: '事件', width:80, sort: true}
-                    ,{field: 'jobDate', title: '请假日期', width:80 ,templet:function (row){
+                    {field: 'stuName', title: '学生名字', width:100}
+                    ,{field: 'day', title: '请假天数', width:100, sort: true}
+                    ,{field: 'goDate', title:'开始日期', width:200}
+                   ,{field: 'endDate', title:'结束日期', width:200}
+                    ,{field: 'remark', title: '事件'}
+                    ,{field: 'jobDate', title: '请假日期', width:200 ,templet:function (row){
                             return  createTime(row.jobDate);
                     }}
-                   ,{field:'processFlag', title: '审批状态',templet:function (row){
+                   ,{field:'processFlag', title: '审批状态', width:100 ,templet:function (row){
                            return process(row.processFlag);
                        }
                    }
@@ -348,17 +357,17 @@
                 ,url: '${pageContext.request.contextPath}/stu/stuReply/select?studId='+studId//数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
-                    ,{field: 'stuReplyId', title: 'ID', width:100}
-                    ,{field: 'proName', title: '项目名称', width:100}
-                    ,{field: 'Score1', title: '功能完善50', width:100}
-                    ,{field: 'Score2', title: '技术难度10', width:80}
-                    ,{field: 'Score3', title: '界面完美10', width:80}
-                    ,{field: 'Score4', title: '回答问题10', width:100}
-                    ,{field: 'Score5', title: '演示方法10', width:80}
-                    ,{field: 'Score6', title: '语言表达10', width:80}
+                    {field: 'stuReplyId', title: 'ID', width:100}
+                    ,{field: 'proName', title: '项目名称', width:200}
+                    ,{field: 'Score1', title: '功能完善50', width:150}
+                    ,{field: 'Score2', title: '技术难度10', width:150}
+                    ,{field: 'Score3', title: '界面完美10', width:150}
+                    ,{field: 'Score4', title: '回答问题10', width:150}
+                    ,{field: 'Score5', title: '演示方法10', width:150}
+                    ,{field: 'Score6', title: '语言表达10', width:150}
                     ,{field: 'Score7', title: '总分100 ', width:100}
-                    ,{field: 'empName', title:'教师名字', width:80}
-                    ,{field: '', title: '学生名字', width:80 ,templet:function(){
+                    ,{field: 'empName', title:'教师名字', width:150}
+                    ,{field: '', title: '学生名字', width:150 ,templet:function(){
                             return stuName.toString();
                         }}
                 ]]
@@ -370,7 +379,7 @@
                 ,url: '${pageContext.request.contextPath}/stu/stuScore/select?studId='+studId//数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
-                    ,{field:'stuName', title: '学生姓名'}
+                    {field:'stuName', title: '学生姓名'}
                     ,{field:'courseName', title: '学生姓名'}
                     ,{field:'termName', title: '学生姓名'}
                     ,{field:'score', title: '成绩'}
@@ -396,17 +405,17 @@
                 ,page: true //开启分页
                 ,cols: [[ //表头
                     {type:'checkbox'}//复选框
-                    ,{field: 'EduId', title: 'ID', width:100, sort: true}
-                    ,{field: 'beginDate', title: '开始时间', width:100, sort: true,
+                    ,{field: 'EduId', title: 'ID', width:70, sort: true}
+                    ,{field: 'beginDate', title: '开始时间', width:200, sort: true,
                         templet:function (row){
                             return createTime(row.beginDate);
                         }}
-                    ,{field: 'endDate', title:'结束时间', width:80,
+                    ,{field: 'endDate', title:'结束时间', width:200,
                         templet:function (row){
                             return createTime(row.endDate);
                         }}
-                    ,{field: 'hisSchool', title: '毕业院校', width:80, sort: true}
-                    ,{field: stuName, title: '学生名字', width:80 ,templet:function (){
+                    ,{field: 'hisSchool', title: '毕业院校', width:200, sort: true}
+                    ,{field: stuName, title: '学生名字', width:100 ,templet:function (){
                             return stuName.toString();
                         }}
                     ,{width:150, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo3'}

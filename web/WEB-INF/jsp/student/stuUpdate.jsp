@@ -153,7 +153,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">所在寝室</label>
                 <div class="layui-input-block">
-                    <select name="stuHours"   placeholder="  ">
+                    <select name="stuHours"   placeholder=" ">
                         <option value=" "> </option>
                         <c:forEach items="${hoursList}" var="hours">
                             <option value="${hours.stuHours}">${hours.hourName}</option>

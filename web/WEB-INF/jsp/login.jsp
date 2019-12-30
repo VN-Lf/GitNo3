@@ -35,7 +35,7 @@
             height: 35px;
             border: 0px;
             font-size: 16px;
-            background-color: yellow;
+            background-color: #49bef3;
             cursor: pointer;
             transition: all .5s;
         }
@@ -48,12 +48,12 @@
             color: rgb(100, 92, 92);
         }
         #stu{
-            float: left;width: 18%;height:20px;padding: 10px;background-color:#00FA9A;
+            float: left;width: 18%;height:20px;padding: 10px;background-color:#ffd35c;
             cursor: pointer;
             transition: 0.5s;
         }
         #emp{
-            float: left;width: 68%;height:20px;background-color: #ff0;padding: 10px;
+            float: left;width: 68%;height:20px;background-color: #49bef3;padding: 10px;
             cursor: pointer;
             transition: 0.5s;
         }
@@ -62,7 +62,7 @@
 
 <body>
 <div id="left" style="width: 30%;height: 100%;float: left;;background-color: rgb(136, 136, 221) ">
-    <img id="obj1" class="img1" alt="" src="${pageContext.request.contextPath }/photos/l.jpg" width="100%" height="100%" border="0">
+    <img id="obj1" class="img1" alt="" src="${pageContext.request.contextPath }/photos/f1.jpeg" width="100%" height="100%" border="0">
 </div>
 <div id="conter" style="width:40%;height: 100%;float: left;background-color:#f1f1f1;">
     <div align="center" style="width: 100%;height: 30%;">
@@ -96,7 +96,7 @@
     <div style="width: 100%;height: 25%;"></div>
 </div>
 <div id="right" style="width: 30%;height: 100%;float:left;background-color: rgb(136, 136, 221);">
-    <img id="obj2" class="img1" alt="" src="${pageContext.request.contextPath }/photos/x.jpg" width="100%" height="100%" border="0">
+    <img id="obj2" class="img1" alt="" src="${pageContext.request.contextPath }/photos/x1.jpeg" width="100%" height="100%" border="0">
 </div>
 </body>
 <script language="JavaScript">
@@ -106,13 +106,13 @@
         if(id == "stu"){
             $("#stu").css("width","68%");
             $("#emp").css("width","18%");
-            $("#login").css("background-color","#00FA9A");
-            $("#biaoti").css("color","#00FA9A");
+            $("#login").css("background-color","#ffd35c");
+            $("#biaoti").css("color","#ffd35c");
         }else if(id == "emp"){
             $("#emp").css("width","68%");
             $("#stu").css("width","18%");
-            $("#login").css("background-color","yellow");
-            $("#biaoti").css("color","yellow");
+            $("#login").css("background-color","#49bef3");
+            $("#biaoti").css("color","#49bef3");
         }
     }
     function donTai() {
@@ -198,11 +198,11 @@
     //时间间隔(单位毫秒)，每秒钟显示一张，数组共有5张图片放在Photos文件夹下。
     var timeInterval=3000;
     var arr=new Array();
-    arr[0]="${pageContext.request.contextPath }/photos/x.jpg";
-    arr[1]="${pageContext.request.contextPath }/photos/l.jpg";
-    arr[2]="${pageContext.request.contextPath }/photos/m.jpg";
-    arr[3]="${pageContext.request.contextPath }/photos/f.jpg";
-    arr[4]="${pageContext.request.contextPath }/photos/n.jpg";
+    arr[0]="${pageContext.request.contextPath }/photos/x1.jpeg";
+    arr[1]="${pageContext.request.contextPath }/photos/l1.jpg";
+    arr[2]="${pageContext.request.contextPath }/photos/m1.jpg";
+    arr[3]="${pageContext.request.contextPath }/photos/f1.jpeg";
+    arr[4]="${pageContext.request.contextPath }/photos/n1.jpeg";
     setInterval(changeImg,timeInterval);
     function changeImg()
     {

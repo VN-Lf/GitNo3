@@ -99,9 +99,9 @@
             margin-top: 10px;
             font-size: 16px;
         <%if("dark-hive".equals(yangshi)){%>
-            color: #9F9F9F;
+            color: white;
         <%}else {%>
-            color: #f1f1f1;
+            color: black;
         <%}%>
         }
     </style>
@@ -211,7 +211,7 @@
             var ks=mont.getFullYear()+'-'+(mont.getMonth()+1)+'-'+mont.getDate()+' 00:00:00';
             //本月的结束时间
             var mEndD = new Date(nowYear, nowMonth+1, 0);
-            var end=mEndD.getFullYear()+'-'+(mEndD.getMonth()+1)+'-'+mEndD.getDate()+' 00:00:00';
+            var end=mEndD.getFullYear()+'-'+(mEndD.getMonth()+1)+'-'+mEndD.getDate()+' 23:59:59';
 
             $.ajax({
                 url:"${pageContext.request.contextPath}/emp/Chatsize",
@@ -276,7 +276,7 @@
 <div data-options="region:'north',split:true" class="hometop">
     <img src="${pageContext.request.contextPath}/upload/20191216/htTitele.png" style="width: 320px;height: 60px;line-height: 75px;float: left;margin:10px 0px 0px 50px">
     <div style="height:70px;width: 500px;line-height: 70px;float: right;margin-left: 200px">
-        <li style="float: left;margin-right:40px" >
+        <li style="float: left;margin-right:30px;width: 80px" >
             <a  href="javascript:void(0);" src="${pageContext.request.contextPath}/emp/personimf"  class="cs-navi-tab" style="color: white">
                 <img src="${pageContext.request.contextPath}/upload/20191216/peo.png" style="width: 25px;height: 20px">
                 ${empId.empName}
@@ -286,8 +286,8 @@
             <a style="color: white" href="javascript:void(0);" src="${pageContext.request.contextPath}/email/toemail" class="cs-navi-tab">
                 <img src="${pageContext.request.contextPath}/upload/20191216/email.png" style="width: 45px;height: 30px;margin-bottom: 5px">
                 <c:if test="${emailcount !='0'}">
-                    <img src="${pageContext.request.contextPath}/upload/20191216/emailimf.png" style="width: 22px;height: 20px;margin-bottom: 8px;position: absolute;top: 20px;left: 1330px;">
-                    <i style="position: absolute;left: 1336px;top:-4px">${emailcount}</i>
+                    <img src="${pageContext.request.contextPath}/upload/20191216/emailimf.png" style="width: 22px;height: 20px;margin-bottom: 8px;position: absolute;top: 20px;left: 1556px;">
+                    <i style="position: absolute;left: 1563px;top:-4px">${emailcount}</i>
                 </c:if>
                 邮件
             </a>
@@ -299,7 +299,7 @@
             </a>
         </li>
         <li style="float: left;margin-right:40px">
-            <a href="${pageContext.request.contextPath}/to/tologin" style="color: white">
+            <a href="${pageContext.request.contextPath}/to/end" style="color: white">
                 <img src="${pageContext.request.contextPath}/upload/20191216/exit.png" style="width: 25px;height: 20px">
                 退出
             </a>
@@ -321,9 +321,6 @@
                 </li>
                 <li href="javascript:void(0);" src="${pageContext.request.contextPath}/attedance/toAttedance" onclick="qiehuan(this)" class="cs-navi-tab">
                     <a>我的考勤</a>
-                </li>
-                <li href="javascript:void(0);" src="${pageContext.request.contextPath}/to/end" onclick="qiehuan(this)" class="cs-navi-tab">
-                    <a href="JavaScript:parent.window.location.href= '/to/tologin';" style="color: red">退出登录</a>
                 </li>
             </ul>
         </div>
@@ -422,6 +419,13 @@
                     src="${pageContext.request.contextPath}/stu/claMian"
                         <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
                     <a>班级管理</a>
+                </li>
+                <li href="javascript:void(0);" <%if(mod.getZhaosheng() == 0){%>
+                    src="${pageContext.request.contextPath}/to/notquan"
+                        <%}else {%>
+                    src="${pageContext.request.contextPath}/enrStu/main"
+                        <%}%> onclick="qiehuan(this)"  class="cs-navi-tab">
+                    <a>招生模块</a>
                 </li>
                 <li href="javascript:void(0);" <%if(mod.getStuBze() == 0){%>
                     src="${pageContext.request.contextPath}/to/notquan"
@@ -564,11 +568,6 @@
                 </select>
                 <fieldset id="hometask" class="layui-elem-field">
                     <legend><h3 onclick="shuaF5(1)" style="cursor: pointer;" title="点我可刷新哦">任务</h3></legend>
-                    <div class="layui-field-box">
-                        学生请假待审批()<br>
-                        未打卡待审批()<br>
-                    </div>
-
                 </fieldset>
             </div>
         </div>
@@ -808,12 +807,14 @@
             var end = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " 17:00:00";
             document.getElementById("sysj").innerText = "剩余 "+huoquEndDate(end,'#sysj');
         }else if(type == "chat"){
+
             var now = new Date(); //当前日期
             var nowMonth = now.getMonth(); //当前月
             var nowYear = now.getFullYear(); //当前年
             //本月的结束时间
             var mEndD = new Date(nowYear, nowMonth+1, 0);
-            document.getElementById("sysj2").innerText = "距离月底剩余 "+huoquEndDate(mEndD,'#sysj2');
+            var end=mEndD.getFullYear()+'-'+(mEndD.getMonth()+1)+'-'+mEndD.getDate()+' 23:59:59';
+            document.getElementById("sysj2").innerText = "距离月底剩余 "+huoquEndDate(end,'#sysj2');
         }
     }
     function huoquEndDate(date,id) {

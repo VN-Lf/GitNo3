@@ -95,6 +95,9 @@ public class dormitoryController {
         System.out.println(studentHour.getFloorId());
         System.out.println(studentHour.getStuHours());
         System.out.println(studentHour.getHourIddsc());
+        String ADDR = studentHour.getAddr();
+        String hname = ADDR + studentHour.getHourName();
+        studentHour.setHourName(hname);
         System.out.println(studentHour.getHourName());
         service.addDormitory(studentHour);
         return "redirect:todormitory";

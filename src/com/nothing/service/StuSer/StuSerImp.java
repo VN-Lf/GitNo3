@@ -77,7 +77,7 @@ public class StuSerImp extends BaseDao implements StuSer{
 
     @Override
     public List stuHol(String  studId){
-        return listBySQL("select j.*,s.stuName from jobs j left join student s on j.userId = s.studId where s.studId = "+studId );
+        return listBySQL("select j.*,s.stuName from jobs j left join student s on j.userId = s.studId where s.studId = "+studId+" and j.jobType = stuLeave" );
     }
 
     @Override

@@ -53,25 +53,29 @@ public class EmailController {
         if(topic.equals("考核")){
             String kaohuid = request.getParameter("empkaohuid");
             //考核类邮件
-            List kaohuscore1 =service.selectEmaillist("select scores  from empAssessment where empAssessId="+kaohuid+"");
-            List kaohuscore=new ArrayList();
-            for(int i=0;i<kaohuscore1.size();i++){
-                Map map= (Map) kaohuscore1.get(i);
-                kaohuscore.add(map.get("kaohuscore"));
-            }
-            if(kaohuscore.get(0)==null){
-                List examkaohu =service.selectEmaillist("select kaohuscore  from emkaohu where empAssessId="+kaohuid+" and studentname='"+student+"'");
-
-                if(examkaohu.size()==0){
-                    String substring = content.substring(content.lastIndexOf(":"));
-                    String substring1 = substring.substring(1, substring.length());
-                    examtype=substring1;
-                }else {
-                    examtype="你已经考核过了";
-                }
-
+            List kaohuscore1 =service.selectEmaillist("select * from empAssessment where empAssessId="+kaohuid+"");
+            if(kaohuscore1.size()==0){
+                examtype="该考核已删除";
             }else {
-                examtype="考核已结束";
+                List kaohuscore=new ArrayList();
+                for(int i=0;i<kaohuscore1.size();i++){
+                    Map map= (Map) kaohuscore1.get(i);
+                    kaohuscore.add(map.get("scores"));
+                }
+                if(kaohuscore.get(0)==null){
+                    List examkaohu =service.selectEmaillist("select kaohuscore  from emkaohu where empAssessId="+kaohuid+" and studentname='"+student+"'");
+
+                    if(examkaohu.size()==0){
+                        String substring = content.substring(content.lastIndexOf(":"));
+                        String substring1 = substring.substring(1, substring.length());
+                        examtype=substring1;
+                    }else {
+                        examtype="你已经考核过了";
+                    }
+
+                }else {
+                    examtype="考核已结束";
+                }
             }
             request.setAttribute("examtype",examtype);
 
@@ -107,8 +111,8 @@ public class EmailController {
             eid = emp.getEmpId()+"";
             ename = emp.getEmpName();
         }
-        List list = service.selectEmaillist("select * from myEmail where receId = '"+eid+"' and empName like '"+ename+"'");
-        int count = service.SelcctEmailcount("select count(*) from myEmail where receId = '"+eid+"'and empName like '"+ename+"'");
+        List list = service.selectEmaillist("select * from myEmail where receId = '"+eid+"' and receName like '"+ename+"'");
+        int count = service.SelcctEmailcount("select count(*) from myEmail where receId = '"+eid+"'and receName like '"+ename+"'");
 
         JSONObject json = new JSONObject();
         json.put("code",0);
