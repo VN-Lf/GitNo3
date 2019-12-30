@@ -188,8 +188,9 @@
                 //console.log(obj)
                 if(obj.event === 'selectedit'){
                     var emailId = data.emailId;
-                    var kaohuid = data.oldFileName;
-                    window.location.href="<%=request.getContextPath()%>/stuemail/toemailServlet?emailId="+emailId+"&kaohuid="+kaohuid;
+                    var kaohuid = data.image;
+                    alert(kaohuid);
+                    window.location.href="<%=request.getContextPath()%>/stuemail/toemailServlet?emailId="+emailId+"&empkaohuid="+kaohuid;
                 }else if(obj.event === 'edit'){
                     var emailId = data.emailId;
                     window.location.href="<%=request.getContextPath()%>/stuemail/againEmail?emailId="+emailId;

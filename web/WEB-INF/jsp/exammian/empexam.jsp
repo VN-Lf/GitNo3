@@ -86,9 +86,9 @@
                 {type:'checkbox',fixed:'left'}
                 ,{field: 'empAssessId', title: '考核编号', sort: true}
                 ,{field: 'empexamid', title: '员工类型'}
-                ,{field: 'empid', title: '任课老师/班主任', sort: true}
+                ,{field: 'empName', title: '任课老师/班主任'}
                 ,{field: 'classid', title: '任课班级'}
-                ,{field: 'scores', title: '总评分',templet:function (data) {
+                ,{field: 'scores', title: '总评分(50满分)',templet:function (data) {
                         if(data.scores == 0){
                             return '考核中'
                         }else if(data.scores==null){

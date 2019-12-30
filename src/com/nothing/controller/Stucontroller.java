@@ -56,27 +56,31 @@ public class Stucontroller {
         String examtype="";
         System.out.println("内容显示："+content);
         if(topic.equals("考核")){
-            String kaohuid = request.getParameter("kaohuid");
+            String kaohuid = request.getParameter("empkaohuid");
             //考核类邮件
-            List kaohuscore1 =service.selectEmaillist("select scores  from empassessment where empAssessId="+kaohuid+"");
-            List kaohuscore=new ArrayList();
-            for(int i=0;i<kaohuscore1.size();i++){
-                Map map= (Map) kaohuscore1.get(i);
-                kaohuscore.add(map.get("kaohuscore"));
-            }
-            if(kaohuscore.get(0)==null){
-                List examkaohu =service.selectEmaillist("select kaohuscore  from emkaohu where empAssessId="+kaohuid+" and studentname='"+student+"'");
-
-                if(examkaohu.size()==0){
-                    String substring = content.substring(content.lastIndexOf(":"));
-                    String substring1 = substring.substring(1, substring.length());
-                    examtype=substring1;
-                }else {
-                    examtype="你已经考核过了";
-                }
-
+            List kaohuscore1 =service.selectEmaillist("select *  from empassessment where empAssessId="+kaohuid+"");
+            if(kaohuscore1.size()==0){
+                examtype="该考核已删除";
             }else {
-                examtype="考核已结束";
+                List kaohuscore=new ArrayList();
+                for(int i=0;i<kaohuscore1.size();i++){
+                    Map map= (Map) kaohuscore1.get(i);
+                    kaohuscore.add(map.get("kaohuscore"));
+                }
+                if(kaohuscore.get(0)==null){
+                    List examkaohu =service.selectEmaillist("select kaohuscore  from emkaohu where empAssessId="+kaohuid+" and studentname='"+student+"'");
+
+                    if(examkaohu.size()==0){
+                        String substring = content.substring(content.lastIndexOf(":"));
+                        String substring1 = substring.substring(1, substring.length());
+                        examtype=substring1;
+                    }else {
+                        examtype="你已经考核过了";
+                    }
+
+                }else {
+                    examtype="考核已结束";
+                }
             }
             request.setAttribute("examtype",examtype);
 
@@ -106,8 +110,8 @@ public class Stucontroller {
         Student student = (Student) session.getAttribute("stuId");
         String name = student.getStuName();
         System.out.println(name+" 的邮件");
-        List list = service.selectEmaillist("select * from myemail where receId = '"+name+"'");
-        int count = service.SelcctEmailcount("select count(*) from myemail where receId = '"+name+"'");
+        List list = service.selectEmaillist("select * from myEmail where receId = '"+student.getStudId()+"' and receName like '"+student.getStuName()+"'");
+        int count = service.SelcctEmailcount("select count(*) from myEmail where receId = '"+student.getStudId()+"'and receName like '"+student.getStuName()+"'");
 
         JSONObject json = new JSONObject();
         json.put("code",0);
@@ -125,8 +129,8 @@ public class Stucontroller {
         Student student = (Student) session.getAttribute("stuId");
         String name = student.getStuName();
         System.out.println(name+"发送的");
-        List list = service.selectEmaillist("select * from myemail where empId = '"+name+"'");
-        int count = service.SelcctEmailcount("select count(*) from myemail where receId = '"+name+"'");
+        List list = service.selectEmaillist("select * from myemail where receName = '"+name+"'");
+        int count = service.SelcctEmailcount("select count(*) from myemail where receName = '"+name+"'");
 
         JSONObject json = new JSONObject();
         json.put("code",0);

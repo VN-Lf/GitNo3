@@ -46,10 +46,11 @@ public class GoPageController {
                 session.setAttribute("color",color);
             }
             Emp emp = (Emp)session.getAttribute("empId");
-            List emailcount = service.emailcount("select * from myemail where empId="+emp.getEmpId()+" and isRead=2");
+            List emailcount = service.emailcount("select * from myemail where receId="+emp.getEmpId()+" and isRead=2 and receName like '"+emp.getEmpName()+"'");
             session.setAttribute("emailcount",emailcount.size());
             return "home";
         }else if(session.getAttribute("stuId") != null) {
+            System.out.println("学的士大夫鬼地方");
             if(color == null || "null".equals(color)){
                 SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
                 String time = df.format(new Date()).substring(0,2);
@@ -124,9 +125,9 @@ public class GoPageController {
     }
     //退出登录
     @RequestMapping("/end")
-    public void End(HttpSession session){
-        System.out.println(session.getAttribute("studId"));
+    public String End(HttpSession session){
         session.invalidate();
+        return "redirect:tologin";
     }
     //无权限
     @RequestMapping("/notquan")

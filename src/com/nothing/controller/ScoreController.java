@@ -11,6 +11,7 @@ import com.nothing.vo.Sdudent.StuReplyScore;
 import com.nothing.vo.Sdudent.StudentProject;
 import com.nothing.vo.Sdudent.StudentScore;
 import com.nothing.vo.emp.Emp;
+import com.nothing.vo.emp.Project;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,8 @@ public class ScoreController{
                 request.setAttribute("courseList",courseList);
                 return "student/score";
             }else if("reply".equals(ac)){
-                List projectList = stuSer.listObj(new StudentProject());
+                List projectList = stuSer.listObj(new Project());
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa"+projectList.size());
                 request.setAttribute("projectList",projectList);
                 return "student/replyScore";
             }
@@ -106,7 +108,7 @@ public class ScoreController{
     @RequestMapping("toClassRepScoByCid")
     public String toClassRepScoByCid(String classId,String projectId,HttpServletRequest request){
         ClassVo classVo = (ClassVo) stuSer.findO(new ClassVo(), Integer.parseInt(classId));
-        StudentProject project = (StudentProject)stuSer.findO(new StudentProject(), Integer.parseInt(projectId));
+        Project project = (Project)stuSer.findO(new Project(), Integer.parseInt(projectId));
         request.setAttribute("cla",classVo);
         request.setAttribute("pro",project);
         return "student/classReplyScore";
@@ -151,7 +153,7 @@ public class ScoreController{
     @RequestMapping("toAddScore")
     @ResponseBody
     public String toAddScore(String tableList, StudentScore studentScore, String testDH, HttpSession session) throws ParseException{
-        //Emp e = (Emp)session.getAttribute("empId");
+        Emp e = (Emp)session.getAttribute("empId");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date testD = formatter.parse(testDH);
         studentScore.setScoreTime(testD);
@@ -172,7 +174,7 @@ public class ScoreController{
             s.setTermId( studentScore.getTermId());
             s.setTestType(studentScore.getTestType());
             s.setScoreTime(testD);
-            //s.setEmpId(e.getEmpId());
+            s.setEmpId(e.getEmpId());
             System.out.println("循环内的考试对象"+s.toString());
             stuSer.addStu(s);
         }
@@ -181,7 +183,7 @@ public class ScoreController{
 
     @RequestMapping("toAddReplyScore")
     public String toAddReplyScore(String tableList,String projectId,HttpSession session){
-        //Emp e = (Emp)session.getAttribute("empId");
+        Emp e = (Emp)session.getAttribute("empId");
         JSONArray jsonArray = JSONArray.parseArray(tableList);
         for(int i = 0;i<jsonArray.size();i++){
             StuReplyScore s = new StuReplyScore();
@@ -196,7 +198,7 @@ public class ScoreController{
             s.setStudId(Integer.parseInt(o.get("sid").toString()));
             s.setProjectId(Integer.parseInt(projectId));
             s.setReplyScoreRemark(o.get("rs").toString());
-            //s.setEmpId(e.getEmpId());
+            s.setEmpId(e.getEmpId());
             System.out.println("循环内的考试对象"+s.toString());
             stuSer.addStu(s);
         }

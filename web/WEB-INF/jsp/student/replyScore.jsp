@@ -42,7 +42,7 @@
             <select name="projectId" lay-verify="required" placeholder=" " id="projectId">
                 <option> </option>
                 <c:forEach items="${projectList}" var="pro">
-                    <option value="${pro.projectId}">${pro.proName}</option>
+                    <option value="${pro.projectId}">${pro.projectName}</option>
                 </c:forEach>
             </select>
         </div>
@@ -52,6 +52,22 @@
     <div class="layui-form-item" style="margin-left: 35%;margin-top: 50px">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formSub">确定</button>
+        </div>
+    </div>
+</form>
+
+<form  class="layui-form" id="proForm" style="display:none;height: 170px;width: 280px" method="post">
+    <input type="hidden" name="enId" id="enId">
+    <div class="layui-form-item" style="margin-left: 5px; margin-top: 40px">
+        <label class="layui-form-label">项目名称</label>
+        <div class="layui-input-block">
+            <input id="projectName" type="text"  name="projectName"  placeholder="" autocomplete="off" class="layui-input" style="width: 200px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="margin-top: 30px;margin-left: 20%">
+            <button class="layui-btn" lay-submit lay-filter="formDemoP">确定</button>
         </div>
     </div>
 </form>
@@ -77,7 +93,7 @@
                 ,{field:'stuReplyId', title: 'Id'}
                 ,{field:'stuName', title: '学生'}
                 ,{field:'className', title: '班级'}
-                ,{field:'proName', title: '项目'}
+                ,{field:'projectName', title: '项目'}
                 ,{field:'empName', title: '录入教师'}
                 ,{field:'score1',title:'功能完善50'}
                 ,{field:'Score2',title:'技术难度10'}
@@ -143,6 +159,18 @@
                         }
                     });
                     break;
+                case 'addPro':
+                    openStuAc = layer.open({
+                        type: 1,
+                        title:"新增答辩项目",
+                        area:['400px','300px'],
+                        content: $("#proForm"),
+                        closeBtn :1,
+                        success: function(layero, index){
+                            document.getElementById("proForm").reset();
+                        }
+                    });
+                    break;
             };
         });
         var form = layui.form;
@@ -165,6 +193,19 @@
                 }
             });
         });
+        form.on('submit(formDemoP)', function(data){
+            $.ajax({
+                url:'${pageContext.request.contextPath}/enrStu/addProject',
+                type:'post',
+                data:data.field,
+                dataType:'text',
+                success:function (data){
+                    layer.close(openStuAc);
+                    table.reload('demo');
+                }
+            });
+
+        })
 
     });
 
@@ -184,6 +225,7 @@
 <script type="text/html" id="toolbarDemo">
     <div>
         <div class="layui-btn-container">
+            <button class="layui-btn  " lay-event="addPro">新增项目</button>
             <button class="layui-btn layui-btn-s layui-btn-warm" lay-event="isAddText">批量录入</button>
             <button class="layui-btn  layui-btn-warm" lay-event="isDel">批量删除</button>
         </div>
@@ -211,10 +253,10 @@
             <div class="layui-form-item" style="display: inline-block">
                 <label class="layui-form-label" style="width:100px">项目</label>
                 <div class="layui-input-block">
-                    <select name="stuSelectPro" lay-verify="required" placeholder=" " id="stuSelectPro">
+                    <select name="stuSelectPro" lay-verify="required" placeholder="" id="stuSelectPro">
                         <option> </option>
                         <c:forEach items="${projectList}" var="pro">
-                            <option>${pro.proName}</option>
+                            <option>${pro.projectName}</option>
                         </c:forEach>
                     </select>
                 </div>

@@ -52,7 +52,7 @@
             ]]
         });
 
-        //未分配班级学生头工具栏事件
+
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
@@ -100,7 +100,7 @@
             <label class="layui-form-label" style="width:100px"><h2>${requestScope.cla.className}</h2></label>
         </div>
         <div class="layui-form-item" style="display: inline-block">
-            <label class="layui-form-label" style="width:350px"><h2>${requestScope.pro.proName}项目答辩成绩</h2></label>
+            <label class="layui-form-label" style="width:350px"><h2>${requestScope.pro.projectName}项目答辩成绩</h2></label>
         </div>
     </div>
     <button class="layui-btn layui-btn-sm" lay-event="yes">保存</button>

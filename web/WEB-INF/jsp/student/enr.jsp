@@ -111,7 +111,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="width: 285px">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
                 <select name="status" placeholder="">

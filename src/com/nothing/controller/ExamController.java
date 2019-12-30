@@ -259,9 +259,8 @@ public class ExamController {
         //添加一条考评
         String endtime = date+" "+time+":00";
         System.out.println(empName+"-------"+empId);
-        List  existexam = examservice.examlist("select * from empAssessment where classId='"+classname+"' and empId='"+empId+"'");
-        if(existexam.size()!=0){
-        }else {
+        List  existexam = examservice.examlist("select * from empAssessment where classId='"+classname+"' and empId='"+empId+"' and scores=0");
+        if(existexam.size()==0){
             List examtype = examservice.examlist("select postName from post where empId="+empId);
             List examtype1=new ArrayList();
             for(int i=0;i<examtype.size();i++){
@@ -277,42 +276,44 @@ public class ExamController {
             empAssessment.setEmpexamid(String.valueOf(examtype1.get(0)));
             empAssessment.setScores(0);
             examservice.addexam(empAssessment);
-        }
+            //给选中的班级发送邮寄
+            Email email=new Email();
+            List stuname = examservice.examlist("select studId,stuName from student where classId=(select classId from " +
+                    "classVo where className='"+classname+"')");
 
-        //给选中的班级发送邮寄
-        Email email=new Email();
-        List stuname = examservice.examlist("select studId,stuName from student where classId=(select classId from " +
-                "classVo where className='"+classname+"')");
+            List empkaohuid = examservice.examlist("select empAssessId from empAssessment where classid='"+classname+"' and empId='"+empId+"'");
+            List empkaohuid1=new ArrayList();
+            for(int i=0;i<empkaohuid.size();i++){
+                Map map= (Map) empkaohuid.get(i);
+                empkaohuid1.add(map.get("empAssessId"));
+            }
 
-        List empkaohuid = examservice.examlist("select empAssessId from empAssessment where classid='"+classname+"' and empId='"+empId+"'");
-        List empkaohuid1=new ArrayList();
-        for(int i=0;i<empkaohuid.size();i++){
-            Map map= (Map) empkaohuid.get(i);
-            empkaohuid1.add(map.get("empAssessId"));
-        }
+            List<Map> emptype =examservice.examlist("select postName from post where  empId ="+empId);
+            String str = ""+emptype.get(0).get("postName");
+            boolean status = str.contains("师");
+            if(status){
+                str = "老师";
+            }else {
+                str = "班主任";
+            }
+            Emp emp =(Emp) session.getAttribute("empId");
+            email.setEmpId(emp.getEmpId()+"");
+            email.setEmpName(emp.getEmpName());
+            email.setContent("对"+empName+"老师进行考核,考核类型:"+str);
+            email.setTopic("考核");
+            email.setImage(String.valueOf(empkaohuid1.get(0)));
+            email.setSendtime(new java.util.Date());
+            email.setEndTime(endtime);
+            email.setIsRead(2);
+            session.setAttribute("kaohuempname",empName);
+            for(int i=0;i<stuname.size();i++){
+                Map map= (Map) stuname.get(i);
+                email.setReceId(""+map.get("studId"));
+                email.setReceName(""+map.get("stuName"));
+                examservice.addexam(email);
+            }
+        }else {
 
-        List emptype =examservice.examlist("select postName from post where  empId ="+empId);
-        List emptype1=new ArrayList();
-
-        for(int i=0;i<emptype.size();i++){
-            Map map= (Map) emptype.get(i);
-            emptype1.add(map.get("postName"));
-        }
-        Emp emp =(Emp) session.getAttribute("empId");
-        email.setEmpId(emp.getEmpId()+"");
-        email.setEmpName(emp.getEmpName());
-        email.setContent("对"+empName+"老师进行考核,考核类型:"+emptype1.get(0));
-        email.setTopic("考核");
-        email.setImage(String.valueOf(empkaohuid1.get(0)));
-        email.setSendtime(new java.util.Date());
-        email.setEndTime(endtime);
-        email.setIsRead(2);
-        session.setAttribute("kaohuempname",empName);
-        for(int i=0;i<stuname.size();i++){
-            Map map= (Map) stuname.get(i);
-            email.setReceId(""+map.get("studId"));
-            email.setReceName(""+map.get("stuName"));
-            examservice.addexam(email);
         }
         return "redirect:empexam";
     }
