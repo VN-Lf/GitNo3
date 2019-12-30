@@ -30,7 +30,7 @@ public class Emp2Controller {
     @RequestMapping("/emplist")
     @ResponseBody
     public JSONObject EmpList() {
-        List examlist = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e,post p,dept d where e.empDeptId=d.deptId and e.empId=p.empId");
+        List examlist = empService.selEmpAll("select p.postName,d.deptName,e.* from emp e LEFT JOIN dept d on e.empDeptId=d.deptId LEFT JOIN post p on e.empId=p.empId ORDER BY e.empId");
         int con = empService.selEmpCont("select count(empId) from emp");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
@@ -39,6 +39,7 @@ public class Emp2Controller {
         jsonObject.put("count", con);
         return jsonObject;
     }
+
     @RequestMapping("/emplistsx")
     @ResponseBody
     public JSONObject empkListSx(String emp,String dept,String phone,String zt) throws UnsupportedEncodingException {
