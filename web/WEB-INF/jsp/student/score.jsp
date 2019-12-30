@@ -23,10 +23,11 @@
 
 
 <!--考试成绩表单-->
-<form  class="layui-form" id="addTextForm" style="display:none;height: auto;width: 600px" method="post"  target="_self">
+<form  class="layui-form" id="addTextForm" style="display:none;height: auto;width: 700px" method="post"  target="_self">
 
-    <div class="layui-form-item">
-        <label class="layui-form-label" style="width:100px">班级名</label>
+    <div style="margin-left: 30px">
+    <div class="layui-form-item" style="margin-top: 20px">
+        <label class="layui-form-label">班级名</label>
         <div class="layui-input-block">
             <select name="classId" lay-verify="required" placeholder=" " id="classId">
                 <option></option>
@@ -65,7 +66,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">学期</label>
         <div class="layui-input-block">
-            <select name="termId" lay-verify="required" placeholder= " " id="termId">
+            <select name="termId" lay-verify="required" placeholder= "" id="termId">
                 <option> </option>
                 <c:forEach items="${termList}" var="term">
                     <option value="${term.termId}">${term.termName}</option>
@@ -81,10 +82,11 @@
         </div>
     </div>
 
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="margin-left:35%">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formSub">确定</button>
         </div>
+    </div>
     </div>
 </form>
 </body>
@@ -171,7 +173,7 @@
                     openStuAc=  layer.open({
                         type: 1,
                         title: "录入成绩",
-                        area: ['700px', '400px'],
+                        area: ['800px', '400px'],
                         content: $("#addTextForm"),
                         closeBtn: 1,
                         success: function (layero, index){
@@ -186,6 +188,7 @@
         //监听提交
         laydate.render({
             elem: '#testDH' //指定元素o
+            ,trigger: 'click'//呼出事件改成click
         });
 
 
@@ -234,9 +237,9 @@
         <button class="layui-btn  layui-btn-warm" lay-event="isDel">批量删除</button>
     </div>
 
-        <div style="float: left;height:10px;margin-top:-40px;margin-left:300px">
+        <div style="float: left;height:10px;margin-top:-40px;margin-left:200px">
             <div class="layui-form-item" style="display: inline-block">
-                <label class="layui-form-label" style="width:100px">学生姓名</label>
+                <label class="layui-form-label" style="width:100px">姓名</label>
                 <div class="layui-input-block">
                     <input id="stuSelectName" type="text" name="stuSelectName" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
                 </div>

@@ -73,6 +73,7 @@ public class BuildingController {
     public String Buildingdelete(String id ){
         System.out.println("进来了删除：id"+id);
         id = id.substring(0,id.length()-1);
+
         service.delBuilding(id);
         return "redirect:toys";
     }

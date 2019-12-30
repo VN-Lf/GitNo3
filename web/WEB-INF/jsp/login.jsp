@@ -11,22 +11,7 @@
     <meta charset="UTF-8">
     <title>登录</title>
     <script src="${pageContext.request.contextPath}/jquery.js"></script>
-    <%
-        HttpSession sess = request.getSession();
-        String message = (String)sess.getAttribute("mes");
-        if(message == "" /*|| message.equals("")*/){
-        }else{
-    %>
-    <script type="text/javascript">
-        var a = "<%=message%>"
-        if(a !="null" ){
-            alert(a);
-        }
-    </script>
-    <%
-            sess.setAttribute("mes", "");
-        }
-    %>
+
     <style>
         input {
             border: 0px;
@@ -94,7 +79,7 @@
                     </div>
                 </div>
                 <div style="position: relative;">
-                    <input id="name" type="text" name="zhanghao" oninput="donTai()" />
+                    <input id="name" type="text"  name="zhanghao" oninput="donTai()" />
                     <span id="tishi" class="tishis">手机号</span>
                 </div>
                 <div style="position: relative;">
@@ -115,6 +100,7 @@
 </div>
 </body>
 <script language="JavaScript">
+
     function qiehuanLog(id) {
         document.getElementById("type").value=id;
         if(id == "stu"){
@@ -131,7 +117,6 @@
     }
     function donTai() {
         var name = document.getElementById("name").value;
-
         if (name == null || name == "") {
             $("#tishi").css("top", "20px");
             $("#tishi").css("left", "20px");
@@ -244,4 +229,26 @@
     }
 
 </script>
+<%
+    HttpSession sess = request.getSession();
+    String message = (String)sess.getAttribute("mes");
+    String zh = (String)sess.getAttribute("zangh");
+    if(message == "" /*|| message.equals("")*/){
+    }else{
+%>
+<script type="text/javascript">
+    var a = "<%=message%>"
+    var s = "<%=zh%>"
+    if(a !="null" ){
+        alert(a);
+        $("#name").val(s);
+        $("#name").attr("value",s);
+
+        donTai();
+    }
+</script>
+<%
+        sess.setAttribute("mes", "");
+    }
+%>
 </html>

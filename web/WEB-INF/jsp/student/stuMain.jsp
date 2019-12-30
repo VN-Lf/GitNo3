@@ -133,45 +133,47 @@
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox'}//复选框
-                ,{field: 'studId', title: 'ID', width:100, sort: true}
+                ,{field: 'studId', title: 'ID', width:60}
                 ,{field: 'stuName', title: '名字', width:100}
                 ,{field: 'stuHisSchool', title:'毕业院校', width:80}
-                ,{field: 'stuSex', title: '性别', width:80, sort: true}
+                ,{field: 'stuSex', title: '性别', width:40, sort: true}
                 ,{field: 'stuAge', title: '年龄', width:80}
                 ,{field: 'stuBirthday', title: '生日', width: 177, templet:function (row){
                         return createTime(row.stuBirthday);
                     }
                 }
-                ,{field: 'stuPhone', title:'电话', width:80}
-                ,{field: 'stuAddr', title: '地址', width: 177}
-                ,{field: 'classNames', title:'班级名', width:80}
-                ,{field: 'hourNames', title: '寝室名', width:80, sort: true}
-                ,{field: 'stuHouse', title: '寝室号', width:80}
-                ,{field: 'interTecher', title: '介绍老师', width: 177}
-                ,{field: 'stuStu', title: '状态', width:80}
-                ,{field: 'stuNation', title: '民族', width: 177}
-                ,{field: 'stuNatives', title: '籍贯', width:80, sort: true}
-                ,{field: 'residence', title: '户籍性质', width:80}
-                ,{field: 'cardId', title: '身份证', width: 177}
-                ,{field: 'stuProfessional', title:'专业', width:80}
-                ,{field: 'stuProLevel', title: '专业类别', width:80, sort: true}
-                ,{field: 'studyType', title: '学习类别', width:80}
+                ,{field: 'stuPhone', title:'电话', width:200}
+                ,{field: 'stuAddr', title: '地址', width: 240}
+                ,{field: 'classNames', title:'班级名', width:200}
+                ,{field: 'hourNames', title: '寝室名', width:100}
+                ,{field: 'interTecher', title: '介绍老师', width: 150}
+                ,{field: 'stuStu', title: '状态', width:120,
+                    templet:function (row){
+                        return allStatus(row.stuStu);
+                    }
+                    }
+                ,{field: 'stuNation', title: '民族', width: 120}
+                ,{field: 'stuNatives', title: '籍贯', width:80,}
+                ,{field: 'residence', title: '户籍性质', width:100}
+                ,{field: 'cardId', title: '身份证', width: 200}
                 ,{field: 'audition', title: '面试人', width: 177}
-                ,{field: 'isvocational', title: '是否中专', width:80, sort: true}
-                ,{field: 'qkMoney', title: '欠款金额', width:80}
-                ,{field: 'score', title: '入学成绩', width: 177}
+                ,{field: 'isvocational', title: '中专', width:80, sort: true,
+                    templet:function (row){
+                        return zz(row.isvocational);
+                    }}
+                ,{field: 'qkMoney', title: '欠款金额', width:100, sort: true}
+                ,{field: 'score', title: '入学成绩', width: 100, sort: true}
                 ,{field: 'dibao', title: '低保', width:80, sort: true}
-                ,{field: 'sourceType', title: '成绩类型', width:80}
-                ,{field: 'danbaoren', title: '担保人', width: 177}
+                ,{field: 'danbaoren', title: '担保人', width:100}
                 ,{field: 'soldier', title:'兵役', width:80}
-                ,{field: 'baominghao', title: '报名号', width:80, sort: true}
-                ,{field: 'zhuxiao', title: '是否住校', width:80}
-                ,{field: 'StuRemark', title: '说明', width:80}
+                ,{field: 'baominghao', title: '报名号', width:80}
+                ,{field: 'zhuxiao', title: '住校', width:80, sort: true}
+                ,{field: 'StuRemark', title: '说明', width:100}
                 ,{field: 'zhuxuejin', title: '助学金', width:80}
-                ,{field: 'tuixue', title: '是否退学', width:80}
-                ,{field: 'xiuxue', title: '是否休学', width:80}
-                ,{field: 'isComputer', title: '是否发放电脑', width:80}
-                ,{field: 'collar', title: '是否领走电脑', width:80}
+                ,{field: 'tuixue', title: '退学', width:80, sort: true}
+                ,{field: 'xiuxue', title: '休学', width:80, sort: true}
+                ,{field: 'isComputer', title: '发放电脑', width:100, sort: true}
+                ,{field: 'collar', title: '领走电脑', width:100, sort: true}
                     ,{width:150, title: '操作',align:'center',fixed: 'right', toolbar: '#barDemo'}
             ]]
         });
@@ -254,7 +256,14 @@
 
     });
 
-
+    function allStatus(v){
+        if(v==4){
+            return "在读"
+        }else if(v==5){
+            return "毕业"
+        }
+        return"";
+    }
     function createTime(v){
         var date = new Date(v);
         var y = date.getFullYear();
@@ -276,6 +285,16 @@
         }
         return""
     }
+
+    function zz(v){
+        if(v==1){
+            return "是"
+        }else if(v==2){
+            return "否"
+        }
+        return""
+    }
+
 
     //底部的
     function addTable(studId,stuName){
